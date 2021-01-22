@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+*.DS_Store
+
+02_distributions
+03_nhst
+04_correlation
+05_lm
+06_glm
+07_residuals
