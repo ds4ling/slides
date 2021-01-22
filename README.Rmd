@@ -22,4 +22,3 @@ slides <- c(
 glue::glue("1. [{slides}]({base}{slides}/)")[1]
 
 ```
-
