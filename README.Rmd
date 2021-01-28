@@ -4,7 +4,7 @@ output: github_document
 ---
 
 ```{r, 'download-bib', echo=F}
-link <- "https://raw.githubusercontent.com/jvcasillas/syllabi/master/589/refs/bib/ds4ling_refs.bib?token=AANKQ7EWSXKTW6I74R4NAZDABDXB4"
+link <- "https://www.jvcasillas.com/syllabi/589/refs/bib/ds4ling_refs.bib"
 
 download.file(link, 
               destfile = here::here("assets", "bib", "ds4ling_refs.bib"), 
@@ -19,6 +19,6 @@ slides <- c(
   "05_lm/03_mrc", "05_lm/04_general_linear_model", "05_lm/05_model_tuning", 
   "06_glm", "07_residuals")
 
-glue::glue("1. [{slides}]({base}{slides}/)")[1]
+glue::glue("1. [{slides}]({base}{slides}/)")[1:2]
 
 ```
