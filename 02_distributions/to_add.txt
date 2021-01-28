@@ -1,0 +1,97 @@
+
+
+<!--
+
+From FIGUEROA "INTRO TO METASCIENCE" ADDED TO SLIDES 1/24/2021
+
+---
+
+Measurement
+
+- Measurement is the processes of assigning a number to an 
+observation:
+  - Every observation must be turned into a number before 
+  statistical analysis can take place
+- Pacifica’s critique of Educational Psychology: 
+  - Multiple regression demands that everything about your 
+  child be converted into a number! 
+- Where do we get these numbers?
+  - Empirical observations and the process of measurement
+
+---
+
+Rules of Measurement
+
+- These numbers are not arbitrary, but are assigned 
+based upon certain rules
+
+- Measurement is a meaningful and selective process:
+  - The numbers must possess certain predefined 
+  characteristics
+
+- The measurements must be Reliable: 
+  - Inter-Rater, Inter-Item, Test-Retest, etc. 
+  - Must be replicable
+
+- The measurements must be Valid:
+  - The numbers must measure what we say they do 
+  - Bathroom scale as self-serving IQ test
+
+- Not all numbers are scientific data:
+  - In order to be scientific the numbers must be reliable and valid measurements based on empirical observations
+
+
+---
+
+Observation
+
+- Definition: Using the senses for some motivated purpose
+
+- Senses are not always reliable and do not necessarily 
+perfectly represent reality:
+  - Sensory observations are already a step removed from 
+  reality because they are first passed through our 
+  perceptions and reinterpreted before we actually 
+  “make sense” of them
+  - In other words, our raw sensory input is not what we 
+  perceive
+
+---
+
+Observation
+
+- We have many evolved adaptive mechanisms for deciphering 
+sensory input:
+  - First, we have a sensation
+  - Then, perception reconstructs it into a meaningful 
+  message in our brain
+  - We then use measurement to turn this processed 
+  information into numbers
+  - We then use statistics to analyze our numbers
+- Clearly, there is a lot of room for bias and error in 
+this multi-stage process!
+
+---
+
+Numbers
+
+- Do “the numbers speak for themselves”? 
+  - NO!
+
+- Our brain’s process the number and then we speak 
+for them
+  - We interpret the numbers in certain way based what we 
+  think they represent
+
+- All our interpretations are subject to errors 
+  - This is called fallibility
+  – There are lots of opportunities to make errors in the 
+  process
+
+- So how do we know that our numbers aren’t too far 
+removed from reality?
+
+
+
+
+
