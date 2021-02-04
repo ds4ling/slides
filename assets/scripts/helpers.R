@@ -9,6 +9,7 @@ library("untidydata")
 library("dplyr")
 library("tidyr")
 library("readr")
+library("purrr")
 library("here")
 
 # Plotting

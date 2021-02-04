@@ -1,0 +1,126 @@
+
+<!--
+To add
+
+
+
+
+Statistical significance
+
+– It is a poor choice of word
+– All it means is that an effect is not statistically equal to zero
+
+
+Statistical Significance:
+
+- As long as the effect is not statistically equivalent to 0 it is called 
+statistically significant:
+  - It may be an effect of trivial magnitude
+  – Basically, it means that this prediction is better than nothing
+  – It doesn’t really mean it is really “significant” in the terms that we 
+  think of as significance
+- “Significant Other” (p<.05?)
+  – “Better than nothing?”
+  – It doesn’t indicate importance
+
+---
+
+
+
+---
+
+FIGUEROA: Philosophy of science
+
+---
+
+scientific theories are fallible and require testing
+
+Theory Falsification
+
+- Basically, there is no way to prove a theory, we can 
+only support it:
+  - We can however, disprove a theory if our observations 
+  or experimental results disconfirm it
+- Research designed to confirm a theory is useless unless 
+it subjects the theory to risk of falsification:
+  - It must attempt to disconfirm the theory
+  - It must be possible at least in principle to 
+  disconfirm a scientific theory
+
+---
+
+Theory Falsification
+
+- If the hypothesis is disconfirmed and the theory is therefore falsified we can:
+  - Reject the theory entirely
+  - Make changes to it and re-test it
+
+- If the hypothesis is confirmed and the theory is therefore 
+not falsified, on the other hand, we never know for a fact 
+that any given theory is true:
+  - Just because the theory is not rejected doesn’t mean it 
+  is the best explanation because other theories might 
+  explain things better
+  - However, we can increase our confidence in the strength 
+  of a theory by continuing to subject it to this cycle of 
+  observation, theory construction, and hypothesis testing
+
+- We can approach Verisimilitude (“likeness to truth”) 
+asymptotically, but can never be 100% our theory represents 
+the truth:
+  - We can have a great deal of confidence in a theory, but 
+  can never be absolutely sure the theory is correct.
+
+---
+
+Fallibility of Empirical Support
+
+- The more you love your theory the more you need to try 
+and “kill” it:
+  – We need to try and disprove the theory in every way 
+  possible to increase our confidence in it
+  – Nietzsche: “that which does not kill us makes us stronger”
+
+---
+
+“Boldness in Conjecture, Austerity in Refutation”
+
+- Popper’s famous quote:
+  - Make risky predictions (boldness in conjecture) and then 
+try to severely kill/disprove your theory (austerity in 
+refutation)
+– Science cannot progress as long as you play it safe
+
+
+---
+
+FIGUEROA: Methodology of science
+
+---
+
+What Happens When You Try to Test a Theory?
+
+- You can't test a theory directly:
+  - But there are intermediate steps you can take
+- For example, if you want to examine the effects of 
+stress, you are faced several questions to address
+
+---
+
+What Happens When You Try to Test a Theory?
+
+- Select lab rats as a model of human stress: 
+  - How similar are we to rats?
+  - How similar are lab rats to wild rats?
+
+- How do you go about stressing rats? 
+  - You might force them to swim
+
+- How do you know it's stressed?
+  - You might do an open field test and count its feces
+- You wind up correlating forced swimming by rats to the 
+number of feces produced in an open field test
+
+
+
+-->

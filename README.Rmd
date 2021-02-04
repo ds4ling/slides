@@ -19,6 +19,6 @@ slides <- c(
   "05_lm/03_mrc", "05_lm/04_general_linear_model", "05_lm/05_model_tuning", 
   "06_glm", "07_residuals")
 
-glue::glue("1. [{slides}]({base}{slides}/)")[1:2]
+glue::glue("1. [{slides}]({base}{slides}/)")[1:3]
 
 ```
