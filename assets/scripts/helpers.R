@@ -27,6 +27,7 @@ library("latex2exp")
 library("broom")
 library("fGarch")
 library("RefManageR")
+library("equatiomatic")
 
 # set seed for reproducibility
 set.seed(12345)

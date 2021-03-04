@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Science for Linguists</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Joseph V. Casillas, PhD" />
+    <script src="assets/header-attrs/header-attrs.js"></script>
+    <link href="assets/remark-css/hygge.css" rel="stylesheet" />
+    <link href="assets/remark-css/rutgers.css" rel="stylesheet" />
+    <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
+    <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="assets/tile-view/tile-view.js"></script>
+    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="assets/panelset/panelset.css" rel="stylesheet" />
+    <script src="assets/panelset/panelset.js"></script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"f7f1679cb1f24e038e47ed177e886b94","expires":14}</script>
+    <script src="assets/himalaya/himalaya.js"></script>
+    <script src="assets/js-cookie/js.cookie.js"></script>
+    <link href="assets/editable/editable.css" rel="stylesheet" />
+    <script src="assets/editable/editable.js"></script>
+    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="assets/kePrint/kePrint.js"></script>
+    <link href="assets/lightable/lightable.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/5235085b15.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Data Science for Linguists
+## The linear model:</br>.lightgrey[Multiple regression]
+### Joseph V. Casillas, PhD
+### Rutgers University</br>Spring 2021</br>Last update: 2021-02-28
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class: inverse, middle
+
+&lt;blockquote align='center' class="twitter-tweet" data-lang="de"&gt;
+&lt;a href="https://twitter.com/AndrewsNotFunny/status/1365382679877812224"&gt;&lt;/a&gt;
+&lt;/blockquote&gt;
+
+---
+class: title-slide-section-grey, middle
+
+# Multiple regression and correlation
+
+---
+layout: true
+
+# MRC
+
+---
+
+### Multiple Causation
+
+- In nature: a phenomenon may have more than a single cause
+
+- In statistics: criterion variable might have more than a single 
+relevant predictor
+
+- Leaving a potential cause out of the equation would constitute "omitting 
+a relevant variable"
+--
+
+  - This biases the parameter estimates for the other predictors
+  - We are not always sure of what those other predictors might be!
+
+---
+
+### Overview
+
+- We have specified a linear formula that can account for the relationship 
+between two continuous variables. 
+
+.center[
+.content-box-blue[
+`\(Y = a + bX + e\)`
+]
+]
+
+- It is uncommon for a given response variable to be determined by a single 
+predictor.
+
+- Most theories/models in social science predict complex relationships 
+between multiple predictors.
+  - Score ~ SES + IQ
+  - Duration ~ speech rate + number of syllables
+  - RT ~ working memory + word position
+
+- We can extend the linear model equation to account for multiple predictors.
+
+---
+
+### Overview
+
+.pull-left[
+
+- We want to construct the equivalent of an **OR** statement or a *logical disjunction* 
+
+- Boolean Algebra tells us that an **OR** statement implies *summing things*
+
+- In other words, all X’s do not have to be high at once to have an effect on Y
+
+- For example, you can get an overall high GRE score by scoring high in verbal 
+but (somewhat) low in math:
+  - They have to have a high total (or sum) 
+  - A sum is implicitly an **OR** statement
+
+]
+
+.pull-right[
+
+| A&lt;/br&gt;(x) | B&lt;/br&gt;(y) | C&lt;/br&gt;(x **∨** y) |
+| :-------: | :-------: | :---------------: |
+| 0         | 0         |   **0**           | 
+| 0         | 1         |   **1**           |
+| 1         | 0         |   **1**           |
+| 1         | 1         |   **1**           |
+
+.center[
+
+If A = 1  
+**OR**  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+
+]
+]
+
+---
+background-image: url(../../assets/img/pensar2.png)
+background-position: 95% 50%
+
+### Overview
+
+- What if we based linguistics Grad School  
+acceptances solely on GRE scores?
+
+--
+
+- One shouldn't have to score high on all of  
+the entrance requirements, but just rank  
+high on the sum of all of them
+
+--
+
+- We could use a weighted sum
+
+---
+
+### Overview
+
+#### Weighted sum
+
+- Some things are more important than others in this overall sum
+
+- For example, GRE is actually a poor predictor of graduate student success
+
+- So we might want to weight this variable lower than something 
+  like GPA or letters of recommendation
+
+- We can use least squares estimation to get the b-weights with 
+the lowest SS&lt;sub&gt;ERROR&lt;/sub&gt;
+
+---
+
+### The equation
+
+.pull-left[
+.content-box-blue[
+`$$Y = a + bX + e$$`
+]
+]
+
+--
+
+.pull-right[
+.content-box-red[
+`$$Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e$$`
+]
+]
+
+--
+
+### Least Squares Estimation
+
+- R will estimate the b-weights that minimize the sum of the squared errors 
+(🙅 by hand examples)
+
+- Ideally these are the b-weights that best represent how much each predictor 
+is really contributing to the variance in the criterion variable (y)
+
+- We will again use least squares estimation to achieve the best (optimal) 
+regression weights
+
+---
+
+### Multiple predictors
+
+- The multiple predictors represent different hypotheses regarding what 
+might be affecting the criterion variable
+
+- In other words, multiple regression is just creating a sum of weighted 
+predictors to explain the total variance in the criterion variable
+
+- The way that the predictors function together is not necessarily the 
+same as the way that they each function alone
+
+- Bivariate regression is just a degenerate form ("special case") of 
+multiple regression containing only one predictor
+
+---
+
+### Interpretation
+
+#### Summarizing so far...
+
+- In multiple regression we assume additivity and linearity
+
+- In Boolean Algebra, a sum (addition) represents a logical disjunction
+
+- The multiple regression "weighted sum" is a complex **OR** statement
+
+--
+
+&lt;/br&gt;
+
+### What does this mean for our parameter estimates and how do we interpret them?
+
+---
+
+### (Semi)partial betas
+
+- .RUred[Intercept] ( `\(a_{0}\)` ): the value of the criterion variable when all 
+predictors are equal to 0  
+(same as bivariate regression)
+
+- .RUred[Slope] ( `\(b_{k}\)` ): the change in the criterion associated with a 
+1-unit change in `\(X_k\)`... 
+--
+*with all other predictors held constant*
+
+--
+
+&lt;/br&gt;
+
+### How can we calculate the unique contribution of each predictor?
+
+---
+background-image: url(./assets/img/ballentine1.png)
+background-size: contain
+background-position: 95% 50%
+
+---
+background-image: url(./assets/img/ballentine2.png)
+background-size: contain
+background-position: 95% 50%
+
+--
+
+.pull-right[
+.footnote[
+Recall that the b-weight of the bivariate model is `\(r(\frac{s_y}{s_x})\)`
+]
+]
+
+---
+background-image: url(./assets/img/ballentine3.png)
+background-size: contain
+background-position: 95% 50%
+
+---
+background-image: url(./assets/img/ballentine4a.png)
+background-size: contain
+background-position: 95% 50%
+
+### The "Ballantine"
+
+.footnote[Cohen &amp; Cohen, 1975]
+
+---
+background-image: url(./assets/img/ballentine4b.png)
+background-size: contain
+background-position: 95% 50%
+
+- `\(r^{2}_{x1,x2} = c + d\)`
+
+--
+
+- `\(r^{2}_{y,x1} = a + c\)`
+
+--
+
+- `\(r^{2}_{y,x2} = b + c\)`
+
+--
+
+- `\(R^{2}_{y,x1,x2} = a + b + c\)`
+
+---
+background-image: url(./assets/img/ballentine5.png)
+background-size: contain
+background-position: 95% 50%
+
+### Squared semipartial correlation
+
+- `\(X_2\)` removed from *explained*  
+variance
+
+--
+
+- Represents unique contribution  
+of `\(X_1\)`
+
+--
+
+- `\(sr^2 = R^{2}_{y,x1,x2} - r^{2}_{y,x2}\)`
+
+---
+background-image: url(./assets/img/ballentine7.png)
+background-size: contain
+background-position: 95% 50%
+
+### Squared partial&lt;/br&gt;correlation
+
+- Y variance not accounted for by  
+`\(X_2\)` is the area of A + E
+
+--
+
+- The area explained by `\(X_1\)` = A  
+(squared semipartial correlation)
+
+--
+
+- Unqiue contribution of `\(X_1\)` is  
+`\(A / (A + E)\)` or...
+
+--
+
+- `\(pr^{2}_{x1} = \frac{A}{A + E}\)`
+
+--
+
+- We are pretending that `\(X_2\)`  
+doesn't exist (statistically)
+
+---
+background-image: url(./assets/img/ballentine4b.png)
+background-size: 300px
+background-position: 95% 20%
+
+### Statistical control&lt;sup&gt;1&lt;/sup&gt;
+
+- Not the same as .green[experimental control]
+  - We are interested in some treatment
+  - Some participants receive treatment, some do not
+  - *Only* looking at highly proficient bilinguals (not low, med. prof.)
+
+- We partial out the effects of predictor `\(X_1\)` from all other predictors and 
+use this error to determine `\(b_1\)`
+
+- We are estimating the effect of one predictor while holding the other 
+predictors constant
+
+- This will only work if predictors are not correlated (i.e., there *cannot* be 
+multicollinearity)
+
+.footnote[&lt;sup&gt;1&lt;/sup&gt;This is a poor choice for a name. Ask why.]
+
+---
+background-image: url(https://i.imgflip.com/25dwia.jpg)
+background-position: 90% 50%
+background-size: 450px
+
+### Conceptual understanding
+
+.pull-left[
+
+- MRC is much more difficult to conceptualize than the bivariate linear 
+regression
+
+- If we consider a simple three variable model (y ~ x&lt;sub&gt;1&lt;/sub&gt; + 
+x&lt;sub&gt;2&lt;/sub&gt;) we are fitting a hyperplane to a three dimensional space
+
+- More variables = more complexity
+
+]
+
+---
+
+![](index_files/figure-html/additive_plots-1.png)&lt;!-- --&gt;
+
+--
+
+.center[
+.RUred[mpg ~ wt] &amp; .blue[mpg ~ drat]  
+!=  
+MRC
+]
+
+---
+background-color: black
+
+&lt;iframe src="./assets/html/threejs1.html" width='1000' height='500' style="border:none;"&gt;&lt;/iframe&gt;
+
+---
+
+![](index_files/figure-html/additive_3d-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_3d-2.png)&lt;!-- --&gt;
+
+---
+
+![](index_files/figure-html/additive_3d_surface-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_3d_surface-2.png)&lt;!-- --&gt;
+
+---
+background-image: url(./assets/img/additive_3d_corner.png)
+background-size: contain
+
+---
+layout: true
+
+# MRC
+
+---
+
+### Doing it in R
+
+.pull-left[
+
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ wt + drat, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.4159 -2.0452  0.0136  1.7704  6.7466 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   30.290      7.318   4.139 0.000274 ***
+## wt            -4.783      0.797  -6.001 1.59e-06 ***
+## drat           1.442      1.459   0.989 0.330854    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.047 on 29 degrees of freedom
+## Multiple R-squared:  0.7609,	Adjusted R-squared:  0.7444 
+## F-statistic: 46.14 on 2 and 29 DF,  p-value: 9.761e-10
+```
+
+]
+
+.pull-right[
+
+
+```r
+*mod &lt;- lm(mpg ~ wt + drat, data = mtcars)
+summary(mod)
+```
+
+]
+
+---
+
+### CIs and significance tests
+
+&lt;table class="table" style="font-size: 22px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; beta &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; SE &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 95% LB &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 95% UB &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; t-value &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; (Intercept) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; wt &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4.78 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; drat &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.46 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.33 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/br&gt;
+
+- Same as bivariate case, but we adjust t-value for k (added estimated 
+parameters)
+
+--
+
+- Statistical significance implies that the 95% CI doesn't contain 0
+
+--
+
+- **Rule of thumb**: multiply SE of b-weight by 2 and add/subtract to/from 
+b-weight  
+
+--
+
+- T-ratio: Parameter estimate divided by SE  
+
+--
+(i.e., 30.29 / 7.32 = 4.14)
+
+--
+
+- **Rule of thumb**: |t| &gt; 2 = significant&lt;sup&gt;&amp;trade;&lt;/sup&gt; 
+
+---
+
+### Coefficient of multiple determination: R&lt;sup&gt;2&lt;/sup&gt;
+
+- Adding variables will always explain more variance
+
+- Not necessarily better
+
+- There is an adjustment for exhausting degrees of freedom
+
+--
+
+### Note
+
+- .green[r]: pearson product moment correlation
+
+- .purple[r&lt;sup&gt;2&lt;/sup&gt;]: coefficient of determination; variance explained 
+(bivariate case)
+
+- .RUred[R&lt;sup&gt;2&lt;/sup&gt;]: coefficient of multiple determination; variance 
+explained (MRC)
+
+---
+
+### Making predictions
+
+- Recall the multiple regression equation...
+
+`$$Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e$$`
+
+- Our `mtcars` model can be summarized as...
+
+$$
+`\begin{aligned}
+\widehat{mpg} &amp;= 30.29 + -4.78(wt) + 1.44(drat)
+\end{aligned}`
+$$
+
+--
+
+- What is the predicted `mpg` for a car that weighs 1 unit with 
+a rear axel ratio (drat) of 2?  
+And one that weighs 1 with a drat of 4?  
+And one that weighs 3 with a drat of 2.5?
+
+--
+
+  - 28.39 
+  `\(mpg = 30.29 + -4.78 \times 1 + 1.44 \times 2\)`
+
+  - 31.28 
+  `\(mpg = 30.29 + -4.78 \times 1 + 1.44 \times 4\)`
+
+  - 19.55 
+  `\(mpg = 30.29 + -4.78 \times 3 + 1.44 \times 2.5\)`
+
+---
+layout: false
+class: title-slide-section-grey, middle
+
+# Interactions
+
+---
+layout: true
+
+# Interactions
+
+---
+
+#### Recall
+
+.pull-left[
+
+- Assumptions of Multiple Regression: 
+  - Additivity
+  - Linearity
+- In Boolean Algebra, a sum (addition) represents a logical disjunction: 
+  - Multiple regression "weighted sum" is a complex "OR" statement
+
+]
+
+.pull-right[
+
+| A&lt;/br&gt;(x) | B&lt;/br&gt;(y) | C&lt;/br&gt;(x **∨** y) |
+| :-------: | :-------: | :---------------: |
+| 0         | 0         |   **0**           | 
+| 0         | 1         |   **1**           |
+| 1         | 0         |   **1**           |
+| 1         | 1         |   **1**           |
+
+.center[
+
+If A = 1  
+**OR**  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+
+]
+]
+
+---
+
+#### Recall
+
+.pull-left[
+
+- Assumptions of Multiple Regression: 
+  - Additivity
+  - Linearity
+- In Boolean Algebra, a sum (addition) represents a logical .blue[disjunction]: 
+  - Multiple regression "weighted sum" is a complex "OR" statement
+
+#### Non-Additivity: Interaction Terms
+
+- In Boolean Algebra, a product (multiplication) represents a logical 
+**conjunction**:
+  - Interaction terms represent "AND" terms
+  - These are included within the overall "OR" statement
+
+]
+
+.pull-right[
+
+| A&lt;/br&gt;(x) | B&lt;/br&gt;(y) | C&lt;/br&gt;(x **∧** y) | &lt;/br&gt;.grey[(x ∨ y)] |
+| :-------: | :-------: | :---------------: | :-----------------: |
+| 0         | 0         |   **0**           |   .lightgrey[0]     |
+| 0         | 1         |   **0**           |   .lightgrey[1]     |
+| 1         | 0         |   **0**           |   .lightgrey[1]     |
+| 1         | 1         |   **1**           |   .lightgrey[1]     |
+
+.center[
+
+If A = 1  
+**AND**  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+
+]
+]
+
+---
+
+.pull-left[
+
+### Genetics example
+
+- You share 50% of genes with your Mom (M) and 50% with your Dad (D)
+
+- But your parents don’t share that many genes
+
+- M and D are generally not genetically correlated with each other, but you 
+(the M\*D interaction) are correlated with both M and D (more on this later)
+
+]
+
+--
+
+.pull-right[
+
+### Drugs and alcohol
+
+Consider taking the upcoming midterm in one of the following conditions
+
+- Neither Drugs nor Alcohol:
+  - probably best, produce highest score
+- Alcohol alone:
+  - Probably lower midterm scores than doing neither
+- Drugs alone:
+  - Probably lower midterm scores than doing neither
+- Alcohol and Drugs together:
+  - Probably lowest scores on the midterm exam of 
+    all the four possible conditions
+
+]
+
+---
+
+### Drugs and alcohol continued
+
+- Is the effect of alcohol and drugs together equal to the negative effect 
+of alcohol PLUS the negative effect of drugs?
+  - Probably not
+  - Alcohol and drugs are known to interact 
+
+- This effect is a negative interaction
+
+- If you mix alcohol and drugs they have a larger combined effect than 
+adding up the effects of each acting separately:
+  - For example, if alcohol makes your score drop 10 points, and the drug 
+  drops it 15 points, when you take both your score will very likely drop 
+  more than just 25 points
+
+- This effect is not additive, it is multiplicative
+
+---
+
+### Non-additivity of effects
+
+- You cannot add the effect of alcohol to the effect of drugs to predict the effect "alcohol AND drugs"
+
+- Because you get an extra effect (a boosting effect) by combing them
+
+- There is a synergistic effect of combining the terms
+
+- In principle, could be either more or less effective
+
+- You include this multiplicative **AND** term (A\*D) in *ADDITION* to the other terms in the model
+
+---
+
+.pull-left[
+
+### The multiple regression formula: 
+
+`$$Y = a_{0} + b_{1}X_{1} + b_{2}X_{2} + (b_{1}X_{1} \times b_{2}X_{2}) + e$$`
+
+### Including interactions in R
+
+- We do this using `:`
+
+- Or \*
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+*m &lt;- lm(mpg ~ wt + drat + wt:drat, data = mtcars)
+summary(m)
+```
+
+```
+## 
+## Call:
+## lm(formula = mpg ~ wt + drat + wt:drat, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8913 -1.8634 -0.3398  1.3247  6.4730 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)    5.550     12.631   0.439   0.6637  
+## wt             3.884      3.798   1.023   0.3153  
+## drat           8.494      3.321   2.557   0.0162 *
+## wt:drat       -2.543      1.093  -2.327   0.0274 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.839 on 28 degrees of freedom
+## Multiple R-squared:  0.7996,	Adjusted R-squared:  0.7782 
+## F-statistic: 37.25 on 3 and 28 DF,  p-value: 6.567e-10
+```
+
+]
+
+---
+
+### Visualization
+
+- Including an interaction affects the hyperplane fit to the data
+
+---
+background-color: black
+
+![](index_files/figure-html/additive_interaction-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction-2.png)&lt;!-- --&gt;
+
+---
+
+![](index_files/figure-html/additive_interaction2-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction2-2.png)&lt;!-- --&gt;
+
+---
+background-color: black
+
+![](index_files/figure-html/additive_interaction3-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction3-2.png)&lt;!-- --&gt;
+
+---
+
+![](index_files/figure-html/additive_interaction4-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction4-2.png)&lt;!-- --&gt;
+
+---
+layout: false
+class: title-slide-section-red
+
+# Review
+
+### What we've seen so far
+
+- Bivariate regression
+- MRC
+- Additive effects
+- Interactions (multiplicative effects)
+
+### What's left
+
+- Assumptions
+- Model specification
+- Alpha slippage
+- Empirical selection of variables
+- Reporting results
+
+
+
+---
+exclude: true
+
+(Wickham and Grolemund, 2016; Lewis-Beck, 1980c; Schroeder, Sjoquist, and Stephan, 1986b; Schroeder, Sjoquist, and Stephan, 1986e; Berry and Feldman, 1985b; Berry and Feldman, 1985d). 
+
+---
+layout: false
+class: title-slide-final, left
+
+# References
+
+[1] W. Berry and S. Feldman. "Multicollinearity". In: _Multiple
+Regression in Practice_. Ed. by W. Berry and S. Feldman. Sage
+University Paper Series on Quantitative Applications in the Social
+Sciences - 50. Newbury Park, CA: Sage, 1985, pp. 37-50. ISBN:
+9780803920545.
+
+[2] W. Berry and S. Feldman. "Specification Error". In: _Multiple
+Regression in Practice_. Ed. by W. Berry and S. Feldman. Sage
+University Paper Series on Quantitative Applications in the Social
+Sciences - 50. Newbury Park, CA: Sage, 1985, pp. 18-25. ISBN:
+9780803920545.
+
+[3] M. Lewis-Beck. "Multiple Regression". In: _Applied Regression: An
+Introduction_. Ed. by M. Lewis-Beck. Sage University Paper Series on
+Quantitative Applications in the Social Sciences - 22. Newbury Park,
+CA: Sage, 1980, pp. 47-74. ISBN: 9781483381497.
+
+[4] L. Schroeder, D. Sjoquist, and P. Stephan. "Multiple Linear
+Regression". In: _Understanding Regression Analysis: An Introductory
+Guide_. Ed. by L. Schroeder, D. Sjoquist and P. Stephan. Sage
+University Paper Series on Quantitative Applications in the Social
+Sciences - 57. Newbury Park, CA: Sage, 1986, pp. 29-35. ISBN:
+9780803927582.
+
+[5] L. Schroeder, D. Sjoquist, and P. Stephan. "Problems and Issues of
+Linear Regression". In: _Understanding Regression Analysis: An
+Introductory Guide_. Ed. by L. Schroeder, D. Sjoquist and P. Stephan.
+Sage University Paper Series on Quantitative Applications in the Social
+Sciences - 57. Newbury Park, CA: Sage, 1986, pp. 65-80. ISBN:
+9780803927582.
+
+---
+layout: false
+class: title-slide-final, left
+
+# References (cont.)
+
+[1] H. Wickham and G. Grolemund. _R for Data Science: Import, Tidy,
+Transform, Visualize, and Model Data_. O'Reilly Media, 2016.
+
+Figueredo, A. J. (2013). Multiple Regression. *Statistical 
+Methods in Psychological Research*.
+
+Figueredo, A. J. (2013). Strong Inference. *Statistical 
+Methods in Psychological Research*.
+
+Figueredo, A. J. (2013). Empirical Selection of Variables. *Statistical 
+Methods in Psychological Research*.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "default",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

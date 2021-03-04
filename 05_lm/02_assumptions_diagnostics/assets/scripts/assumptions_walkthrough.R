@@ -57,10 +57,59 @@ autoplot(mod1, which = c(1, 3))
 autoplot(mod2, which = c(1, 3))
 
 
+library(tidyverse)
+library(patchwork)
+
+mod1$residuals %>% length
+mod2$residuals %>% length
+
+mod1$fitted
+
+resid  <- mod1$residuals
+fitted <- mod1$fitted
+resid_cog <- tibble(resid_mean = mean(resid), resid_median = median(resid)) %>% 
+  pivot_longer(cols = everything())
+  
+length(mod1$residuals) * 0.1
+length(mod2$residuals) * 0.1
+
+2 * IQR(mod2$residuals) / length(mod2$residuals)^(1/3)
 
 
+diagnosis <- function(mod) {
+
+  resid  <- mod$residuals
+  fitted <- mod$fitted
+  
+  resid_cog <- mean(resid)
+  
+  fd_bw <- 2 * IQR(resid) / length(resid)^(1/3)
+
+  p1 <- as_tibble(x = resid, y = fitted) %>% 
+    ggplot() + 
+    aes(x = fitted, y = resid) + 
+    geom_hline(yintercept = 0, lty = 3) + 
+    geom_point(pch = 21, size = 1.25, fill = "grey") + 
+    labs(y = "Residuals", x = "Fitted values") + 
+    ds4ling::ds4ling_bw_theme()
+  
+  p2 <- as_tibble(x = resid) %>% 
+    ggplot() + 
+    aes(x = resid) + 
+    geom_histogram(color = "black", fill = "grey70", binwidth = fd_bw) +
+    geom_vline(xintercept = resid_cog, lty = 2) +
+    labs(y = "Density", x = "Residuals") + 
+    ds4ling::ds4ling_bw_theme() 
+
+  p3 <- ds4ling::gg_qqplot(resid) + 
+    ds4ling::ds4ling_bw_theme()
 
 
+  print(p1 + p2 + p3)
+}
+
+diagnosis(mod2)
+diagnosis(mod1)
 
 
 
