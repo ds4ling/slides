@@ -43,7 +43,7 @@ ui <- "- "
 ```{r, child="part1"}
 ```
 
-```{r, child="part2", eval=F}
+```{r, child="part2"}
 ```
 
 ---

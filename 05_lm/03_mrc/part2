@@ -1,26 +1,4 @@
 
-
----
-layout: false
-class: title-slide-section-red
-
-# Review
-
-### What we've seen so far
-
-- Bivariate regression
-- MRC
-- Additive effects
-- Interactions (multiplicative effects)
-
-### What's left
-
-- Assumptions
-- Model specification
-- Alpha slippage
-- Empirical selection of variables
-- Reporting results
-
 ---
 class: title-slide-section-grey, middle
 background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_ballantine.png)
@@ -203,11 +181,6 @@ the restricted model can be eliminated:
 
 <p></p>
 
-- Basically, test the model once with everything and then test the model 
-without something or other:
-
-<p></p>
-
 - Testing a more complicated model and then a less complicated one
 
 ---
@@ -351,7 +324,7 @@ background-position: 95% 10%, 95% 90%
 
 ---
 class: title-slide-section-red
-background-image: url(https://scontent-lga3-1.cdninstagram.com/vp/c5d834b393a4e7e578253c8e2ccee338/5B3F62C1/t51.2885-15/e35/12716470_1688916864717116_2047131572_n.jpg)
+background-image: url(https://assets.stickpng.com/images/580b57fcd9996e24bc43c53b.png)
 background-size: 400px
 background-position: 90% 50%
 
@@ -361,7 +334,7 @@ background-position: 90% 50%
 
 - Imagine that you have a romantic partner that you are thinking of dumping 
 
-- It might be worthwhile see if it is a good idea by doing the math first
+- It might be worthwhile to see if it is a good idea by doing the math first
 
 - So you consider what your life is like with your partner (inclusive model) 
 and subtract what it would be like without your partner (restricted model)
@@ -817,7 +790,7 @@ high
 
 .pull-right[
 
-```{r, alpha_slippage, warning=FALSE, echo=FALSE, fig.height=5}
+```{r, alpha_slippage, warning=FALSE, echo=FALSE, fig.height=5, fig.retina=2}
 error_rate <- vector(mode = 'numeric', length = 100)
 
 for (i in 1:100) {
@@ -828,7 +801,7 @@ tibble(x = 1:100, y = error_rate) %>%
   ggplot(., aes(x = x, y = y)) + 
    geom_point(pch = 21, fill = '#cc0033', size = 7) + 
    labs(x = "# of tests", y = "Type I error rate") + 
-   ds4ling::ds4ling_bw_theme()
+   ds4ling::ds4ling_bw_theme(base_family = "Times", base_size = 16)
 ```
 
 ]

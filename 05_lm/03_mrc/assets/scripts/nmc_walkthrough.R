@@ -1,51 +1,98 @@
 # - online presentations
-# - mid term
 # - PA4
+# - PA5
 # - model selection walkthrough
 
 
-library(lingStuff)
-library(tidyverse)
+# Load libraries --------------------------------------------------------------
 
-create_project(name = "nmc")
+library("lingStuff")
+library("tidyverse")
+
+# -----------------------------------------------------------------------------
 
 
 
 
-my_cars <- mtcars %>% 
-  select(., mpg, wt, drat)
+# create_project() function ---------------------------------------------------
+#
+# This function takes two arguments: name (char) and type ()
+# Run ?lingStuff::create_project to get an idea of what the options are 
+# and what it does and then run lingStuff::create_project(name = "nmc")
 
-mod_full <- lm(mpg ~ wt + drat + wt:drat, data = my_cars)
-mod_int  <- lm(mpg ~ wt + drat          , data = my_cars)
-mod_drat <- lm(mpg ~ wt                 , data = my_cars)
-mod_wt   <- lm(mpg ~ drat               , data = my_cars)
+# -----------------------------------------------------------------------------
+
+
+
+
+
+# NMC examples using forward selection ----------------------------------------
+
+# 1. From the mtcars dataframe select the columns 'mpg', 'wt', and 'drat' and 
+#    assign this subset of columns to a new object called 'my_cars'
+
+
+# One you have done that run the following models: 
 mod_null <- lm(mpg ~ 1                  , data = my_cars)
+mod_wt   <- lm(mpg ~ wt                 , data = my_cars)
+mod_add  <- lm(mpg ~ wt + drat          , data = my_cars)
+mod_int  <- lm(mpg ~ wt + drat + wt:drat, data = my_cars)
 
-anova(mod_int, mod_full) # keep int
-# F(1) = 5.41, p < 0.03
+# 2. Look at the summary of 'mod_null'. What does the intercept tell you?
 
-anova(mod_drat, mod_int) # drat not sig.
-# F(1) = 0.98, p > 0.05
-# F > 1
 
-anova(mod_wt, mod_int) # wt sig.
-# F(1) = 36.01, p < 0.001
-# There was a main effect of wt ()
+# 3. Look at the summary of 'mod_wt'. What does the summary tell you? 
 
-library(corrplot)
+
+# 4. Use a nested model comparison to test the additive effect of 'drat'.
+#    (hint: use the anova() function)
+
+
+# 5. Test the interaction term using a NMC and write out the important info in 
+# a comment below. 
+
+
+# 6. Run the anova() function on the multiplicative model. Compare with (5). 
+
+
+# -----------------------------------------------------------------------------
+
+
+
+
+
+
+# Getting a correlation matrix ------------------------------------------------
+
+# Might have to install
+library("corrplot")
+
 my_cor <- cor(my_cars)
 corrplot(my_cor, type = "upper")
 
-
-# - papaja
-#     - devtools::install_github("crsh/papaja")
-#     - install tinytex
-#     - Download LaTeX (miktex)
+# -----------------------------------------------------------------------------
 
 
-devtools::install_github("crsh/papaja")
 
-library(tinytex)
+
+
+# Literate, reproducible manuscripts using papaja -----------------------------
+# - devtools::install_github("crsh/papaja")
+# - install tinytex
+
+library("tinytex")
 install_tinytex()
 
+# -----------------------------------------------------------------------------
 
+
+
+
+
+# Reporting results -----------------------------------------------------------
+
+# !!! don't rely on this
+devtools::install_github("easystats/report")
+
+
+# -----------------------------------------------------------------------------
