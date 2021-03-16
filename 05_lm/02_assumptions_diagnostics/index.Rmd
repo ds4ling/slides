@@ -1129,11 +1129,11 @@ remaining scores to predict all 10 of them
 layout: false
 class: inverse, middle
 
-<blockquote align='center' class="twitter-tweet" data-lang="de">
-<a href="https://twitter.com/johncassil/status/964122022593945601"></a>
-</blockquote>
-
-<!-- not sure what this was -->
+```{r, tiktok, results='asis', echo=F}
+tt_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189"
+tt <- tiktok_embed(tt_url)
+tt
+```
 
 ---
 layout: false

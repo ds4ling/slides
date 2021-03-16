@@ -20,6 +20,8 @@ library("tidyverse")
 # Run ?lingStuff::create_project to get an idea of what the options are 
 # and what it does and then run lingStuff::create_project(name = "nmc")
 
+lingStuff::create_project(name = "nmc")
+
 # -----------------------------------------------------------------------------
 
 

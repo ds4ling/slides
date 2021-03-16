@@ -29,5 +29,8 @@ library("fGarch")
 library("RefManageR")
 library("equatiomatic")
 
+# xaringan stuff
+library("tiktokrmd")
+
 # set seed for reproducibility
 set.seed(12345)
