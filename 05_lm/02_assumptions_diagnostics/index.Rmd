@@ -1131,7 +1131,8 @@ class: middle
 
 ```{r, tiktok, echo=F}
 tt_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189"
-tiktok_html(tt_url, include_player = FALSE)
+tt <- tiktok_embed(tt_url)
+tt
 ```
 
 ---
