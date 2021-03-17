@@ -1127,12 +1127,11 @@ remaining scores to predict all 10 of them
 
 ---
 layout: false
-class: inverse, middle
+class: middle
 
 ```{r, tiktok, echo=F}
 tt_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189"
-tt <- tiktok_embed(tt_url)
-tt
+tiktok_html(tt_url, include_player = FALSE)
 ```
 
 ---
