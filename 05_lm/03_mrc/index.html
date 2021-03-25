@@ -14,7 +14,7 @@
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"cb110ec16c084f19a0864a4c1e047fab","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xaccbd783a4444aea2f68f0974aeaa54","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -32,7 +32,7 @@ class: center, middle, inverse, title-slide
 # Data Science for Linguists
 ## The linear model:</br>.lightgrey[Multiple regression]
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-03-10
+### Rutgers University</br>Spring 2021</br>Last update: 2021-03-24
 
 ---
 
@@ -1984,6 +1984,7 @@ background-position: 80% 70%
 
 .footnote[Casillas, 2015]
 
+
 ---
 exclude: true
 
@@ -2043,6 +2044,231 @@ Methods in Psychological Research*.
 
 Figueredo, A. J. (2013). Empirical Selection of Variables. *Statistical 
 Methods in Psychological Research*.
+
+---
+
+# Bonus
+
+### Statistical control in MRC
+
+---
+background-image: url(./assets/img/mrc_math.png)
+background-size: contain
+
+???
+
+We are interested in testing the hypothesis that 
+taller people are better at math. 
+
+A priori we know that this doesn't make sense. 
+
+In a population of children we know that there is a causal relationship 
+between age and height and age and math score
+(as children get older they get taller; as children get older they get better 
+at math)
+
+Thus, in a population of children we would observe a correlation between height 
+and math (age is a confound)
+
+---
+
+
+```r
+glimpse(mrc_ex_data)
+```
+
+```
+## Rows: 10,000
+## Columns: 5
+## $ age      &lt;dbl&gt; 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5…
+## $ height   &lt;dbl&gt; 36.77788, 40.85082, 41.90963, 40.91368, 39.99944, 38.79008, 4…
+## $ score    &lt;dbl&gt; 57.36148, 55.69443, 53.88175, 56.82029, 53.81413, 53.59684, 5…
+## $ age_c    &lt;dbl&gt; -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -…
+## $ height_c &lt;dbl&gt; -12.637914, -8.564972, -7.506157, -8.502107, -9.416351, -10.6…
+```
+
+```r
+sample_n(mrc_ex_data, 10) %&gt;% 
+  mutate_if(is.numeric, round, digits = 2) %&gt;% 
+  head(., n = 10)
+```
+
+```
+##     age height score age_c height_c
+## 1   7.9  40.43 58.87  -3.6    -8.98
+## 2  18.0  56.09 70.63   6.5     6.68
+## 3   5.1  42.76 57.14  -6.4    -6.65
+## 4  17.0  57.87 72.29   5.5     8.45
+## 5  16.8  54.27 68.92   5.3     4.86
+## 6  18.0  54.04 70.00   6.5     4.62
+## 7  11.5  43.96 66.89   0.0    -5.45
+## 8  17.3  58.31 72.03   5.8     8.89
+## 9  16.9  57.62 70.04   5.4     8.21
+## 10  8.8  44.40 60.44  -2.7    -5.01
+```
+
+---
+class: middle
+
+.pull-left[
+
+```r
+lm(height ~ age_c, mrc_ex_data) %&gt;% summary()
+```
+
+```
+## 
+## Call:
+## lm(formula = height ~ age_c, data = mrc_ex_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -11.255  -2.033   0.031   2.013  11.665 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 49.415790   0.029986  1648.0   &lt;2e-16 ***
+## age_c        1.261273   0.007989   157.9   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.999 on 9998 degrees of freedom
+## Multiple R-squared:  0.7137,	Adjusted R-squared:  0.7137 
+## F-statistic: 2.493e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/mrc-math-height-age-plot-1.png" width="100%" /&gt;
+]
+
+---
+class: middle
+
+.pull-left[
+
+```r
+lm(score ~ age_c, mrc_ex_data) %&gt;% summary()
+```
+
+```
+## 
+## Call:
+## lm(formula = score ~ age_c, data = mrc_ex_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.6328 -1.3835  0.0204  1.3758  7.1214 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 64.367451   0.019954  3225.8   &lt;2e-16 ***
+## age_c        1.240785   0.005316   233.4   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.995 on 9998 degrees of freedom
+## Multiple R-squared:  0.8449,	Adjusted R-squared:  0.8449 
+## F-statistic: 5.447e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/mrc-math-score-age-plot-1.png" width="100%" /&gt;
+
+]
+
+---
+class: middle
+
+.pull-left[
+
+```r
+lm(score ~ height_c, mrc_ex_data) %&gt;% summary()
+```
+
+```
+## 
+## Call:
+## lm(formula = score ~ height_c, data = mrc_ex_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.5541  -2.1973  -0.0409   2.1267  12.3640 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 64.367451   0.031959    2014   &lt;2e-16 ***
+## height_c     0.701625   0.005703     123   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.196 on 9998 degrees of freedom
+## Multiple R-squared:  0.6022,	Adjusted R-squared:  0.6021 
+## F-statistic: 1.513e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/mrc-math-score-height-plot-1.png" width="100%" /&gt;
+
+]
+
+--
+
+.footnote[**What can we do about this**?]
+
+---
+class: middle
+
+.pull-left[
+
+
+```r
+lm(score ~ height_c + age_c, mrc_ex_data) %&gt;% summary
+```
+
+```
+## 
+## Call:
+## lm(formula = score ~ height_c + age_c, data = mrc_ex_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.6294 -1.3824  0.0191  1.3743  7.1263 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 64.367451   0.019955 3225.66   &lt;2e-16 ***
+## height_c    -0.001730   0.006655   -0.26    0.795    
+## age_c        1.242967   0.009936  125.09   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.995 on 9997 degrees of freedom
+## Multiple R-squared:  0.8449,	Adjusted R-squared:  0.8449 
+## F-statistic: 2.723e+04 on 2 and 9997 DF,  p-value: &lt; 2.2e-16
+```
+]
+
+--
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/mrc-ex-adj-age-plot-1.png" width="100%" /&gt;
+
+]
+
+--
+
+.footnote[**We partial out the spurious relationship between math score &lt;br&gt; and height by conditioning on age**.]
+
+---
+
+&lt;img src="index_files/figure-html/mrc-final-1.png" width="1008" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
