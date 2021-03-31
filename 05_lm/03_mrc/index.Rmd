@@ -30,7 +30,6 @@ xaringanExtra::use_xaringan_extra(
 
 ```{r, 'helpers', echo=FALSE, message=F, warning=F}
 source(here::here("assets", "scripts", "helpers.R"))
-source(here::here("05_lm", "03_mrc", "assets", "scripts", "mrc.R"))
 ```
 
 ```{r, load_refs, echo=FALSE, cache=FALSE, warning=F, message=F}
