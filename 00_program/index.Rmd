@@ -24,7 +24,7 @@ options(htmltools.dir.version = FALSE)
 
 ```{r xaringan-extra-all-the-things, echo=FALSE}
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "scribble", "search", "webcam")
 )
 ```
 

@@ -10,17 +10,23 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
-    <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"f8d400276b8f4ac488848bf40a7edd59","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"bf5dd2703bae4cccb8b10f8eafa7b343","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
     <script src="assets/xaringanExtra-webcam/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <script src="assets/mark.js/mark.min.js"></script>
+    <link href="assets/xaringanExtra-search/search.css" rel="stylesheet" />
+    <script src="assets/xaringanExtra-search/search.js"></script>
+    <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":false,"autoSearch":true}) })</script>
+    <script src="assets/fabric/fabric.min.js"></script>
+    <link href="assets/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="assets/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
   </head>
   <body>
@@ -30,7 +36,7 @@ class: center, middle, inverse, title-slide
 # Data Science for Linguists
 ## Program
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-01-20
+### Rutgers University</br>Spring 2021</br>Last update: 2021-03-25
 
 ---
 
@@ -39,6 +45,40 @@ class: center, middle, inverse, title-slide
 
 
 
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 50px;
+height: 128px;
+z-index: 0;
+background-image: url(https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/ds4ling.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+bottom:-3em;left:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('a')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = 'https://www.ds4ling.jvcasillas.com'
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
 
 # Overview
 

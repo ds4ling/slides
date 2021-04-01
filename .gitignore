@@ -5,6 +5,5 @@
 
 *.DS_Store
 
-05_lm/05_model_tuning
 06_glm
 07_residuals
