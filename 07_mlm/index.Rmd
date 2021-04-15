@@ -653,11 +653,6 @@ p_model_comparison
 
 Complete pooling is the same line for each subject, sometimes it is a good fit, sometimes it is way off (i.e., 309)
 
-subj 373 is interesting... when you know very little, best guess is complete pooling estimate
-
-no pooling model follows the data, steep slope for 308, negative slope for 335.
-but... moving from one cluster (subj) to another, they forget everything about the previous clusters (no pooling = model with amnesia)
-
 ---
 class: middle
 
@@ -680,6 +675,15 @@ df_models %>%
   ds4ling_bw_theme(base_size = 18, base_family = "Times") + 
   theme(legend.position = "bottom", legend.justification = "left")
 ```
+
+???
+
+Complete pooling is the same line for each subject, sometimes it is a good fit, sometimes it is way off (i.e., 309)
+
+subj 373 is interesting... when you know very little, best guess is complete pooling estimate
+
+no pooling model follows the data, steep slope for 308, negative slope for 335.
+but... moving from one cluster (subj) to another, they forget everything about the previous clusters (no pooling = model with amnesia)
 
 ---
 background-color: black
