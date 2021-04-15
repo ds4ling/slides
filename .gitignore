@@ -5,4 +5,5 @@
 
 *.DS_Store
 
-07_residuals
+08_bda/
+09_residuals/
