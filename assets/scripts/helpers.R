@@ -13,6 +13,10 @@ library("purrr")
 library("here")
 library("forcats")
 
+# Modeling
+library("lme4")
+library("brms")
+
 # Plotting
 library("ggplot2")
 library("patchwork")
