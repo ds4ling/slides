@@ -5,7 +5,7 @@ library("lme4")           # Multilevel models
 library("brms")           # Bayesian regression models in Stan
 library("tidybayes")      # Tidying and ploting posteriors
 library("palmerpenguins") # Penguin dataset
-
+library("bayestestR")
 #
 # Overview
 #
@@ -23,7 +23,7 @@ tuxedo_birds <- penguins %>%
 # We are particularly interested in predicting body mass as a function 
 # species and bill depth. 
 # We will slowly build up to that model and make plots along the way. 
-# (Note: we will wrecklessly completely disregard priors for now)
+# (Note: we will recklessly completely disregard priors for now)
 
 
 
@@ -40,12 +40,12 @@ tuxedo_birds <- penguins %>%
 glimpse(tuxedo_birds)
 
 tuxedo_birds$body_mass_g %>% mean
-fre_0 <- lm(body_mass_g ~ 1, data = tuxedo_birds)
+fre_0 <-  lm(body_mass_g ~ 1, data = tuxedo_birds)
 bda_0 <- brm(body_mass_g ~ 1, data = tuxedo_birds)
 
 as_tibble(bda_0) %>% 
   ggplot(., aes(x = b_Intercept)) + 
-    geom_histogram()
+    geom_histogram(fill = "grey95", color = "black")
 
 
 
@@ -57,7 +57,6 @@ as_tibble(bda_0) %>%
 #        - What do the parameter estimates represent?
 #    - Try to plot the posterior distribution (forest plot) 
 #    - How confident are you that the group difference is != to 0?
-
 
 tuxedo_birds %>% 
   group_by(species) %>% 
