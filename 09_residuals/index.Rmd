@@ -244,7 +244,7 @@ seems unlikely we will stray too far from the linear model
 
 - Book recommendations
   - Data Analysis Using Regression and Multlilevel-Hierarchicaal Models (Gelman & Hill, 2007)
-  - Regression and other stories (Gelman, Hill, & XXX, 2020)
+  - Regression and other stories (Gelman, Hill, & Vehtari, 2020)
   - Statistical Rethinking (McElreath, 2015, 2020)
 ]
 
