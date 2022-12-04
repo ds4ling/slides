@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'Distributions'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -18,17 +18,25 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: xaringan-extra-all-the-things
+#| echo: false
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
+#| echo: false
+#| message: false
+#| warning: false
 source(here::here("assets", "scripts", "helpers.R"))
 ```
 
@@ -45,35 +53,43 @@ layout: true
 
 ### A necessary evil
 
+.Large[
 - Mastering quantitative methods is an "[...] increasingly vital component of linguistic training" (Johnson, 2008). 
+]
 
 --
 
+.Large[
 - Main roadblock = lack of resources
+]
 
 --
 
+.Large[
 - Most programs don't offer this training. Students get it elsewhere (or not at all)
+]
 
 --
 
+.Large[
 - Not a lot of good texts made specifically for linguistics
-
---
-
   - "Linguists learn to do stats on the street."
-  - "If you want to be a phonotician today, you really have to train to be a 
-  programmer."
+  - "If you want to be a phonetician today, you really have to train to be a programmer."
+]
 
 ---
 
 ### Big picture
 
+.Large[
 - It's all guessing. We use stats and hypothesis testing to assess our guesses
+]
 
 --
 
+.Large[
 - "All models are wrong, but some are useful" - Georege Box
+]
 
 --
 
@@ -83,6 +99,7 @@ layout: true
 
 ### An aside
 
+.Large[
 - Statistics is hard
 
 - You are learning. You will make mistakes. 
@@ -90,11 +107,13 @@ layout: true
 - You should come away with a better understanding of the big picture. 
 
 - Ideally this would be the first class of many you take on the subject
+]
 
 ---
 
 ### Goals (according to Johnson, 2008)
 
+.Large[
 1. Data reduction
 
 2. Inference
@@ -102,6 +121,7 @@ layout: true
 3. Discovery of relationships
 
 4. Exploration
+]
 
 --
 
@@ -251,32 +271,39 @@ layout: true
 
 .pull-left[
 
+.large[
 - If we collect a series of observations we have a **sample** of data
 
-- We can create a ```histogram``` by selecting a bin size and counting the 
+- We can create a `histogram` by selecting a bin size and counting the 
 frequency of the values in our sample that fall inside the bin
 
 - A histogram shows us the frequency distribution of our sample
 
 - For example, the histogram to the right shows that 
-the value ```3``` appears in this sample over 200 times
-
+the value `3` appears in this sample over 200 times
+]
 ]
 
 .pull-right[
 
-```{r, 'normal_distribution1', cache=F, echo=FALSE, fig.retina=2, fig.height=5}
+```{r}
+#| label: normal_distribution1
+#| cache: false
+#| echo: false
+#| fig.retina: 2 
+#| fig.height: 5
 # 1000 random numbers with a mean of 5, sd of 2
 my_normal_x <- rnorm(1000, mean = 3.5, sd = 1.5)
 
 # Histogram of data
 p1 <- tibble(x = my_normal_x) %>% 
-  ggplot(., aes(x = x))
+  ggplot() +
+  aes(x = x)
 
 p1 + geom_histogram(binwidth = 1, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-    scale_x_continuous(breaks = -1:8, labels = -1:8) + 
-    ds4ling_theme()
+    color = 'black', alpha = 0.6) +
+  scale_x_continuous(breaks = -1:8, labels = -1:8) + 
+  ds4ling_theme()
 ```
 
 ]
@@ -285,6 +312,7 @@ p1 + geom_histogram(binwidth = 1, fill = 'lightblue',
 
 ### Describing the sample 
 
+.Large[
 We can describe the characteristics of our sample to see how the values are 
 distributed. 
 
@@ -293,6 +321,7 @@ For this we use...
 1. Measures of central tendency (mid-point)
 
 2. Measures of dispersion (around mid-point)
+]
 
 ---
 
@@ -300,26 +329,28 @@ For this we use...
 
 #### Measures of central tendency (mid-point)
 
-```{r, 'trivial-sample'}
+```{r}
+#| label: trivial-sample
 # Create a vector of numbers
 my_data <- c(2, 5, 8)
 ```
 
 .pull-left[
-
+.large[
 - .blue[mean]: arithmetic average, least squares estimate of central tendency
 
 - .blue[median]: value located in the middle
 
 - .blue[mode]: most frequently occurring value
-
+]
 ]
 
 --
 
 .pull-right[
 
-```{r, 'avg-ex'}
+```{r}
+#| label: avg-ex
 
 (2 + 5 + 8) / 3
 
@@ -335,26 +366,29 @@ median(my_data)
 
 #### Measures of dispersion (around mid-point)
 
-```{r, 'print-ex', echo=F}
+```{r}
+#| label: print-ex
+#| echo: false
 my_data 
 ```
 
 .pull-left[
-
+.large[
 - .blue[range]: difference between highest and lowest value
 
 - .blue[variance]: subtract mean from each value, sum the squares and divide by 
 n - 1
 
 - .blue[standard deviation]: square root of the variance
-
+]
 ]
 
 --
 
 .pull-right[
 
-```{r, 'range'}
+```{r}
+#| label: range
 max(my_data) - min(my_data)
 
 
@@ -375,24 +409,27 @@ max(my_data) - min(my_data)
 
 #### Measures of dispersion (around mid-point)
 
-```{r, 'print-ex-again', echo=F}
+```{r}
+#| label: print-ex-again
+#| echo: false
 my_data 
 ```
 
 .pull-left[
-
+.large[
 - .blue[range]: difference between highest and lowest value
 
 - .blue[variance]: subtract mean from each value, sum the squares and divide by 
 n - 1
 
 - .blue[standard deviation]: square root of the variance
-
+]
 ]
 
 .pull-right[
 
-```{r, 'range-var-sd'}
+```{r}
+#| label: range-var-sd
 range(my_data)
 var(my_data)
 sd(my_data)
@@ -405,22 +442,28 @@ sd(my_data)
 ### More about distributions
 
 .pull-left[
-
+.Large[
 - There are many <u>families</u> of distributions<sup>1</sup>, each of which have important characteristics. 
 
 - The most important for us (for now) is the normal distribution. 
 
 - It is easy to recognize because it looks like a bell. 
 ]
+]
 
 .pull-right[
 
-```{r, 'normal_distribution2', echo=FALSE, fig.retina=2, fig.height=5, cache=F}
+```{r}
+#| label: normal_distribution2 
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 5
+#| cache: false
 
 p1 + geom_histogram(binwidth = 1, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-    scale_x_continuous(breaks = -1:8, labels = -1:8) + 
-    ds4ling_theme()
+    color = 'black', alpha = 0.6) + 
+  scale_x_continuous(breaks = -1:8, labels = -1:8) + 
+  ds4ling_theme()
 ```
 
 ]
@@ -455,24 +498,30 @@ print(p1)
 - If we decrease the bin size in our histogram (the range of observations used 
 for each vertical bar) we can see the distribution looks more bell-like
 
-```{r, normal-distributions3, echo=FALSE, fig.retina=2, fig.height=5, fig.width=3.5, cache=F}
+```{r}
+#| label: normal-distributions3
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 5
+#| fig.width: 3.5
+#| cache: false
 
 p1 + geom_histogram(binwidth = 0.66, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-     ds4ling_theme()
+    color = 'black', alpha = 0.6) + 
+  ds4ling_theme()
 
 p1 + geom_histogram(binwidth = 0.33, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-     ds4ling_theme()
+    color = 'black', alpha = 0.6) + 
+  ds4ling_theme()
 
 p1 + geom_histogram(binwidth = 0.22, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-     ds4ling_theme()
+    color = 'black', alpha = 0.6) + 
+  ds4ling_theme()
 
 p1 + geom_histogram(binwidth = 0.2, fill = 'lightblue', alpha = 0.6,
-                    color = 'black', aes(y = ..density..)) +
-     geom_density(bw = 0.75, color = 'black', size = 1) + 
-     ds4ling_theme()
+    color = 'black', aes(y = after_stat(density))) +
+  geom_density(bw = 0.75, color = 'black', linewidth = 1) + 
+  ds4ling_theme()
 ```
 
 ---
@@ -481,6 +530,7 @@ p1 + geom_histogram(binwidth = 0.2, fill = 'lightblue', alpha = 0.6,
 
 .pull-left[
 
+.large[
 - If we continue decreasing the bin size we can also see that the rectangular 
 shape of the vertical bars becomes a curved line
 
@@ -488,17 +538,21 @@ shape of the vertical bars becomes a curved line
 zero
 
 - The formula that derives this line is called a probability density function. 
-
 ]
-
+]
 
 .pull-right[
 
-```{r, normal-distributions4, echo=FALSE, fig.retina=2, fig.height=5, cache=F}
+```{r}
+#| label: normal-distributions4
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 5
+#| cache: false
 p1 + geom_histogram(binwidth = 1, fill = 'lightblue', alpha = 0.6,
-                    color = 'black', aes(y = ..density..)) +
-     geom_density(bw = 0.75, color = 'black', size = 1) + 
-     ds4ling_theme()
+    color = 'black', aes(y = after_stat(density))) +
+  geom_density(bw = 0.75, color = 'black', linewidth = 1) + 
+  ds4ling_theme()
 ```
 
 ]
@@ -522,36 +576,43 @@ layout: true
 ### Less-than-normal data
 
 .pull-left[
-
+.Large[
 - Likewise it is easy to notice when a distribution is not normal. 
 
 - We can end up with non-normal data for many reasons. 
 
 - Sometimes it depends on the nature of what we are measuring.
-
+]
 ]
 
 .pull-right[
 
-```{r, 'uniform_distribution', echo=FALSE, fig.retina=2, fig.height=5, warning=F, cache=F}
+```{r}
+#| label: uniform_distribution
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 5
+#| warning: false
+#| cache: false
 # 100 random uniform numbers from 1 to 6 (a die)
 my_uniform_x <- sample(1:6, size = 1000, replace = TRUE) 
 
 # Histogram of data
 p2 <- tibble(x = my_uniform_x) %>% 
-  ggplot(., aes(x = x)) + 
-    geom_histogram(binwidth = 1, fill = 'red', alpha = 0.6,
-                   color = 'black', aes(y = ..density..)) + 
-    stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
-    scale_x_continuous(breaks = 1:6, labels = 1:6, limits = c(-2, 9), 
-      oob = function(x, limits) x) + 
-    annotate("text", x = -1, y = 0.20, parse = T, size = 8,
-             label = paste0("mu == 3.5")) + 
-    annotate("text", x = -1, y = 0.18, parse = T, size = 8,
-             label = paste0("sigma == 1.7")) + 
-    ds4ling_theme()
+  ggplot() + 
+  aes(x = x) + 
+  geom_histogram(binwidth = 1, fill = 'red', alpha = 0.6,
+    color = 'black', aes(y = ..density..)) + 
+  stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
+  scale_x_continuous(breaks = 1:6, labels = 1:6, limits = c(-2, 9), 
+    oob = function(x, limits) x) + 
+  annotate("text", x = -1, y = 0.20, parse = T, size = 8,
+    label = paste0("mu == 3.5")) + 
+  annotate("text", x = -1, y = 0.18, parse = T, size = 8,
+    label = paste0("sigma == 1.7")) + 
+  ds4ling_theme()
 
-print(p2)
+p2
 ```
 
 ]
@@ -564,16 +625,17 @@ my_uniform_x <- sample(1:6, size = 1000, replace = TRUE)
 
 # Histogram of data
 p2 <- tibble(x = my_uniform_x) %>% 
-  ggplot(., aes(x = x)) + 
-    geom_histogram(binwidth = 1, fill = 'grey90', 
-                   color = 'black', aes(y = ..density..)) + 
-    stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
-    scale_x_continuous(limits = c(-2, 9), breaks = 1:6, labels = 1:6) + 
-    annotate("text", x = -1, y = 0.20, parse = T, 
-             label = paste0("mu == 3.5")) + 
-    annotate("text", x = -1, y = 0.19, parse = T, 
-             label = paste0("sigma == 1.7")) + 
-    ds4ling_theme()
+  ggplot() + 
+  aes(x = x) + 
+  geom_histogram(binwidth = 1, fill = 'grey90', 
+    color = 'black', aes(y = ..density..)) + 
+  stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
+  scale_x_continuous(limits = c(-2, 9), breaks = 1:6, labels = 1:6) + 
+  annotate("text", x = -1, y = 0.20, parse = T, 
+    label = paste0("mu == 3.5")) + 
+  annotate("text", x = -1, y = 0.19, parse = T, 
+    label = paste0("sigma == 1.7")) + 
+  ds4ling_theme()
 ```
 
 ---
@@ -584,32 +646,42 @@ p2 <- tibble(x = my_uniform_x) %>%
 - because of outliers
 - because of other underlying population differences
 
-```{r, 'non_normal_distributions', echo=FALSE, fig.retina=2, fig.height=4.5, fig.width=14, cache=F}
+```{r}
+#| label: non_normal_distributions
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 4.5
+#| fig.width: 14
+#| cache: false
 
 my_skewed_x <- rsnorm(1000, mean = 2.5, sd = 1.5, xi = 3.5)
 
 p3 <- tibble(x = my_skewed_x) %>%
-  ggplot(., aes(x = x)) + 
-    geom_histogram(aes(y = ..density..), 
-      binwidth = 0.25, fill = 'lightgrey', color = 'black') +
-    geom_density(bw = 0.5) + 
-    scale_x_continuous(
-      limits = c(-3, 11), breaks = c(0, 4, 8), labels = c(0, 4, 8), 
-      oob = function(x, limits) x) +
-    ds4ling_theme()
+  ggplot() +
+  aes(x = x) + 
+  geom_histogram(aes(y = ..density..), 
+    binwidth = 0.25, fill = 'lightgrey', color = 'black') +
+  geom_density(bw = 0.5) + 
+  scale_x_continuous(
+    limits = c(-3, 11), breaks = c(0, 4, 8), labels = c(0, 4, 8), 
+    oob = function(x, limits) x) +
+  ds4ling_theme()
 
 # Vector with outliers
-my_outlier_x <- c(rnorm(n = 900, mean = 3, sd = 1.25), 
-                 rnorm(n = 100, mean = 8.5, sd = 0.5))
+my_outlier_x <- c(
+  rnorm(n = 900, mean = 3, sd = 1.25), 
+  rnorm(n = 100, mean = 8.5, sd = 0.5)
+  )
 
 p4 <- tibble(x = my_outlier_x) %>% 
-  ggplot(., aes(x = x)) + 
-    geom_histogram(binwidth = 0.5, fill = 'lightblue', color = 'black', 
-                   aes(y = ..density..)) + 
-    geom_density(bw = 0.5) + 
-    scale_x_continuous(limits = c(-3, 11), breaks = c(0, 4, 8), 
-                       labels = c(0, 4, 8), oob = function(x, limits) x) + 
-    ds4ling_theme()
+  ggplot() + 
+  aes(x = x) + 
+  geom_histogram(aes(y = ..density..), 
+    binwidth = 0.5, fill = 'lightblue', color = 'black') +
+  geom_density(bw = 0.5) + 
+  scale_x_continuous(limits = c(-3, 11), breaks = c(0, 4, 8), 
+    labels = c(0, 4, 8), oob = function(x, limits) x) + 
+  ds4ling_theme()
 
 p3 | p4
 
@@ -634,7 +706,14 @@ print(p3)
 ---
 layout:false
 
-```{r, 'p123', echo=FALSE, fig.retina=2, fig.height=8, fig.width=14, fig.align='center', cache=F}
+```{r}
+#| label: p123
+#| echo: false
+#| fig.retina: 2
+#| fig.height: 8
+#| fig.width: 14
+#| fig.align: 'center'
+#| cache: false
 # combine vectors to plot all three distributions on top of each other 
 combined_dists <- 
   tibble(normal = my_normal_x, 
@@ -651,17 +730,22 @@ dist_desc <- combined_dists %>%
             sd = round(sd(val), 2), .groups = "drop")
 
 p5 <- combined_dists %>%
-  ggplot(., aes(x = val, y = type, fill = type, height = ..density..)) + 
-    geom_density_ridges(scale = 1.8, stat = 'density') + 
-    scale_fill_brewer("Blues", guide = FALSE) + 
-    geom_vline(xintercept = 3.5, lty = 3, color = 'grey60') + 
-    ds4ling_theme() + 
-    theme(axis.text.y = element_text(vjust = 0))
+  ggplot() +
+  aes(x = val, y = type, fill = type, height = ..density..) + 
+  geom_density_ridges(scale = 1.8, stat = 'density') + 
+  scale_fill_brewer("Blues", guide = "none") + 
+  geom_vline(xintercept = 3.5, lty = 3, color = 'grey60') + 
+  ds4ling_theme() + 
+  theme(axis.text.y = element_text(vjust = 0))
 
-print(p5)
+p5
 ```
 
-```{r, 'qqplot-build', echo=FALSE, include=FALSE, cache=F}
+```{r}
+#| label: qqplot-build
+#| echo: false
+#| include: false
+#| cache: false
 # Build qqplots for the next slide
 qq1 <- gg_qqplot(my_normal_x)
 qq2 <- gg_qqplot(my_uniform_x)
@@ -669,11 +753,19 @@ qq3 <- gg_qqplot(my_skewed_x)
 qq4 <- gg_qqplot(my_outlier_x)
 ```
 
-```{r, 'qqplots1', echo=FALSE, fig.retina=2, fig.width=8, fig.height=9, include=FALSE, cache=F, eval=T}
+```{r}
+#| label: qqplots1
+#| echo: false
+#| fig.retina: 2
+#| fig.width: 8
+#| fig.height: 9
+#| include: false
+#| cache: false
+#| eval: true
 p1_qq1 <- p1 + geom_histogram(binwidth = 1, fill = 'lightblue', 
-                   color = 'black', alpha = 0.6) + 
-    scale_x_continuous(breaks = -1:8, labels = -1:8) + 
-    ds4ling_theme() 
+    color = 'black', alpha = 0.6) + 
+  scale_x_continuous(breaks = -1:8, labels = -1:8) + 
+  ds4ling_theme() 
 
 p1_qq1 / qq1 
 ```
@@ -699,12 +791,18 @@ by normal curve.
   quantiles. 
   - Normal data should be highly correlated with theoretical quantiles from the 
   normal distribution (more on correlation next week). 
-
 ]
 
 ---
 
-```{r, 'qqplots234', echo=FALSE, fig.retina=2, fig.width=14, fig.height=8.5, warning=F, cache=F}
+```{r}
+#| label: qqplots234
+#| echo: false
+#| fig.retina: 2
+#| fig.width: 14
+#| fig.height: 8.5
+#| warning: false
+#| cache: false
 # Plot all samples and qq plots
 (p2 | p3 | p4) / (qq2 | qq3 | qq4)
 ```
@@ -716,8 +814,10 @@ layout: true
 
 ---
 
+.Large[
 - There is something else special about the normal distribution. 
 - It has a useful property called the **empirical rule**.
+]
 
 .pull-left[
 
@@ -758,14 +858,17 @@ standard deviations a given value x falls from the mean, μ.
 
 ### An example
 
-```{r, 'create-vectors'}
+```{r}
+#| label: create-vectors
 vec1 <- c(2, 5, 8)
 vec2 <- c(22, 55, 88)
 ```
 
 .pull-left[
 
-```{r, 'mean-sd-vec1', results='hold'}
+```{r}
+#| label: mean-sd-vec1
+#| results: 'hold'
 mean(vec1)
 sd(vec1)
 ```
@@ -774,7 +877,9 @@ sd(vec1)
 
 .pull-right[
 
-```{r, 'mean-sd-vec2', results='hold'}
+```{r}
+#| label: mean-sd-vec2
+#| results: 'hold'
 mean(vec2)
 sd(vec2)
 ```
@@ -785,7 +890,9 @@ sd(vec2)
 
 ### Convert to .RUred[z-score]
 
+.Large[
 <font color="orange">Subtract the mean</font> from <font color="green">each value</font> and divide by the <font color="blue">standard deviation</font>
+]
 
 ### $$\color{red}{z} = \frac{\color{green}{x} - \color{orange}{\mu}}{\color{blue}{\sigma}}$$
 
@@ -821,13 +928,16 @@ sd(vec2)
 
 ### Convert to .RUred[z-score]
 
+.Large[
 <font color="orange">Subtract the mean</font> from <font color="green">each value</font> and divide by the <font color="blue">standard deviation</font>
+]
 
 ### $$\color{red}{z} = \frac{\color{green}{x} - \color{orange}{\mu}}{\color{blue}{\sigma}}$$
 
 .pull-left[
 
-```{r, 'std-vec1-manual'}
+```{r}
+#| label: std-vec1-manual
 vec1_std <- (vec1 - mean(vec1)) / sd(vec1)
 vec1_std
 
@@ -838,7 +948,8 @@ mean(vec1_std); sd(vec1_std)
 
 .pull-right[
 
-```{r, 'std-vec2-manual'}
+```{r}
+#| label: std-vec2-manual
 vec2_std <- (vec2 - mean(vec2)) / sd(vec2)
 vec2_std
 
@@ -853,18 +964,26 @@ class: title-slide-section-red
 
 # Example - Exam scores
 
+.Large[
 - Imagine you and a freind took exams in different classes. 
 
 - You received the same raw score (89 out of 100)
 
 - The exams were graded on a curve and your curved grade is higher than 
 your friends. Why?
+]
 
 ---
 
 # Exam scores
 
-```{r, 'exam-scores1', echo=FALSE, fig.retina=2, fig.width=14, fig.height=6, cache=F}
+```{r}
+#| label: exam-scores1
+#| echo: false
+#| fig.retina: 2
+#| fig.width: 14
+#| fig.height: 6
+#| cache: false
 
 # Load test_scores data
 data(test_scores)
@@ -881,25 +1000,30 @@ descriptives_a <- test_scores %>%
 # Plot class a
 test_scores %>% 
   dplyr::filter(., group == 'Class_A') %>%
-  ggplot(., aes(x = group, y = score, label = id)) + 
-    geom_hline(yintercept = descriptives_a$`Mean score`, 
-               color = 'red', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_a$`Mean score` + descriptives_a$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_a$`Mean score` - descriptives_a$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 8, 
-                     color = 'black', show.legend = FALSE) + 
-    geom_point(size = 5) + 
-    scale_fill_brewer(palette = "Set1") + 
-    labs(x = NULL, y = 'Score', title = NULL) + 
-    coord_flip() + 
-    theme_grey(base_family = 'Times', base_size = 30)
+  ggplot() + 
+  aes(x = group, y = score, label = id) + 
+  geom_hline(yintercept = descriptives_a$`Mean score`, 
+    color = 'red', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_a$`Mean score` + descriptives_a$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_a$`Mean score` - descriptives_a$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 8, 
+    color = 'black', show.legend = FALSE) + 
+  geom_point(size = 5) + 
+  scale_fill_brewer(palette = "Set1") + 
+  labs(x = NULL, y = 'Score', title = NULL) + 
+  coord_flip() + 
+  theme_grey(base_family = 'Times', base_size = 30)
 ```
 
 --
 
-```{r, 'ex-descriptives1', results='asis', echo=FALSE, cache=F}
+```{r}
+#| label: ex-descriptives1
+#| results: 'asis'
+#| echo: false
+#| cache: false
 descriptives_a %>% select(-group) %>% kable(format = 'html')
 ```
 
@@ -910,21 +1034,22 @@ descriptives_a %>% select(-group) %>% kable(format = 'html')
 # Replot class a with different x lims
 class_a_plot <- test_scores %>% 
   dplyr::filter(., group == 'Class_A') %>%
-  ggplot(., aes(x = group, y = score, label = id)) + 
-    geom_hline(yintercept = descriptives_a$`Mean score`, 
-               color = 'red', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_a$`Mean score` + descriptives_a$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_a$`Mean score` - descriptives_a$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 7, 
-                     color = 'black', show.legend = FALSE) + 
-    geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
-    scale_fill_brewer(palette = "Set1") + 
-    labs(x = NULL, y = 'Score', title = NULL) + 
-    ylim(60, 100) + 
-    coord_flip() + 
-    theme_grey(base_family = 'Times', base_size = 25)
+  ggplot() +
+  aes(x = group, y = score, label = id) + 
+  geom_hline(yintercept = descriptives_a$`Mean score`, 
+    color = 'red', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_a$`Mean score` + descriptives_a$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_a$`Mean score` - descriptives_a$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 7, 
+    color = 'black', show.legend = FALSE) + 
+  geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
+  scale_fill_brewer(palette = "Set1") + 
+  labs(x = NULL, y = 'Score', title = NULL) + 
+  ylim(60, 100) + 
+  coord_flip() + 
+  theme_grey(base_family = 'Times', base_size = 25)
 
 # Calculate descriptives of class b
 descriptives_b <- test_scores %>% 
@@ -938,21 +1063,22 @@ descriptives_b <- test_scores %>%
 # Plot class b on same scale as class a
 class_b_plot <- test_scores %>% 
   dplyr::filter(., group == 'Class_B') %>%
-  ggplot(., aes(x = group, y = score, label = id)) + 
-    geom_hline(yintercept = descriptives_b$`Mean score`, 
-               color = 'red', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_b$`Mean score` + descriptives_b$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_b$`Mean score` - descriptives_b$`SD score`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 7, 
-                     color = 'black', show.legend = FALSE) + 
-    geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
-    scale_fill_brewer(palette = 'Set1') + 
-    labs(x = NULL, y = 'Score', title = NULL) + 
-    ylim(60, 100) + 
-    coord_flip() + 
-    theme_grey(base_family = 'Times', base_size = 25)
+  ggplot() + 
+  aes(x = group, y = score, label = id) + 
+  geom_hline(yintercept = descriptives_b$`Mean score`, 
+    color = 'red', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_b$`Mean score` + descriptives_b$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_b$`Mean score` - descriptives_b$`SD score`, 
+    color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 7, 
+    color = 'black', show.legend = FALSE) + 
+  geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
+  scale_fill_brewer(palette = 'Set1') + 
+  labs(x = NULL, y = 'Score', title = NULL) + 
+  ylim(60, 100) + 
+  coord_flip() + 
+  theme_grey(base_family = 'Times', base_size = 25)
 
 # side by side
 class_a_plot / class_b_plot
@@ -960,7 +1086,11 @@ class_a_plot / class_b_plot
 
 --
 
-```{r, 'ex-descriptives2', results='asis', echo=FALSE, cache=F}
+```{r} 
+#| label: ex-descriptives2
+#| results: 'asis'
+#| echo: false
+#| cache: false
 bind_rows(descriptives_a, descriptives_b) %>% kable(format = 'html')
 ```
 
@@ -968,12 +1098,18 @@ bind_rows(descriptives_a, descriptives_b) %>% kable(format = 'html')
 
 # Exam scores - Standardized
 
-```{r, 'exam-scores-std1', echo=FALSE, fig.retina=2, fig.width=14, fig.height=7, cache=F}
+```{r}
+#| label: exam-scores-std1
+#| echo: false
+#| fig.retina: 2
+#| fig.width: 14
+#| fig.height: 7
+#| cache: false
 
 # standardize the scores of each group
 scores <- test_scores %>% 
   group_by(group) %>% 
-  mutate(., `Std. score` = (score - mean(score)) / sd(score))
+  mutate(`Std. score` = (score - mean(score)) / sd(score))
 
 # Calculate descriptives by group
 descriptives_std <- scores %>% 
@@ -983,24 +1119,22 @@ descriptives_std <- scores %>%
 
 # Plot standardized data
 scores %>% 
-    ungroup() %>% 
-    mutate(., group = factor(group, levels = c('Class_B', 'Class_A'))) %>% 
-    ggplot(., aes(x = group, y = `Std. score`, label = id)) + 
-    geom_hline(yintercept = descriptives_std$`Std. Mean`, 
-               color = 'red', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_std$`Std. Mean` + 
-               descriptives_std$`Std. SD`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_hline(yintercept = descriptives_std$`Std. Mean` - 
-               descriptives_std$`Std. SD`, 
-               color = 'darkred', lty = 2, size = 1.5) +
-    geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 8, 
-                     color = 'black', show.legend = FALSE) + 
-    geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
-    scale_fill_brewer(palette = "Set1") + 
-    labs(x = NULL, title = NULL) + 
-    coord_flip(ylim = c(-2, 2)) + 
-    theme_grey(base_family = 'Times', base_size = 30)
+  ungroup() %>% 
+  mutate(group = factor(group, levels = c('Class_B', 'Class_A'))) %>% 
+  ggplot(., aes(x = group, y = `Std. score`, label = id)) + 
+  geom_hline(yintercept = descriptives_std$`Std. Mean`, 
+    color = 'red', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_std$`Std. Mean` + 
+    descriptives_std$`Std. SD`, color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_hline(yintercept = descriptives_std$`Std. Mean` - 
+    descriptives_std$`Std. SD`, color = 'darkred', lty = 2, linewidth = 1.5) +
+  geom_label_repel(aes(fill = important), nudge_x = 0.3, size = 8, 
+    color = 'black', show.legend = FALSE) + 
+  geom_point(size = 5, pch = 21, aes(fill = important), show.legend = F) + 
+  scale_fill_brewer(palette = "Set1") + 
+  labs(x = NULL, title = NULL) + 
+  coord_flip(ylim = c(-2, 2)) + 
+  theme_grey(base_family = 'Times', base_size = 30)
 ```
 
 ---
@@ -1008,13 +1142,17 @@ class: middle
 
 .pull-left[
 
-```{r, 'ex-print1', results = 'asis', cache=F, echo=FALSE}
+```{r}
+#| label: ex-print1
+#| results: 'asis'
+#| cache: false
+#| echo: false
 scores %>% 
-  ungroup(.) %>%
-  dplyr::filter(., group == 'Class_A') %>% 
+  ungroup() %>%
+  dplyr::filter(group == 'Class_A') %>% 
   select(-important, -group) %>% 
   arrange(score) %>% 
-  mutate(., `Dev. score` = `Std. score` * 10 + 50) %>% 
+  mutate(`Dev. score` = `Std. score` * 10 + 50) %>% 
   kable(format = 'html') %>% 
   row_spec(5, bold = T, color = "white", background = "#cc0033")
 ```
@@ -1023,13 +1161,17 @@ scores %>%
 
 .pull-right[
 
-```{r, 'ex-print2', results = 'asis', cache=F, echo=FALSE}
+```{r}
+#| label: ex-print2
+#| results: 'asis'
+#| cache: false
+#| echo: false
 scores %>% 
-  ungroup(.) %>%
+  ungroup() %>%
   dplyr::filter(., group == 'Class_B') %>% 
   select(-important, -group) %>% 
   arrange(score) %>% 
-  mutate(., `Dev. score` = `Std. score` * 10 + 50) %>% 
+  mutate(`Dev. score` = `Std. score` * 10 + 50) %>% 
   kable(format = 'html') %>% 
   row_spec(10, bold = T, color = "white", background = "#cc0033")
 ```
@@ -1076,12 +1218,22 @@ class: title-slide-final, left
 
 # References
 
-```{r, echo=FALSE, results='asis', message=F}
+```{r}
+#| label: bib
+#| echo: false
+#| results: 'asis'
+#| message: false
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
 ```
 
-```{r, results='asis', echo=FALSE, eval=TRUE, cache=FALSE, warning=FALSE, message=FALSE}
+```{r}
+#| label: print-bib
+#| results: 'asis'
+#| echo: false
+#| cache: false
+#| warning: false
+#| message: false
 writeLines(ui)
 print(bib[key = "wickham2016r"], 
   .opts = list(check.entries = FALSE, 

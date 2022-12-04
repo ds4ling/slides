@@ -10,17 +10,14 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"eac4473552c0474f91f3572729cc109a","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xcef394434e74c59bd22f856c6aa5ee4","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/kePrint/kePrint.js"></script>
     <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
@@ -29,10 +26,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Distributions
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-02-02
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-04
+]
 
 ---
 
@@ -57,35 +62,43 @@ layout: true
 
 ### A necessary evil
 
+.Large[
 - Mastering quantitative methods is an "[...] increasingly vital component of linguistic training" (Johnson, 2008). 
+]
 
 --
 
+.Large[
 - Main roadblock = lack of resources
+]
 
 --
 
+.Large[
 - Most programs don't offer this training. Students get it elsewhere (or not at all)
+]
 
 --
 
+.Large[
 - Not a lot of good texts made specifically for linguistics
-
---
-
   - "Linguists learn to do stats on the street."
-  - "If you want to be a phonotician today, you really have to train to be a 
-  programmer."
+  - "If you want to be a phonetician today, you really have to train to be a programmer."
+]
 
 ---
 
 ### Big picture
 
+.Large[
 - It's all guessing. We use stats and hypothesis testing to assess our guesses
+]
 
 --
 
+.Large[
 - "All models are wrong, but some are useful" - Georege Box
+]
 
 --
 
@@ -95,6 +108,7 @@ layout: true
 
 ### An aside
 
+.Large[
 - Statistics is hard
 
 - You are learning. You will make mistakes. 
@@ -102,11 +116,13 @@ layout: true
 - You should come away with a better understanding of the big picture. 
 
 - Ideally this would be the first class of many you take on the subject
+]
 
 ---
 
 ### Goals (according to Johnson, 2008)
 
+.Large[
 1. Data reduction
 
 2. Inference
@@ -114,6 +130,7 @@ layout: true
 3. Discovery of relationships
 
 4. Exploration
+]
 
 --
 
@@ -263,16 +280,17 @@ layout: true
 
 .pull-left[
 
+.large[
 - If we collect a series of observations we have a **sample** of data
 
-- We can create a ```histogram``` by selecting a bin size and counting the 
+- We can create a `histogram` by selecting a bin size and counting the 
 frequency of the values in our sample that fall inside the bin
 
 - A histogram shows us the frequency distribution of our sample
 
 - For example, the histogram to the right shows that 
-the value ```3``` appears in this sample over 200 times
-
+the value `3` appears in this sample over 200 times
+]
 ]
 
 .pull-right[
@@ -285,6 +303,7 @@ the value ```3``` appears in this sample over 200 times
 
 ### Describing the sample 
 
+.Large[
 We can describe the characteristics of our sample to see how the values are 
 distributed. 
 
@@ -293,6 +312,7 @@ For this we use...
 1. Measures of central tendency (mid-point)
 
 2. Measures of dispersion (around mid-point)
+]
 
 ---
 
@@ -307,13 +327,13 @@ my_data &lt;- c(2, 5, 8)
 ```
 
 .pull-left[
-
+.large[
 - .blue[mean]: arithmetic average, least squares estimate of central tendency
 
 - .blue[median]: value located in the middle
 
 - .blue[mode]: most frequently occurring value
-
+]
 ]
 
 --
@@ -359,14 +379,14 @@ median(my_data)
 ```
 
 .pull-left[
-
+.large[
 - .blue[range]: difference between highest and lowest value
 
 - .blue[variance]: subtract mean from each value, sum the squares and divide by 
 n - 1
 
 - .blue[standard deviation]: square root of the variance
-
+]
 ]
 
 --
@@ -406,14 +426,14 @@ max(my_data) - min(my_data)
 ```
 
 .pull-left[
-
+.large[
 - .blue[range]: difference between highest and lowest value
 
 - .blue[variance]: subtract mean from each value, sum the squares and divide by 
 n - 1
 
 - .blue[standard deviation]: square root of the variance
-
+]
 ]
 
 .pull-right[
@@ -450,12 +470,13 @@ sd(my_data)
 ### More about distributions
 
 .pull-left[
-
+.Large[
 - There are many &lt;u&gt;families&lt;/u&gt; of distributions&lt;sup&gt;1&lt;/sup&gt;, each of which have important characteristics. 
 
 - The most important for us (for now) is the normal distribution. 
 
 - It is easy to recognize because it looks like a bell. 
+]
 ]
 
 .pull-right[
@@ -502,6 +523,7 @@ for each vertical bar) we can see the distribution looks more bell-like
 
 .pull-left[
 
+.large[
 - If we continue decreasing the bin size we can also see that the rectangular 
 shape of the vertical bars becomes a curved line
 
@@ -509,9 +531,8 @@ shape of the vertical bars becomes a curved line
 zero
 
 - The formula that derives this line is called a probability density function. 
-
 ]
-
+]
 
 .pull-right[
 
@@ -538,13 +559,13 @@ layout: true
 ### Less-than-normal data
 
 .pull-left[
-
+.Large[
 - Likewise it is easy to notice when a distribution is not normal. 
 
 - We can end up with non-normal data for many reasons. 
 
 - Sometimes it depends on the nature of what we are measuring.
-
+]
 ]
 
 .pull-right[
@@ -561,16 +582,17 @@ my_uniform_x &lt;- sample(1:6, size = 1000, replace = TRUE)
 
 # Histogram of data
 p2 &lt;- tibble(x = my_uniform_x) %&gt;% 
-  ggplot(., aes(x = x)) + 
-    geom_histogram(binwidth = 1, fill = 'grey90', 
-                   color = 'black', aes(y = ..density..)) + 
-    stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
-    scale_x_continuous(limits = c(-2, 9), breaks = 1:6, labels = 1:6) + 
-    annotate("text", x = -1, y = 0.20, parse = T, 
-             label = paste0("mu == 3.5")) + 
-    annotate("text", x = -1, y = 0.19, parse = T, 
-             label = paste0("sigma == 1.7")) + 
-    ds4ling_theme()
+  ggplot() + 
+  aes(x = x) + 
+  geom_histogram(binwidth = 1, fill = 'grey90', 
+    color = 'black', aes(y = ..density..)) + 
+  stat_function(fun = dnorm, args = list(mean = 3.5, sd = 1.7)) + 
+  scale_x_continuous(limits = c(-2, 9), breaks = 1:6, labels = 1:6) + 
+  annotate("text", x = -1, y = 0.20, parse = T, 
+    label = paste0("mu == 3.5")) + 
+  annotate("text", x = -1, y = 0.19, parse = T, 
+    label = paste0("sigma == 1.7")) + 
+  ds4ling_theme()
 ```
 
 ---
@@ -629,7 +651,6 @@ by normal curve.
   quantiles. 
   - Normal data should be highly correlated with theoretical quantiles from the 
   normal distribution (more on correlation next week). 
-
 ]
 
 ---
@@ -643,8 +664,10 @@ layout: true
 
 ---
 
+.Large[
 - There is something else special about the normal distribution. 
 - It has a useful property called the **empirical rule**.
+]
 
 .pull-left[
 
@@ -725,7 +748,9 @@ sd(vec2)
 
 ### Convert to .RUred[z-score]
 
+.Large[
 &lt;font color="orange"&gt;Subtract the mean&lt;/font&gt; from &lt;font color="green"&gt;each value&lt;/font&gt; and divide by the &lt;font color="blue"&gt;standard deviation&lt;/font&gt;
+]
 
 ### `$$\color{red}{z} = \frac{\color{green}{x} - \color{orange}{\mu}}{\color{blue}{\sigma}}$$`
 
@@ -761,7 +786,9 @@ sd(vec2)
 
 ### Convert to .RUred[z-score]
 
+.Large[
 &lt;font color="orange"&gt;Subtract the mean&lt;/font&gt; from &lt;font color="green"&gt;each value&lt;/font&gt; and divide by the &lt;font color="blue"&gt;standard deviation&lt;/font&gt;
+]
 
 ### `$$\color{red}{z} = \frac{\color{green}{x} - \color{orange}{\mu}}{\color{blue}{\sigma}}$$`
 
@@ -823,12 +850,14 @@ class: title-slide-section-red
 
 # Example - Exam scores
 
+.Large[
 - Imagine you and a freind took exams in different classes. 
 
 - You received the same raw score (89 out of 100)
 
 - The exams were graded on a curve and your curved grade is higher than 
 your friends. Why?
+]
 
 ---
 
@@ -1165,6 +1194,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
