@@ -12,31 +12,35 @@
     <script src="assets/tile-view/tile-view.js"></script>
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"bf5dd2703bae4cccb8b10f8eafa7b343","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x41430ce2cba40eca1c82f10825fa4a9","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/mark.js/mark.min.js"></script>
     <link href="assets/xaringanExtra-search/search.css" rel="stylesheet" />
     <script src="assets/xaringanExtra-search/search.js"></script>
     <script>window.addEventListener('load', function() { window.xeSearch = new RemarkSearch({"position":"bottom-left","caseSensitive":false,"showIcon":false,"autoSearch":true}) })</script>
-    <script src="assets/fabric/fabric.min.js"></script>
-    <link href="assets/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
-    <script src="assets/xaringanExtra-scribble/scribble.js"></script>
-    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <script src="assets/kePrint/kePrint.js"></script>
+    <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Program
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-03-25
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-04
+]
 
 ---
 
@@ -46,46 +50,12 @@ class: center, middle, inverse, title-slide
 
 
 
-<div>
-<style type="text/css">.xaringan-extra-logo {
-width: 50px;
-height: 128px;
-z-index: 0;
-background-image: url(https://raw.githubusercontent.com/jvcasillas/hex_stickers/master/stickers/ds4ling.png);
-background-size: contain;
-background-repeat: no-repeat;
-position: absolute;
-bottom:-3em;left:1em;
-}
-</style>
-<script>(function () {
-  let tries = 0
-  function addLogo () {
-    if (typeof slideshow === 'undefined') {
-      tries += 1
-      if (tries < 10) {
-        setTimeout(addLogo, 100)
-      }
-    } else {
-      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
-        .forEach(function (slide) {
-          const logo = document.createElement('a')
-          logo.classList = 'xaringan-extra-logo'
-          logo.href = 'https://www.ds4ling.jvcasillas.com'
-          slide.appendChild(logo)
-        })
-    }
-  }
-  document.addEventListener('DOMContentLoaded', addLogo)
-})()</script>
-</div>
-
 # Overview
 
-Spring 2021  
-Thursday 08:10 – 11:10 am  
-Meetings: via Zoom
-Profesor: Joseph Casillas  
+Spring 2023  
+Monday 10:20 – 13:20  
+Meetings: AB 5190
+Professor: Joseph Casillas  
 
 Office: AB 5174  
 Office hours: By appointment  
@@ -118,16 +88,11 @@ https://jvcasillas.youcanbook.me
 
 ### SPAN589: Data Science for Linguistics
 
-In this course students examine the fundamental principles of doing experimental 
-research in linguistics. Specifically, the focus is on developing an in depth 
-understanding of the experimental paradigms and statistical procedures used in 
-sociolinguistics, phonetics, psycholinguistics, syntax, and corpus linguistics. 
-Students will learn advanced techniques used to explore, tidy, visualize, and 
-analyze data. We will also focus on how to make the aforementioned procedures 
-reproducible and shareable. Students will develop a foundation in programming in 
-R, as well as learning the most common tools at the disposal of todays data 
-scientist (i.e. GitHub, Knitr, etc.). No prior experience with statistics or 
-programming is necessary.  
+In this course students examine the fundamental principles of doing experimental  research in linguistics. 
+Specifically, the focus is on developing an in depth understanding of the experimental paradigms and statistical procedures used in sociolinguistics, phonetics, psycholinguistics, syntax, and corpus linguistics. 
+Students will learn advanced techniques used to explore, tidy, visualize, and analyze data. 
+We will also focus on how to make the aforementioned procedures reproducible and shareable. Students will develop a foundation in programming in R, as well as learning the most common tools at the disposal of todays data scientist (i.e. GitHub, Knitr, etc.). 
+No prior experience with statistics or programming is necessary.
 Pre-requisites: SPAN 361 or 363
 
 ---
@@ -139,9 +104,9 @@ layout: true
 
 ### Class websites
 
-- Canvas: https://rutgers.instructure.com/courses/113952
+- Canvas: https://rutgers.instructure.com/courses/221415
 
-- Class website: https://ds4ling.github.io  
+- Class website: https://www.ds4ling.jvcasillas.com
 
 ---
 
@@ -205,42 +170,33 @@ layout: true
 ### Preparation and participation
 
 Students are expected to attend class prepared and to actively participate. 
-Part of this grade is derived from reading summaries. Students will 
-occasionally be required to write a brief summary (max. 1 page) of the weekly 
-readings and answer assigned questions. 
+Part of this grade is derived from reading summaries. 
+Students will occasionally be required to write a brief summary (max. 1 page) of the weekly readings and answer assigned questions. 
 
 ---
 
 ### Programming assignments
 
-Students will complete 5 programming assignments over the course of the 
-semester. These assignments are designed in a way so that the student must 
-demonstrate adequate knowledge of basic programming and statistical principles 
-covered in class. The skills required in each assignment are cumulative, each 
-building on the material learned in the previous weeks. All statistical 
-programming assignments must be completed in RMarkdown and will be handed in 
-via GitHub unless otherwise noted.
+Students will complete 5 programming assignments over the course of the  semester. 
+These assignments are designed in a way so that the student must demonstrate adequate knowledge of basic programming and statistical principles covered in class. 
+The skills required in each assignment are cumulative, each building on the material learned in the previous weeks. 
+All statistical programming assignments must be completed in RMarkdown and will be handed in via GitHub unless otherwise noted.
 
 ---
 
 ### Online presentation
 
-The presentation will be on the statistical analyses used in some published 
-paper. This presentation must be hosted on GitHub and in HTML format using 
-RMarkdown. Aside from creating an online presentation, students will also be 
-required to read and comment on the presentations of two classmates. 
+The presentation will be on the statistical analyses used in some published paper. 
+This presentation must be hosted on GitHub and in HTML format using RMarkdown. 
+Aside from creating an online presentation, students will also be required to read and comment on the presentations of two classmates.
 
 ---
 
 ### Midterm exam
 
-&lt;!--
-There will be an in-class exam during the 11th week of the semester (April 
-3rd). Details will be provided beforehand. 
---&gt;
 
+There will be an in-class exam during the 13th week of the semester (April 17th). 
 In reality the midterm exam is just another programming assignment that is worth more points. 
-It will be due during the 11th week of the semester. 
 Details will be provided beforehand. 
 
 ---
@@ -249,11 +205,9 @@ Details will be provided beforehand.
 
 #### Overview
 
-Each student will complete a research project in which they put in practice 
-the tools learned over the course of the semester. The primary focus will be 
-on managing the project in an automatic and reproducible way so that it can 
-be shared with other collaborators. The project will be hosted on GitHub and 
-will include the following:
+Each student will complete a research project in which they put in practice the tools learned over the course of the semester. 
+The primary focus will be on managing the project in an automatic and reproducible way so that it can be shared with other collaborators. 
+The project will be hosted on GitHub and will include the following:
 
 - slides
 - manuscript
@@ -275,9 +229,8 @@ Students have two options regarding the type of project they do:
     - For students w/o data
     - Ideal for students in proposal phase (IRB, NSF, ect.)
 
-All projects require the prior approval of the professor. Project due dates 
-will be established in class, but can be expected to be due several days 
-before the university assigned final exam (though there is no exam).
+All projects require the prior approval of the professor. 
+Project due dates will be established in class, but can be expected to be due several days before the university assigned final exam (though there is no exam).
 
 ---
 
@@ -285,17 +238,15 @@ before the university assigned final exam (though there is no exam).
 
 #### Paper
 
-The manuscript will be a write up of the methods/results sections of a research 
-article. The focus is on clearly and accurately explaining the statistical 
-analyses used in the project and appropriately interpreting the results. The 
-paper must be a literate document written in RMarkdown using ```papaja```. We 
-will demo this in class.
+The manuscript will be a write up of the methods/results sections of a research article. 
+The focus is on clearly and accurately explaining the statistical analyses used in the project and appropriately interpreting the results. 
+The paper must be a literate document written in RMarkdown using `papaja`. 
+We will demo this in class.
 
 #### Presentation
 
-Students will present their work in a semi-finished state during the final 
-week of the semester (10 min. presentation + 5 min. for questions). The slides 
-of this presentation are part of the project and must also be hosted on GitHub.
+Students will present their work in a semi-finished state during the final week of the semester (10 min. presentation + 5 min. for questions). 
+The slides of this presentation are part of the project and must also be hosted on GitHub.
 
 ---
 
@@ -303,16 +254,12 @@ of this presentation are part of the project and must also be hosted on GitHub.
 
 #### Peer review
 
-Each student is required to evaluate the project of two other students. They 
-will fork the project in order to evaluate the reproducibility of the code 
-and the statistical validity of the analysis. Students will write up two 
-evaluations for each peer: one for the professor (not to be seen by anybody 
-else), and one for the owner of the project in the form of an issue/comment on 
-GitHub. The evaluation written for the professor should be longer and more in 
-depth. Both evaluations should be written in the style of a peer review for an
-academic journal, thus they should include comments, questions, suggestions, and 
-*constructive* criticisms (\#BeReviewer1). The point of this excersize is to 
-help the author make the final product better. 
+Each student is required to evaluate the project of two other students. 
+They will fork the project in order to evaluate the reproducibility of the code and the statistical validity of the analysis. 
+Students will write up two evaluations for each peer: one for the professor (not to be seen by anybody else), and one for the owner of the project in the form of an issue/comment on GitHub. 
+The evaluation written for the professor should be longer and more in depth. 
+Both evaluations should be written in the style of a peer review for an academic journal, thus they should include comments, questions, suggestions, and *constructive* criticisms (\#BeReviewer1). 
+The point of this excersize is to help the author make the final product better.
 
 ---
 layout: true
@@ -321,13 +268,14 @@ layout: true
 
 ---
 
-The course is designed to satisfy the learning goals of the Department of 
-Spanish and Portuguese. More information available at: http://span-port.rutgers.edu/learning-goals
+The course is designed to satisfy the learning goals of the Department of Spanish and Portuguese. 
+More information available at: http://span-port.rutgers.edu/learning-goals
 
 ### Communication
 
-All course communication will be via Slack. You should have received an email 
-with an invitation link to join the course Slack. Some rules for using Slack:
+All course communication will be via Slack. 
+You should have received an email with an invitation link to join the course Slack. 
+Some rules for using Slack:
 
 - Use an identifiable username and add your picture to your profile.
 - Only the professor is allowed to use the @channel and @here mentions.
@@ -341,113 +289,141 @@ discourse apply.
 ### Attendance
 
 Regular class attendance is essential for successful completion of the course. 
-More than 1 absences will have a negative effect on your final grade. The 2nd 
-absence and every subsequent absence after that will result in the loss of 5% 
-point off the final overall course grade, regardless of reason. Keep in mind 
-that while you have 1 "free" absence, on the day/s you miss you will not be able 
-to earn participation points, you will miss the material given in class and you 
-might miss your own presentation. If you are absent, contact a classmate 
-immediately to get the assignments and to keep up with the material scheduled in 
-the syllabus. The instructor is not responsible for catching you up. Do not 
-send emails to the instructor asking for updates if you missed class.
+More than 1 absences will have a negative effect on your final grade. 
+The 2nd absence and every subsequent absence after that will result in the loss of 5% point off the final overall course grade, regardless of reason. 
+Keep in mind that while you have 1 "free" absence, on the day/s you miss you will not be able to earn participation points, you will miss the material given in class and you might miss your own presentation. 
+If you are absent, contact a classmate immediately to get the assignments and to keep up with the material scheduled in the syllabus. 
+The instructor is not responsible for catching you up. 
+Do not send emails to the instructor asking for updates if you missed class.
 
-Any planned absence that you are aware of ahead of time, such as religious 
-holidays recognized by Rutgers University or Dean's excuses, should be 
-made up before the absence occurs. If you know that you will be absent, it is 
-your responsibility to let the instructor know ahead of time. All holidays or 
-special events observed by any religion will be honored for those students who 
-show affiliation with that particular religion. Absences pre-approved by the RU 
-Dean of Students (or Dean's designee) will be honored.
+Any planned absence that you are aware of ahead of time, such as religious holidays recognized by Rutgers University or Dean's excuses, should be made up before the absence occurs. 
+If you know that you will be absent, it is your responsibility to let the instructor know ahead of time. 
+All holidays or special events observed by any religion will be honored for those students who show affiliation with that particular religion. 
+Absences pre-approved by the RU Dean of Students (or Dean's designee) will be honored.
 
 ---
 
 ### Code of academic integrity
 
-The professor will initiate an academic integrity case against students 
-suspected of cheating, plagiarizing, or aiding others in dishonest academic 
-behavior. Students are responsible for reading and understanding the Code of 
-Academic Integrity.
+The professor will initiate an academic integrity case against students suspected of cheating, plagiarizing, or aiding others in dishonest academic behavior. 
+Students are responsible for reading and understanding the Code of Academic Integrity.
 
-Examples of academic dishonesty include, but are not limited to, plagiarism, 
-cheating, and aiding and abetting dishonesty. An example of plagiarism would be 
-to submit a written sample which in part or in whole is not the student's own 
-work without attributing the source. Cheating includes allowing another person 
-to do your work and to submit the work under one's own name. Any work which is 
-submitted for a grade must be 100% the student's own work. If you are not sure 
-when it is appropriate to seek help, please see the professor.
+Examples of academic dishonesty include, but are not limited to, plagiarism, cheating, and aiding and abetting dishonesty. 
+An example of plagiarism would be to submit a written sample which in part or in whole is not the student's own work without attributing the source. 
+Cheating includes allowing another person to do your work and to submit the work under one's own name. 
+Any work which is submitted for a grade must be 100% the student's own work. 
+If you are not sure when it is appropriate to seek help, please see the professor.
 
 ---
 
 ### Students with disabilities
 
-Rutgers University welcomes students with disabilities into all of the 
-University's educational programs. In order to receive consideration for 
-reasonable accommodations, a student with a disability must contact the 
-appropriate disability services office at the campus where you are officially 
-enrolled, participate in an intake interview, and provide documentation: 
-[https://ods.rutgers.edu/students/documentation-guidelines](https://ods.rutgers.edu/students/documentation-guidelines).  
+Rutgers University welcomes students with disabilities into all of the University's educational programs. 
+In order to receive consideration for reasonable accommodations, a student with a disability must contact the appropriate disability services office at the campus where you are officially enrolled, participate in an intake interview, and provide documentation: [https://ods.rutgers.edu/students/documentation-guidelines](https://ods.rutgers.edu/students/documentation-guidelines).
 
-If the documentation supports your request for reasonable accommodations, your 
-campus’s disability services office will provide you with a Letter of 
-Accommodations. Please share this letter with your instructors and discuss the 
-accommodations with them as early in your courses as possible. To begin this 
-process, please complete the Registration form on the ODS web site at: 
-[https://ods.rutgers.edu/students/registration-form](https://ods.rutgers.edu/students/registration-form).
+If the documentation supports your request for reasonable accommodations, your campus's disability services office will provide you with a Letter of Accommodations. 
+Please share this letter with your instructors and discuss the accommodations with them as early in your courses as possible. 
+To begin this process, please complete the Registration form on the ODS web site at: [https://ods.rutgers.edu/students/registration-form](https://ods.rutgers.edu/students/registration-form).
 
 ---
 layout: false
 
-.footnotesize[
-
-
-
-|     | Week |  Date |                               Topic                               |
-| :-- | :--: | :---: | :---------------------------------------------------------------- |
-|     |  1   | 01/21 | Intro, Setup, GitHub, PA1 assigned                                |
-|     |      |       |                                                                   |
-|     |  2   | 01/28 | Stats: Variables, distributions                                   |
-|     |      |       | Programming: RStudio projects, RMarkdown, ggplot                  |
-|     |      |       |                                                                   |
-|     |  3   | 02/04 | Stats: Hypothesis testing, comparing means                        |
-|     |      |       | Programming: PA2 assigned, R basics, getting/tidying data, ggplot |
-|     |      |       |                                                                   |
-|     |  4   | 02/11 | Stats: Bivariate correlation                                      |
-|     |      |       | Programming: R basics, tidying/transforming data, ggplot          |
-|     |      |       |                                                                   |
-|     |  5   | 02/18 | Stats: The linear model: regression                               |
-|     |      |       | Programming: PA3 assigned, R basics, GitHub Pages                 |
-|     |      |       |                                                                   |
-|     |  6   | 02/25 | Stats: The linear model/regression                                |
-|     |      |       | Programming: R basics, HTML presentations, slidify                |
-|     |      |       |                                                                   |
-|     |  7   | 03/04 | Stats: The linear model/regression                                |
-|     |      |       | Programming: PA4 assigned, HTML presentations, xaringan           |
-|     |      |       |                                                                   |
-|     |  8   | 03/11 | Stats: The linear model/regression                                |
-|     |      |       | Programming: papaja                                               |
-|     |      |       |                                                                   |
-|     |      | 03/12 | **Spring break**                                                  |
-|     |      |       |                                                                   |
-|     |  9   | 03/25 | Stats: General Linear Model                                       |
-|     |      |       | Programming: mid-term (PA5) assigned, modeling tips and tricks    |
-|     |      |       |                                                                   |
-|     |  10  | 04/01 | Stats: General Linear Model                                       |
-|     |      |       | Programming: modeling tips and tricks                             |
-|     |      |       |                                                                   |
-|     |  11  | 04/08 | Stats: Generalized Linear Model                                   |
-|     |      |       | **Online presentations due**                                      |
-|     |      |       |                                                                   |
-|     |  12  | 04/15 | Stats: Generalized Linear Model                                   |
-|     |      |       | **Online presentation comments due**                              |
-|     |      |       |                                                                   |
-|     |  13  | 04/22 | Research project presentations, residuals                         |
-|     |      |       |                                                                   |
-|     |  14  | 04/29 | Next steps                                                        |
-|     |      |       |                                                                   |
-|     |  15  | 05/04 | Reading day (no class)                                            |
-|     |      |       |                                                                   |
-|     |  16  | 05/?? | Final exam day (Projects due)                                     |
-]
+&lt;table class="table lightable-paper lightable-striped lightable-hover" style='font-size: 18px; margin-left: auto; margin-right: auto; font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Stats &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Programming &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 1: 01/23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Getting started. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; GitHub, R, and RStudio. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 2: 01/30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Variables, distributions. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; RStudio projects, RMarkdown, ggplot. PA1 assigned. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 3: 02/06 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NHST, comparing means. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R basics, getting/tidying data, ggplot. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 4: 02/13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bivariate correlation. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PA2 assigned, R basics, tidying data, ggplot. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 5: 02/20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The linear model/regression. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R basics, GitHub Pages. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 6: 02/27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The linear model/regression. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PA3 assigned, R basics, HTML presentations, slidify &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 7: 03/06 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The linear model/regression. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; HTML presentations, xaringan. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 03/11 - 03/19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Spring break. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 8: 03/20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The linear model/regression. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PA4 assigned, papaja. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 9: 03/27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; General Linear Model. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Modeling tips and tricks. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 10: 04/03 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; General Linear Model. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; PA5 assigned, modeling tips and tricks. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 11: 04/10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Generalized Linear Model. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Online presentations due. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 12: 04/17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Multilevel models. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Online presentation comments due. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 13: 04/24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bayesian inference. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mid-term &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 14: 05/01 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Residuals. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Research project presentations. &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 15: 05/03 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Reading day. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Week 16: 05/10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Final exam day. &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Projects due before 12pm. &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 class: title-slide-final, middle
@@ -518,6 +494,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
