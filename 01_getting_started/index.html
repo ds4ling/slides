@@ -10,27 +10,32 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x8f829d2778844dc9e7c31b69f72a082","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x855cc346ec845f3b46c6ed597906b29","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
   </head>
   <body>
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Getting started
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-01-21
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-04
+]
 
 ---
 
@@ -100,7 +105,7 @@ background-position: 10% 50%
 ```r
 ggplot(mtcars, aes(x = disp, y = mpg)) + 
   geom_point() + 
-*  geom_smooth(method = 'lm')
+* geom_smooth(method = 'lm', formula = "y ~ x")
 ```
 
 &lt;img src="index_files/figure-html/stats-example-1.png" width="504" /&gt;
@@ -136,7 +141,7 @@ class: center, middle
 
 --
 
-### .big[.RUred[manage version controlled research projects]] in a way that facilitates collaboration and honesty
+### .big[.RUred[manage version controlled research projects]]&lt;br&gt;in a way that facilitates collaboration and honesty
 
 --
 
@@ -195,11 +200,11 @@ of class.
 - It also serves as a resource for students to ask questions and exchange 
 information relevant to the course. 
 
-- You will receive an email with an invitation link to join the course Slack ([www.ru-datasci4ling.slack.com](https://join.slack.com/t/ru-datasci4ling/shared_invite/zt-kx9sghzo-teEa8XE92ACYEeCrDlbh4A))
+- You will receive an email with an invitation link to join the course Slack ([www.ru-ds4ling.slack.com](https://join.slack.com/t/ru-datasci4ling/shared_invite/zt-kx9sghzo-teEa8XE92ACYEeCrDlbh4A))
 
 - For personal matters (only) you can email the professor.
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/slack_setup/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/slack_setup/index.html)
 
 ]
 
@@ -229,20 +234,21 @@ background-position: 80% 80%
 
 - You can download R here: https://cran.r-project.org 
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/r_install/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/r_install/index.html)
 ]
 
 ---
 
 .right-column[
 
-### **RStudio**
+### **RStudio** .black[(Posit)]
 
-- We will interface with R using RStudio, a fully feautred IDE. 
+- We will interface with R using RStudio (Posit), a fully feautred IDE. 
 
-- RStudio is available to download here: https://www.rstudio.com/products/rstudio/download/#download
+- RStudio (Posit) is available to download here:  
+&lt;https://posit.co/download/rstudio-desktop/#download&gt;
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/rstudio_install/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/rstudio_install/index.html)
 
 ]
 
@@ -255,6 +261,8 @@ background-position: 80% 80%
 #### Obligatory
 
 - .blue[tidyverse]: Install and load tidy verse packages
+
+- .blue[ds4ling]: Functions and datasets used in this course
 
 - .blue[knitr]: Dynamic report generation
 
@@ -285,15 +293,15 @@ install.packages("packageName")
 
 #### Helpful
 
-- .blue[ds4ling]: Functions and datasets used in this course
-
-- .blue[lingStuff]: Tools for linguistics related research
-
 - .blue[patchwork]: Combine ggplots
 
 - .blue[broom]: Stat models to tidy dataframe
 
 - .blue[learnr]: Interactive tutorials
+
+- .blue[stringr]: For manipulating strings
+
+- .blue[sjPlot]: For making plots and tables from model objects
 
 ]
 
@@ -325,7 +333,7 @@ install.packages("packageName")
 
 - We will use GitHub for project management and sharing reproducible reports.
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/github_setup/index.html)
+- Need help? [Instructions](https://ds4ling.jvcasillas.com/misc/tutorials/github_setup/index.html)
 
 ]
 
@@ -359,7 +367,7 @@ background-position: 9% 15%
 ### You can find some very basic tutorials related to 
 ### R, RStudio, RMarkdown, GitHub, and Slack [here][here]
 
-[here]: https://ds4ling.github.io/sources/tuts/index.html
+[here]: https://wwww.ds4ling.jvcasillas.com/misc/tutorials/index.html
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -409,6 +417,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

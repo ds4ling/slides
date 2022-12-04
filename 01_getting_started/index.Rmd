@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'Getting started'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -18,17 +18,28 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup 
+#| include: false
+
 options(htmltools.dir.version = FALSE)
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r} 
+#| label: xaringan-extra-all-the-things
+#| echo: false
+
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'load-helpers', echo=F, message=F, warning=F}
+```{r}
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
+
 source(here::here("assets", "scripts", "helpers.R"))
 ```
 
@@ -86,10 +97,16 @@ background-position: 10% 50%
 
 .pull-right[
 
-```{r, stats-example, warning=FALSE, message=FALSE, fig.retina=2, fig.height=5}
+```{r}
+#| label: stats-example
+#| warning: false
+#| message: false 
+#| fig.retina: 2 
+#| fig.height: 5
+
 ggplot(mtcars, aes(x = disp, y = mpg)) + 
   geom_point() + 
-  {{geom_smooth(method = 'lm')}}
+ {{geom_smooth(method = 'lm', formula = "y ~ x")}}
 ```
 
 ]
@@ -123,7 +140,7 @@ class: center, middle
 
 --
 
-### .big[.RUred[manage version controlled research projects]] in a way that facilitates collaboration and honesty
+### .big[.RUred[manage version controlled research projects]]<br>in a way that facilitates collaboration and honesty
 
 --
 
@@ -182,11 +199,11 @@ of class.
 - It also serves as a resource for students to ask questions and exchange 
 information relevant to the course. 
 
-- You will receive an email with an invitation link to join the course Slack ([www.ru-datasci4ling.slack.com](https://join.slack.com/t/ru-datasci4ling/shared_invite/zt-kx9sghzo-teEa8XE92ACYEeCrDlbh4A))
+- You will receive an email with an invitation link to join the course Slack ([www.ru-ds4ling.slack.com](https://join.slack.com/t/ru-datasci4ling/shared_invite/zt-kx9sghzo-teEa8XE92ACYEeCrDlbh4A))
 
 - For personal matters (only) you can email the professor.
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/slack_setup/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/slack_setup/index.html)
 
 ]
 
@@ -216,20 +233,21 @@ background-position: 80% 80%
 
 - You can download R here: https://cran.r-project.org 
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/r_install/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/r_install/index.html)
 ]
 
 ---
 
 .right-column[
 
-### **RStudio**
+### **RStudio** .black[(Posit)]
 
-- We will interface with R using RStudio, a fully feautred IDE. 
+- We will interface with R using RStudio (Posit), a fully feautred IDE. 
 
-- RStudio is available to download here: https://www.rstudio.com/products/rstudio/download/#download
+- RStudio (Posit) is available to download here:  
+<https://posit.co/download/rstudio-desktop/#download>
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/rstudio_install/index.html)
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/rstudio_install/index.html)
 
 ]
 
@@ -242,6 +260,8 @@ background-position: 80% 80%
 #### Obligatory
 
 - .blue[tidyverse]: Install and load tidy verse packages
+
+- .blue[ds4ling]: Functions and datasets used in this course
 
 - .blue[knitr]: Dynamic report generation
 
@@ -257,7 +277,10 @@ background-position: 80% 80%
 
 You can download a package in r using the following command: 
 
-```{r, eval=FALSE}
+```{r}
+#| label: install-ex
+#| eval: false
+
 install.packages("packageName")
 ```
 
@@ -271,15 +294,15 @@ install.packages("packageName")
 
 #### Helpful
 
-- .blue[ds4ling]: Functions and datasets used in this course
-
-- .blue[lingStuff]: Tools for linguistics related research
-
 - .blue[patchwork]: Combine ggplots
 
 - .blue[broom]: Stat models to tidy dataframe
 
 - .blue[learnr]: Interactive tutorials
+
+- .blue[stringr]: For manipulating strings
+
+- .blue[sjPlot]: For making plots and tables from model objects
 
 ]
 
@@ -311,7 +334,7 @@ install.packages("packageName")
 
 - We will use GitHub for project management and sharing reproducible reports.
 
-- Need help? [Instructions](https://ds4ling.github.io/sources/tuts/github_setup/index.html)
+- Need help? [Instructions](https://ds4ling.jvcasillas.com/misc/tutorials/github_setup/index.html)
 
 ]
 
@@ -345,4 +368,4 @@ background-position: 9% 15%
 ### You can find some very basic tutorials related to 
 ### R, RStudio, RMarkdown, GitHub, and Slack [here][here]
 
-[here]: https://ds4ling.github.io/sources/tuts/index.html
+[here]: https://wwww.ds4ling.jvcasillas.com/misc/tutorials/index.html
