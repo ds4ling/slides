@@ -10,17 +10,14 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"ba630ee818304606b36dad3ca1b3481f","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x4c5e23cf85f4b5787f249bd19dec9ae","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/kePrint/kePrint.js"></script>
     <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
@@ -29,12 +26,21 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## The linear model:</br>.lightgrey[Assumptions, diagnostics, and interpretation]
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-03-16
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-06
+]
 
 ---
+
 
 
 
@@ -48,6 +54,8 @@ class: inverse, middle
 &lt;blockquote align='center' class="twitter-tweet" data-lang="de"&gt;
 &lt;a href="https://twitter.com/thomasp85/status/963836721866661889"&gt;&lt;/a&gt;
 &lt;/blockquote&gt;
+
+&lt;!-- tweet about mtcars --&gt; 
 
 ---
 class: title-slide-section-grey, middle
@@ -63,8 +71,6 @@ layout: true
 background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png)
 background-size: 400px
 background-position: 95% 50%
-
-
 
 ### Statistical assumptions
 
@@ -442,23 +448,16 @@ background-position: 95% 50%
 .pull-left[
 
 
-```r
-# Fit model
-mod1 &lt;- lm(y ~ x, data = assumptions_data)
-
-# Print summary
-summary(mod1)
-```
 
 &lt;table class="table table-striped" style="font-size: 13px; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; minimum &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; q1 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; q3 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; maximum &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1st Qu. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 3rd Qu. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max. &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -474,11 +473,6 @@ summary(mod1)
 &lt;/table&gt;
 
 
-```r
-# Test manually
-mean(mod1$residuals)
-```
-
 ```
 ## [1] -9.506965e-18
 ```
@@ -488,23 +482,16 @@ mean(mod1$residuals)
 .pull-right[
 
 
-```r
-# Fit mod
-mod2 &lt;- lm(y_quad ~ x, data = assumptions_data)
-
-# Print summary
-summary(mod2)
-```
 
 &lt;table class="table table-striped" style="font-size: 13px; margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; minimum &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; q1 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; median &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; q3 &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; maximum &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Min. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1st Qu. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 3rd Qu. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Max. &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -519,11 +506,6 @@ summary(mod2)
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-
-```r
-# Test manually
-mean(mod2$residuals)
-```
 
 ```
 ## [1] -6.612868e-16
@@ -615,10 +597,6 @@ alternative hypothesis: true autocorrelation is greater than 0
 - Think about your study
 
 
-```r
-cor.test(assumptions_data$x, mod1$residuals) # do correlation test 
-```
-
 ```
 ## 
 ## 	Pearson's product-moment correlation
@@ -642,10 +620,6 @@ cor.test(assumptions_data$x, mod1$residuals) # do correlation test
 - Test for correlation
 - Think about your study
 
-
-```r
-cor.test(assumptions_data$x, mod2$residuals) # do correlation test 
-```
 
 ```
 ## 
@@ -857,6 +831,8 @@ class: middle, center
 
 &lt;iframe src="https://gallery.shinyapps.io/slr_diag/" style="border:none;" height="600" width="1300"&gt;&lt;/iframe&gt;
 
+&lt;!-- assumptions shiny app --&gt;
+
 ---
 layout: false
 class: title-slide-section-grey, middle
@@ -916,10 +892,6 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 .pull-left[
 
 
-```r
-summary(cars_mod)$call
-```
-
 ```
 lm(formula = mpg ~ wt, data = mtcars)
 ```
@@ -950,10 +922,6 @@ lm(formula = mpg ~ wt, data = mtcars)
 .pull-left[
 
 
-```r
-summary(cars_mod$residuals)
-```
-
 ```
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 -4.5432 -2.3647 -0.1252  0.0000  1.4096  6.8727 
@@ -976,7 +944,6 @@ summary(cars_mod$residuals)
 - Mean = 0, median close to 0
 - If anything is off you can see it here, but check residual plots
 ]
-
 ]
 
 ---
@@ -985,10 +952,6 @@ summary(cars_mod$residuals)
 
 .pull-left[
 
-
-```r
-summary(cars_mod)$coef
-```
 
 ```
              Estimate Std. Error   t value     Pr(&gt;|t|)
@@ -1013,7 +976,6 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10
 - Expresses strength of relationship between predictor(s) and outcome variable
 - One unit change in predictor will change outcome by...
 ]
-
 ]
 
 ---
@@ -1022,10 +984,6 @@ wt          -5.344472   0.559101 -9.559044 1.293959e-10
 
 .pull-left[
 
-
-```r
-summary(cars_mod)
-```
 
 ```
 
@@ -1108,10 +1066,6 @@ but you also want to know how explanatory your predictions are (r-squared)
 .pull-left[
 
 
-```r
-summary(cars_mod)
-```
-
 ```
 
 Call:
@@ -1157,10 +1111,6 @@ F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
 
 .pull-left[
 
-
-```r
-summary(cars_mod)
-```
 
 ```
 
@@ -1277,7 +1227,7 @@ remaining scores to predict all 10 of them
 layout: false
 class: middle
 
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189" data-video-id="6811647290709757189" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti">@chelseaparlettpelleriti</a> <p>Always check your assumptions 📈<a title="statistics" target="_blank" href="https://www.tiktok.com/tag/statistics">#statistics</a> <a title="math" target="_blank" href="https://www.tiktok.com/tag/math">#math</a> <a title="linearregression" target="_blank" href="https://www.tiktok.com/tag/linearregression">#linearregression</a> <a title="fyp" target="_blank" href="https://www.tiktok.com/tag/fyp">#fyp</a></p> <a target="_blank" title="♬ is it me, Jesus? - Mackenzie Lee" href="https://www.tiktok.com/music/is-it-me-Jesus-6732518990188415749">♬ is it me, Jesus? - Mackenzie Lee</a> </section> </blockquote> 
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189" data-video-id="6811647290709757189" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>Always check your assumptions 📈<a title="statistics" target="_blank" href="https://www.tiktok.com/tag/statistics?refer=embed">#statistics</a> <a title="math" target="_blank" href="https://www.tiktok.com/tag/math?refer=embed">#math</a> <a title="linearregression" target="_blank" href="https://www.tiktok.com/tag/linearregression?refer=embed">#linearregression</a> <a title="fyp" target="_blank" href="https://www.tiktok.com/tag/fyp?refer=embed">#fyp</a></p> <a target="_blank" title="♬ is it me, Jesus? - Mackenzie Lee" href="https://www.tiktok.com/music/is-it-me-Jesus-6732518990188415749?refer=embed">♬ is it me, Jesus? - Mackenzie Lee</a> </section> </blockquote> 
 <!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
 <script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
 <style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
@@ -1372,6 +1322,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
