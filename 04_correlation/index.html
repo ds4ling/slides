@@ -10,17 +10,14 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xd11ba5a6a6d4cedaff61a5ab1dc7d1e","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"ecc21d22065d4987a9529581f61a3de1","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/kePrint/kePrint.js"></script>
     <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
@@ -29,15 +26,20 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Bivariate correlation
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-02-11
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-05
+]
 
 ---
-
-
-
 
 
 
@@ -523,9 +525,13 @@ class: middle
 
 &lt;iframe src="https://richarddmorey.shinyapps.io/standardizing_and_correlations/" style="border:none;" height="600" width="100%"&gt;&lt;/iframe&gt;
 
+&lt;!-- standardizing and correlation shiny app --&gt; 
+
 ---
 
 &lt;iframe src="https://gallery.shinyapps.io/correlation_game/" style="border:none;" height="600" width="100%"&gt;&lt;/iframe&gt;
+
+&lt;!-- correlation game --&gt; 
 
 ---
 class: middle
@@ -1333,9 +1339,9 @@ Pearson's correlation coefficient = **0.9254545**.
 
 .pull-left[
 
-1. ```cor()```
+1. `cor()`
 
-2. ```cor.test()```
+2. `cor.test()`
 
 &lt;img src="index_files/figure-html/simple-cor-ex-plot-1.png" width="468" /&gt;
 
@@ -1402,13 +1408,8 @@ background-position: 50% 70%
 Load the `test_scores_rm` dataset from the `ds4ling` package. 
 
 
-```r
-data(test_scores_rm)
-test_scores_rm
 ```
-
-```
-## # A tibble: 16 x 4
+## # A tibble: 16 × 4
 ##    id     spec  test1 test2
 ##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1 span01 g1_lo  64.3  69.2
@@ -1521,6 +1522,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

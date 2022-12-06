@@ -2,31 +2,6 @@
 <!--
 To add
 
-
-
-
-Statistical significance
-
-– It is a poor choice of word
-– All it means is that an effect is not statistically equal to zero
-
-
-Statistical Significance:
-
-- As long as the effect is not statistically equivalent to 0 it is called 
-statistically significant:
-  - It may be an effect of trivial magnitude
-  – Basically, it means that this prediction is better than nothing
-  – It doesn’t really mean it is really “significant” in the terms that we 
-  think of as significance
-- “Significant Other” (p<.05?)
-  – “Better than nothing?”
-  – It doesn’t indicate importance
-
----
-
-
-
 ---
 
 FIGUEROA: Philosophy of science

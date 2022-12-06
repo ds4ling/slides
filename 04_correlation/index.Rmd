@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'Bivariate correlation'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -17,23 +17,33 @@ output:
       in_header: "../assets/partials/header.html"
 ---
 
-
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
+#knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.retina = 2, 
+  cache = FALSE, 
+  message = FALSE,
+  warning = FALSE
+  )
+
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: xaringan-extra-all-the-things
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
 source(here::here("assets", "scripts", "helpers.R"))
 read_chunk(here::here("04_correlation", "assets", "scripts", "correlation.R"))
 ```
-
-
 
 
 class: inverse, middle
@@ -501,15 +511,19 @@ coefficients lower than 1
 
 </br>
 
-```{r, 'cor_examples', echo=FALSE, fig.retina=2, fig.width=15, fig.height=5, fig.align='center'}
+```{r}
+#| label: cor_examples
+#| fig.width: 15
+#| fig.height: 5
+#| fig.align: 'center'
 
 # Create linear data for plots
 cor_data <- data.frame(x = rnorm(100, 0, 1), y = rnorm(100, 0, 1)) %>% 
-  mutate(., y_linear = 0 + x * 1.2 + rnorm(100, mean = 0, sd = 0.5), 
-            y_pos = y_linear - mean(y_linear), 
-            y_neg = y_linear * -1, 
-            y_poly = 2 + -(x * 1.1)^2 + rnorm(100, mean = 0, sd = 0.25), 
-            y_cube = 0.5 + (x * 0.45)^3 + rnorm(100, mean = 0, sd = 0.1))
+  mutate(y_linear = 0 + x * 1.2 + rnorm(100, mean = 0, sd = 0.5), 
+    y_pos = y_linear - mean(y_linear), 
+    y_neg = y_linear * -1, 
+    y_poly = 2 + -(x * 1.1)^2 + rnorm(100, mean = 0, sd = 0.25), 
+    y_cube = 0.5 + (x * 0.45)^3 + rnorm(100, mean = 0, sd = 0.1))
 
 # Calculate correlations
 cor_y     <- cor(cor_data$x, cor_data$y) %>% round(., 2)
@@ -518,12 +532,11 @@ cor_yneg  <- cor(cor_data$x, cor_data$y_neg) %>% round(., 2)
 cor_ypoly <- cor(cor_data$x, cor_data$y_poly) %>% round(., 2)
 cor_ycube <- cor(cor_data$x, cor_data$y_cube) %>% round(., 2)
 
-
 # Set template for plots
 cor_plots <- function(plot_title, ylab = "y", r_xpos = 2, r_label) {
   list(
-    geom_vline(xintercept = 0, color = "grey40", size = 0.5), 
-    geom_hline(yintercept = 0, color = "grey40", size = 0.5),  
+    geom_vline(xintercept = 0, color = "grey40", linewidth = 0.5), 
+    geom_hline(yintercept = 0, color = "grey40", linewidth = 0.5),  
     geom_point(pch = 21, fill = "darkred"), 
     coord_cartesian(ylim = c(-3, 3), xlim = c(-3, 3)), 
     labs(y = ylab, title = plot_title), 
@@ -536,34 +549,35 @@ no_cor <- cor_data %>%
   ggplot(., aes(x = x, y = y)) + 
     cor_plots("No correlation", r_label = deparse(bquote(~r ==~  .(cor_y)))) 
 
-
 pos_cor <- cor_data %>%
   ggplot(., aes(x = x, y = y_pos)) + 
     cor_plots("Positive correlation", r_xpos = -2, 
-              r_label = deparse(bquote(~r ==~  .(cor_ypos)))) 
-
+      r_label = deparse(bquote(~r ==~  .(cor_ypos)))) 
 
 neg_cor <- cor_data %>%
   ggplot(., aes(x = x, y = y_neg)) + 
     cor_plots("Negative correlation", 
-              r_label = deparse(bquote(~r ==~  .(cor_yneg)))) 
+      r_label = deparse(bquote(~r ==~  .(cor_yneg)))) 
 
-no_cor + pos_cor + neg_cor + plot_annotation(tag_levels = '1', tag_suffix = ".")
+no_cor + pos_cor + neg_cor + 
+  plot_annotation(tag_levels = '1', tag_suffix = ".")
 ```
 
 ---
 class: middle
 
-```{r, 'cor-non-linear', echo=FALSE, fig.width=14, fig.retina=2}
+```{r}
+#| label: cor-non-linear
+#| fig.width: 14
 poly_cor <- cor_data %>%
   ggplot(., aes(x = x, y = y_poly)) + 
     cor_plots("Non-linear data", 
-              r_label = deparse(bquote(~r ==~  .(cor_ypoly)))) 
+      r_label = deparse(bquote(~r ==~  .(cor_ypoly)))) 
 
 cube_cor <- cor_data %>%
   ggplot(., aes(x = x, y = y_cube)) + 
     cor_plots("Non-linear data", 
-              r_label = deparse(bquote(~r ==~  .(cor_ycube)))) 
+      r_label = deparse(bquote(~r ==~  .(cor_ycube)))) 
 
 poly_cor + cube_cor + plot_annotation(tag_levels = '1', tag_suffix = ".")
 ```
@@ -572,18 +586,25 @@ poly_cor + cube_cor + plot_annotation(tag_levels = '1', tag_suffix = ".")
 
 <iframe src="https://richarddmorey.shinyapps.io/standardizing_and_correlations/" style="border:none;" height="600" width="100%"></iframe>
 
+<!-- standardizing and correlation shiny app --> 
+
 ---
 
 <iframe src="https://gallery.shinyapps.io/correlation_game/" style="border:none;" height="600" width="100%"></iframe>
 
+<!-- correlation game --> 
+
 ---
 class: middle
 
-```{r, 'vocab_plot', echo=FALSE, fig.width=13, fig.retina=2, fig.align='center'}
+```{r}
+#| label: vocab_plot
+#| fig.width: 13
+#| fig.align: 'center'
 
 # plot it
 vocab_data %>% 
-  mutate(., vocab_1k = vocab / 1000) %>% 
+  mutate(vocab_1k = vocab / 1000) %>% 
   dplyr::filter(., vocab_1k >= 4) %>% 
   ggplot(., aes(x = ages, y = vocab_1k)) + 
     geom_point(color = 'black', fill = 'blue', 
@@ -632,13 +653,16 @@ $$\frac{\sum_{i}^{n} \left ( \frac{x_i - \bar{x}}{s_x} \right ) \left ( \frac{y_
 
 ]
 
-```{r, 'create_vocab_table', echo=FALSE, warning=FALSE}
+```{r}
+#| label: create_vocab_table
 ```
 
-```{r, 'vocab_table0', results='asis', echo=FALSE}
+```{r}
+#| label: vocab_table0
+#| results: 'asis'
 vocab_table1 %>%
-  select(., 1:3) %>% 
-  slice(., 1:12) %>% 
+  select(1:3) %>% 
+  slice(1:12) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') 
 ```
 
@@ -650,10 +674,12 @@ $$\frac{\sum_{i}^{n} \left ( \frac{\color{red}{x_i} - \bar{x}}{s_x} \right ) \le
 
 ]
 
-```{r, 'vocab_table1', results='asis', echo=FALSE}
+```{r}
+#| label: vocab_table1
+#| results: 'asis'
 vocab_table1 %>%
-  select(., 1:3) %>% 
-  slice(., 1:12) %>% 
+  select(1:3) %>% 
+  slice(1:12) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   column_spec(2, color = "#cc0033") %>% 
   column_spec(3, color = "blue")
@@ -667,9 +693,11 @@ $$\frac{\sum_{i}^{n} \left ( \frac{x_i - \color{red}{\bar{x}}}{\color{blue}{s_x}
 
 ]
 
-```{r, 'vocab_table2', results='asis', echo=FALSE, warning=FALSE}
+```{r}
+#| label: vocab_table2
+#| results: 'asis'
 vocab_table2 %>%
-  select(., 1:3) %>% 
+  select(1:3) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   row_spec(13, bold = T, color = "white", background = "white") %>%
   row_spec(14, bold = T) %>% 
@@ -685,10 +713,12 @@ $$\frac{\sum_{i}^{n} \color{red}{\left ( \frac{x_i - \bar{x}}{s_x} \right )} \le
 
 ]
 
-```{r, 'vocab_table3', results='asis', echo=FALSE, warning=FALSE}
+```{r}
+#| label: vocab_table3
+#| results: 'asis'
 vocab_table1 %>%
-  select(., 1:4) %>% 
-  slice(., 1:12) %>% 
+  select(1:4) %>% 
+  slice(1:12) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   column_spec(2, color = "#cc0033") %>% 
   column_spec(4, color = "#cc0033")
@@ -702,10 +732,12 @@ $$\frac{\sum_{i}^{n} \left ( \frac{x_i - \bar{x}}{s_x} \right ) \color{blue}{\le
 
 ]
 
-```{r, 'vocab_table4', results='asis', echo=FALSE, warning=FALSE}
+```{r}
+#| label: vocab_table4
+#| results: 'asis'
 vocab_table1 %>%
-  select(., 1:5) %>% 
-  slice(., 1:12) %>% 
+  select(1:5) %>% 
+  slice(1:12) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   column_spec(3, color = "blue") %>% 
   column_spec(5, color = "blue")
@@ -719,10 +751,12 @@ $$\frac{\sum_{i}^{n} \color{purple}{\left ( \frac{x_i - \bar{x}}{s_x} \right ) \
 
 ]
 
-```{r, 'vocab_table5', results='asis', echo=FALSE, warning=FALSE}
+```{r}
+#| label: vocab_table5
+#| results: 'asis'
 vocab_table1 %>%
-  select(., 1:6) %>% 
-  slice(., 1:12) %>% 
+  select(1:6) %>% 
+  slice(1:12) %>% 
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   column_spec(4, color = "purple") %>% 
   column_spec(5, color = "purple") %>%
@@ -737,7 +771,9 @@ $$\frac{\color{green}{\sum_{i}^{n} \left ( \frac{x_i - \bar{x}}{s_x} \right ) \l
 
 ]
 
-```{r, 'vocab_table6', results='asis', echo=FALSE, warning=FALSE}
+```{r}
+#| label: vocab_table6
+#| results: 'asis'
 vocab_table2 %>%
   kable(., format = 'html', full_width = T, escape = FALSE, align = 'r') %>% 
   row_spec(13, bold = T, color = "white", background = "white") %>%
@@ -753,7 +789,9 @@ $$\frac{\sum_{i}^{n} \left ( \frac{x_i - \bar{x}}{s_x} \right ) \left ( \frac{y_
 
 ]
 
-```{r, 'hand_calc_r', echo=TRUE}
+```{r}
+#| label: hand_calc_r
+#| echo: true
 my_sum <- sum(vocab_sample$`(z_x)(z_y)`) 
 my_n <- (nrow(vocab_sample) - 1)
 my_r <- my_sum / my_n
@@ -763,6 +801,8 @@ my_r
 or 
 
 ```{r}
+#| label: hand-calc-2
+#| echo: true
 10.18 / (12 - 1)
 ```
 
@@ -776,11 +816,14 @@ Pearson's correlation coefficient = **`r my_r`**.
 
 .pull-left[
 
-1. ```cor()```
+1. `cor()`
 
-2. ```cor.test()```
+2. `cor.test()`
 
-```{r, 'simple-cor-ex-plot', echo=FALSE, fig.retina=2, fig.width=6.5, fig.height=4.5}
+```{r}
+#| label: simple-cor-ex-plot
+#| fig.width: 6.5
+#| fig.height: 4.5
 ggplot(mtcars, aes(x = disp, y = mpg)) + 
   geom_point(size = 2) + 
   ds4ling_bw_theme(base_family = "Times", base_size = 18)
@@ -792,11 +835,15 @@ ggplot(mtcars, aes(x = disp, y = mpg)) +
 
 .pull-right[
 
-```{r, 'simple-cor-ex-val'}
+```{r}
+#| label: simple-cor-ex-val
+#| echo: true
 cor(mtcars$mpg, mtcars$disp)
 ```
 
-```{r, 'simple-cor-ex-test'}
+```{r}
+#| label: simple-cor-ex-test
+#| echo: true
 cor.test(mtcars$mpg, mtcars$disp)
 ```
 
@@ -811,6 +858,8 @@ class: center, middle
 
 <iframe src="https://www.tylervigen.com/spurious-correlations" style="border:none;" height="600" width="100%"></iframe>
 
+<!-- spurious correlations website --> 
+
 ---
 class: center, middle
 
@@ -822,13 +871,17 @@ background-image: url(https://i.pinimg.com/736x/e8/eb/f2/e8ebf268abd01f28ab1dc56
 background-size: 1250px
 background-position: 50% 70%
 
+<!-- correlation != causation tattoo --> 
+
 ---
 
 # Practice
 
 Load the `test_scores_rm` dataset from the `ds4ling` package. 
 
-```{r, 'test-scores-rm'}
+```{r}
+#| label: test-scores-rm
+#| echo: true
 data(test_scores_rm)
 test_scores_rm
 ```
@@ -838,12 +891,15 @@ class: title-slide-final, left
 
 # References
 
-```{r, load_refs, echo=FALSE, message=F}
+```{r}
+#| label: load_refs
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
 ```
 
-```{r, print_refs, results='asis', echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r}
+#| label: print_refs
+#| results: 'asis'
 writeLines(ui)
 print(bib[key = "wickham2016r"], 
   .opts = list(check.entries = FALSE, 
