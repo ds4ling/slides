@@ -17,7 +17,6 @@ output:
       in_header: "../../assets/partials/header.html"
 ---
 
-
 ```{r}
 #| label: setup
 #| include: false

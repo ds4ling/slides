@@ -10,17 +10,14 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xaccbd783a4444aea2f68f0974aeaa54","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"dad50e22d7a8439982ad4bc007393352","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/kePrint/kePrint.js"></script>
     <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
@@ -29,13 +26,20 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## The linear model:</br>.lightgrey[Multiple regression]
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-03-24
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-06
+]
 
 ---
-
 
 
 
@@ -406,7 +410,7 @@ x&lt;sub&gt;2&lt;/sub&gt;) we are fitting a hyperplane to a three dimensional sp
 
 ---
 
-![](index_files/figure-html/additive_plots-1.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_plots-1.png" width="1008" /&gt;
 
 --
 
@@ -423,11 +427,11 @@ background-color: black
 
 ---
 
-![](index_files/figure-html/additive_3d-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_3d-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_3d-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_3d-2.png" width="504" /&gt;
 
 ---
 
-![](index_files/figure-html/additive_3d_surface-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_3d_surface-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_3d_surface-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_3d_surface-2.png" width="504" /&gt;
 
 ---
 background-image: url(./assets/img/additive_3d_corner.png)
@@ -472,10 +476,6 @@ layout: true
 .pull-right[
 
 
-```r
-*mod &lt;- lm(mpg ~ wt + drat, data = mtcars)
-summary(mod)
-```
 
 ]
 
@@ -782,11 +782,6 @@ adding up the effects of each acting separately:
 .pull-right[
 
 
-```r
-*m &lt;- lm(mpg ~ wt + drat + wt:drat, data = mtcars)
-summary(m)
-```
-
 ```
 ## 
 ## Call:
@@ -821,20 +816,20 @@ summary(m)
 ---
 background-color: black
 
-![](index_files/figure-html/additive_interaction-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_interaction-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_interaction-2.png" width="504" /&gt;
 
 ---
 
-![](index_files/figure-html/additive_interaction2-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction2-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_interaction2-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_interaction2-2.png" width="504" /&gt;
 
 ---
 background-color: black
 
-![](index_files/figure-html/additive_interaction3-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction3-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_interaction3-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_interaction3-2.png" width="504" /&gt;
 
 ---
 
-![](index_files/figure-html/additive_interaction4-1.png)&lt;!-- --&gt;![](index_files/figure-html/additive_interaction4-2.png)&lt;!-- --&gt;
+&lt;img src="index_files/figure-html/additive_interaction4-1.png" width="504" /&gt;&lt;img src="index_files/figure-html/additive_interaction4-2.png" width="504" /&gt;
 
 ---
 layout: false
@@ -1480,13 +1475,6 @@ you examine all the possible interactions you will have a complex model
 - Fit all the relevant models
 
 
-```r
-mod_full &lt;- lm(mpg ~ wt + drat + wt:drat, data = mtcars) # inclusive model
-mod_int  &lt;- lm(mpg ~ wt + drat          , data = mtcars) # restricted model
-mod_drat &lt;- lm(mpg ~ wt                 , data = mtcars) # restricted model
-mod_wt   &lt;- lm(mpg ~ drat               , data = mtcars) # restricted model
-mod_null &lt;- lm(mpg ~ 1                  , data = mtcars) # null model
-```
 
 --
 
@@ -1504,10 +1492,6 @@ mod_null &lt;- lm(mpg ~ 1                  , data = mtcars) # null model
 
 ### Doing it in R
 
-
-```r
-anova(mod_int, mod_full) # Test interaction effect
-```
 
 ```
 ## Analysis of Variance Table
@@ -2073,10 +2057,6 @@ and math (age is a confound)
 ---
 
 
-```r
-glimpse(mrc_ex_data)
-```
-
 ```
 ## Rows: 10,000
 ## Columns: 5
@@ -2085,12 +2065,6 @@ glimpse(mrc_ex_data)
 ## $ score    &lt;dbl&gt; 57.36148, 55.69443, 53.88175, 56.82029, 53.81413, 53.59684, 5…
 ## $ age_c    &lt;dbl&gt; -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -6.5, -…
 ## $ height_c &lt;dbl&gt; -12.637914, -8.564972, -7.506157, -8.502107, -9.416351, -10.6…
-```
-
-```r
-sample_n(mrc_ex_data, 10) %&gt;% 
-  mutate_if(is.numeric, round, digits = 2) %&gt;% 
-  head(., n = 10)
 ```
 
 ```
@@ -2111,10 +2085,6 @@ sample_n(mrc_ex_data, 10) %&gt;%
 class: middle
 
 .pull-left[
-
-```r
-lm(height ~ age_c, mrc_ex_data) %&gt;% summary()
-```
 
 ```
 ## 
@@ -2227,10 +2197,6 @@ class: middle
 .pull-left[
 
 
-```r
-lm(score ~ height_c + age_c, mrc_ex_data) %&gt;% summary
-```
-
 ```
 ## 
 ## Call:
@@ -2319,6 +2285,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

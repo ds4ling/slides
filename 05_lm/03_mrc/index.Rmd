@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'The linear model:</br>.lightgrey[Multiple regression]'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -17,32 +17,50 @@ output:
       in_header: "../../assets/partials/header.html"
 ---
 
-
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
+#knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.retina = 2, 
+  cache = FALSE, 
+  message = FALSE,
+  warning = FALSE
+  )
+
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: xaringan-extra-all-the-things
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
 source(here::here("assets", "scripts", "helpers.R"))
+source(here::here("05_lm", "03_mrc", "assets", "scripts", "mrc.R"))
 ```
 
-```{r, load_refs, echo=FALSE, cache=FALSE, warning=F, message=F}
+```{r}
+#| label: load_refs
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
 ```
 
 
 
-```{r, child="part1"}
+```{r}
+#| label: load-part-1
+#| child: "part1"
 ```
 
-```{r, child="part2"}
+```{r}
+#| label: load-part-2
+#| child: "part2"
 ```
 
 
@@ -57,7 +75,9 @@ class: title-slide-final, left
 
 # References
 
-```{r, results='asis', echo=FALSE, eval=TRUE, cache=FALSE}
+```{r}
+#| label: print-bib1
+#| results: 'asis'
 PrintBibliography(bib, end = 5)
 ```
 
@@ -67,7 +87,9 @@ class: title-slide-final, left
 
 # References (cont.)
 
-```{r, results='asis', echo=FALSE, eval=TRUE, cache=FALSE}
+```{r}
+#| label: print-bib2
+#| results: 'asis'
 PrintBibliography(bib, start = 6)
 ```
 
@@ -107,7 +129,8 @@ and math (age is a confound)
 
 ---
 
-```{r mrc-math}
+```{r}
+#| label: mrc-math
 glimpse(mrc_ex_data)
 sample_n(mrc_ex_data, 10) %>% 
   mutate_if(is.numeric, round, digits = 2) %>% 
@@ -118,14 +141,17 @@ sample_n(mrc_ex_data, 10) %>%
 class: middle
 
 .pull-left[
-```{r, mrc-math-height-age-mod, echo=T}
+```{r}
+#| label: mrc-math-height-age-mod
 lm(height ~ age_c, mrc_ex_data) %>% summary()
 ```
 ]
 
 .pull-right[
 
-```{r, mrc-math-height-age-plot, fig.retina=2, out.width="100%", echo=F}
+```{r}
+#| label: mrc-math-height-age-plot
+#| out.width: "100%"
 mrc_ex_data %>% 
   ggplot(., aes(x = age_c + mean(age), y = height_c + mean(height))) + 
     geom_point(alpha = 0.1) + 
@@ -141,14 +167,18 @@ mrc_ex_data %>%
 class: middle
 
 .pull-left[
-```{r, mrc-math-score-age-mod, echo=T}
+```{r}
+#| label: mrc-math-score-age-mod
+#| echo: true
 lm(score ~ age_c, mrc_ex_data) %>% summary()
 ```
 ]
 
 .pull-right[
 
-```{r, mrc-math-score-age-plot, fig.retina=2, out.width="100%", echo=F}
+```{r}
+#| label: mrc-math-score-age-plot
+#| out.width: "100%"
 
 mrc_ex_data %>% 
   ggplot(., aes(x = age_c + mean(age), y = score)) + 
@@ -166,14 +196,18 @@ mrc_ex_data %>%
 class: middle
 
 .pull-left[
-```{r, mrc-math-score-height-mod, echo=T}
+```{r}
+#| label: mrc-math-score-height-mod
+#| echo: true
 lm(score ~ height_c, mrc_ex_data) %>% summary()
 ```
 ]
 
 .pull-right[
 
-```{r, mrc-math-score-height-plot, fig.retina=2, out.width="100%", echo=F}
+```{r}
+#| label: mrc-math-score-height-plot
+#| out.width: "100%"
 
 mrc_ex_data %>% 
   ggplot(., aes(x = height_c + mean(height), y = score)) + 
@@ -197,7 +231,8 @@ class: middle
 
 .pull-left[
 
-```{r, mrc-ex-adj-age-mod}
+```{r}
+#| label: mrc-ex-adj-age-mod
 lm(score ~ height_c + age_c, mrc_ex_data) %>% summary
 ```
 ]
@@ -206,7 +241,9 @@ lm(score ~ height_c + age_c, mrc_ex_data) %>% summary
 
 .pull-right[
 
-```{r, mrc-ex-adj-age-plot, fig.retina=2, out.width="100%", echo=F}
+```{r}
+#| label: mrc-ex-adj-age-plot
+#| out.width: "100%"
 
 mrc_ex_data %>% 
   dplyr::filter(age == 12.5) %>% 
@@ -228,7 +265,10 @@ mrc_ex_data %>%
 
 ---
 
-```{r, mrc-final, fig.retina=2, fig.width=14, fig.height=8, echo=F}
+```{r}
+#| label: mrc-final
+#| fig.width: 14
+#| fig.height: 8
 
 mrc_ex_data %>% 
   mutate(age_fct = round(age) %>% as.factor()) %>% 
