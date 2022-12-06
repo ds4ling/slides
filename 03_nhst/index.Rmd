@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'NHST'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -17,17 +17,30 @@ output:
       in_header: "../assets/partials/header.html"
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
+#knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.retina = 2, 
+  cache = FALSE, 
+  message = FALSE,
+  warning = FALSE
+  )
+
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: xaringan-extra-all-the-things
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
 source(here::here("assets", "scripts", "helpers.R"))
 ```
 
@@ -46,30 +59,35 @@ class: title-slide-section-grey, middle
 
 # More about z-scores
 
-```{r, 'standard-normal', echo=FALSE, fig.height=6.5, fig.width=6.5, out.extra='style=float:right', fig.retina=2, warning=FALSE, cache=FALSE}
+```{r}
+#| label: standard-normal
+#| fig.height: 6.5
+#| fig.width: 6.5
+#| out.extra: 'style=float:right'
 # Save PDF of normal to object for plot
 pdf_tex2 <- "$f(x)= \\frac{1}{\\sqrt{2 \\pi}\\times 2}\\, e^{-\\,\\frac{(x - 15 )^2}{2}}$"
 pdf_tex4 <- "$f(x)= \\frac{1}{\\sqrt{2 \\pi}}\\, e^{\\,-\\frac{x^2}{2}}$"
 
-standard_x <- c(TeX('-4$\\sigma$'), 
-                TeX('-3$\\sigma$'), 
-                TeX('-2$\\sigma$'), 
-                TeX('-1$\\sigma$'), 
-                TeX('0$\\sigma$'), 
-                TeX('1$\\sigma$'), 
-                TeX('2$\\sigma$'), 
-                TeX('3$\\sigma$'), 
-                TeX('4$\\sigma$'))
+standard_x <- c(
+  TeX('-4$\\sigma$'), 
+  TeX('-3$\\sigma$'), 
+  TeX('-2$\\sigma$'), 
+  TeX('-1$\\sigma$'), 
+  TeX('0$\\sigma$'), 
+  TeX('1$\\sigma$'), 
+  TeX('2$\\sigma$'), 
+  TeX('3$\\sigma$'), 
+  TeX('4$\\sigma$')
+)
 
 normalp1 <- plot_dist(range = c(5, 25), mean = 15, sd = 2) + 
-    labs(y = NULL, x = NULL) + 
-    scale_y_continuous(breaks = NULL) 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) 
 
 normalp2 <- plot_dist(range = c(-4, 4), font_color = "darkblue") + 
   labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = seq(-4, 4, 1), 
-                     labels = standard_x) 
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x) 
 
 normalp1 / normalp2
 ```
@@ -112,7 +130,11 @@ layout: true
 
 ---
 
-```{r, 'standard-normal2', echo=FALSE, fig.height=6.5, fig.width=6.5, out.extra="style='float:right'", fig.retina=2}
+```{r}
+#| label: standard-normal2
+#| fig.height: 6.5
+#| fig.width: 6.5
+#| out.extra: "style='float:right'"
 
 normalp3 <- plot_dist(range = c(-4, 4), tex = "$\\textit{P}(x)$", 
   font_color = "black") + 
@@ -128,8 +150,7 @@ normalp4 <- plot_dist(distribution = "pnorm", range = c(-4, 4),
   geom_hline(yintercept = 0.5, lty = 3) + 
   labs(y = NULL, x = NULL, title = 'Distribution Function') + 
   scale_y_continuous(position = "right") + 
-  scale_x_continuous(breaks = seq(-4, 4, 1), 
-                     labels = standard_x)
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x)
 
 normalp3 / normalp4
 ```
@@ -181,40 +202,44 @@ If we standardize the scores: *N*(0, 1)...
 
 .pull-right[
 
-```{r, 'standard-normal3a', echo=FALSE, fig.height=6.5, fig.width=6, fig.align='center', fig.retina=2}
+```{r}
+#| label: standard-normal3a
+#| fig.height: 6.5
+#| fig.width: 6
+#| fig.align: 'center'
 
 normalp50 <- ggplot(data = data.frame(x = c(60, 100)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, 
-                args = list(mean = 80, sd = 5), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 80, sd = 5), linewidth = 1) + 
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
   scale_x_continuous(breaks = seq(60, 100, 5), labels = seq(60, 100, 5)) + 
   ds4ling_theme() 
 
 normalp50_build <- ggplot_build(normalp50)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 80, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = ifelse(x >= 80, yes = 'shade', no = 'no_shade'))
 
-p50 <- normalp50 + geom_area(data = normalp50_build, show.legend = FALSE, 
-                             alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 80, xend = 80, y = 0, yend = 0.399, lty = 2) 
+p50 <- normalp50 + 
+  geom_area(data = normalp50_build, show.legend = FALSE, 
+    alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 80, xend = 80, y = 0, yend = max(normalp50_build$y), lty = 2) 
 
 normalp5a <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
   scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x) + 
   ds4ling_theme() 
 
 normalp5a_build <- ggplot_build(normalp5a)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = ifelse(x >= 0, yes = 'shade', no = 'no_shade'))
 
 p5a <- normalp5a + geom_area(data = normalp5a_build, show.legend = FALSE, 
-                             alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 0, xend = 0, y = 0, yend = 0.399, lty = 2) 
+    alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = max(normalp5a_build$y), lty = 2) 
 
 p50 / p5a + plot_annotation(tag_levels = '1', tag_suffix = ".")
 ```
@@ -223,25 +248,29 @@ p50 / p5a + plot_annotation(tag_levels = '1', tag_suffix = ".")
 
 ---
 
-```{r, 'standard-normal3b', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=F, message=F}
+```{r}
+#| label: standard-normal3b
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 normalp5b <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = seq(0, 1), 
-                     labels = c(0, TeX("$z_1$"))) + 
+  scale_x_continuous(breaks = seq(0, 1), labels = c(0, TeX("$z_1$"))) +
   ds4ling_theme() 
 
 normalp5b_build <- ggplot_build(normalp5b)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 1.02, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 1.02, 'shade', 'no_shade'))
 
 p5b <- normalp5b + geom_area(data = normalp5b_build, show.legend = FALSE, 
-                             alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 0, xend = 0, y = 0, yend = 0.399, lty = 2) + 
-           geom_segment(x = 1.03, xend = 1.03, y = 0, yend = 0.2395, lty = 2)  
+    alpha = 0.4, aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = max(normalp5b_build$y), lty = 2) + 
+  geom_segment(x = 1.03, xend = 1.03, y = 0, yend = 0.2395, lty = 2)  
 
 p5aNewX <- p5a + scale_x_continuous(breaks = 0, labels = 0)
 
@@ -289,18 +318,21 @@ probability) in a z-table<sup>1</sup>.
 
 ### 1. What is the probability that $Z$ takes values between 0 and 1.9?
 
-```{r, 'q1', echo=FALSE, fig.height=3.5, fig.width=7, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q1
+#| fig.height: 3.5
+#| fig.width: 7
+#| fig.align: 'center'
 
 q1 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 1.9), 
-                     labels = c(0, 1.9)) + 
+  scale_x_continuous(breaks = c(0, 1.9), labels = c(0, 1.9)) +
   ds4ling_theme() 
 
 q1_build <- ggplot_build(q1)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 1.9, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 1.9, 'shade', 'no_shade'))
 
 q1_x1_ht <- as.data.frame(q1_build[q1_build$x >= 0 & 
                                    q1_build$x <= 0.1, 'y']) %>% pull
@@ -308,11 +340,12 @@ q1_x2_ht <- as.data.frame(q1_build[q1_build$x >= 1.9 &
                                    q1_build$x <= 2, 'y']) %>% pull
 
 q1 + geom_area(data = q1_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 0, xend = 0, y = 0, yend = q1_x1_ht, lty = 2) + 
-           geom_segment(x = 1.9, xend = 1.9, y = 0, yend = q1_x2_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q1_x1_ht, lty = 2) + 
+  geom_segment(x = 1.9, xend = 1.9, y = 0, yend = q1_x2_ht, lty = 2)  
 ```
 
 The probability that $Z$ takes values between 0 and 1.9 is 
@@ -323,18 +356,21 @@ The probability that $Z$ takes values between 0 and 1.9 is
 
 ### 2. What is the probability that $Z$ takes values between 0 and 2?
 
-```{r, 'q2', echo=FALSE, fig.height=3.5, fig.width=7, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q2
+#| fig.height: 3.5
+#| fig.width: 7
+#| fig.align: 'center'
 
 q2 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 2), 
-                     labels = c(0, 2)) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
   ds4ling_theme() 
 
 q2_build <- ggplot_build(q2)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2.1, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2.1, 'shade', 'no_shade'))
 
 q2_x1_ht <- as.data.frame(q2_build[q2_build$x >= 0 & 
                                    q2_build$x <= 0.1, 'y']) %>% pull
@@ -342,11 +378,12 @@ q2_x2_ht <- as.data.frame(q2_build[q2_build$x >= 2 &
                                    q2_build$x <= 2.1, 'y']) %>% pull
 
 q2 + geom_area(data = q2_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 0, xend = 0, y = 0, yend = q2_x1_ht, lty = 2) + 
-           geom_segment(x = 2.1, xend = 2.1, y = 0, yend = q2_x2_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q2_x1_ht, lty = 2) + 
+  geom_segment(x = 2.1, xend = 2.1, y = 0, yend = q2_x2_ht, lty = 2)  
 ```
 
 The probability that $Z$ takes values between 0 and 2 is 
@@ -357,30 +394,34 @@ The probability that $Z$ takes values between 0 and 2 is
 
 ### 3. What is the probability that $Z$ takes values between 0 and 2.33?
 
-```{r, 'q3', echo=FALSE, fig.height=3.5, fig.width=7, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q3
+#| fig.height: 3.5
+#| fig.width: 7
+#| fig.align: 'center'
 
 q3 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 2.33), 
-                     labels = c(0, 2.33)) + 
+  scale_x_continuous(breaks = c(0, 2.33), labels = c(0, 2.33)) +
   ds4ling_theme() 
 
 q3_build <- ggplot_build(q3)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2.33, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2.33, 'shade', 'no_shade'))
 
 q3_x1_ht <- as.data.frame(q3_build[q3_build$x >= 0 & 
                                    q3_build$x <= 0.1, 'y']) %>% pull
-q3_x2_ht <- as.data.frame(q3_build[q3_build$x >= 2.33 & 
+q3_x2_ht <- as.data.frame(q3_build[q3_build$x >= 2.32 & 
                                    q3_build$x <= 2.4, 'y']) %>% pull
 
 q3 + geom_area(data = q3_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_segment(x = 0, xend = 0, y = 0, yend = q3_x1_ht, lty = 2) + 
-           geom_segment(x = 2.33, xend = 2.33, y = 0, yend = q3_x2_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q3_x1_ht, lty = 2) + 
+  geom_segment(x = 2.33, xend = 2.33, y = 0, yend = q3_x2_ht, lty = 2)  
 ```
 
 The probability that $Z$ takes values between 0 and 2.33 is 
@@ -391,24 +432,27 @@ The probability that $Z$ takes values between 0 and 2.33 is
 
 ### 4. Find the probability that $Z$ takes values bewteen 1 and 2.
 
-```{r, 'q4', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q4
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 q4 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 1, 2), 
-                     labels = c(0, 1, 2)) + 
+  scale_x_continuous(breaks = c(0, 1, 2), labels = c(0, 1, 2)) +
   ds4ling_theme() 
 
 q4_build <- ggplot_build(q4)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 1 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 1 & x <= 2, 'shade', 'no_shade'))
 
 q4_build_a <- ggplot_build(q4)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
 
 q4_build_b <- ggplot_build(q4)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 1, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 1, 'shade', 'no_shade'))
 
 q4_x1_ht <- as.data.frame(q4_build[q4_build$x >= 1 & 
                                    q4_build$x <= 1.1, 'y']) %>% pull
@@ -416,26 +460,29 @@ q4_x2_ht <- as.data.frame(q4_build[q4_build$x >= 2 &
                                    q4_build$x <= 2.1, 'y']) %>% pull
 
 q4p1 <- q4 + geom_area(data = q4_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
 
 q4p2 <- q4 + geom_area(data = q4_build_a, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
 
 q4p3 <- q4 + geom_area(data = q4_build_b, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2)  
 
 q4p1 + q4p2 + q4p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
 
@@ -453,47 +500,53 @@ Probalitiy of (1) = (2) - (3)
 
 ### 5. What is the probability that $Z$ > 2?
 
-```{r, 'q5', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q5
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 q5 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 2), 
-                     labels = c(0, 2)) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
   ds4ling_theme() 
 
 q5_build <- ggplot_build(q5)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 2, 'shade', 'no_shade'))
 
 q5_build_a <- ggplot_build(q5)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0, 'shade', 'no_shade'))
 
 q5_build_b <- ggplot_build(q5)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
 
 q5_x1_ht <- as.data.frame(q5_build[q5_build$x >= 2 & 
                                    q5_build$x <= 2.1, 'y']) %>% pull
 
 q5p1 <- q5 + geom_area(data = q5_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2) 
 
 q5p2 <- q5 + geom_area(data = q5_build_a, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) 
 
 q5p3 <- q5 + geom_area(data = q5_build_b, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2)  
 
 q5p1 + q5p2 + q5p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
 
@@ -511,47 +564,53 @@ Probalitiy of (1) = (2) - (3)
 
 ### 6. What is the probability that $Z$ < 2?
 
-```{r, 'q6', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q6
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 q6 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) + 
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(0, 2), 
-                     labels = c(0, 2)) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
   ds4ling_theme() 
 
 q6_build <- ggplot_build(q6)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x <= 2, 'shade', 'no_shade'))
 
 q6_build_a <- ggplot_build(q6)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x <= 0, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x <= 0, 'shade', 'no_shade'))
 
 q6_build_b <- ggplot_build(q6)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
 
 q6_x1_ht <- as.data.frame(q6_build[q6_build$x >= 2 & 
                                    q6_build$x <= 2.1, 'y']) %>% pull
 
 q6p1 <- q6 + geom_area(data = q6_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2) 
 
 q6p2 <- q6 + geom_area(data = q6_build_a, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) 
 
 q6p3 <- q6 + geom_area(data = q6_build_b, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2)  
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2)  
 
 q6p1 + q6p2 + q6p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
 ```
@@ -568,38 +627,43 @@ Probalitiy of (1) = 0.5 + (3)
 
 ### 7. What is the probability that −2 < $Z$ < 0?
 
-```{r, 'q7', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q7
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 q7 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) + 
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(-2, 0), 
-                     labels = c(-2, 0)) + 
+  scale_x_continuous(breaks = c(-2, 0), labels = c(-2, 0)) +
   ds4ling_theme() 
 
 q7_build <- ggplot_build(q7)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= -2 & x <= 0, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= -2 & x <= 0, 'shade', 'no_shade'))
 
 q7_build_a <- ggplot_build(q7)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x <= 2 & x >= 0, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x <= 2 & x >= 0, 'shade', 'no_shade'))
 
 q7_x1_ht <- as.data.frame(q7_build[q7_build$x >= -2.1 & 
                                    q7_build$x <= -2, 'y']) %>% pull
 
 q7p1 <- q7 + geom_area(data = q7_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = -2, xend = -2, y = 0, yend = q7_x1_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = -2, xend = -2, y = 0, yend = q7_x1_ht, lty = 2) 
 
 q7p2 <- q7 + geom_area(data = q7_build_a, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q7_x1_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q7_x1_ht, lty = 2) 
 
 q7p1 + q7p2 + plot_annotation(tag_levels = '1', tag_suffix = ".")
 
@@ -617,24 +681,27 @@ Probalitiy of (1) = (2)
 
 ### 8. What is the probability that −1 < $Z$ < 2?
 
-```{r, 'q8', echo=FALSE, fig.height=3.5, fig.width=13, fig.align='center', fig.retina=2, warning=FALSE, message=FALSE, cache=FALSE}
+```{r}
+#| label: q8
+#| fig.height: 3.5
+#| fig.width: 13
+#| fig.align: 'center'
 
 q8 <- ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 0, sd = 1), size = 1) + 
-  labs(y = "", x = "") + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) + 
+  labs(y = NULL, x = NULL) + 
   scale_y_continuous(breaks = NULL) + 
-  scale_x_continuous(breaks = c(-1, 0, 2), 
-                     labels = c(-1, 0, 2)) + 
+  scale_x_continuous(breaks = c(-1, 0, 2), labels = c(-1, 0, 2)) +
   ds4ling_theme() 
 
 q8_build <- ggplot_build(q8)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= -1 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= -1 & x <= 2, 'shade', 'no_shade'))
 
 q8_build_a <- ggplot_build(q8)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 1, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 1, 'shade', 'no_shade'))
 
 q8_build_b <- ggplot_build(q8)$data[[1]] %>% 
-  mutate(., to_shade = ifelse(x >= 0 & x <= 2, yes = 'shade', no = 'no_shade'))
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
 
 q8_x1_ht <- as.data.frame(q8_build[q8_build$x >= -1.1 & 
                                    q8_build$x <= -1, 'y']) %>% pull
@@ -644,26 +711,29 @@ q8_x2_ht <- as.data.frame(q8_build[q8_build$x >= -2.1 &
 
 
 q8p1 <- q8 + geom_area(data = q8_build, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = -1, xend = -1, y = 0, yend = q8_x1_ht, lty = 2) +
-           geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = -1, xend = -1, y = 0, yend = q8_x1_ht, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
 
 q8p2 <- q8 + geom_area(data = q8_build_a, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 1, xend = 1, y = 0, yend = q8_x1_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 1, xend = 1, y = 0, yend = q8_x1_ht, lty = 2) 
 
 q8p3 <- q8 + geom_area(data = q8_build_b, show.legend = FALSE, alpha = 0.4, 
-                     aes(x = x, y = y, fill = to_shade)) + 
-           scale_fill_manual(name = '', values = c("white", "lightblue")) + 
-           geom_hline(yintercept = 0, size = 1) + 
-           geom_vline(xintercept = 0, lty = 2) + 
-           geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
+    aes(x = x, y = y, fill = to_shade)) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "lightblue")) + 
+  geom_hline(yintercept = 0, size = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
 
 q8p1 + q8p2 + q8p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
 ```
@@ -765,23 +835,28 @@ mean of 100 with a standard deviation of 15.<sup>1</sup>
 
 .pull-left[
 
-```{r, 'iq-pop'}
+```{r}
+#| label: iq-pop
 # Our population
 draws    <- 1e+5 
 pop_mean <- 100  # mu
 pop_sd   <- 15   # sigma
 
 # Generate distribution
-pop_iq <- rnorm(n = draws, 
-                mean = pop_mean, 
-                sd = pop_sd)
+pop_iq <- rnorm(
+  n = draws,
+  mean = pop_mean, 
+  sd = pop_sd
+)
 ```
 
 ]
 
 .pull-right[
 
-```{r, 'p6', echo=FALSE, fig.height=6, fig.retina=2, cache=FALSE}
+```{r}
+#| label: p6
+#| fig.height: 6 
 p6 <- tibble(x = pop_iq) %>% 
   ggplot(., aes(x = x)) +
     geom_density(color = 'black', fill = 'grey90') + 
@@ -837,25 +912,32 @@ background-size: 550px
 
 - Given the central limit theorem, we know that the distribution of sample means 
 will be normal with a mean of 100 and a standard deviation of 
-```15 / sqrt(36)``` = `r 15 / sqrt(36)`. 
+`15 / sqrt(36)` = `r 15 / sqrt(36)`. 
 - We can compare our own mean to this distribution as follows:
 
-```{r, 'iq-sample', cache=FALSE}
+```{r}
+#| label: iq-sample
 sample_n    <- 36  # Sample size
 sample_mean <- 103 # xbar (trump family mean)
 dist_mean   <- pop_mean
 sample_sd   <- pop_sd / sqrt(sample_n)
 
 # Generate sample
-trumps <- rnorm(n = draws, 
-                mean = dist_mean, 
-                sd = sample_sd)
+trumps <- rnorm(
+  n = draws, 
+  mean = dist_mean, 
+  sd = sample_sd
+)
 ```
 ]
 
 .pull-right[
 
-```{r, 'p7', echo=FALSE, fig.retina=2, fig.height=6, fig.width=8, include=FALSE, cache=FALSE}
+```{r}
+#| label: p7
+#| fig.height: 6
+#| fig.width: 8
+#| include: false
 p7 <- tibble(x = trumps) %>% 
   ggplot(., aes(x = x)) + 
     geom_density(color = 'black', fill = 'grey90') + 
@@ -864,7 +946,7 @@ p7 <- tibble(x = trumps) %>%
      ds4ling_theme()
 
 p7_build <- ggplot_build(p7)$data[[1]] %>% 
-  mutate(., trumps = ifelse(x >= sample_mean, yes = 'Trumps', no = 'Population'))
+  mutate(trumps = if_else(x >= sample_mean, 'Trumps', 'Population'))
 
 p7 + geom_area(data = p7_build, aes(x = x, y = y, fill = trumps)) + 
      scale_fill_brewer(name = '', palette = 'Set1') + 
@@ -896,7 +978,8 @@ $$\color{red}{z} = \frac{\color{blue}{\bar{x}} - \color{green}{\mu}}{\color{purp
 
 Where **z** is derived by calculating the difference between the .blue[sample mean] and the <font color="green">population mean</font> and dividing it by the <font color="purple">population standard deviation</font> divided by the <font color="orange">square root </font>of the <font color="grey">sample size</font>. 
 
-```{r, 'z_conversion'}
+```{r}
+#| label: z_conversion
 {{sample_z <- (sample_mean - pop_mean) / (pop_sd / sqrt(sample_n))}}
 dist_z  <- (trumps - pop_mean) / (pop_sd / sqrt(sample_n))
 print(sample_z) 
@@ -904,7 +987,12 @@ print(sample_z)
 
 ---
 
-```{r, 'p8', echo=FALSE, fig.retina=2, fig.height=7.5, fig.width=14, cache=FALSE}
+```{r}
+#| label: p8
+#| fig.retina: 2
+#| fig.height: 7.5
+#| fig.width: 14
+
 p8 <- tibble(x = dist_z) %>% 
   ggplot(., aes(x = x)) +
     geom_density(color = 'black', fill = 'grey90') + 
@@ -913,18 +1001,18 @@ p8 <- tibble(x = dist_z) %>%
      ds4ling_theme()
 
 p8_build <- ggplot_build(p8)$data[[1]] %>% 
-  mutate(., trumps = ifelse(x >= sample_z, yes = 'Trumps', no = 'Population'))
+  mutate(trumps = if_else(x >= sample_z, 'Trumps', 'Population'))
 
 p8 + geom_area(data = p8_build, aes(x = x, y = y, fill = trumps)) + 
-     scale_fill_brewer(name = '', palette = 'Set1') + 
-     geom_segment(x = sample_z, xend = sample_z, 
-                  y = 0, yend = 0.195, color = 'black', size = 0.75) + 
-     geom_segment(x = sample_z + 0.25, xend = sample_z + 1, 
-                  y = 0.025, yend = 0.05, color = 'black', size = 0.75) + 
-     annotate("text", x = sample_z + 0.2, y = 0.23, label = "Sample\nmean", size = 5) + 
-     annotate("text", x = sample_z + 1.6, y = 0.07, size = 5,
-              label = "Probability of observing\nlarger mean") + 
-     theme(legend.position = 'bottom')
+  scale_fill_brewer(name = '', palette = 'Set1') + 
+  geom_segment(x = sample_z, xend = sample_z, 
+    y = 0, yend = 0.195, color = 'black', size = 0.75) + 
+  geom_segment(x = sample_z + 0.25, xend = sample_z + 1, 
+    y = 0.025, yend = 0.05, color = 'black', size = 0.75) + 
+  annotate("text", x = sample_z + 0.2, y = 0.23, label = "Sample\nmean", size = 5) + 
+  annotate("text", x = sample_z + 1.6, y = 0.07, size = 5,
+    label = "Probability of observing\nlarger mean") + 
+  theme(legend.position = 'bottom')
 ```
 
 - This probability is related to what you know as a p-value (we'll come back to 
@@ -974,7 +1062,8 @@ more in the exam?
 
 --
 
-```{r, 'ex2-zscores', eval=FALSE}
+```{r}
+#| label: ex2-zscores
 # (score - mean) / sd
 (84 - 72) / 15.2
 ```
@@ -985,7 +1074,8 @@ The z-score is: `r (84 - 72) / 15.2`. Look this value up in z-table.
 
 ### We can do this in R
 
-```{r, 'ex2-pnorm'}
+```{r}
+#} label: ex2-pnorm
 pnorm(q = 84, mean = 72, sd = 15.2, lower.tail = FALSE) 
 ```
 
@@ -1023,8 +1113,10 @@ background-size: contain
 background-position: 50% 50%
 background-color: black
 
+<!-- meme of karl pearson "do you have a moment to talk about NHST" --> 
+
 ---
-background-image: url(https://static-19.sinclairstoryline.com/resources/media/a079367c-a58f-4130-b01b-5d5d320655d2-large16x9_genericcourtroomgavel.JPG?1531677910817)
+background-image: url(./assets/img/gavel.JPG)
 background-size: contain
 
 # .white[NHST]
@@ -1048,10 +1140,13 @@ hypothesis, supporting an .big[.bold[.green[alternative hypothesis]] (.green[H<s
 ]
 
 ---
-background-image: url(https://thehill.com/sites/default/files/styles/thumb_small_article/public/ginsburgruth_041017gn_lead.jpg?itok=TFxW052n)
+background-image: url(https://api.time.com/wp-content/uploads/2019/01/ruth-bader-ginsburg-supreme-court-justice-portrait.jpg)
 background-size: contain
+background-color: black
 
 # .white[NHST]
+
+<!-- RBG headshot --> 
 
 --
 
@@ -1221,7 +1316,11 @@ them is due to something other than random chance
 
 --
 
-```{r, 't-test-prep', echo=FALSE, fig.align='center', fig.width=12, fig.height=4, fig.retina=2}
+```{r}
+#| label: t-test-prep
+#| fig.align: 'center'
+#| fig.width: 12
+#| fig.height: 4
 some_data <- tibble(
   Groups = c(rep('g1', 3000), rep('g2', 3000)), 
   var = c(rnorm(n = 3000, mean = -10, sd = 20), 
@@ -1256,7 +1355,9 @@ some_data %>%
 
 ### Independent samples
 
-```{r, 'independent-samples-ex', echo=FALSE, results='asis'}
+```{r}
+#| label: independent-samples-ex
+#| results: 'asis'
 ind_samp <- tribble(
   ~'name', ~'group', ~'score', 
    'John',  'g1',      250, 
@@ -1264,9 +1365,9 @@ ind_samp <- tribble(
    'Jimmy', 'g2',      460, 
    'Jessy', 'g2',      200)
 
-mutate(ind_samp, group  = cell_spec(group, "html", color = 'white', 
-                              background = factor(group, 
-                                    c("g1", "g2"), c("blue", "#cc0033")))) %>% 
+mutate(ind_samp, group  = cell_spec(
+  group, "html", color = 'white', 
+  background = factor(group, c("g1", "g2"), c("blue", "#cc0033")))) %>%
 kable(., format = 'html', escape = F) 
 ```
 
@@ -1276,7 +1377,9 @@ kable(., format = 'html', escape = F)
 
 ### Paired samples
 
-```{r, 'paired-samples-ex', echo=FALSE, results='asis'}
+```{r}
+#| label: paired-samples-ex
+#| results: 'asis'
 
 prd_samp <- tribble(
   ~'name',     ~'test1', ~'test2', 
@@ -1299,8 +1402,9 @@ column_spec(3, color = '#cc0033')
 
 .pull-left[
 
-
-```{r, 'dummy-print', eval=FALSE}
+```{r}
+#| label: dummy-print
+#| eval: false
 ind_samp <- tribble(
   ~'name', ~'group', ~'score', 
    'John',  'g1',      250, 
@@ -1309,10 +1413,12 @@ ind_samp <- tribble(
    'Jessy', 'g2',      200)
 ```
 
-```{r, 'ind-samp-table', results='asis', echo=FALSE}
-mutate(ind_samp, group  = cell_spec(group, "html", color = 'white', 
-                              background = factor(group, 
-                                    c("g1", "g2"), c("blue", "#cc0033")))) %>% 
+```{r}
+#| label: ind-samp-table
+#| results: 'asis'
+mutate(ind_samp, group  = cell_spec(
+  group, "html", color = 'white', 
+  background = factor(group, c("g1", "g2"), c("blue", "#cc0033")))) %>%
 kable(., format = 'html', escape = F) 
 ```
 
@@ -1320,7 +1426,8 @@ kable(., format = 'html', escape = F)
 
 .pull-right[
 
-```{r, 'ind-samp', cache=FALSE, echo=TRUE}
+```{r}
+#| label: 'ind-samp'
 # t-test: # independent 2-group
 t.test(score ~ group, data = ind_samp)
 ```
@@ -1334,7 +1441,9 @@ t.test(score ~ group, data = ind_samp)
 .pull-left[
 
 
-```{r, 'paired-print-dummy', eval=FALSE}
+```{r}
+#| label: paired-print-dummy
+#| eval: false
 prd_samp <- tribble(
   ~'name',     ~'test1', ~'test2', 
    'Mike',      35,       67, 
@@ -1343,7 +1452,9 @@ prd_samp <- tribble(
    'Mitchell',  78,       91)
 ```
 
-```{r, 'prd-colored-table', results='asis', echo=FALSE}
+```{r}
+#| label: prd-colored-table
+#| results: 'asis'
 kable(prd_samp, format = 'html', escape = F) %>% 
 column_spec(2, color = 'blue') %>% 
 column_spec(3, color = '#cc0033')
@@ -1353,7 +1464,8 @@ column_spec(3, color = '#cc0033')
 
 .pull-right[
 
-```{r, 'paired-output'}
+```{r}
+#| label: paired-output
 # t-test: paired sample
 t.test(prd_samp$test1, prd_samp$test2, 
        paired = TRUE)
@@ -1367,20 +1479,21 @@ t.test(prd_samp$test1, prd_samp$test2,
 
 We can transfrom the dataframe from wide to long. 
 
-```{r, 'paired-long'}
+```{r}
+#| label: paired-long
 prd_samp_long <- prd_samp %>% 
-  gather(., key = test, val = score, -name)
+  pivot_longer(cols = -name, names_to = "test", values_to = "score")
 ```
 
-```{r, 'paired-long-table', results='asis', echo=FALSE}
+```{r}
+#| label: paired-long-table
+#| results: 'asis'
 mutate(prd_samp_long, 
-       test  = cell_spec(test, "html", color = 'black', 
-                         background = factor(test, 
-                          c("test1", "test2"), c("coral", "lightskyblue"))), 
-       name  = cell_spec(name, "html", color = 'white', 
-                         background = factor(name, 
-                          c("Mike", "Melanie", "Melissa", "Mitchell"), 
-                          c("blue", "#cc0033", "green", "lightblue")))) %>% 
+  test  = cell_spec(test, "html", color = 'black', 
+  background = factor(test, c("test1", "test2"), c("coral", "lightskyblue"))),
+  name  = cell_spec(name, "html", color = 'white', 
+  background = factor(name, c("Mike", "Melanie", "Melissa", "Mitchell"), 
+                            c("blue", "#cc0033", "green", "lightblue")))) %>%
 kable(., format = 'html', escape=FALSE)
 ```
 
@@ -1390,7 +1503,8 @@ kable(., format = 'html', escape=FALSE)
 
 Same result...
 
-```{r, 'paired-alt-results'}
+```{r}
+#| label: paired-alt-results
 # t-test: paired sample
 t.test(score ~ test, data = prd_samp_long, paired = TRUE)
 ```
@@ -1399,7 +1513,9 @@ t.test(score ~ test, data = prd_samp_long, paired = TRUE)
 layout: false
 class: middle
 
-```{r, 'nhst-decisions', results='asis', echo=FALSE}
+```{r}
+#| label: nhst-decisions
+#| results: 'asis'
 tribble(
  ~' ',       ~'  ',                ~`H0 is true`,  ~`H0 is false`,
   'Decision', 'Fail to reject H0',  'Correct',      'Type II error',
@@ -1436,12 +1552,15 @@ class: title-slide-final, left
 
 # References
 
-```{r, load_refs, echo=FALSE, message=F}
+```{r}
+#| label: load_refs
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
 ```
 
-```{r, print_refs, results='asis', echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r}
+#| label: print_refs
+#| results: 'asis'
 writeLines(ui)
 print(bib[key = "wickham2016r"], 
   .opts = list(check.entries = FALSE, 

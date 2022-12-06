@@ -10,17 +10,14 @@
     <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
     <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
     <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xef8d0e501764ab297cf28c1dc072ba3","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"b5fa576384804e399ce70ae955dd6dc5","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
     <script src="assets/editable/editable.js"></script>
-    <script src="assets/xaringanExtra-webcam/webcam.js"></script>
-    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="assets/kePrint/kePrint.js"></script>
     <link href="assets/lightable/lightable.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
@@ -29,10 +26,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## NHST
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-02-04
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-05
+]
 
 ---
 
@@ -382,17 +387,6 @@ mean of 100 with a standard deviation of 15.&lt;sup&gt;1&lt;/sup&gt;
 .pull-left[
 
 
-```r
-# Our population
-draws    &lt;- 1e+5 
-pop_mean &lt;- 100  # mu
-pop_sd   &lt;- 15   # sigma
-
-# Generate distribution
-pop_iq &lt;- rnorm(n = draws, 
-                mean = pop_mean, 
-                sd = pop_sd)
-```
 
 ]
 
@@ -444,21 +438,10 @@ background-size: 550px
 
 - Given the central limit theorem, we know that the distribution of sample means 
 will be normal with a mean of 100 and a standard deviation of 
-```15 / sqrt(36)``` = 2.5. 
+`15 / sqrt(36)` = 2.5. 
 - We can compare our own mean to this distribution as follows:
 
 
-```r
-sample_n    &lt;- 36  # Sample size
-sample_mean &lt;- 103 # xbar (trump family mean)
-dist_mean   &lt;- pop_mean
-sample_sd   &lt;- pop_sd / sqrt(sample_n)
-
-# Generate sample
-trumps &lt;- rnorm(n = draws, 
-                mean = dist_mean, 
-                sd = sample_sd)
-```
 ]
 
 .pull-right[
@@ -483,12 +466,6 @@ we typically convert our mean to a z-score as follows:
 
 Where **z** is derived by calculating the difference between the .blue[sample mean] and the &lt;font color="green"&gt;population mean&lt;/font&gt; and dividing it by the &lt;font color="purple"&gt;population standard deviation&lt;/font&gt; divided by the &lt;font color="orange"&gt;square root &lt;/font&gt;of the &lt;font color="grey"&gt;sample size&lt;/font&gt;. 
 
-
-```r
-*sample_z &lt;- (sample_mean - pop_mean) / (pop_sd / sqrt(sample_n))
-dist_z  &lt;- (trumps - pop_mean) / (pop_sd / sqrt(sample_n))
-print(sample_z) 
-```
 
 ```
 ## [1] 1.2
@@ -546,9 +523,8 @@ more in the exam?
 --
 
 
-```r
-# (score - mean) / sd
-(84 - 72) / 15.2
+```
+## [1] 0.7894737
 ```
 
 The z-score is: 0.7894737. Look this value up in z-table.
@@ -557,10 +533,6 @@ The z-score is: 0.7894737. Look this value up in z-table.
 
 ### We can do this in R
 
-
-```r
-pnorm(q = 84, mean = 72, sd = 15.2, lower.tail = FALSE) 
-```
 
 ```
 ## [1] 0.2149176
@@ -600,8 +572,10 @@ background-size: contain
 background-position: 50% 50%
 background-color: black
 
+&lt;!-- meme of karl pearson "do you have a moment to talk about NHST" --&gt; 
+
 ---
-background-image: url(https://static-19.sinclairstoryline.com/resources/media/a079367c-a58f-4130-b01b-5d5d320655d2-large16x9_genericcourtroomgavel.JPG?1531677910817)
+background-image: url(./assets/img/gavel.JPG)
 background-size: contain
 
 # .white[NHST]
@@ -625,10 +599,13 @@ hypothesis, supporting an .big[.bold[.green[alternative hypothesis]] (.green[H&l
 ]
 
 ---
-background-image: url(https://thehill.com/sites/default/files/styles/thumb_small_article/public/ginsburgruth_041017gn_lead.jpg?itok=TFxW052n)
+background-image: url(https://api.time.com/wp-content/uploads/2019/01/ruth-bader-ginsburg-supreme-court-justice-portrait.jpg)
 background-size: contain
+background-color: black
 
 # .white[NHST]
+
+&lt;!-- RBG headshot --&gt; 
 
 --
 
@@ -893,15 +870,6 @@ them is due to something other than random chance
 
 
 
-```r
-ind_samp &lt;- tribble(
-  ~'name', ~'group', ~'score', 
-   'John',  'g1',      250, 
-   'Jane',  'g1',      340, 
-   'Jimmy', 'g2',      460, 
-   'Jessy', 'g2',      200)
-```
-
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -939,18 +907,13 @@ ind_samp &lt;- tribble(
 .pull-right[
 
 
-```r
-# t-test: # independent 2-group
-t.test(score ~ group, data = ind_samp)
-```
-
 ```
 ## 
 ## 	Welch Two Sample t-test
 ## 
 ## data:  score by group
 ## t = -0.25442, df = 1.2363, p-value = 0.8349
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group g1 and group g2 is not equal to 0
 ## 95 percent confidence interval:
 ##  -1161.468  1091.468
 ## sample estimates:
@@ -968,14 +931,6 @@ t.test(score ~ group, data = ind_samp)
 
 
 
-```r
-prd_samp &lt;- tribble(
-  ~'name',     ~'test1', ~'test2', 
-   'Mike',      35,       67, 
-   'Melanie',   50,       46, 
-   'Melissa',   90,       86, 
-   'Mitchell',  78,       91)
-```
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -1014,24 +969,18 @@ prd_samp &lt;- tribble(
 .pull-right[
 
 
-```r
-# t-test: paired sample
-t.test(prd_samp$test1, prd_samp$test2, 
-       paired = TRUE)
-```
-
 ```
 ## 
 ## 	Paired t-test
 ## 
 ## data:  prd_samp$test1 and prd_samp$test2
 ## t = -1.0785, df = 3, p-value = 0.3598
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
 ##  -36.54539  18.04539
 ## sample estimates:
-## mean of the differences 
-##                   -9.25
+## mean difference 
+##           -9.25
 ```
 
 ]
@@ -1043,10 +992,6 @@ t.test(prd_samp$test1, prd_samp$test2,
 We can transfrom the dataframe from wide to long. 
 
 
-```r
-prd_samp_long &lt;- prd_samp %&gt;% 
-  gather(., key = test, val = score, -name)
-```
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -1063,24 +1008,14 @@ prd_samp_long &lt;- prd_samp %&gt;%
    &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #cc0033 !important;" &gt;Melanie&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: green !important;" &gt;Melissa&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 90 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightblue !important;" &gt;Mitchell&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;" &gt;Mike&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightskyblue !important;" &gt;test2&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #cc0033 !important;" &gt;Melanie&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #cc0033 !important;" &gt;Melanie&lt;/span&gt; &lt;/td&gt;
@@ -1089,8 +1024,18 @@ prd_samp_long &lt;- prd_samp %&gt;%
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: green !important;" &gt;Melissa&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 90 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: green !important;" &gt;Melissa&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightskyblue !important;" &gt;test2&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 86 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightblue !important;" &gt;Mitchell&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &lt;span style="     color: black !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: coral !important;" &gt;test1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 78 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: lightblue !important;" &gt;Mitchell&lt;/span&gt; &lt;/td&gt;
@@ -1107,23 +1052,18 @@ prd_samp_long &lt;- prd_samp %&gt;%
 Same result...
 
 
-```r
-# t-test: paired sample
-t.test(score ~ test, data = prd_samp_long, paired = TRUE)
-```
-
 ```
 ## 
 ## 	Paired t-test
 ## 
 ## data:  score by test
 ## t = -1.0785, df = 3, p-value = 0.3598
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
 ##  -36.54539  18.04539
 ## sample estimates:
-## mean of the differences 
-##                   -9.25
+## mean difference 
+##           -9.25
 ```
 
 ---
@@ -1146,13 +1086,13 @@ class: middle
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;font-weight: bold;vertical-align: middle !important;" rowspan="2"&gt; Decision &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Decision &lt;/td&gt;
    &lt;td style="text-align:left;width: 10em; border-right:1px solid;"&gt; Fail to reject H0 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;"&gt;Correct&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #cc0033 !important;"&gt;Type II error&lt;/span&gt; &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   
+   &lt;td style="text-align:left;font-weight: bold;"&gt; Decision &lt;/td&gt;
    &lt;td style="text-align:left;width: 10em; border-right:1px solid;"&gt; Reject H0 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #cc0033 !important;"&gt;Type I error&lt;/span&gt; &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; &lt;span style="     color: white !important;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: blue !important;"&gt;Correct&lt;/span&gt; &lt;/td&gt;
@@ -1249,6 +1189,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
