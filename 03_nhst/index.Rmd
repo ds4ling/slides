@@ -837,6 +837,7 @@ mean of 100 with a standard deviation of 15.<sup>1</sup>
 
 ```{r}
 #| label: iq-pop
+#| echo: true
 # Our population
 draws    <- 1e+5 
 pop_mean <- 100  # mu
@@ -917,6 +918,7 @@ will be normal with a mean of 100 and a standard deviation of
 
 ```{r}
 #| label: iq-sample
+#| echo: true
 sample_n    <- 36  # Sample size
 sample_mean <- 103 # xbar (trump family mean)
 dist_mean   <- pop_mean
@@ -980,6 +982,7 @@ Where **z** is derived by calculating the difference between the .blue[sample me
 
 ```{r}
 #| label: z_conversion
+#| echo: true
 {{sample_z <- (sample_mean - pop_mean) / (pop_sd / sqrt(sample_n))}}
 dist_z  <- (trumps - pop_mean) / (pop_sd / sqrt(sample_n))
 print(sample_z) 
@@ -1064,6 +1067,7 @@ more in the exam?
 
 ```{r}
 #| label: ex2-zscores
+#| echo: true
 # (score - mean) / sd
 (84 - 72) / 15.2
 ```

@@ -13,7 +13,7 @@
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"b5fa576384804e399ce70ae955dd6dc5","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x581fe9d08f84b0bbf027feea466944f","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Joseph V. Casillas, PhD
 ]
 .date[
-### Rutgers University</br>Spring 2023</br>Last update: 2022-12-05
+### Rutgers University</br>Spring 2023</br>Last update: 2022-12-06
 ]
 
 ---
@@ -387,6 +387,19 @@ mean of 100 with a standard deviation of 15.&lt;sup&gt;1&lt;/sup&gt;
 .pull-left[
 
 
+```r
+# Our population
+draws    &lt;- 1e+5 
+pop_mean &lt;- 100  # mu
+pop_sd   &lt;- 15   # sigma
+
+# Generate distribution
+pop_iq &lt;- rnorm(
+  n = draws,
+  mean = pop_mean, 
+  sd = pop_sd
+)
+```
 
 ]
 
@@ -442,6 +455,19 @@ will be normal with a mean of 100 and a standard deviation of
 - We can compare our own mean to this distribution as follows:
 
 
+```r
+sample_n    &lt;- 36  # Sample size
+sample_mean &lt;- 103 # xbar (trump family mean)
+dist_mean   &lt;- pop_mean
+sample_sd   &lt;- pop_sd / sqrt(sample_n)
+
+# Generate sample
+trumps &lt;- rnorm(
+  n = draws, 
+  mean = dist_mean, 
+  sd = sample_sd
+)
+```
 ]
 
 .pull-right[
@@ -466,6 +492,12 @@ we typically convert our mean to a z-score as follows:
 
 Where **z** is derived by calculating the difference between the .blue[sample mean] and the &lt;font color="green"&gt;population mean&lt;/font&gt; and dividing it by the &lt;font color="purple"&gt;population standard deviation&lt;/font&gt; divided by the &lt;font color="orange"&gt;square root &lt;/font&gt;of the &lt;font color="grey"&gt;sample size&lt;/font&gt;. 
 
+
+```r
+*sample_z &lt;- (sample_mean - pop_mean) / (pop_sd / sqrt(sample_n))
+dist_z  &lt;- (trumps - pop_mean) / (pop_sd / sqrt(sample_n))
+print(sample_z) 
+```
 
 ```
 ## [1] 1.2
@@ -522,6 +554,11 @@ more in the exam?
 
 --
 
+
+```r
+# (score - mean) / sd
+(84 - 72) / 15.2
+```
 
 ```
 ## [1] 0.7894737
