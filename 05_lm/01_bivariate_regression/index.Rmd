@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'The linear model:</br>.lightgrey[Bivariate regression]'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -17,28 +17,40 @@ output:
       in_header: "../../assets/partials/header.html"
 ---
 
-
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(fig.retina=2, cache=FALSE)
+#knitr::opts_knit$set(root.dir = here::here())
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.retina = 2, 
+  cache = FALSE, 
+  message = FALSE,
+  warning = FALSE
+  )
+
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: xaringan-extra-all-the-things
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "animate", "tachyons", "webcam")
+  c("tile_view", "panelset", "editable", "tachyons")
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
 source(here::here("assets", "scripts", "helpers.R"))
 ```
-
 
 class: inverse, middle
 
 <blockquote align='center' class="twitter-tweet" data-lang="de">
 <a href="https://twitter.com/ChelseaParlett/status/1352717277976694784"></a>
 </blockquote>
+
+<!-- regression the movie tweet --> 
 
 ---
 class: title-slide-section-grey, middle
@@ -131,7 +143,9 @@ $$y = 70$$
 
 .pull-left[
 
-```{r, cartesian_coord_plot1, echo=FALSE, fig.height=6}
+```{r}
+#| label: cartesian_coord_plot1
+#| fig.height: 6
 y_hashes <- data.frame(
   x = -0.15, 
   x_end = 0.15, 
@@ -146,25 +160,22 @@ x_hashes <- data.frame(
   label = 'x-axis'
 )
 
-coords_p1 <- tribble(~'x', ~'y', ~'label', 
-          1,    4,   'y-axis', 
-          4,   -1,   'x-axis') %>%
+coords_p1 <- tribble(
+  ~'x', ~'y', ~'label', 
+    1,    4,   'y-axis', 
+    4,   -1,   'x-axis') %>%
 ggplot(data = ., aes(x = x, y = y, label = label, color = label)) + 
   geom_text(size = 6, show.legend = FALSE) + 
-  scale_x_continuous(breaks = seq(-5, 5, 1), 
-                     labels = seq(-5, 5, 1)) + 
-  scale_y_continuous(breaks = seq(-5, 5, 1), 
-                     labels = seq(-5, 5, 1)) + 
+  scale_x_continuous(breaks = seq(-5, 5, 1), labels = seq(-5, 5, 1)) + 
+  scale_y_continuous(breaks = seq(-5, 5, 1), labels = seq(-5, 5, 1)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_segment(data = y_hashes, show.legend = FALSE, 
-               aes(x = x, xend = x_end, 
-                   y = y_axis, yend = y_axis, 
-                   label = NULL, color = NULL)) + 
+    aes(x = x, xend = x_end, y = y_axis, yend = y_axis, label = NULL, 
+        color = NULL)) +
   geom_segment(data = x_hashes, show.legend = FALSE, 
-               aes(x = x_axis, xend = x_axis, 
-                   y = y, yend = y_end, 
-                   label = NULL, color = NULL)) + 
+    aes(x = x_axis, xend = x_axis, y = y, yend = y_end, label = NULL, 
+        color = NULL)) +
   scale_color_brewer(palette = "Set1") + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
@@ -177,12 +188,16 @@ coords_p1
 
 .pull-right[
 
-```{r, cartesian_coord_plot2, echo=FALSE, fig.height=6}
-coords_p1 + geom_abline(intercept = 0, 
-                        slope = 1, 
-                        size = 1.5,
-                        lty = 1, 
-                        color = "darkred")
+```{r}
+#| label: cartesian_coord_plot2
+#| fig.height: 6
+coords_p1 + geom_abline(
+  intercept = 0, 
+  slope = 1, 
+  linewidth = 1.5,
+  lty = 1, 
+  color = "darkred"
+  )
 ```
 
 ]
@@ -193,24 +208,32 @@ coords_p1 + geom_abline(intercept = 0,
 
 .pull-left[
 
-```{r, cartesian_coord_plot3, echo=FALSE, fig.height=6}
-coords_p1 + geom_abline(intercept = 1, 
-                        slope = 3, 
-                        size = 1.5,
-                        lty = 1, 
-                        color = "darkred")
+```{r}
+#| label: cartesian_coord_plot3
+#| fig.height: 6
+coords_p1 + geom_abline(
+  intercept = 1, 
+  slope = 3, 
+  linewidth = 1.5,
+  lty = 1, 
+  color = "darkred"
+  )
 ```
 
 ]
 
 .pull-right[
 
-```{r, cartesian_coord_plot4, echo=FALSE, fig.height=6}
-coords_p1 + geom_abline(intercept = 2, 
-                        slope = -1, 
-                        size = 1.5,
-                        lty = 1, 
-                        color = "darkred")
+```{r}
+#| label: cartesian_coord_plot4
+#| fig.height: 6
+coords_p1 + geom_abline(
+  intercept = 2, 
+  slope = -1, 
+  linewidth = 1.5,
+  lty = 1, 
+  color = "darkred"
+  )
 ```
 
 ]
@@ -258,39 +281,37 @@ layout: true
 
 .pull-left[
 
-```{r, best_fit1, echo=FALSE, fig.height=6}
+```{r}
+#| label: best_fit1
+#| fig.height: 6
 
 coords_p2_labels <- tribble(
   ~'x', ~'y', ~'label', 
     1,    4,   'y-axis', 
-    4,   -1,   'x-axis')
+    4,   -1,   'x-axis'
+  )
 
 coords_p2_points <- tribble(
   ~'x', ~'y',
     1,    1,
     2,    2, 
-    3,    3)
+    3,    3
+  )
 
 coords_p2 <- ggplot(coords_p2_labels, aes(x = x, y = y, label = label)) + 
   geom_text(size = 6, show.legend = FALSE) + 
-  geom_point(data = coords_p2_points, 
-             aes(x = x, y = y, label = NULL), 
-             color = "blue", size = 3) + 
-  scale_x_continuous(breaks = seq(-5, 5, 1), 
-                     labels = seq(-5, 5, 1)) + 
-  scale_y_continuous(breaks = seq(-5, 5, 1), 
-                     labels = seq(-5, 5, 1)) + 
+  geom_point(data = coords_p2_points,  aes(x = x, y = y, label = NULL), 
+    color = "blue", size = 3) +
+  scale_x_continuous(breaks = seq(-5, 5, 1), labels = seq(-5, 5, 1)) + 
+  scale_y_continuous(breaks = seq(-5, 5, 1), labels = seq(-5, 5, 1)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_segment(data = y_hashes, show.legend = FALSE, 
-               aes(x = x, xend = x_end, 
-                   y = y_axis, yend = y_axis, 
-                   label = NULL, color = NULL)) + 
+    aes(x = x, xend = x_end, y = y_axis, yend = y_axis, label = NULL, 
+        color = NULL)) +
   geom_segment(data = x_hashes, show.legend = FALSE, 
-               aes(x = x_axis, xend = x_axis, 
-                   y = y, yend = y_end, 
-                   label = NULL, color = NULL)) + 
-  scale_color_brewer(palette = "Set1") + 
+    aes(x = x_axis, xend = x_axis,  y = y, yend = y_end, label = NULL, 
+        color = NULL)) + scale_color_brewer(palette = "Set1") +
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 coords_p2
@@ -302,10 +323,10 @@ coords_p2
 
 .pull-right[
 
-```{r, best_fit2, echo=FALSE, fig.height=6}
-
+```{r}
+#| label: best_fit2
+#| fig.height: 6
 coords_p2 + geom_abline(intercept = 0, slope = 1, color = "darkred")
-
 ```
 
 ]
@@ -320,16 +341,16 @@ ggplot(coords_p2_points, aes(x = x, y = y)) +
   coord_cartesian(xlim = c(0, 4), ylim = c(0, 4)) + 
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
-  geom_hline(yintercept = mean(coords_p2_points$y), 
-             lty = 1, color = 'blue', size = 1.5) +
+  geom_hline(yintercept = mean(coords_p2_points$y), lty = 1, color = 'blue', 
+    linewidth = 1.5) +
   geom_abline(intercept = 0, slope = 1, lty = 2, color = "darkred") + 
-  geom_segment(aes(x = 1, xend = 1, y = 1, yend = 2), lty = 3, size = 1) + 
-  geom_segment(aes(x = 3, xend = 3, y = 2, yend = 3), lty = 3, size = 1) + 
+  geom_segment(aes(x = 1, xend = 1, y = 1, yend = 2), lty = 3, linewidth = 1) + 
+  geom_segment(aes(x = 3, xend = 3, y = 2, yend = 3), lty = 3, linewidth = 1) + 
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
-  annotate("text", x = 0.5, y = 1, label = "(1, 1)", 
-           size = 6, color = 'darkgrey') + 
-  annotate("text", x = 3.5, y = 3, label = "(3, 3)", 
-           size = 6, color = 'darkgrey') + 
+  annotate("text", x = 0.5, y = 1, label = "(1, 1)", lwd = 6, 
+    color = 'darkgrey') +
+  annotate("text", x = 3.5, y = 3, label = "(3, 3)", lwd = 6, 
+    color = 'darkgrey') +
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 ```
@@ -338,11 +359,13 @@ ggplot(coords_p2_points, aes(x = x, y = y)) +
 
 .pull-right[
 
-```{r, best_fit_table1, results='asis', echo=FALSE}
+```{r}
+#| label: best_fit_table1
+#| results: 'asis'
 kable(coords_p2_points, format = "html")
 ```
 
-- If we tried to predict using just the .blue[mean of ```y```] we would be 
+- If we tried to predict using just the .blue[mean of `y`] we would be 
 right once, but we would miss badly for .grey[(1, 1)] and .grey[(3, 3)].
 
 - The .RUred[line of best fit] is that which reduces the distance between the 
@@ -366,7 +389,8 @@ right once, but we would miss badly for .grey[(1, 1)] and .grey[(3, 3)].
 
 .pull-left[
 
-```{r, best_fit4, echo=FALSE}
+```{r}
+#| label: best_fit4
 imperf_points1 <- tribble(
   ~'x', ~'y', ~'fitted1', ~'fitted2', 
     1,    2,    1.6,        0.75, 
@@ -379,7 +403,7 @@ ggplot(imperf_points1, aes(x = x, y = y)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 1, color = 'blue', size = 1.5, alpha = 0.3) +
+    lty = 1, color = 'blue', linewidth = 1.5, alpha = 0.3) +
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
@@ -389,9 +413,9 @@ ggplot(imperf_points1, aes(x = x, y = y)) +
 
 .pull-right[
 
-- Again, we can see that the .blue[mean of ```y```] isn't the best solution. 
-  - It can summarize the ```y``` data
-  - It cannot explain the relationship between ```x``` and ```y```.
+- Again, we can see that the .blue[mean of `y`] isn't the best solution. 
+  - It can summarize the `y` data
+  - It cannot explain the relationship between `x` and `y`.
 
 - We need a method to assess how well a given line fits the data
 
@@ -409,10 +433,9 @@ imperf_plot1 <- ggplot(imperf_points1, aes(x = x, y = y)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 1, color = 'blue', size = 1.5, alpha = 0.1) +
-  geom_abline(intercept = 0.5, slope = 1.1, 
-              lty = 2, color = "darkred") + 
-  geom_segment(aes(xend = x, yend = fitted1), lty = 3, size = 1) +
+    lty = 1, color = 'blue', linewidth = 1.5, alpha = 0.1) +
+  geom_abline(intercept = 0.5, slope = 1.1, lty = 2, color = "darkred") + 
+  geom_segment(aes(xend = x, yend = fitted1), lty = 3, linewidth = 1) +
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
@@ -421,10 +444,9 @@ imperf_plot2 <- ggplot(imperf_points1, aes(x = x, y = y)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 1, color = 'blue', size = 1.5, alpha = 0.1) +
-  geom_abline(intercept = 0.25, slope = 0.5, 
-              lty = 2, color = "darkred") + 
-  geom_segment(aes(xend = x, yend = fitted2), lty = 3, size = 1) +
+    lty = 1, color = 'blue', linewidth = 1.5, alpha = 0.1) +
+  geom_abline(intercept = 0.25, slope = 0.5, lty = 2, color = "darkred") +
+  geom_segment(aes(xend = x, yend = fitted2), lty = 3, linewidth = 1) +
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
@@ -435,10 +457,11 @@ imperf_plot3 <- ggplot(imperf_points1, aes(x = x, y = y)) +
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
   geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 1, color = 'blue', size = 1.5, alpha = 0.1) +
+    lty = 1, color = 'blue', linewidth = 1.5, alpha = 0.1) +
   geom_abline(intercept = coef(imperf_mod)[1], slope = coef(imperf_mod)[2], 
-              lty = 2, color = "darkred") + 
-  geom_segment(aes(xend = x, yend = fitted(imperf_mod)), lty = 3, size = 1) +
+    lty = 2, color = "darkred") + 
+  geom_segment(aes(xend = x, yend = fitted(imperf_mod)), lty = 3, 
+    linewidth = 1) +
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
@@ -458,10 +481,9 @@ lines (i.e., other distances).
 .pull-left[
 
 
-```{r, best_fit6, echo=FALSE}
-
+```{r}
+#| label: best_fit6
 imperf_plot1
-
 ```
 
 ]
@@ -484,22 +506,22 @@ ones, thus we square them.
 
 .pull-left[
 
-```{r, best_fit7, echo=FALSE}
-
-imperf_plot1 + annotate("text", x = 0.85, y = 1.85, label = "[", 
-                        size = 14, color = 'grey70') + 
-               geom_segment(aes(x = 2.17, xend = 2.17, y = 1, yend = 2.7), 
-                        size = 1.7, color = 'grey70') + 
-               geom_segment(aes(x = 2.1, xend = 2.19, y = 1, yend = 1), 
-                        size = 1.7, color = 'grey70') +
-               geom_segment(aes(x = 2.1, xend = 2.19, y = 2.7, yend = 2.7), 
-                        size = 1.7, color = 'grey70') +
-               geom_segment(aes(x = 3.17, xend = 3.17, y = 3, yend = 3.8), 
-                        size = 1.7, color = 'grey70') + 
-               geom_segment(aes(x = 3.1, xend = 3.19, y = 3, yend = 3), 
-                        size = 1.7, color = 'grey70') +
-               geom_segment(aes(x = 3.1, xend = 3.19, y = 3.8, yend = 3.8), 
-                        size = 1.7, color = 'grey70') 
+```{r}
+#| label: best_fit7
+imperf_plot1 + 
+  annotate("text", x = 0.85, y = 1.85, label = "[", lwd = 14, color = 'grey70') +
+  geom_segment(aes(x = 2.17, xend = 2.17, y = 1, yend = 2.7), 
+    linewidth = 1.7, color = 'grey70') +
+  geom_segment(aes(x = 2.1, xend = 2.19, y = 1, yend = 1), 
+    linewidth = 1.7, color = 'grey70') +
+  geom_segment(aes(x = 2.1, xend = 2.19, y = 2.7, yend = 2.7), 
+    linewidth = 1.7, color = 'grey70') +
+  geom_segment(aes(x = 3.17, xend = 3.17, y = 3, yend = 3.8), 
+    linewidth = 1.7, color = 'grey70') + 
+  geom_segment(aes(x = 3.1, xend = 3.19, y = 3, yend = 3), 
+    linewidth = 1.7, color = 'grey70') +
+  geom_segment(aes(x = 3.1, xend = 3.19, y = 3.8, yend = 3.8), 
+    linewidth = 1.7, color = 'grey70') 
 ```
 
 ]
@@ -508,26 +530,25 @@ imperf_plot1 + annotate("text", x = 0.85, y = 1.85, label = "[",
 
 </br>
 
-```{r, best_fit_table2, echo=FALSE, results='asis'}
+```{r}
+#| label: best_fit_table2
+#| results: 'asis'
 imperf_table1 <- imperf_points1 %>% 
   select(x_i = x, y_i = y, y_hat = fitted1) %>% 
-  mutate(., pred.error = y_i - y_hat, 
-            sqrd.error = pred.error ^ 2)
+  mutate(pred.error = y_i - y_hat, sqrd.error = pred.error ^ 2)
 
 pred_error1 <- sum(imperf_table1$pred.error)
 sqrd_error1 <- sum(imperf_table1$sqrd.error)
 
 imperf_table1 %>% 
-  add_row(., y_hat = NA) %>% 
-  add_row(., y_hat = NA, 
-             pred.error = pred_error1, 
-             sqrd.error = sqrd_error1) %>% 
-  mutate(., x_i = cell_spec(x_i, "html", 
-            color = if_else(is.na(x_i), "white", "black")), 
-            y_i = cell_spec(y_i, "html", 
-            color = if_else(is.na(y_i), "white", "black")), 
-            y_hat = cell_spec(y_hat, "html", 
-            color = if_else(is.na(y_hat), "white", "black"))) %>% 
+  add_row(y_hat = NA) %>% 
+  add_row(y_hat = NA, pred.error = pred_error1, sqrd.error = sqrd_error1) %>%
+  mutate(x_i = cell_spec(x_i, "html", 
+  color = if_else(is.na(x_i), "white", "black")), 
+  y_i = cell_spec(y_i, "html", 
+  color = if_else(is.na(y_i), "white", "black")), 
+  y_hat = cell_spec(y_hat, "html", 
+  color = if_else(is.na(y_hat), "white", "black"))) %>% 
   kable(., format = "html", escape = F) %>% 
   row_spec(4, color = "white") %>% 
   row_spec(5, color = "#cc0033")
@@ -542,7 +563,8 @@ sum of the squares of the errors*.
 
 .pull-left[
 
-```{r, best_fit8, echo=FALSE}
+```{r}
+#| label: best_fit8
 imperf_plot2
 ```
 
@@ -552,26 +574,25 @@ imperf_plot2
 
 </br>
 
-```{r, best_fit_table3, echo=FALSE, results='asis'}
+```{r}
+#| label: best_fit_table3
+#| results: 'asis'
 imperf_table2 <- imperf_points1 %>% 
   select(x_i = x, y_i = y, y_hat = fitted2) %>% 
-  mutate(., pred.error = y_i - y_hat, 
-            sqrd.error = pred.error ^ 2)
+  mutate(pred.error = y_i - y_hat, sqrd.error = pred.error ^ 2)
 
 pred_error2 <- sum(imperf_table2$pred.error)
 sqrd_error2 <- sum(imperf_table2$sqrd.error)
 
 imperf_table2 %>% 
-  add_row(., y_hat = NA) %>% 
-  add_row(., y_hat = NA, 
-             pred.error = pred_error2, 
-             sqrd.error = sqrd_error2) %>% 
-  mutate(., x_i = cell_spec(x_i, "html", 
-            color = if_else(is.na(x_i), "white", "black")), 
-            y_i = cell_spec(y_i, "html", 
-            color = if_else(is.na(y_i), "white", "black")), 
-            y_hat = cell_spec(y_hat, "html", 
-            color = if_else(is.na(y_hat), "white", "black"))) %>% 
+  add_row(y_hat = NA) %>% 
+  add_row(y_hat = NA, pred.error = pred_error2, sqrd.error = sqrd_error2) %>%
+  mutate(x_i = cell_spec(x_i, "html", 
+    color = if_else(is.na(x_i), "white", "black")), 
+    y_i = cell_spec(y_i, "html", 
+    color = if_else(is.na(y_i), "white", "black")), 
+    y_hat = cell_spec(y_hat, "html", 
+    color = if_else(is.na(y_hat), "white", "black"))) %>% 
   kable(., format = "html", escape = F) %>% 
   row_spec(4, color = "white") %>% 
   row_spec(5, color = "#cc0033")
@@ -586,19 +607,20 @@ sum of the squares of the errors*.
 
 .pull-left[
 
-```{r, best_fit9, echo=FALSE}
-
+```{r}
+#| label: best_fit9
 imperf_mod <- lm(y ~ x, data = imperf_points1)
 
 imperf_plot_bestfit <- ggplot(imperf_points1, aes(x = x, y = y)) + 
   coord_cartesian(xlim = c(0, 4), ylim = c(0, 4)) + 
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
-  geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 1, color = 'blue', size = 1.5, alpha = 0.3) +
+  geom_hline(yintercept = mean(imperf_points1$y), lty = 1, color = 'blue', 
+    linewidth = 1.5, alpha = 0.3) +
   geom_abline(intercept = coef(imperf_mod)[1], slope = coef(imperf_mod)[2], 
-              lty = 2, color = "darkred") + 
-  geom_segment(aes(xend = x, yend = fitted(imperf_mod)), lty = 3, size = 1) +
+    lty = 2, color = "darkred") + 
+  geom_segment(aes(xend = x, yend = fitted(imperf_mod)), lty = 3, 
+    linewidth = 1) +
   geom_point(color = 'blue', fill = 'grey70', pch = 21, size = 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 imperf_plot_bestfit
@@ -610,27 +632,26 @@ imperf_plot_bestfit
 
 </br>
 
-```{r, best_fit_table4, echo=FALSE, results='asis'}
+```{r}
+#| label: best_fit_table4
+#| results: 'asis'
 imperf_table3 <- imperf_points1 %>% 
   select(x_i = x, y_i = y) %>% 
-  mutate(., y_hat = fitted(imperf_mod), 
-            pred.error = y_i - y_hat, 
-            sqrd.error = pred.error ^ 2)
+  mutate(y_hat = fitted(imperf_mod), pred.error = y_i - y_hat, 
+    sqrd.error = pred.error^2)
 
 pred_error3 <- sum(imperf_table3$pred.error)
 sqrd_error3 <- sum(imperf_table3$sqrd.error)
 
 imperf_table3 %>% 
-  add_row(., y_hat = NA) %>% 
-  add_row(., y_hat = NA, 
-             pred.error = pred_error3, 
-             sqrd.error = sqrd_error3) %>% 
-  mutate(., x_i = cell_spec(x_i, "html", 
-            color = if_else(is.na(x_i), "white", "black")), 
-            y_i = cell_spec(y_i, "html", 
-            color = if_else(is.na(y_i), "white", "black")), 
-            y_hat = cell_spec(y_hat, "html", 
-            color = if_else(is.na(y_hat), "white", "black"))) %>% 
+  add_row(y_hat = NA) %>% 
+  add_row(y_hat = NA, pred.error = pred_error3, sqrd.error = sqrd_error3) %>%
+  mutate(x_i = cell_spec(x_i, "html", 
+    color = if_else(is.na(x_i), "white", "black")), 
+    y_i = cell_spec(y_i, "html", 
+    color = if_else(is.na(y_i), "white", "black")), 
+    y_hat = cell_spec(y_hat, "html", 
+    color = if_else(is.na(y_hat), "white", "black"))) %>% 
   kable(., format = "html", escape = F) %>% 
   row_spec(4, color = "white") %>% 
   row_spec(5, color = "#cc0033")
@@ -655,14 +676,17 @@ errors?
 
 ---
 
-```{r, slope_table, echo=FALSE}
+```{r}
+#| label: slope_table
 exp_table <- imperf_points1 %>% 
-  mutate(., obs = row_number()) %>% 
-  select(., obs, x, y) %>% 
-  mutate(., `x - xbar` = x - mean(x), 
-            `y - ybar` = y - mean(y), 
-            `(x-xbar)(y-ybar)` = `x - xbar` * `y - ybar`, 
-            `x - xbar^2` = `x - xbar` ^ 2)
+  mutate(obs = row_number()) %>% 
+  select(obs, x, y) %>% 
+  mutate(
+    `x - xbar` = x - mean(x), 
+    `y - ybar` = y - mean(y), 
+    `(x-xbar)(y-ybar)` = `x - xbar` * `y - ybar`, 
+    `x - xbar^2` = `x - xbar` ^ 2
+  )
 
 x_sum     <- sum(exp_table$x)
 y_sum     <- sum(exp_table$y)
@@ -673,28 +697,26 @@ xdev_sum  <- sum(exp_table$`x - xbar^2`)
 
 exp_table %>% 
   mutate(obs = as.character(obs)) %>% 
-  add_row(., obs = NA) %>% 
-  add_row(., obs = "Sum", 
-             x = x_sum, 
-             y = y_sum, 
-            `(x-xbar)(y-ybar)` = xprod_sum, 
-            `x - xbar^2` = xdev_sum) %>% 
-  add_row(., obs = "Mean", x = x_bar, y = y_bar) %>% 
-  mutate(., 
-    obs = cell_spec(obs, "html", 
-                    color = if_else(is.na(obs), "white", "black")), 
-    x = cell_spec(x, "html", 
-                  color = if_else(is.na(x), "white", "black")), 
-    y = cell_spec(y, "html", 
-                  color = if_else(is.na(y), "white", "black")), 
+  add_row(obs = NA) %>% 
+  add_row(
+    obs = "Sum", 
+    x = x_sum, 
+    y = y_sum, 
+   `(x-xbar)(y-ybar)` = xprod_sum, 
+   `x - xbar^2` = xdev_sum) %>% 
+  add_row(obs = "Mean", x = x_bar, y = y_bar) %>% 
+  mutate(
+    obs = cell_spec(obs, "html", color = if_else(is.na(obs), "white", "black")),
+    x = cell_spec(x, "html", color = if_else(is.na(x), "white", "black")),
+    y = cell_spec(y, "html", color = if_else(is.na(y), "white", "black")),
     `x - xbar` = cell_spec(`x - xbar`, "html", 
-                  color = if_else(is.na(`x - xbar`), "white", "black")), 
+      color = if_else(is.na(`x - xbar`), "white", "black")),
     `y - ybar` = cell_spec(`y - ybar`, "html", 
-                  color = if_else(is.na(`y - ybar`), "white", "black")), 
+      color = if_else(is.na(`y - ybar`), "white", "black")),
     `(x-xbar)(y-ybar)` = cell_spec(`(x-xbar)(y-ybar)`, "html", 
-                  color = if_else(is.na(`(x-xbar)(y-ybar)`), "white", "#cc0033")), 
+        color = if_else(is.na(`(x-xbar)(y-ybar)`), "white", "#cc0033")), 
     `x - xbar^2` = cell_spec(`x - xbar^2`, "html", 
-                  color = if_else(is.na(`x - xbar^2`), "white", "blue"))) %>% 
+        color = if_else(is.na(`x - xbar^2`), "white", "blue"))) %>% 
   kable(., format = "html", escape = F, align = rep("r", 7))
 ```
 
@@ -732,9 +754,12 @@ $$\hat{y} = 1 + 0.5x$$
 
 ---
 
-```{r, imperf_plot_bestfit, echo=FALSE, fig.width=14, fig.height=7, warning=FALSE}
+```{r}
+#| label: imperf_plot_bestfit
+#| fig.width: 14
+#| fig.height: 7
 imperf_plot_bestfit + 
-  annotate("text", x = 1, y = 3, size = 7, parse = T, 
+  annotate("text", x = 1, y = 3, lwd = 7, parse = T, 
     label = TeX("$\\hat{y} = 1 + 0.5x$", output = "character"))
 ```
 
@@ -742,6 +767,8 @@ imperf_plot_bestfit +
 class: middle
 
 <iframe src="https://gallery.shinyapps.io/simple_regression/" style="border:none;" height="600" width="1300"></iframe>
+
+<!-- simple regression shiny app --> 
 
 ---
 
@@ -801,7 +828,9 @@ $$mpg_i = \beta_0 + \beta_1 wt_i + \epsilon_i$$
 
 - To do this in R, we use the `lm()` function
 
-```{r, mtcars_mod, eval=FALSE}
+```{r}
+#| label: mtcars_mod
+#| eval: false
 model <- lm(mpg ~ wt, data = mtcars)
 summary(model)
 ```
@@ -818,11 +847,14 @@ parameter estimates, i.e., β<sub>0</sub> (intercept) and
 ---
 class: middle
 
-```{r, mtcars_p1, message=FALSE, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p1
+#| fig.width: 13
+#| fig.height: 7
 
 # Basic plot to demonstrate 'y ~ x'
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
-  geom_smooth(method = 'lm', se = F, color = 'white') + 
+  geom_smooth(method = 'lm', se = F, color = 'white', formula = "y ~ x") + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
@@ -832,25 +864,31 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 ---
 class: middle
 
-```{r, mtcars_p2, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p2
+#| fig.width: 13
+#| fig.height: 7
 
 # Show that mean isnt useful
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_smooth(method = 'lm', se = F, color = 'white', formula = 'y ~ x') + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
-  geom_hline(yintercept = mean(mtcars$mpg), lwd = 2, 
-             color = 'darkred') + 
-  annotate('text', x = (mean(mtcars$wt) + 1), 
-           y = (mean(mtcars$mpg) + 1), size = 6,
-           label = 'Mean mpg', color = 'darkred') +
+  geom_hline(yintercept = mean(mtcars$mpg), linewidth = 2, color = 'darkred') +
+  annotate('text', 
+    x = (mean(mtcars$wt) + 1), 
+    y = (mean(mtcars$mpg) + 1), lwd = 6,
+    label = 'Mean mpg', color = 'darkred') +
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 ```
 
 ---
 class: middle
 
-```{r, mtcars_p3, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p3
+#| fig.width: 13
+#| fig.height: 7
 
 mod <- lm(mpg ~ wt, data = mtcars)
 
@@ -858,16 +896,17 @@ mod <- lm(mpg ~ wt, data = mtcars)
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
-  geom_hline(yintercept = mean(mtcars$mpg), lwd = 2, 
-             color = 'darkred') + 
-  annotate('text', x = (mean(mtcars$wt) + 1), 
-           y = (mean(mtcars$mpg) + 1), size = 6,
-           label = 'Mean mpg', color = 'darkred') + 
-  stat_smooth(method = 'lm', se = F, color = 'darkblue', 
-              lwd = 2, fullrange = TRUE, formula = 'y ~ x') + 
-  annotate('text', x = (mean(mtcars$wt) + 1), 
-           y = (mean(mtcars$mpg) - 2), size = 6,
-           label = 'Best linear fit', color = 'darkblue') +
+  geom_hline(yintercept = mean(mtcars$mpg), linewidth = 2, color = 'darkred') +
+  annotate('text', 
+    x = (mean(mtcars$wt) + 1), 
+    y = (mean(mtcars$mpg) + 1), lwd = 6,
+    label = 'Mean mpg', color = 'darkred') + 
+  stat_smooth(method = 'lm', se = F, color = 'darkblue', lwd = 2, 
+    fullrange = TRUE, formula = 'y ~ x') + 
+  annotate('text', 
+    x = (mean(mtcars$wt) + 1), 
+    y = (mean(mtcars$mpg) - 2), lwd = 6,
+    label = 'Best linear fit', color = 'darkblue') +
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 ```
@@ -875,15 +914,16 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 ---
 class: middle
 
-```{r, mtcars_p4b, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p4b
+#| fig.width: 13
+#| fig.height: 7
 
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
-  geom_hline(yintercept = mean(mtcars$mpg), lwd = 2, 
-             color = 'darkred') + 
-  geom_segment(aes(xend = wt, y = fitted(mod), yend = mpg), 
-               color = "darkred") +
-  stat_smooth(method = 'lm', se = F, color = 'darkblue', 
-              lwd = 2, fullrange = TRUE, formula = 'y ~ x') + 
+  geom_hline(yintercept = mean(mtcars$mpg), linewidth = 2, color = 'darkred') +
+  geom_segment(aes(xend = wt, y = fitted(mod), yend = mpg), color = "darkred") +
+  stat_smooth(method = 'lm', se = F, color = 'darkblue', linewidth = 2, 
+    fullrange = TRUE, formula = 'y ~ x') +
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
@@ -893,14 +933,16 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 ---
 class: middle
 
-```{r, mtcars_p4, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p4
+#| fig.width: 13
+#| fig.height: 7
 
 ggplot(mod, aes(x = fitted(mod), y = residuals(mod))) + 
-  geom_hline(yintercept = 0, color = 'darkblue', lwd = 2) + 
-  annotate('text', x = 10, y = -1, size = 6, color = 'darkblue', 
-           label = 'Best linear fit\nLeast squares estimate\n(sideways)') +
-  geom_segment(aes(xend = fitted(mod), yend = 0), 
-               color = "darkred") +
+  geom_hline(yintercept = 0, color = 'darkblue', linewidth = 2) + 
+  annotate('text', x = 10, y = -1, lwd = 6, color = 'darkblue', 
+    label = 'Best linear fit\nLeast squares estimate\n(sideways)') +
+  geom_segment(aes(xend = fitted(mod), yend = 0), color = "darkred") +
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
@@ -921,7 +963,8 @@ ggplot(mod, aes(x = fitted(mod), y = residuals(mod))) +
 
 .right-column[
 
-```{r, mtcars_table1, echo=FALSE}
+```{r}
+#| label: mtcars_table1
 mod <- lm(mpg ~ wt, data = mtcars)
 print(summary(mod), digits = 2)
 ```
@@ -942,21 +985,25 @@ print(summary(mod), digits = 2)
 
 .right-column[
 
-```{r, mtcars_p5, echo=FALSE, fig.width=10, fig.height=4}
+```{r}
+#| label: mtcars_p5
+#| fig.width: 10
+#| fig.height: 4
 
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_vline(xintercept = 0, lty = 2, lwd = 0.8, color = 'black') + 
-  geom_hline(yintercept = coef(mod)[1], lty = 2, lwd = 0.8, color = 'black') + 
+  geom_hline(yintercept = coef(mod)[1], lty = 2, linewidth = 0.8, color = 'black') + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
-  stat_smooth(method = 'lm', se = F, color = 'darkblue', 
-              lwd = 2, fullrange = TRUE, formula = 'y ~ x') + 
+  stat_smooth(method = 'lm', se = F, color = 'darkblue', linewidth = 2, 
+    fullrange = TRUE, formula = 'y ~ x') +
   xlim(0, 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 ```
 
-```{r, mtcars_table2, echo=FALSE}
+```{r}
+#| label: mtcars_table2
 print(summary(mod)$coef, digits = 3)
 ```
 
@@ -976,25 +1023,29 @@ print(summary(mod)$coef, digits = 3)
 
 .right-column[
 
-```{r, mtcars_p6, echo=FALSE, fig.width=10, fig.height=4}
+```{r}
+#| label: mtcars_p6
+#| fig.width: 10
+#| fig.height: 4
 
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_vline(xintercept = 0, lty = 2, lwd = 0.8, color = 'black') + 
-  geom_hline(yintercept = coef(mod)[1], lty = 2, lwd = 0.8, color = 'black') + 
+  geom_hline(yintercept = coef(mod)[1], lty = 2, linewidth = 0.8, color = 'black') + 
   geom_segment(aes(x = 1, xend = 0, y = 16, yend = coef(mod)[1]), 
-               arrow = arrow(angle = 15, type = "closed"), color = 'darkred') +
+    arrow = arrow(angle = 15, type = "closed"), color = 'darkred') +
   annotate('text', x = 1.2, y = 15, label = "y-intercept = 37.29", 
-           size = 6, color = 'darkred') + 
+    lwd = 6, color = 'darkred') + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   stat_smooth(method = 'lm', se = F, color = 'darkblue', 
-              lwd = 2, fullrange = TRUE, formula = 'y ~ x') + 
+    linewidth = 2, fullrange = TRUE, formula = 'y ~ x') + 
   xlim(0, 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 ```
 
-```{r, mtcars_table3, echo=FALSE}
+```{r}
+#| label: mtcars_table3
 print(summary(mod)$coef, digits = 3)
 ```
 
@@ -1015,30 +1066,32 @@ print(summary(mod)$coef, digits = 3)
 
 .right-column[
 
-```{r, mtcars_p7, echo=FALSE, fig.width=10, fig.height=4}
+```{r}
+#| label: mtcars_p7
+#| fig.width: 10
+#| fig.height: 4
 
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
-  geom_segment(aes(x = 0, xend = 1, 
-                   y = coef(mod)[1], yend = coef(mod)[1]), 
-                   lty = 2, lwd = 0.8, color = 'black') + 
-  geom_segment(aes(x = 1, xend = 1, 
-                   y = coef(mod)[1], yend = coef(mod)[1] + coef(mod)[2]), 
-                   lty = 2, lwd = 0.8, color = 'black') + 
+  geom_segment(aes(x = 0, xend = 1, y = coef(mod)[1], yend = coef(mod)[1]),
+    lty = 2, linewidth = 0.8, color = 'black') + 
+  geom_segment(lty = 2, linewidth = 0.8, color = 'black', 
+    aes(x = 1, xend = 1, y = coef(mod)[1], yend = coef(mod)[1] + coef(mod)[2])) + 
   geom_segment(aes(x = 2, xend = 1.1, y = (coef(mod)[1]) - 1), 
-               yend = coef(mod)[1], arrow = arrow(angle = 15, type = "closed"), 
-               color = 'darkred') + 
+    yend = coef(mod)[1], arrow = arrow(angle = 15, type = "closed"), 
+    color = 'darkred') +
   annotate('text', x = 3, y = (coef(mod)[1] - 1), label = "Slope = -5.34", 
-           size = 6, color = 'darkred') + 
+    lwd = 6, color = 'darkred') + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   stat_smooth(method = 'lm', se = F, color = 'darkblue', 
-              lwd = 2, fullrange = TRUE, formula = 'y ~ x') + 
+    linewidth = 2, fullrange = TRUE, formula = 'y ~ x') + 
   xlim(0, 6) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 
 ```
 
-```{r, mtcars_table4, echo=FALSE}
+```{r}
+#| label: mtcars_table4
 print(summary(mod)$coef, digits = 3)
 ```
 
@@ -1048,7 +1101,10 @@ print(summary(mod)$coef, digits = 3)
 
 ### Understanding slopes and intercepts
 
-```{r, lm_ex1, echo=FALSE, fig.height=6, fig.width=14}
+```{r}
+#| label: lm_ex1
+#| fig.height: 6
+#| fig.width: 14
 lm_ex()
 ```
 
@@ -1058,7 +1114,10 @@ lm_ex()
 
 .pull-left[
 
-```{r, lm_ex2, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex2
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 100, slope = 10, intercept = 0, sigma = 0.5) 
 ```
 
@@ -1066,7 +1125,10 @@ lm_ex(n = 100, slope = 10, intercept = 0, sigma = 0.5)
 
 .pull-right[
 
-```{r, lm_ex3, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex3
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 100, slope = 1, intercept = 0, sigma = 0.5, 
       custAxis = TRUE, xlim = c(-3, 3), ylim = c(-30, 23)) 
 ```
@@ -1079,7 +1141,10 @@ lm_ex(n = 100, slope = 1, intercept = 0, sigma = 0.5,
 
 .pull-left[
 
-```{r, lm_ex4, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex4
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 300, slope = 10, intercept = 0, sigma = 2.5) 
 ```
 
@@ -1087,7 +1152,10 @@ lm_ex(n = 300, slope = 10, intercept = 0, sigma = 2.5)
 
 .pull-right[
 
-```{r, lm_ex5, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex5
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 300, slope = -10, intercept = 0, sigma = 2.5) 
 ```
 
@@ -1099,7 +1167,10 @@ lm_ex(n = 300, slope = -10, intercept = 0, sigma = 2.5)
 
 .pull-left[
 
-```{r, lm_ex6, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex6
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 300, slope = 1, intercept = 0, sigma = 2.5, 
       custAxis = TRUE, xlim = c(-4, 4), ylim = c(-10, 30)) 
 ```
@@ -1108,7 +1179,10 @@ lm_ex(n = 300, slope = 1, intercept = 0, sigma = 2.5,
 
 .pull-right[
 
-```{r, lm_ex7, echo=FALSE, fig.height=6, fig.width=7}
+```{r}
+#| label: lm_ex7
+#| fig.height: 6
+#| fig.width: 7
 lm_ex(n = 300, slope = 1, intercept = 20, sigma = 2.5, 
       custAxis = TRUE, xlim = c(-4, 4), ylim = c(-10, 30)) 
 ```
@@ -1144,7 +1218,8 @@ lm_ex(n = 300, slope = 1, intercept = 20, sigma = 2.5,
 ---
 
 .pull-left[
-```{r, variance_explained1, echo=FALSE}
+```{r}
+#| label: variance_explained1
 
 ggplot(imperf_points1, aes(x = x, y = y)) + 
   coord_cartesian(xlim = c(0, 4), ylim = c(0, 4)) + 
@@ -1174,28 +1249,29 @@ $\color{red}{y_i}$, $\color{blue}{\bar{y}}$, and $\color{green}{\hat{y}}$
 
 .pull-left[
 
-```{r, variance_explained2, echo=FALSE, warning=FALSE}
+```{r}
+#| label: variance_explained2
 var_exp_p1 <- imperf_points1 %>% 
-  mutate(., varexp = if_else(y == 3, 1, 0)) %>% 
-ggplot(., aes(x = x, y = y, fill = as.factor(varexp))) + 
+  mutate(varexp = if_else(y == 3, 1, 0)) %>% 
+  ggplot(., aes(x = x, y = y, fill = as.factor(varexp))) + 
   coord_cartesian(xlim = c(0, 4), ylim = c(0, 4)) + 
   geom_vline(xintercept = 0) + 
   geom_hline(yintercept = 0) + 
-  geom_hline(yintercept = mean(imperf_points1$y), 
-             lty = 2, color = 'blue', size = 1.5) +
+  geom_hline(yintercept = mean(imperf_points1$y), lty = 2, color = 'blue', 
+    lwd = 1.5) +
   geom_abline(intercept = coef(imperf_mod)[1], slope = coef(imperf_mod)[2], 
-              lty = 1, color = "darkolivegreen4", size = 1.5) + 
+    lty = 1, color = "darkolivegreen4", lwd = 1.5) + 
   geom_segment(aes(xend = imperf_points1$x, yend = fitted(imperf_mod)), 
-               lty = 3, size = 1) + 
+    lty = 3, lwd = 1) + 
   geom_point(color = 'black', pch = 21, size = 6, show.legend = F, stroke = 1.5) + 
   scale_fill_brewer(palette = "Set1", direction = -1) + 
   ds4ling_bw_theme(base_size = 20, base_family = 'Times') + 
   annotate("text", x = 1, y = 2.2, label = TeX("$y_1$", output = "character"), 
-    fontface = 5, size = 6, parse = T) + 
+    fontface = 5, lwd = 6, parse = T) + 
   annotate("text", x = 2, y = 0.8, label = TeX("$y_2$", output = "character"), 
-    fontface = 5, size = 6, parse = T) +
+    fontface = 5, lwd = 6, parse = T) +
   annotate("text", x = 3, y = 3.2, label = TeX("$y_3$", output = "character"), 
-    fontface = 5, size = 6, parse = T)
+    fontface = 5, lwd = 6, parse = T)
 
 var_exp_p1
 ```
@@ -1216,15 +1292,12 @@ $\color{green}{\hat{y}}$ = A value of y predicted by our model
 
 .pull-left[
 
-```{r, variance_explained3, echo=FALSE, warning=FALSE}
-var_exp_p1 + annotate("text", 
-                      x = 2.7, y = 2.58, 
-                      label = "{", 
-                      fontface = 5, size = 36) + 
-             annotate("text", 
-                      x = 2.1, y = 2.6, 
-                      label = "Total\ndeviation", color = "red",
-                      fontface = 1, size = 6, hjust = 0.5)
+```{r}
+#| label: variance_explained3
+var_exp_p1 + 
+  annotate("text", x = 2.7, y = 2.58, label = "{", fontface = 5, lwd = 36) +
+  annotate("text", x = 2.1, y = 2.6, label = "Total\ndeviation", 
+    color = "red", fontface = 1, lwd = 6, hjust = 0.5)
 ```
 
 ]
@@ -1249,15 +1322,12 @@ Ex. $y_3$ = 3 - 2
 
 .pull-left[
 
-```{r, variance_explained4, echo=FALSE, warning=FALSE}
-var_exp_p1 + annotate("text", 
-                      x = 3.1, y = 2.3, 
-                      label = "}", 
-                      fontface = 5, size = 18) + 
-             annotate("text", 
-                      x = 3.7, y = 2.25, color = "red", 
-                      label = "Predicted\ndeviation", 
-                      fontface = 1, size = 6)
+```{r}
+#| label: variance_explained4
+var_exp_p1 + 
+  annotate("text", x = 3.1, y = 2.3, label = "}", fontface = 5, lwd = 18) +
+  annotate("text", x = 3.7, y = 2.25, color = "red", 
+    label = "Predicted\ndeviation", fontface = 1, lwd = 6)
 ```
 
 ]
@@ -1284,15 +1354,12 @@ Ex. $y_3$ = 2.5 - 2
 
 .pull-left[
 
-```{r, variance_explained5, echo=FALSE, warning=FALSE}
-var_exp_p1 + annotate("text", 
-                      x = 2.8, y = 2.8, 
-                      label = "{", 
-                      fontface = 5, size = 18) + 
-             annotate("text", 
-                      x = 2.2, y = 2.8, color = "red", 
-                      label = "Error\ndeviation", 
-                      fontface = 1, size = 6)
+```{r}
+#| label: variance_explained5
+var_exp_p1 + 
+  annotate("text", x = 2.8, y = 2.8, label = "{", fontface = 5, lwd = 18) +
+  annotate("text", x = 2.2, y = 2.8, color = "red", 
+    label = "Error\ndeviation", fontface = 1, lwd = 6)
 ```
 
 ]
@@ -1322,33 +1389,19 @@ Ex. $y_3$ = 3 - 2.5
 
 .pull-left[
 
-```{r, variance_explained6, echo=FALSE, warning=FALSE, message=FALSE}
-
-var_exp_p1 + annotate("text", 
-                      x = 2.7, y = 2.58, 
-                      label = "{", 
-                      fontface = 5, size = 70) + 
-             annotate("text", 
-                      x = 2.1, y = 2.58, 
-                      label = "Total\ndeviation", color = "red",
-                      fontface = 2, size = 6, hjust = 0) +
-             annotate("text", 
-                      x = 3.15, y = 2.3, 
-                      label = "}", 
-                      fontface = 5, size = 35) + 
-             annotate("text", 
-                      x = 3.25, y = 2.27, color = "red", 
-                      label = "Predicted\ndeviation", 
-                      fontface = 2, size = 6, hjust = 0) +
-             annotate("text", 
-                      x = 3.15, y = 2.8, 
-                      label = "}", 
-                      fontface = 5, size = 35) + 
-             annotate("text", 
-                      x = 3.25, y = 2.8, color = "red", 
-                      label = "Error\ndeviation", 
-                      fontface = 2, size = 6, hjust = 0) + 
-             coord_cartesian(xlim = c(2, 4), ylim = c(1.5, 3.5)) 
+```{r}
+#| label: variance_explained6
+var_exp_p1 + 
+  annotate("text", x = 2.7, y = 2.58, label = "{", fontface = 5, lwd = 70) + 
+  annotate("text", x = 2.1, y = 2.58, label = "Total\ndeviation", 
+    color = "red", fontface = 2, lwd = 6, hjust = 0) + 
+  annotate("text", x = 3.15, y = 2.3, label = "}", fontface = 5, lwd = 35) + 
+  annotate("text", x = 3.25, y = 2.27, color = "red", 
+    label = "Predicted\ndeviation", fontface = 2, lwd = 6, hjust = 0) + 
+  annotate("text", x = 3.15, y = 2.8, label = "}", fontface = 5, lwd = 35) + 
+  annotate("text", x = 3.25, y = 2.8, color = "red", 
+    label = "Error\ndeviation", fontface = 2, lwd = 6, hjust = 0) + 
+  coord_cartesian(xlim = c(2, 4), ylim = c(1.5, 3.5))
 ```
 
 ]
@@ -1391,6 +1444,8 @@ class: middle, center
 
 <iframe src="https://jvcasillas.shinyapps.io/shiny_bivariate_regression/" style="border:none;" height="600" width="1300"></iframe>
 
+<!-- bivariate regression shiny app --> 
+
 ---
 layout: true
 
@@ -1408,7 +1463,9 @@ $$\hat{y} = \beta_0 + \beta_1 wt_i + \epsilon_i$$
 
 - Our `mtcars` model can be summarized as...
 
-```{r, model_print, results='asis', echo=FALSE}
+```{r}
+#| label: model_print
+#| results: 'asis'
 b <- coef(mod)
 cat(sprintf("$$mpg = %.02f + %.02f wt$$", b[1], b[2]))
 ```
@@ -1431,30 +1488,31 @@ And one that weighs 3? And 6?
 ---
 class: middle
 
-```{r, mtcars_p8, echo=FALSE, fig.width=13, fig.height=7}
+```{r}
+#| label: mtcars_p8
+#| fig.width: 13
+#| fig.height: 7
 
 ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_smooth(method = 'lm', se = F, color = 'white', formula = 'y ~ x') + 
   geom_point(size = 4) + 
   geom_point(size = 3, color = 'lightblue') + 
   stat_smooth(method = "lm", fullrange = TRUE, formula = 'y ~ x') + 
-  geom_segment(aes(x = 0, xend = 1, 
-               y = round(coef(mod)[2] * 1 + coef(mod)[1], 2), 
-               yend = round(coef(mod)[2] * 1 + coef(mod)[1], 2)), 
-               lwd = 1, lty = 3, color = "darkred") + 
-  geom_segment(aes(x = 0, xend = 3, 
-               y = round(coef(mod)[2] * 3 + coef(mod)[1], 2), 
-               yend = round(coef(mod)[2] * 3 + coef(mod)[1], 2)), 
-               lwd = 1, lty = 3, color = "darkred") + 
-  geom_segment(aes(x = 0, xend = 6, 
-               y = round(coef(mod)[2] * 6 + coef(mod)[1], 2), 
-               yend = round(coef(mod)[2] * 6 + coef(mod)[1], 2)), 
-               lwd = 1, lty = 3, color = "darkred") +   
+  geom_segment(lwd = 1, lty = 3, color = "darkred", 
+    aes(x = 0, xend = 1, y = round(coef(mod)[2] * 1 + coef(mod)[1], 2),
+        yend = round(coef(mod)[2] * 1 + coef(mod)[1], 2))) + 
+  geom_segment(lwd = 1, lty = 3, color = "darkred", 
+    aes(x = 0, xend = 3, y = round(coef(mod)[2] * 3 + coef(mod)[1], 2), 
+        yend = round(coef(mod)[2] * 3 + coef(mod)[1], 2))) + 
+  geom_segment(lwd = 1, lty = 3, color = "darkred", 
+    aes(x = 0, xend = 6, y = round(coef(mod)[2] * 6 + coef(mod)[1], 2), 
+        yend = round(coef(mod)[2] * 6 + coef(mod)[1], 2))) +
   scale_x_continuous(limits=c(0, 6.25), expand = c(0, 0)) +
   ds4ling_bw_theme(base_size = 20, base_family = 'Times')
 ```
 
 ---
+exclude: true
 layout: false
 class: inverse, middle
 
@@ -1462,18 +1520,23 @@ class: inverse, middle
 <a href="https://twitter.com/tres_gonzaga/status/910822470927523840"></a>
 </blockquote>
 
+<!-- deleted tweet --> 
+
 ---
 layout: false
 class: title-slide-final, left
 
 # References
 
-```{r, load_refs, echo=FALSE, cache=FALSE, warning=F, message=F}
+```{r}
+#| label: load_refs
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
 ```
 
-```{r, print_refs, results='asis', echo=FALSE, eval=TRUE, cache=FALSE, warning=FALSE, message=FALSE}
+```{r}
+#| label: print_refs
+#| results: 'asis'
 writeLines(ui)
 print(bib[key = "wickham2016r"], 
   .opts = list(check.entries = FALSE, 
