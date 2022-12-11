@@ -18,17 +18,21 @@ layout: true
 
 ### Multiple Causation
 
+.Large[
 - In nature: a phenomenon may have more than a single cause
 
 - In statistics: criterion variable might have more than a single 
 relevant predictor
+]
 
-- Leaving a potential cause out of the equation would constitute "omitting 
-a relevant variable"
 --
 
+.Large[
+- Leaving a potential cause out of the equation would constitute "omitting 
+a relevant variable"
   - This biases the parameter estimates for the other predictors
   - We are not always sure of what those other predictors might be!
+]
 
 ---
 
@@ -46,11 +50,15 @@ $Y = a + bX + e$
 - It is uncommon for a given response variable to be determined by a single 
 predictor.
 
+<p></p>
+
 - Most theories/models in social science predict complex relationships 
 between multiple predictors.
   - Score ~ SES + IQ
   - Duration ~ speech rate + number of syllables
   - RT ~ working memory + word position
+
+<p></p>
 
 - We can extend the linear model equation to account for multiple predictors.
 
@@ -61,15 +69,17 @@ between multiple predictors.
 .pull-left[
 
 - We want to construct the equivalent of an **OR** statement or a *logical disjunction* 
-
 - Boolean Algebra tells us that an **OR** statement implies *summing things*
 
 - In other words, all X’s do not have to be high at once to have an effect on Y
 
-- For example, you can get an overall high GRE score by scoring high in verbal 
-but (somewhat) low in math:
+<p></p>
+
+- For example, you can get an overall high GRE score by scoring high in verbal but (somewhat) low in math:
   - They have to have a high total (or sum) 
   - A sum is implicitly an **OR** statement
+
+<p></p>
 
 ]
 
@@ -99,18 +109,24 @@ background-position: 95% 50%
 
 ### Overview
 
+.Large[
 - What if we based linguistics Grad School  
 acceptances solely on GRE scores?
+]
 
 --
 
+.Large[
 - One shouldn't have to score high on all of  
 the entrance requirements, but just rank  
 high on the sum of all of them
+]
 
 --
 
+.Large[
 - We could use a weighted sum
+]
 
 ---
 
@@ -118,6 +134,7 @@ high on the sum of all of them
 
 #### Weighted sum
 
+.Large[
 - Some things are more important than others in this overall sum
 
 - For example, GRE is actually a poor predictor of graduate student success
@@ -127,6 +144,7 @@ high on the sum of all of them
 
 - We can use least squares estimation to get the b-weights with 
 the lowest SS<sub>ERROR</sub>
+]
 
 ---
 
@@ -163,6 +181,7 @@ regression weights
 
 ### Multiple predictors
 
+.Large[
 - The multiple predictors represent different hypotheses regarding what 
 might be affecting the criterion variable
 
@@ -174,6 +193,7 @@ same as the way that they each function alone
 
 - Bivariate regression is just a degenerate form ("special case") of 
 multiple regression containing only one predictor
+]
 
 ---
 
@@ -181,11 +201,13 @@ multiple regression containing only one predictor
 
 #### Summarizing so far...
 
+.Large[
 - In multiple regression we assume additivity and linearity
 
 - In Boolean Algebra, a sum (addition) represents a logical disjunction
 
 - The multiple regression "weighted sum" is a complex **OR** statement
+]
 
 --
 
@@ -318,10 +340,16 @@ background-position: 95% 20%
 
 ### Statistical control<sup>1</sup>
 
+.large[
+
+<p></p>
+
 - Not the same as .green[experimental control]
   - We are interested in some treatment
   - Some participants receive treatment, some do not
   - *Only* looking at highly proficient bilinguals (not low, med. prof.)
+
+<p></p>
 
 - We partial out the effects of predictor $X_1$ from all other predictors and 
 use this error to determine $b_1$
@@ -331,6 +359,8 @@ predictors constant
 
 - This will only work if predictors are not correlated (i.e., there *cannot* be 
 multicollinearity)
+
+]
 
 .footnote[<sup>1</sup>This is a poor choice for a name. Ask why.]
 
@@ -342,7 +372,7 @@ background-size: 450px
 ### Conceptual understanding
 
 .pull-left[
-
+.Large[
 - MRC is much more difficult to conceptualize than the bivariate linear 
 regression
 
@@ -350,12 +380,17 @@ regression
 x<sub>2</sub>) we are fitting a hyperplane to a three dimensional space
 
 - More variables = more complexity
-
+]
 ]
 
 ---
+class: middle
 
-```{r, additive_plots, echo=FALSE, fig.width=14, fig.height=5}
+```{r}
+#| label: additive_plots
+#| fig.width: 14
+#| fig.height: 5
+
 p1 <- ggplot(mtcars, aes(x = wt, y = mpg)) + 
   geom_point() + 
   geom_smooth(method = lm, formula = "y ~ x") +
@@ -384,39 +419,42 @@ background-color: black
 
 ---
 
-```{r, additive_3d, echo=FALSE}
+```{r}
+#| label: additive_3d
 
 # Left and right sides
 plot3D::scatter3D(x, y, z, 
-    pch = 21, cex = 1, expand = 0.75, colkey = F,
-    theta = 0, phi = 5, ticktype = "detailed",
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    col.panel ="steelblue")
+  pch = 21, cex = 1, expand = 0.75, colkey = F,
+  theta = 0, phi = 5, ticktype = "detailed",
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  col.panel ="steelblue")
 
 plot3D::scatter3D(x, y, z, 
-    pch = 21, cex = 1,  expand = 0.75, colkey = F,
-    theta = 90, phi = 5, ticktype = "detailed",
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    col.panel ="steelblue")
+  pch = 21, cex = 1,  expand = 0.75, colkey = F,
+  theta = 90, phi = 5, ticktype = "detailed",
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  col.panel ="steelblue")
 ```
 
 ---
 
-```{r, additive_3d_surface, echo=FALSE}
+```{r}
+#| label: additive_3d_surface
+
 # Left and right sides with regression surface
 plot3D::scatter3D(x, y, z, 
-    pch = 21, cex = 1, expand = 0.75, colkey = F,
-    theta = 0, phi = 5, ticktype = "detailed",
-    xlab = "wt", ylab = "drat", zlab = "mpg",
-    surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
-                facets = NA, col = 'grey60'))
+  pch = 21, cex = 1, expand = 0.75, colkey = F,
+  theta = 0, phi = 5, ticktype = "detailed",
+  xlab = "wt", ylab = "drat", zlab = "mpg",
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA, col = 'grey60'))
 
 plot3D::scatter3D(x, y, z, 
-    pch = 21, cex = 1,  expand = 0.75, colkey = F,
-    theta = 90, phi = 5, ticktype = "detailed",
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
-                facets = NA, col = 'grey60'))
+  pch = 21, cex = 1,  expand = 0.75, colkey = F,
+  theta = 90, phi = 5, ticktype = "detailed",
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA, col = 'grey60'))
 ```
 
 ---
@@ -434,7 +472,8 @@ layout: true
 
 .pull-left[
 
-```{r, fit_mrc, echo=FALSE}
+```{r}
+#| label: fit_mrc
 mod <- lm(mpg ~ wt + drat, data = mtcars)
 summary(mod)
 ```
@@ -443,7 +482,9 @@ summary(mod)
 
 .pull-right[
 
-```{r, fit_mrc_fake, eval=FALSE}
+```{r}
+#| label: fit_mrc_fake
+#| eval: false
 mod <- lm(mpg ~ wt + drat, data = mtcars) #<<
 summary(mod)
 ```
@@ -454,13 +495,14 @@ summary(mod)
 
 ### CIs and significance tests
 
-```{r, fit_mrc_print, echo=FALSE}
+```{r}
+#| label: fit_mrc_print
 cis <- confint(mod)
 summary(mod) %>% 
   tidy(.) %>% 
   mutate(., `95% LB` = cis[, 1], `95% UB` = cis[, 2]) %>%
   dplyr::select(., ` ` = term, beta = estimate, SE = std.error, 
-                `95% LB`, `95% UB`, `t-value` = statistic, p.value) %>% 
+    `95% LB`, `95% UB`, `t-value` = statistic, p.value) %>% 
   kable(., format = 'html', digits = 2) %>% 
   kable_styling(., font_size = 22)
 ```
@@ -494,16 +536,19 @@ b-weight
 
 ### Coefficient of multiple determination: R<sup>2</sup>
 
+.large[
 - Adding variables will always explain more variance
 
 - Not necessarily better
 
 - There is an adjustment for exhausting degrees of freedom
+]
 
 --
 
 ### Note
 
+.large[
 - .green[r]: pearson product moment correlation
 
 - .purple[r<sup>2</sup>]: coefficient of determination; variance explained 
@@ -511,6 +556,7 @@ b-weight
 
 - .RUred[R<sup>2</sup>]: coefficient of multiple determination; variance 
 explained (MRC)
+]
 
 ---
 
@@ -522,7 +568,8 @@ $$Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e$$
 
 - Our `mtcars` model can be summarized as...
 
-```{r, echo=F}
+```{r}
+#| label: print-eq
 extract_eq(mod, wrap = T, use_coefs = T, fix_signs = F, ital_vars = T)
 ```
 
@@ -688,6 +735,7 @@ adding up the effects of each acting separately:
 
 ### Non-additivity of effects
 
+.Large[
 - You cannot add the effect of alcohol to the effect of drugs to predict the effect "alcohol AND drugs"
 
 - Because you get an extra effect (a boosting effect) by combing them
@@ -697,6 +745,7 @@ adding up the effects of each acting separately:
 - In principle, could be either more or less effective
 
 - You include this multiplicative **AND** term (A\*D) in *ADDITION* to the other terms in the model
+]
 
 ---
 
@@ -718,7 +767,9 @@ $$Y = a_{0} + b_{1}X_{1} + b_{2}X_{2} + (b_{1}X_{1} \times b_{2}X_{2}) + e$$
 
 .pull-right[
 
-```{r, nonadditive_mod}
+```{r}
+#| label: nonadditive_mod
+#| comment: ""
 m <- lm(mpg ~ wt + drat + wt:drat, data = mtcars) #<<
 summary(m)
 ```
@@ -729,87 +780,96 @@ summary(m)
 
 ### Visualization
 
+.Large[
 - Including an interaction affects the hyperplane fit to the data
+]
 
 ---
 background-color: black
 
-```{r additive_interaction, echo=FALSE}
+```{r}
+#| label: additive_interaction
 # compare additive and int models
 par(bg = 'black')
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 50, phi = 10,  colkey = F, tick.col = 'white', 
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F, tick.col = 'white', 
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA))
 
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 50, phi = 10,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 ```
 
 ---
 
-```{r additive_interaction2, echo=FALSE}
+```{r}
+#| label: additive_interaction2
+
 # compare additive and int models
 #par(bg = 'black')
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 50, phi = 10,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA))
 
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 50, phi = 10,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 ```
 
 ---
 background-color: black
 
-```{r additive_interaction3, echo=FALSE}
+```{r}
+#| label: additive_interaction3
+
 # compare additive and int models
 par(bg = 'black')
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 0, phi = 5,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 0, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 90, phi = 5,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 90, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 ```
 
 ---
 
-```{r additive_interaction4, echo=FALSE}
+```{r}
+#| label: additive_interaction4
+
 # compare additive and int models
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 0, phi = 5,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 0, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 
 plot3D::scatter3D(x, y, z, 
-    pch = 1, cex = 0, bty = "bl", expand = 0.75,
-    theta = 90, phi = 5,  colkey = F,
-    xlab = "wt", ylab = "drat", zlab = "mpg", 
-    surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
-                facets = NA))
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 90, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
 ```
 
 ---
@@ -820,15 +880,19 @@ class: title-slide-section-red
 
 ### What we've seen so far
 
+.Large[
 - Bivariate regression
 - MRC
 - Additive effects
 - Interactions (multiplicative effects)
+]
 
 ### What's left
 
+.Large[
 - Assumptions
 - Model specification
 - Alpha slippage
 - Empirical selection of variables
 - Reporting results
+]

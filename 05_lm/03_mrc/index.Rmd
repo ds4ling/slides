@@ -129,8 +129,11 @@ and math (age is a confound)
 
 ---
 
+## Some data
+
 ```{r}
 #| label: mrc-math
+#| comment: ""
 glimpse(mrc_ex_data)
 sample_n(mrc_ex_data, 10) %>% 
   mutate_if(is.numeric, round, digits = 2) %>% 
@@ -143,6 +146,8 @@ class: middle
 .pull-left[
 ```{r}
 #| label: mrc-math-height-age-mod
+#| comment: ""
+#| echo: true
 lm(height ~ age_c, mrc_ex_data) %>% summary()
 ```
 ]
@@ -170,6 +175,7 @@ class: middle
 ```{r}
 #| label: mrc-math-score-age-mod
 #| echo: true
+#| comment: ""
 lm(score ~ age_c, mrc_ex_data) %>% summary()
 ```
 ]
@@ -199,6 +205,7 @@ class: middle
 ```{r}
 #| label: mrc-math-score-height-mod
 #| echo: true
+#| comment: ""
 lm(score ~ height_c, mrc_ex_data) %>% summary()
 ```
 ]
@@ -233,6 +240,8 @@ class: middle
 
 ```{r}
 #| label: mrc-ex-adj-age-mod
+#| echo: true
+#| comment: ""
 lm(score ~ height_c + age_c, mrc_ex_data) %>% summary
 ```
 ]
