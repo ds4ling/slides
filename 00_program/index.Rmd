@@ -71,7 +71,6 @@ Specifically, the focus is on developing an in depth understanding of the experi
 Students will learn advanced techniques used to explore, tidy, visualize, and analyze data. 
 We will also focus on how to make the aforementioned procedures reproducible and shareable. Students will develop a foundation in programming in R, as well as learning the most common tools at the disposal of todays data scientist (i.e. GitHub, Knitr, etc.). 
 No prior experience with statistics or programming is necessary.
-Pre-requisites: SPAN 361 or 363
 
 ---
 layout: true
@@ -173,7 +172,7 @@ Aside from creating an online presentation, students will also be required to re
 ### Midterm exam
 
 
-There will be an in-class exam during the 13th week of the semester (April 17th). 
+There will be an in-class exam during the 13th week of the semester (April 24th). 
 In reality the midterm exam is just another programming assignment that is worth more points. 
 Details will be provided beforehand. 
 
@@ -334,7 +333,7 @@ background-position: 9% 15%
 
 # Data Science for Linguists
 
-## https://ds4ling.github.io
+## www.ds4ling.jvcasillas.com
 
 ### Save the link to the website in your favorites
 
