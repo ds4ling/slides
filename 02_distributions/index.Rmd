@@ -261,6 +261,10 @@ class: title-slide-section-grey, middle
 # Distributions
 
 ---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_pop_v_sample.png)
+background-size: contain
+
+---
 layout: true
 
 # Distributions
