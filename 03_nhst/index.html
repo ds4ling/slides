@@ -13,7 +13,7 @@
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x581fe9d08f84b0bbf027feea466944f","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"d3d1947462d549f7bd0c2431d5aba974","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Joseph V. Casillas, PhD
 ]
 .date[
-### Rutgers University</br>Spring 2023</br>Last update: 2022-12-06
+### Rutgers University</br>Spring 2023</br>Last update: 2023-02-01
 ]
 
 ---
@@ -80,11 +80,15 @@ z-scores): .blue[*N*(0, 1)]
 
 --
 
+&lt;p&gt;&lt;/p&gt;
+
 - Same characteristics as a non-standardized normal:
   - 68% of the data fall within 1σ of µ
   - 95% of the data fall within 2σ of µ
   - 99.7% of the data fall within 3σ of µ
   - **Sum of area under the curve = 1**
+
+&lt;p&gt;&lt;/p&gt;
 
 --
 
@@ -601,7 +605,7 @@ class: middle, center
 
 class: title-slide-section-grey, middle
 
-# Hypothesis testing
+# Null hypothesis significance testing
 
 ---
 background-image: url(https://i.imgflip.com/2sdkd6.jpg)
@@ -725,6 +729,19 @@ background-image: url(https://larspsyll.files.wordpress.com/2014/07/i_do_not_thi
 background-size: contain
 
 ---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png)
+background-size: 500px
+background-position: 20% 50%
+count: false
+
+---
+
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png), url(https://www.jvcasillas.com/media/rstats/memes/rstats_nhst3.png)
+background-size: 500px, contain
+background-position: 20% 50%, 100% 50%
+count: false
+
+---
 class: middle
 background-color: black
 background-image: url(https://www.freepngimg.com/thumb/arnold_schwarzenegger/29411-8-arnold-schwarzenegger-file.png)
@@ -735,6 +752,11 @@ background-position: 100% 50%
 
 ### .lightgrey[The probability of (correctly) rejecting] 
 ### **H&lt;sub&gt;0&lt;/sub&gt;** .lightgrey[when] .yellow[H&lt;sub&gt;1&lt;/sub&gt;] .lightgrey[is true.] 
+
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/power.png)
+background-size: contain
+count: false
 
 ---
 background-image: url("../assets/img/pensar2.jpg")
@@ -752,20 +774,28 @@ something
 - In other words, we hypothesize something about a .blue[population] or about 
 the relationship between two .blue[populations]
 
+&lt;p&gt;&lt;/p&gt;
+
 - What we hypothesize is considered an *alternative* to a *null* hypothesis
 	- **Null hypothesis** (H&lt;sub&gt;0&lt;/sub&gt;): the difference between the 
 	populations = 0
 	- .blue[Alternative hypothesis] (H&lt;sub&gt;1&lt;/sub&gt;): the difference 
 	between the populations `\(\neq\)` 0
 
+&lt;p&gt;&lt;/p&gt;
+
 - We determine which statistical test is most appropriate according to the 
 nature of our data
 
 - Set alpha
 
+&lt;p&gt;&lt;/p&gt;
+
 - Conduct relevant test and...
   - reject the null hypothesis (if there is sufficient evidence)
   - fail to reject the null hypothesis 
+
+&lt;p&gt;&lt;/p&gt;
 
 ???
 
@@ -776,6 +806,16 @@ Theory Falsification
 - Research should be designed in a way that subjects theory to risk of falsification, it should attempt to disconfirm the theory
 - It must be possible at least in principle to disconfirm a scientific theory
 
+
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_nhst1.png)
+background-size: contain
+count: false
+
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_nhst2.png)
+background-size: contain
+count: false
 
 ---
 background-image: url("../assets/img/confundido.png")
