@@ -39,3 +39,33 @@ library("tiktokrmd")
 
 # set seed for reproducibility
 set.seed(12345)
+
+
+# Plotting functions ----------------------------------------------------------
+
+# TJ Mahr's self documenting function
+# https://www.tjmahr.com/self-titled-ggplot2-plots/
+
+self_document <- function(expr) {
+  monofont <- ifelse(
+    extrafont::choose_font("Consolas") == "", 
+    "mono", 
+    "Consolas"
+  )
+  
+  p <- rlang::enexpr(expr)
+  title <- rlang::expr_text(p) |> 
+    grkstyle::grk_style_text() |> 
+    paste0(collapse = "\n")
+  
+  patchwork::wrap_elements(eval(p)) + 
+    patchwork::plot_annotation(
+      title = title, 
+      theme = theme(
+        plot.title = element_text(
+          family = monofont, hjust = 0, size = rel(.9), 
+          margin = margin(0, 0, 5.5, 0, unit = "pt")
+        )
+      )
+    )
+}
