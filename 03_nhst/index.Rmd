@@ -1083,7 +1083,8 @@ The z-score is: `r (84 - 72) / 15.2`. Look this value up in z-table.
 ### We can do this in R
 
 ```{r}
-#} label: ex2-pnorm
+#| label: ex2-pnorm
+#| echo: true
 pnorm(q = 84, mean = 72, sd = 15.2, lower.tail = FALSE) 
 ```
 
