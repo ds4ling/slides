@@ -1243,7 +1243,6 @@ background-position: 20% 50%
 count: false
 
 ---
-
 background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png), url(https://www.jvcasillas.com/media/rstats/memes/rstats_nhst3.png)
 background-size: 500px, contain
 background-position: 20% 50%, 100% 50%
@@ -1322,6 +1321,11 @@ count: false
 
 ---
 background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_nhst2.png)
+background-size: contain
+count: false
+
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues_wrong.png)
 background-size: contain
 count: false
 
