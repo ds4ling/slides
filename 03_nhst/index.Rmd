@@ -1250,6 +1250,18 @@ background-position: 20% 50%, 100% 50%
 count: false
 
 ---
+layout: false
+class: middle
+count: false
+
+```{r}
+#| label: tiktok1
+t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6821961902101466374"
+t1 <- tiktok_embed(t1_url)
+t1
+```
+
+---
 class: middle
 background-color: black
 background-image: url(https://www.freepngimg.com/thumb/arnold_schwarzenegger/29411-8-arnold-schwarzenegger-file.png)
