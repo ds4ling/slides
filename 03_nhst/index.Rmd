@@ -1254,11 +1254,38 @@ layout: false
 class: middle
 count: false
 
+.pull-left[
 ```{r}
 #| label: tiktok1
 t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6821961902101466374"
 t1 <- tiktok_embed(t1_url)
 t1
+
+```
+]
+
+.pull-right[
+```{r}
+#| label: tiktok2
+t2_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/7073346137440439598"
+t2 <- tiktok_embed(t2_url)
+t2
+```
+]
+
+<!-- trending towards significance tiktoks -->
+
+---
+layout: false
+class: middle
+count: false
+
+```{r}
+#| label: tiktok3
+t3_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/7073335593823898923"
+t3 <- tiktok_embed(t3_url)
+t3
+
 ```
 
 ---
