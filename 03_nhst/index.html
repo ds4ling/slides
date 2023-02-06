@@ -13,7 +13,7 @@
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x71b05bd77c348c08f1b455079aa2aab","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x831622b13d740e7b9b4f7725354f409","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -1026,6 +1026,11 @@ them is due to something other than random chance
 .pull-right[
 
 
+```r
+# t-test: # independent 2-group
+t.test(score ~ group, data = ind_samp)
+```
+
 ```
 ## 
 ## 	Welch Two Sample t-test
@@ -1087,6 +1092,12 @@ them is due to something other than random chance
 
 .pull-right[
 
+
+```r
+# t-test: paired sample
+t.test(prd_samp$test1, prd_samp$test2, 
+       paired = TRUE)
+```
 
 ```
 ## 
@@ -1170,6 +1181,11 @@ We can transfrom the dataframe from wide to long.
 
 Same result...
 
+
+```r
+# t-test: paired sample
+t.test(score ~ test, data = prd_samp_long, paired = TRUE)
+```
 
 ```
 ## 

@@ -1516,6 +1516,7 @@ kable(., format = 'html', escape = F)
 
 ```{r}
 #| label: 'ind-samp'
+#| echo: true
 # t-test: # independent 2-group
 t.test(score ~ group, data = ind_samp)
 ```
@@ -1554,6 +1555,7 @@ column_spec(3, color = '#cc0033')
 
 ```{r}
 #| label: paired-output
+#| echo: true
 # t-test: paired sample
 t.test(prd_samp$test1, prd_samp$test2, 
        paired = TRUE)
@@ -1593,6 +1595,7 @@ Same result...
 
 ```{r}
 #| label: paired-alt-results
+#| echo: true
 # t-test: paired sample
 t.test(score ~ test, data = prd_samp_long, paired = TRUE)
 ```
