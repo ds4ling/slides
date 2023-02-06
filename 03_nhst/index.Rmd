@@ -1632,11 +1632,23 @@ tribble(
 </blockquote>
 
 ---
+background-image: url( https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error1.png)
+background-size: contain
+count: false
+
+---
+background-image: url( https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error2.png)
+background-size: contain
+count: false
+
+---
+count: false
 
 <iframe src="https://jvcasillas.shinyapps.io/r_for_linguists/#section-data-structures" style="border:none;" height="800" width="100%"></iframe>
 
 ---
 class: title-slide-final, left
+count: false
 
 # References
 
