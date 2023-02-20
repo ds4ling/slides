@@ -140,10 +140,17 @@ pure reason
 group
 - Category membership defined by having a specific feature that members of 
 other groups don’t possess
-  - Birds have wings, but monkeys don’t, so only winged animals could be 
+  - Birds have wings, but monkeys don't, so only winged animals could be 
   considered birds
 
 ]
+
+???
+
+Teacher (Plato) and Pupil (Aristotle)
+
+– had very different points of view on certain things, such as the nature of categories
+– Like Obi-Wan and Darth Vader
 
 ---
 class: middle

@@ -13,7 +13,7 @@
     <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x5f9bed6ce8846a28058958353271684","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xc26aebb171842768a041bba939cf953","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 ### Joseph V. Casillas, PhD
 ]
 .date[
-### Rutgers University</br>Spring 2023</br>Last update: 2022-12-06
+### Rutgers University</br>Spring 2023</br>Last update: 2023-02-19
 ]
 
 ---
@@ -178,6 +178,9 @@ assume x = 2. Solve for y.
 ---
 layout: false
 class: title-slide-section-grey, middle
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_general.png)
+background-position: 95% 50%
+background-size: 450px
 
 # The linear model
 
@@ -206,6 +209,7 @@ layout: true
 
 - Our independent variables are called **predictors**
 
+&lt;p&gt;&lt;/p&gt;
 - The intercept and the slope are *coefficients*
   - These are the meat and potatoes of the linear model
   - They are also called *parameter estimates*
@@ -274,10 +278,14 @@ right once, but we would miss badly for .grey[(1, 1)] and .grey[(3, 3)].
 
 ### Measurement error
 
+&lt;p&gt;&lt;/p&gt;
+
 - We rarely (never) find a perfectly linear relationship in our data
   - Most relationships are not perfectly linear
   - Our measurements are not perfect (VOT, formants, durations, RT)
   - There is error in everything (normal distribution)
+
+&lt;p&gt;&lt;/p&gt;
 
 - We account for .RUred[error] in our models
 
@@ -293,9 +301,13 @@ right once, but we would miss badly for .grey[(1, 1)] and .grey[(3, 3)].
 
 .pull-right[
 
+&lt;p&gt;&lt;/p&gt;
+
 - Again, we can see that the .blue[mean of `y`] isn't the best solution. 
   - It can summarize the `y` data
   - It cannot explain the relationship between `x` and `y`.
+
+&lt;p&gt;&lt;/p&gt;
 
 - We need a method to assess how well a given line fits the data
 
@@ -1110,8 +1122,9 @@ the negative values
 ]
 
 ---
-background-image: url(./assets/img/nash.gif)
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_office.png)
 background-position: 90% 50%
+background-size: 450px
 
 &lt;div style="float:left"&gt;
 &lt;h3&gt;$$R^2 = \frac{SS_{predicted}}{SS_{total}}$$&lt;/h3&gt;
@@ -1137,6 +1150,9 @@ layout: true
 # Bivariate regression
 
 ---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_tellmey.png)
+background-position: 90% 10%
+background-size: 300px
 
 ### Making predictions
 
@@ -1171,15 +1187,10 @@ class: middle
 &lt;img src="index_files/figure-html/mtcars_p8-1.png" width="936" /&gt;
 
 ---
-exclude: true
 layout: false
 class: inverse, middle
-
-&lt;blockquote align='center' class="twitter-tweet" data-lang="de"&gt;
-&lt;a href="https://twitter.com/tres_gonzaga/status/910822470927523840"&gt;&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- deleted tweet --&gt; 
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_knowledge.png)
+background-size: contain
 
 ---
 layout: false

@@ -241,6 +241,9 @@ coords_p1 + geom_abline(
 ---
 layout: false
 class: title-slide-section-grey, middle
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_general.png)
+background-position: 95% 50%
+background-size: 450px
 
 # The linear model
 
@@ -269,6 +272,7 @@ layout: true
 
 - Our independent variables are called **predictors**
 
+<p></p>
 - The intercept and the slope are *coefficients*
   - These are the meat and potatoes of the linear model
   - They are also called *parameter estimates*
@@ -376,10 +380,14 @@ right once, but we would miss badly for .grey[(1, 1)] and .grey[(3, 3)].
 
 ### Measurement error
 
+<p></p>
+
 - We rarely (never) find a perfectly linear relationship in our data
   - Most relationships are not perfectly linear
   - Our measurements are not perfect (VOT, formants, durations, RT)
   - There is error in everything (normal distribution)
+
+<p></p>
 
 - We account for .RUred[error] in our models
 
@@ -413,9 +421,13 @@ ggplot(imperf_points1, aes(x = x, y = y)) +
 
 .pull-right[
 
+<p></p>
+
 - Again, we can see that the .blue[mean of `y`] isn't the best solution. 
   - It can summarize the `y` data
   - It cannot explain the relationship between `x` and `y`.
+
+<p></p>
 
 - We need a method to assess how well a given line fits the data
 
@@ -1425,8 +1437,9 @@ $$SS_{error} = \sum (y_i - \hat{y}_i)^2$$
 ]
 
 ---
-background-image: url(./assets/img/nash.gif)
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_office.png)
 background-position: 90% 50%
+background-size: 450px
 
 <div style="float:left">
 <h3>$$R^2 = \frac{SS_{predicted}}{SS_{total}}$$</h3>
@@ -1452,6 +1465,9 @@ layout: true
 # Bivariate regression
 
 ---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_tellmey.png)
+background-position: 90% 10%
+background-size: 300px
 
 ### Making predictions
 
@@ -1512,15 +1528,10 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 ```
 
 ---
-exclude: true
 layout: false
 class: inverse, middle
-
-<blockquote align='center' class="twitter-tweet" data-lang="de">
-<a href="https://twitter.com/tres_gonzaga/status/910822470927523840"></a>
-</blockquote>
-
-<!-- deleted tweet --> 
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/rstats_knowledge.png)
+background-size: contain
 
 ---
 layout: false
