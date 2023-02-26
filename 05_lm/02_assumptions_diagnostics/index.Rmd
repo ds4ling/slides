@@ -66,29 +66,30 @@ layout: true
 
 ---
 background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png)
-background-size: 400px
+background-size: 350px
 background-position: 95% 50%
 
 ### Statistical assumptions
 
+.Large[
 - Every model has assumptions that need  
 to be met in  order for the model to work  
 properly and be trustworthy
 
 - It is not standard practice to report  
 whether all assumptions have been met when  
-writing up your results... 
---
-.RUred[but it should be].
+writing up your results... .RUred[but it should be].
 
 - Make a habit of assessing your models and  
 incorporating the relevant information in  
 your writing. 
+]
 
 ---
 
 ### Regression assumptions
 
+.Large[
 We can break the assumptions up into 3 areas: 
 
 1. Model specification
@@ -96,11 +97,13 @@ We can break the assumptions up into 3 areas:
 2. Measurement error
 
 3. The error term
+]
 
 ---
 
 ### Model specification
 
+.Large[
 There should be no specification error
 
 - The relationship between x<sub>i</sub> and y<sub>i</sub> is linear: 
@@ -109,6 +112,7 @@ $y_i = \alpha + \beta x_i + \epsilon _i$
 - Including irrelevant variables 🤷🏽
 
 - Omitting relevant variables 👎🏽
+]
 
 --
 
@@ -122,7 +126,7 @@ background-position: 95% 50%
 ### Including an irrelevant variable (sin of commission): 🤷🏽
 
 .pull-left[
-
+.large[
 - Similar to a Type I error
 
 - Adds to the error of prediction, but it does not bias the parameter estimates 
@@ -132,7 +136,7 @@ the irrelevant variable
 
 - Though the parameter estimates won't be biased, the standard error terms 
 around each beta weight will increase (this affects t-ratio and p-value)
-
+]
 ]
 
 ---
@@ -143,7 +147,7 @@ background-position: 95% 50%
 ### Including an irrelevant variable (sin of commission): 🤷🏽
 
 .pull-left[
-
+.large[
 - For example, imagine a situation in which you model employee performance as a 
 function of a bunch of good predictors
 
@@ -151,7 +155,7 @@ function of a bunch of good predictors
 estimates
 
 - You are considering something that doesn't matter, i.e., astrology
-
+]
 ]
 
 ---
@@ -162,7 +166,7 @@ background-position: 95% 50%
 ### Excluding a relevant variable (sin of omission): 👎🏽
 
 .pull-left[
-
+.Large[
 - Similar to a Type II error
 
 - This is much more serious!
@@ -170,7 +174,7 @@ background-position: 95% 50%
 - This will bias your parameter estimates
 
 - You are leaving something important out (variance left unexplained)
-
+]
 ]
 
 ---
@@ -181,7 +185,7 @@ background-position: 95% 50%
 ### Excluding a relevant variable (sin of omission): 👎🏽
 
 .pull-left[
-
+.large[
 - For example, if you want to model RT as a function of working memory but you 
 forget to look at age
 
@@ -191,7 +195,7 @@ forget to look at age
 
 - You could be either overestimating or underestimating the other regression 
 parameters
-
+]
 ]
 
 ---
@@ -223,9 +227,11 @@ fix this problem
 
 ### Measurement error
 
+.Large[
 There should be no measurement error
 
 - Variables x<sub>i</sub> and y<sub>i</sub> should be as accurate as possible
+]
 
 --
 
@@ -237,6 +243,7 @@ There should be no measurement error
 
 #### The error term should meet the following characteristics...
 
+.large[
 - Mean = 0
 
 - Homoskedasticity
@@ -246,6 +253,7 @@ There should be no measurement error
 - Predictor not correlated with error term
 
 - Error is normally distributed 
+]
 
 ---
 
@@ -253,9 +261,11 @@ There should be no measurement error
 
 #### Mean of 0
 
+.Large[
 - Slope estimates will not be biased
 
 - Intercept can be biased
+]
 
 --
 
@@ -267,6 +277,7 @@ There should be no measurement error
 
 #### Homoskedasticity
 
+.large[
 - Variance around predicted values should be consistent
 
 - Common simple inspection is to look at scatter plot of fitted vs. x-values 
@@ -277,6 +288,7 @@ There should be no measurement error
 - Will not bias parameter estimates
 
 - Will increase confidence intervals, thus affects t-ratios and p-values
+]
 
 --
 
@@ -284,10 +296,21 @@ There should be no measurement error
 
 ---
 
+```{r}
+#| label: tiktok1
+t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/7076276399505558827"
+t1 <- tiktok_embed(t1_url)
+t1
+
+```
+
+---
+
 ### About the error term
 
 #### No autocorrelation
 
+.large[
 - If the residuals are autocorrelated, it means that the prediction error of a 
 given observation depends on that of the previous observation
 
@@ -300,6 +323,7 @@ given observation depends on that of the previous observation
 - Will affect confidence intervals, t-ratios, p-values
 
 - Increased chance of Type II error
+]
 
 --
 
@@ -309,11 +333,13 @@ given observation depends on that of the previous observation
 
 ### Predictor not correlated with error term
 
+.Large[
 - Typically the result of omitting a relevant variable (sin of omission)
 
 - Will bias parameter estimates
 
 - Solution: include missing variable
+]
 
 --
 
@@ -323,6 +349,7 @@ given observation depends on that of the previous observation
 
 ### Normally Distributed Errors 
 
+.large[
 - There is no a priori reason for error to be anything but normally distributed 
 
 - It should become standard practice for you to examine your residuals to see 
@@ -340,24 +367,34 @@ be explained by something else
 
 - You cannot conclude with 100% certainty that a Type II error has been 
 committed, but you might strongly suspect it
+]
 
 ---
 
 ### Summarizing
 
-1. Model specification
+<p></p>
+.large[
+- Model specification
   - The relationship between x<sub>i</sub> and y<sub>i</sub> is linear
   - Including irrelevant variables 
   - Omitting relevant variables
+]
 
-2. Measurement error
+<p></p>
+.large[
+- Measurement error
+]
 
-3. The error term
+<p></p>
+.large[
+- The error term
   - Mean = 0
   - Homoskedasticity
   - No autocorrelation
   - Predictor not correlated with error term
   - Error is normally distributed 
+]
 
 ---
 
@@ -383,18 +420,24 @@ layout: true
 
 ### Remember those "residuals"?
 
+<p></p>
+.large[
 - A residual represents prediction error in our model with regard 
 to a single point. 
   - Our `mtcars` model predicted that a 6 ton car should get 5.22 mpg. 
   - If in reality it gets 10.22 mpg, then the residual for that specific 
 data point would be 5 mpg. 
+]
 
 --
 
+.large[
 - Remember: All models are wrong. 
+]
 
 --
 
+.large[
 - Our models will always be off by at least a little bit for most 
 of the observations we try to fit. 
 
@@ -404,6 +447,7 @@ your models in order to help assess how well it fits your data.
 - Specifically, we need to make sure that there aren't any unexpected 
 patterns because that would suggest that our model does not properly 
 fit our data.
+]
 
 ---
 background-image: url(https://www.realitybytesinc.com/images/sick-computer.jpg)
@@ -855,11 +899,13 @@ cat(sprintf("$$y = %.02f + %.02f x$$", b_without[1], b_without[2]))
 
 ### Global test of model assumptions
 
+.Large[
 - It is also possible to use the package `gvlma` to test model assumptions. 
 
 - It seems rather conservative
 
 - I don't know too much about it. 
+]
 
 ---
 
@@ -1060,6 +1106,7 @@ summary(cars_mod)
 
 ### Statistical Significance
 
+.Large[
 - As long as the effect is not statistically equivalent to 0 it is called 
 statistically significant
 
@@ -1071,6 +1118,7 @@ statistically significant
   think of as significance
 
 - It doesn’t indicate importance
+]
 
 ---
 
@@ -1078,6 +1126,7 @@ statistically significant
 
 #### How do we know if the “significant” effect we found is actually important?
 
+.large[
 - The coefficient of determination (r-squared) tells you how much of the 
 variance you have explained
 
@@ -1085,12 +1134,15 @@ variance you have explained
 
 - You want to know if your predictions are better than chance alone (F-ratio) 
 but you also want to know how explanatory your predictions are (r-squared)
+]
 
 #### How important are the chosen predictors?
 
+.large[
 - The numerators in both ratios are similar
 
 - They represent the predicted portion of the variance
+]
 
 ---
 
@@ -1192,11 +1244,13 @@ $$MS_{Error} = \frac{SS_{Error}}{df_{Error}}$$
 
 #### Derived from the number of sample statistics used in your computation:
 
+.Large[
 - e.g., for a standard deviation, you subtract all the raw scores from the mean
 
 - Since you used the sample mean, you used up 1 df
 
 - df = n - 1
+]
 
 ---
 
@@ -1204,15 +1258,19 @@ $$MS_{Error} = \frac{SS_{Error}}{df_{Error}}$$
 
 #### In the denominator of the standard deviation, you are using a sample statistic, not a population parameter, so you have df = n - 1:
 
+.large[
 - n - 1 reflects the fact that you used a statistic and if you know one number 
 (the mean) there is less uncertainty remaining
 - If you know the mean and you have 10 scores, then you only need 9 of the 
 remaining scores to predict all 10 of them
+]
 
 #### Usually we have an F-table with associated degrees of freedom to show us whether the F-ratio is "statistically significant":
 
+.large[
 - Numerator df = k 
 - Denominator df = n - k - 1
+]
 
 ---
 
@@ -1231,10 +1289,10 @@ layout: false
 class: middle
 
 ```{r}
-#| label: tiktok
-tt_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189"
-tt <- tiktok_embed(tt_url)
-tt
+#| label: tiktok2
+tt_url2 <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189"
+tt2 <- tiktok_embed(tt_url2)
+tt2
 ```
 
 ---
