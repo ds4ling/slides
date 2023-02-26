@@ -1295,6 +1295,12 @@ tt2 <- tiktok_embed(tt_url2)
 tt2
 ```
 
+--
+
+.footnote[
+[Exercises](https://www.ds4ling.jvcasillas.com/slides/05_lm/02_assumptions_diagnostics/assets/scripts/assumptions_walkthrough_ex.R)
+]
+
 ---
 layout: false
 class: title-slide-final, left
