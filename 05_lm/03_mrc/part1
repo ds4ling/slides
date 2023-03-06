@@ -104,6 +104,10 @@ Otherwise, C = 0
 ]
 
 ---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_additive_effects.png)
+background-size: contain
+
+---
 background-image: url(../../assets/img/pensar2.png)
 background-position: 95% 50%
 
@@ -502,7 +506,7 @@ summary(mod) %>%
   tidy(.) %>% 
   mutate(., `95% LB` = cis[, 1], `95% UB` = cis[, 2]) %>%
   dplyr::select(., ` ` = term, beta = estimate, SE = std.error, 
-    `95% LB`, `95% UB`, `t-value` = statistic, p.value) %>% 
+    `95% LB`, `95% UB`, `t-ratio` = statistic, p.value) %>% 
   kable(., format = 'html', digits = 2) %>% 
   kable_styling(., font_size = 22)
 ```
@@ -716,20 +720,36 @@ Consider taking the upcoming midterm in one of the following conditions
 
 ### Drugs and alcohol continued
 
+<p></p>
+
+.large[
 - Is the effect of alcohol and drugs together equal to the negative effect 
 of alcohol PLUS the negative effect of drugs?
   - Probably not
   - Alcohol and drugs are known to interact 
+]
 
+<p></p>
+
+.large[
 - This effect is a negative interaction
+]
 
+<p></p>
+
+.large[
 - If you mix alcohol and drugs they have a larger combined effect than 
 adding up the effects of each acting separately:
   - For example, if alcohol makes your score drop 10 points, and the drug 
   drops it 15 points, when you take both your score will very likely drop 
   more than just 25 points
+]
 
+<p></p>
+
+.large[
 - This effect is not additive, it is multiplicative
+]
 
 ---
 
