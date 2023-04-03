@@ -61,8 +61,8 @@ ui <- "- "
 ```
 
 class: inverse, middle
-
-IMG HERE
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_interactions.png)
+background-size: 700px
 
 ---
 class: title-slide-section-grey, middle
