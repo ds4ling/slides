@@ -12,7 +12,7 @@
     <script src="assets/tile-view/tile-view.js"></script>
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"f249f5bed5b9444aa9af3548713e9f54","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x3ab6d2ee7cd42ca9f44d536aa9a3c68","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -25,10 +25,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## The Generalized Linear Model
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-04-08
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2023-04-12
+]
 
 ---
 
@@ -105,6 +113,7 @@ background-position: 5% 10%, 50% 50%, 95% 10%, 0% 95%, 100% 95%
 
 ### What we know, where we've been
 
+.large[
 - Distributions
   - Normal distribution
   - CLT
@@ -118,7 +127,7 @@ background-position: 5% 10%, 50% 50%, 95% 10%, 0% 95%, 100% 95%
 - The general linear model
   - Continuous predictors
   - Categorical predictors
-
+]
 ]
 
 --
@@ -127,12 +136,13 @@ background-position: 5% 10%, 50% 50%, 95% 10%, 0% 95%, 100% 95%
 
 ### What they have in common
 
+.large[
 - Criterion
   - Continuous
   - Linear relationship with predictors
   - `\(-\infty\)` : `\(\infty\)`
   - Errors are normally distributed
-
+]
 ]
 
 ---
@@ -141,26 +151,34 @@ background-position: 5% 10%, 50% 50%, 95% 10%, 0% 95%, 100% 95%
 
 ### Where we're headed
 
+.large[
 - Sometimes we measure phenomena that are not continuous variables ranging from 
   `\(-\infty\)` : `\(\infty\)`
+]
 
 &lt;p&gt;&lt;/p&gt;
 
+.large[
 - For example, we often analyze binary outcomes
   - Decisions
   - The presence/absence of a linguistic feature
   - Categorical perception 
+]
 
 &lt;p&gt;&lt;/p&gt;
 
+.large[
 - Sometimes we count things
   - Number of languages in a given area
   - Number of code switches during a linguistic interview
+]
 
 &lt;p&gt;&lt;/p&gt;
 
+.large[
 - We can extend our model in order to account for these different types of 
 *dependent* variables
+]
 
 ---
 class: title-slide-section-grey, middle
@@ -213,18 +231,17 @@ background-position: 95% 50%
 
 ### Distributions
 
-#### Meet the (exponential) family
+#### .Large[Meet the (exponential) family]
 
-The exponential family is a series of probability  
-distributions, each with its own properties. 
+.Large[
+The exponential family is a series&lt;br&gt;of probability distributions, each&lt;br&gt;with its own properties. 
 
-There are +/- 12, but we will focus on 3:
+There are ±12, but we'll focus on 3:
 
 - Gaussian 
-
 - Binomial 
-
 - Poisson 
+]
 
 ---
 
@@ -232,16 +249,17 @@ There are +/- 12, but we will focus on 3:
 
 ### Linking functions
 
+.Large[
 The linking function transforms the response variable in the manner most 
 appropriate given the data distribution you have selected. 
 
-- Identity: for gaussian response variable (normal distribution)
+- .RUred[Identity]: for gaussian response variable (normal distribution)
 
-- Logit: for binary response variable (binomial distribution)
+- .blue[Logit]: for binary response variable (binomial distribution)
 
-- Log: for count response variable (poisson distribution)
+- .green[Log]: for count response variable (poisson distribution)
 
-&lt;/br&gt;
+]
 
 --
 
@@ -260,7 +278,7 @@ maximizes the likelihood that the process described by the model produced
 the data that were actually observed.&lt;sup&gt;1&lt;/sup&gt;
 &lt;/ru-blockquote&gt;
 
-&lt;img src="index_files/figure-html/mle_ex-1.png" width="720" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/mle-ex-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 .footnote[&lt;sup&gt;1&lt;/sup&gt; [Brooks-Bartlett](https://towardsdatascience.com/probability-concepts-explained-maximum-likelihood-estimation-c7b4342fdbb1) (2018)]
 
@@ -284,6 +302,7 @@ under the hood. [Brooks-Bartlett](https://towardsdatascience.com/probability-con
 is a good place to start if you are interested.]
 
 ---
+count: false
 
 # The generalized linear model
 
@@ -308,6 +327,102 @@ distribution
 
 ### Something new
 
+.Large["y as a function of x"]
+
+]
+
+---
+count: false
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
+.Large["y as a function of x"]
+
+.Large[y ~ x]
+
+]
+
+---
+count: false
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
+.Large[
+
+"y as a function of x"
+
+y ~ x
+
+|          |        |                                           |
+| :------- | :----: | :---------------------------------------- |
+| `\(y_{i}\)`  | `\(\sim\)` | `\(Normal(\mu_{i}, \sigma)\)`                 |
+| `\(u_{i}\)`  | `\(=\)`    | `\(\alpha + \beta_{1} \times predictor_{i}\)` |
+| `\(\sigma\)` | `\(\sim\)` | `\(Normal(0, \sigma^2)\)`                     |
+
+]
+]
+
+---
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
 - We can use different combinations of distributions and linking functions to 
 model different outcome variables
 - There are many options. Learning new modeling tools will open your mind to 
@@ -325,6 +440,7 @@ Linear Model framework:
 
 ### Assumptions
 
+.Large[
 - Data are independently distributed (independence of scores)
 
 - Dependent variable follows a distribution from the exponential family
@@ -333,6 +449,7 @@ Linear Model framework:
 (linear relationship is result of linking function)
 
 - Errors are independent (NOTE: they do not have to be normally distributed)
+]
 
 ---
 
@@ -340,19 +457,25 @@ Linear Model framework:
 
 ### Doing it in R
 
+.Large[
+
 #### The `glm()` function
 
 - Thus far we have used the `lm()` function to fit models
 
 - The `glm()` function works in the same way
 
+]
+
 --
 
 
 ```r
-my_glm &lt;- glm(criterion ~ pred1 + pred2 + pred1:pred2, # model formula
-              data = my_df,                            # select dataframe
-*             family = gaussian(link = "identity"))
+my_glm &lt;- glm(
+  criterion ~ pred1 + pred2 + pred1:pred2, # model formula
+  data = my_df,                            # select dataframe
+* family = gaussian(link = "identity")
+)
 ```
 
 --
@@ -372,7 +495,11 @@ my_glm &lt;- glm(criterion ~ pred1 + pred2 + pred1:pred2, # model formula
 
 ```r
 # Standard lm()
-lm(mpg ~ drat, data = mtcars)
+lm(
+  formula = mpg ~ drat, 
+  data = mtcars
+  # No likelihood/linking function
+)
 ```
 
 &lt;table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;"&gt;
@@ -408,8 +535,12 @@ lm(mpg ~ drat, data = mtcars)
 
 
 ```r
-glm(mpg ~ drat, data = mtcars, 
-    family = gaussian(link = "identity"))
+# glm() equivalent
+glm(
+  formula = mpg ~ drat, 
+  data = mtcars, 
+* family = gaussian(link = "identity")
+)
 ```
 
 &lt;table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;"&gt;
@@ -447,16 +578,32 @@ glm(mpg ~ drat, data = mtcars,
 &lt;/br&gt;
 
 &lt;div align="center"&gt;
-&lt;img width="450" src="./assets/img/russian_dolls.png"&gt;
+&lt;img width="400" src="./assets/img/russian_dolls.png"&gt;
 &lt;/div&gt;
 
 .center[**The standard linear model is a special case of the GLM**]
 
 ---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 background-color: black
 class: middle
 
-&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" width="576" style='float:right' /&gt;
+&lt;img src="index_files/figure-html/log-reg-plot-1.png" width="60%" style='float:right' /&gt;
 
 # Logistic regression
 
@@ -464,30 +611,63 @@ class: middle
 
 # Logistic regression
 
+.Large[
 ### Model setup
+
+.pull-left[
+.center[y ~ x]
 
 - The criterion is binary (0/1)
 
-- The distribution for binary data is the **binomial** distribution
+- The distribution for binary data is either the **bernoulli** or **binomial** distribution
 
 - The linking function is the **logit**
+]
+]
+
+--
+
+.pull-right[
+
+&lt;br&gt;
+
+.Large[
+|                |        |                           |
+| -------------: | :----- | :------------------------ |
+| `\(y_{i}\)`        | `\(\sim\)` | `\(Bernoulli(1, p_{i})\)`     |
+| `\(logit(p)_{i}\)` | `\(=\)`    | `\(\alpha + \beta_{1}x_{i}\)` |
+]
+]
+
+---
+
+# Logistic regression
 
 ### How it works
 
-- The logit linking function transforms the criterion so that it can be modeled by the linear predictor
+.pull-left[
+.Large[
+- The logit linking function transforms the criterion so it can be modeled by the linear predictor
 
 `$$logit(p) = log(\frac{p}{1 - p})$$`
+]
+]
 
-- In other words, the linking function transforms the 0/1 outcomes to 
-`\(-\infty\)` : `\(\infty\)`
+--
 
-`$$log(\frac{p_{i}}{1 - p_{i}}) = \alpha + \beta_{1}X_{1} + \beta_{2}X_{2} + ... + \beta_{k}X_{k}$$`
+.pull-right[
+.Large[
+- In other words, the linking function transforms the dichotomous 0/1 outcomes to `\(-\infty\)` : `\(\infty\)`
+
+`$$log(\frac{p_{i}}{1 - p_{i}}) = \alpha + \beta_{1}X_{1}$$`
+]
+]
 
 ---
 layout: false
 class: middle
 
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6871246394531876102" data-video-id="6871246394531876102" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti">@chelseaparlettpelleriti</a> <p>🐧🧊 and that's on making sure you create a safe place to ask questions as a teacher 😎✌🏼 <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok">#statsTikTok</a> <a title="datascience" target="_blank" href="https://www.tiktok.com/tag/datascience">#datascience</a></p> <a target="_blank" title="♬ The Wonder Pets! - Wonder Pets" href="https://www.tiktok.com/music/The-Wonder-Pets-6841272099479227142">♬ The Wonder Pets! - Wonder Pets</a> </section> </blockquote> 
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6871246394531876102" data-video-id="6871246394531876102" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>🐧🧊 and that's on making sure you create a safe place to ask questions as a teacher 😎✌🏼 <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statsTikTok</a> <a title="datascience" target="_blank" href="https://www.tiktok.com/tag/datascience?refer=embed">#datascience</a></p> <a target="_blank" title="♬ The Wonder Pets! - Wonder Pets" href="https://www.tiktok.com/music/The-Wonder-Pets-6841272099479227142?refer=embed">♬ The Wonder Pets! - Wonder Pets</a> </section> </blockquote> 
 <!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
 <script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
 <style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
@@ -495,7 +675,7 @@ class: middle
 
 ---
 
-&lt;img src="index_files/figure-html/lin_log_comp-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lin-log-comp-1.png" width="100%" /&gt;
 
 ---
 
@@ -503,6 +683,7 @@ class: middle
 
 ### What you need to know
 
+.large[
 - Logistic regression is the most appropriate way to model binary response 
 variables (0/1)
 
@@ -518,6 +699,7 @@ variables (0/1)
 
 - This is much less intuitive, much more difficult to understand without some 
 math
+]
 
 ---
 
@@ -525,6 +707,7 @@ math
 
 ### Example
 
+.large[
 - You are interested in understanding the perception of stop voicing in 
 English bilabials 
 
@@ -537,45 +720,59 @@ bilabial stops that differed in voice-onset time
 identified the sounds as /b/'s or /p/'s
 
 - A /p/ response is coded as a 1
+]
 
---
-
-.center[![:scale 70%](./assets/img/vot.png)]
+---
+background-image: url(./assets/img/vot.png)
+background-size: contain
 
 ---
 
 # Logistic regression
 
+.left-column[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 ```r
-mod_log &lt;- glm(resp ~ vot, data = vot_logistic_data, family = binomial(link = "logit"))
+mod_log &lt;- glm(
+  resp ~ vot, 
+  data = vot_logistic_data, 
+  family = "binomial"
+)
 ```
+
+]
+
+.right-column[
 
 
 ```
-## 
-## Call:
-## glm(formula = resp ~ vot, family = "binomial", data = vot_logistic_data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.3085  -0.6583  -0.2198   0.6503   2.9320  
-## 
-## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -0.84614    0.06089   -13.9   &lt;2e-16 ***
-## vot          0.05731    0.00213    26.9   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 3482.8  on 2599  degrees of freedom
-## Residual deviance: 2063.6  on 2598  degrees of freedom
-## AIC: 2067.6
-## 
-## Number of Fisher Scoring iterations: 5
+
+Call:
+glm(formula = resp ~ vot, family = "binomial", data = vot_logistic_data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.3085  -0.6583  -0.2198   0.6503   2.9320  
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.84614    0.06089   -13.9   &lt;2e-16 ***
+vot          0.05731    0.00213    26.9   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 3482.8  on 2599  degrees of freedom
+Residual deviance: 2063.6  on 2598  degrees of freedom
+AIC: 2067.6
+
+Number of Fisher Scoring iterations: 5
 ```
+
+]
 
 ---
 
@@ -583,8 +780,10 @@ mod_log &lt;- glm(resp ~ vot, data = vot_logistic_data, family = binomial(link =
 
 ### Example
 
+.Large[
 - We can convert the log-odds to probabilities by calculating the inverse 
 logit&lt;sup&gt;1&lt;/sup&gt;
+]
 
 
 ```r
@@ -615,16 +814,18 @@ inv_logit(mod_log) %&gt;% kable(., format = 'html')
 
 --
 
+.Large[
 - This is still difficult to interpret... a plot might help. 
+]
 
-&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
+&lt;/br&gt;&lt;/br&gt;
 
 &lt;sup&gt;1&lt;/sup&gt; Inverse logit = `\(\frac{1}{1 + exp(-x)}\)`
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/vot_plot-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/vot-plot-1.png" width="100%" /&gt;
 
 ---
 class: middle
@@ -719,7 +920,7 @@ linear equation:
 
 
 ```r
-inv_logit_manual(-0.846 + 0.057 * 10)
+plogis(-0.846 + 0.057 * 10)
 ```
 
 ```
@@ -731,23 +932,23 @@ to 20 ms?
 
 
 ```r
-inv_logit_manual(-0.846 + 0.057 * 20) - 
-inv_logit_manual(-0.846 + 0.057 * 10)
+plogis(-0.846 + 0.057 * 20) - 
+plogis(-0.846 + 0.057 * 10)
 ```
 
 ```
 ## [1] 0.1415404
 ```
 
-The shift from 10ms to 20 ms VOT corresponds  
-with a positive difference of 14% in 
-the probability of selecting /p/
-
 ]
 
 .pull-right[
 
 &lt;img src="index_files/figure-html/repeat-glm-vot-plot2-1.png" width="100%" /&gt;
+
+The shift from 10ms to 20 ms VOT corresponds  
+with a positive difference of 14% in 
+the probability of selecting /p/
 
 ]
 
@@ -757,6 +958,7 @@ the probability of selecting /p/
 
 ### Summary
 
+.large[
 - Logistic regression is a powerful tool for modeling binary data
 
 - The `glm()` function works similarly to the `lm()` function 
@@ -772,12 +974,13 @@ regression
 
 - Parameter estimates are evaluated in log odds (and require some work in order 
 to accurately interpret them)
+]
 
 ---
 layout: false
 class: middle
 
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6828303282482449669" data-video-id="6828303282482449669" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti">@chelseaparlettpelleriti</a> <p>🙃😉 <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok">#statsTiktok</a> <a title="machinelearning" target="_blank" href="https://www.tiktok.com/tag/machinelearning">#machineLearning</a></p> <a target="_blank" title="♬ original sound - Cass Martin " href="https://www.tiktok.com/music/original-sound-6622403695122320133">♬ original sound - Cass Martin </a> </section> </blockquote> 
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6828303282482449669" data-video-id="6828303282482449669" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>🙃😉 <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statsTiktok</a> <a title="machinelearning" target="_blank" href="https://www.tiktok.com/tag/machinelearning?refer=embed">#machineLearning</a></p> <a target="_blank" title="♬ original sound - Cass Martin " href="https://www.tiktok.com/music/original-sound-6622403695122320133?refer=embed">♬ original sound - Cass Martin </a> </section> </blockquote> 
 <!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
 <script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
 <style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
@@ -815,13 +1018,15 @@ class: middle
 background-color: black
 class: middle
 
-&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="576" style='float:right' /&gt;
+&lt;img src="index_files/figure-html/poisson-plot-1.png" width="60%" style='float:right' /&gt;
 
 # Poisson regression
 
 ---
 
 # Poisson regression
+
+.pull-left[
 
 ### Model setup
 
@@ -831,24 +1036,30 @@ class: middle
 
 - The linking function is **log** 
 
---
-
 ### How it works
 
 - The log linking function transforms the criterion so that it can be modeled by 
 the linear predictor
 
-`$$g(u) = exp(u)$$`
+]
 
-- Conversely, this can be understood as exponentiating the linear predictor to 
-make the values non-negative
+.pull-right[
 
-`$$y_{i} = exp(\alpha + \beta_{1}X_{1} + \beta_{2}X_{2} + ... + \beta_{k}X_{k})$$`
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.Large[
+|                    |        |                           |
+| -----------------: | :----- | :------------------------ |
+| `\(y_{i}\)`            | `\(\sim\)` | `\(Poisson(\lambda_{i})\)`     |
+| `\(log(\lambda)_{i}\)` | `\(=\)`    | `\(\alpha + \beta_{1}x_{i}\)` |
+]
+
+]
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/lin_poisson_comp-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lin-poisson-comp-1.png" width="100%" /&gt;
 
 ---
 
@@ -856,6 +1067,7 @@ class: middle
 
 ### What you need to know
 
+.large[
 - Poisson regression is the most appropriate way to model count data 
 (0, 1, 2...)
 
@@ -870,6 +1082,7 @@ logarithmic scale
 - The parameter estimates that can be interpreted as multiplicative effects
 
 - This is not too difficult to understand
+]
 
 ---
 
@@ -881,9 +1094,11 @@ logarithmic scale
 
 
 ```r
-glm(units ~ temp, 
-    data = ice_cream_poisson_data, 
-*   family = poisson(link = "log"))
+glm(
+  units ~ temp, 
+  data = ice_cream_poisson_data, 
+* family = poisson(link = "log")
+) 
 ```
 
 &lt;table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;"&gt;
@@ -920,7 +1135,7 @@ glm(units ~ temp,
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/icecream_plot1-1.png" width="504" /&gt;
+&lt;img src="index_files/figure-html/icecream-plot1-1.png" width="100%" /&gt;
 
 ]
 
@@ -932,7 +1147,7 @@ change of 0.04 log units in ice cream sold.
 
 - We can exponentiate 0.04 to make it more  
 interpretable.  `exp(coef(mod_poisson)[2])` = 
-0.04
+1.0400058
 
 - A 1 unit change in temperature gives a 4% positive  
 increase in ice cream sold.
@@ -948,9 +1163,11 @@ increase in ice cream sold.
 
 
 ```r
-*glm(units ~ temp + city,
-    data = ice_cream_poisson_data, 
-    family = poisson(link = "log"))
+glm(
+* units ~ temp + city,
+  data = ice_cream_poisson_data, 
+  family = poisson(link = "log")
+)
 ```
 
 &lt;table class="table" style="font-size: 14px; margin-left: auto; margin-right: auto;"&gt;
@@ -994,7 +1211,7 @@ increase in ice cream sold.
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/icecream_plot2-1.png" width="504" /&gt;
+&lt;img src="index_files/figure-html/icecream-plot2-1.png" width="100%" /&gt;
 
 ]
 
@@ -1006,7 +1223,7 @@ positive difference of approx. 4% in ice cream sold
 in NYC. 
 
 - When temp = 0, ice cream sold in Tucson is approx.  
-58% less
+42% less
 
 ]
 
@@ -1021,7 +1238,7 @@ in NYC.
 
 ```r
 ice_cream_poisson_data %&gt;% 
-  mutate(., temp_c = temp - mean(temp)) %&gt;% 
+  mutate(temp_c = temp - mean(temp)) %&gt;% 
 * glm(units ~ temp_c + city,
       data = ., 
       family = poisson(link = "log"))
@@ -1068,7 +1285,7 @@ ice_cream_poisson_data %&gt;%
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/icecream_plot3-1.png" width="504" /&gt;
+&lt;img src="index_files/figure-html/icecream-plot3-1.png" width="100%" /&gt;
 
 ]
 
@@ -1080,7 +1297,7 @@ positive difference of approx. 4% in ice cream sold
 in NYC. 
 
 - At the average temperature (68.5), ice cream  
-sold in Tucson is (still) approx. 58% less
+sold in Tucson is (still) approx. 42% less
 
 ]
 
@@ -1090,6 +1307,7 @@ sold in Tucson is (still) approx. 58% less
 
 ### Summary
 
+.large[
 - Poisson regression is a powerful tool for modeling count data
 
 - The `glm()` function works similarly to the `lm()` function 
@@ -1105,6 +1323,7 @@ regression
 
 - Parameter estimates are evaluated on a log (multiplicative) scale and are 
 not difficult to interpret
+]
 
 ---
 
@@ -1204,6 +1423,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
