@@ -12,7 +12,7 @@
     <script src="assets/tile-view/tile-view.js"></script>
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x3078b02c3ef4ca18575a7386139a381","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xdf99972f994437884ea7f6cc078fd24","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -23,10 +23,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Multilevel models
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-04-15
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2023-04-24
+]
 
 ---
 
@@ -41,6 +49,16 @@ class: center, middle, inverse, title-slide
 
 
 
+layout: false
+class: middle
+
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6828191481187110150" data-video-id="6828191481187110150" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>The model with 1000 names <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statsTikTok</a> 🙃</p> <a target="_blank" title="♬ Say So - Doja Cat / Nicki Minaj" href="https://www.tiktok.com/music/Say-So-6821214531558165253?refer=embed">♬ Say So - Doja Cat / Nicki Minaj</a> </section> </blockquote> 
+<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
+<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
+<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+
+---
 class: title-slide-section-grey, middle
 
 # Next steps
@@ -50,6 +68,8 @@ layout: true
 
 # What we've seen
 
+.large[
+
 - MRC
 
 - Linear regression
@@ -57,6 +77,8 @@ layout: true
 - General linear model
 
 - Generalized linear model
+
+]
 
 ---
 
@@ -75,13 +97,17 @@ layout: false
 
 # What about repeated measures designs?
 
+.Large[
 - Whenever we have more than one data point from the same 
 participant we are dealing with a type of repeated measures 
 design
   - between subjects factor
   - within subjects factor
+]
 
 &lt;p&gt;&lt;/p&gt;
+
+.Large[
 
 - Everything we have done this semester has been under the 
 assumption that we have one data point per participant (i.e., 
@@ -93,9 +119,13 @@ there was no autocorrelation, i.e., that the data were independent
 - Repeated measures designs introduce autocorrelation into the 
 model. Why?
 
+]
+
 ---
 
 # What's the big deal?
+
+.Large[
 
 - Disregarding lack of independence = pseudo-replication
 
@@ -104,6 +134,8 @@ independent when they aren’t
 
 - This will inflate your degrees of freedom, completely bias your 
 parameter estimates and make your p-values meaningless
+
+]
 
 ---
 
@@ -130,10 +162,6 @@ what type of variables you have.
 ]
 
 .pull-right[
-
-```r
-head(ChickWeight, 20)
-```
 
 ```
 ## Grouped Data: weight ~ Time | Chick
@@ -165,6 +193,8 @@ head(ChickWeight, 20)
 
 # What can we do?
 
+.Large[
+
 - Currently, the most popular solution is to use a multi-level or 
 hierarchical model
 
@@ -179,40 +209,51 @@ time-series data, etc.)
 - Building on our knowledge of the linear model, understanding 
 the basic idea of mixed effects models is trivial
 
+]
+
 ---
 
 # How does it work? 
 
 ### Standard linear model
 
+.large[
 - Recall our formula for fitting a linear model
+]
 
 --
 
-.Large[$$\hat{y} = \alpha + \beta X + \epsilon$$]
+.Large[
+
+|           |        |                            |
+| --------: | :----: | :------------------------- |
+| `\(y_{i}\)`   | `\(\sim\)` | `\(Normal(\mu_{i}, \sigma)\)`  |
+| `\(\mu_{i}\)` | `\(=\)`    | `\(\alpha + \beta_{1} x_{i}\)` |
+| `\(\sigma\)`  | `\(\sim\)` | `\(Normal(0, \sigma^{2})\)`    | 
+
+]
 
 --
 
-.Large[$$response = intercept + slope * predictor + error$$]
+.large[
+- We fit these models in R using `lm()` or `glm()`
 
---
-
-- We fit these models in R using `lm()` or `glm()`  
-##.center[
+.center[
 ```
 lm(criterion ~ predictor, data = my_data)
 ```
 ]
-
-- In a mixed effects model, what we know as *predictors* are 
-called **fixed effects**
+]
 
 --
 
-- The novel aspect of a mixed effects model is that it also 
-includes .blue[random effects]
+.large[
 
+- In a mixed effects model, what we know as *predictors* are called **fixed effects**
+- The novel aspect of a mixed effects model is that it also includes .blue[random effects]
 - Random effects allow us to account for non-independence
+
+]
 
 ---
 
@@ -220,7 +261,9 @@ includes .blue[random effects]
 
 ### Mixed effects model
 
+.Large[
 - A mixed effects model *mixes* both fixed effects and random effects
+]
 
 --
 
@@ -232,12 +275,15 @@ includes .blue[random effects]
 
 --
 
+.Large[
+
 - We fit these models in R using `lmer()` or `glmer()` from the `lme4` package (there are other options as well)
 
 .center[
 ```
 lmer(criterion ~ fixed_effect + (1|random_effect), data = my_data)
 ```
+]
 ]
 
 ---
@@ -259,7 +305,7 @@ answer
 
 - ...but you will always find exceptions to this
 
-- Most of the time you will see subjects and items as random effects 
+- Most of the time you will see **subjects** and **items** as random effects 
 (things that are repeated in the design)
 
 - This typically implies that the model includes **random intercepts**, 
@@ -270,7 +316,7 @@ understand what they do
 
 ---
 
-&lt;img src="index_files/figure-html/lmem_plot_raw-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lmem_plot_raw-1.png" width="100%" /&gt;
 
 ---
 class: middle
@@ -411,29 +457,42 @@ class: middle
 
 --
 
-&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;&lt;/br&gt;
-
 .pull-right[
+.Large[
 - The dataframe includes values of the `response` variable at 20 
 different time points for each participant (n = 10)
 
-- We could model this as:  
+- We could model this as:
+
 ```
 lm(response ~ time, data = my_df)
 ```
+]
 
+.large[
+|                |        |                             |
+| -------------: | :----: | :-------------------------- |
+| `\(response_{i}\)` | `\(\sim\)` | `\(N(\mu_{i}, \sigma)\)`        |
+| `\(\mu_{i}\)`      | `\(=\)`    | `\(\alpha + \beta_1 time_{i}\)` |
+| `\(\sigma\)`       | `\(\sim\)` | `\(Normal(0, \sigma^{2})\)`     |
+]
+
+.Large[
 - But this would violate our assumption of independence (and would 
 produce a terribly misspecified model)
+]
 ]
 
 ---
 
-&lt;img src="index_files/figure-html/lmem_plot_lm-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lmem_plot_lm-1.png" width="100%" /&gt;
 
 ---
 
 # Let's include `subjects` as a random effect
 
+.pull-left[
+.Large[
 - We will do this by giving subjects a random intercept
 
 - In other words, we will allow the intercepts to vary for each 
@@ -446,14 +505,31 @@ lmer(response ~ time + (1|subjects), data = my_df)
 ]
 
 - What would this look like?
+]
+]
+
+--
+
+.pull-right[
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+.large[
+|                 |        |                                                  |
+| --------------: | :----: | :----------------------------------------------- |
+| `\(response_{it}\)` | `\(\sim\)` | `\(N(\mu_{it}, \sigma)\)`                            |
+| `\(\mu_{it}\)`      | `\(=\)`    | `\(\alpha + \alpha_{subject_i} + \beta_1 time_{t}\)` |
+| `\(\sigma\)`        | `\(\sim\)` | `\(Normal(0, \sigma^{2})\)`                          |
+]
+]
 
 ---
 
-&lt;img src="index_files/figure-html/lmem_plot_subj-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lmem_plot_subj-1.png" width="100%" /&gt;
 
 ---
 
-&lt;img src="index_files/figure-html/lmem_plot_ranInt-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lmem_plot_ranInt-1.png" width="100%" /&gt;
 
 ---
 background-image: url(../assets/img/pensar2.png)
@@ -486,7 +562,7 @@ the time course (when `time` = 0)
 
 ---
 
-&lt;img src="index_files/figure-html/lmem_plot_ranSlopes-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/lmem_plot_ranSlopes-1.png" width="100%" /&gt;
 
 ---
 background-image: url(../assets/img/pensar2.png)
@@ -535,7 +611,10 @@ effect specified to the right
 ]
 
 .pull-right[
-&lt;img src="index_files/figure-html/lmem_plot_ranSlopes2-1.png" width="504" /&gt;
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;img src="index_files/figure-html/lmem_plot_ranSlopes2-1.png" width="100%" /&gt;
 ]
 
 ---
@@ -580,7 +659,13 @@ glmer(response ~ fixed_effect + (1 + fixed_effect|participant), family = binomia
 glmer(counts   ~ fixed_effect + (1 + fixed_effect|participant), family = poisson(link = "log"))
 ```
 
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_mem.png)
+background-size: contain
 
+---
+background-image: url(https://www.jvcasillas.com/media/rstats/memes/lm_glm_glmm_cats.png)
+background-size: contain
 
 ---
 
@@ -604,27 +689,19 @@ Based on [Bates (2011)](http://lme4.r-forge.r-project.org/slides/2011-03-16-Amst
 ### `sleepstudy` dataset
 
 .pull-left[
-
+.Large[
 - Part of `lme4` package
-
 - Criterion = reaction time (`Reaction`)
-
 - Predictor = \# of days of sleep deprivation (`Days`)
-
 - 10 observations per participant
-
 - \+2 fake participants w/ incomplete data
-
+]
 ]
 
 .pull-right[
 
 
 
-
-```r
-str(df_sleep)
-```
 
 ```
 ## tibble [183 × 3] (S3: tbl_df/tbl/data.frame)
@@ -633,12 +710,8 @@ str(df_sleep)
 ##  $ Subject : chr [1:183] "308" "308" "308" "308" ...
 ```
 
-```r
-head(df_sleep)
 ```
-
-```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   Reaction  Days Subject
 ##      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
 ## 1     250.     0 308    
@@ -654,12 +727,12 @@ head(df_sleep)
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot0-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot0-1.png" width="100%" /&gt;
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot1-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot1-1.png" width="100%" /&gt;
 
 ---
 
@@ -668,126 +741,126 @@ class: middle
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Model &lt;/th&gt;
    &lt;th style="text-align:left;"&gt; Subject &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; Intercept &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; Slope_Days &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Model &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 308 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 244.1927 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 21.764702 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 309 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 205.0549 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2.261785 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 310 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 203.4842 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 6.114899 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 330 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 289.6851 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 3.008073 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 331 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 285.7390 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 5.266019 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 332 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 264.2516 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 9.566768 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 333 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 275.0191 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 9.142046 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 334 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 240.1629 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 12.253141 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 335 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 263.0347 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -2.881034 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 337 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 290.1041 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 19.025974 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 349 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 215.1118 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 13.493933 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 350 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 225.8346 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 19.504017 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 351 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 261.1470 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 6.433498 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 352 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 276.3721 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 13.566549 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 369 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 254.9681 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 11.348109 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 370 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 210.4491 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 18.056151 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 371 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 253.6360 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 9.188445 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 372 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 267.0448 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 11.298073 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 374 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 286.0000 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2.000000 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No pooling &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -800,16 +873,12 @@ The models are unaware that any of the other participants exist.
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot2-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot2-1.png" width="100%" /&gt;
 
 ---
 
 # Complete pooling
 
-
-```r
-summary(m_pooled)
-```
 
 ```
 ## 
@@ -835,7 +904,7 @@ summary(m_pooled)
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot3-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot3-1.png" width="100%" /&gt;
 
 ???
 
@@ -844,7 +913,7 @@ Complete pooling is the same line for each subject, sometimes it is a good fit, 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot4-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot4-1.png" width="100%" /&gt;
 
 ???
 
@@ -1071,12 +1140,12 @@ class: middle
 
 ---
 
-&lt;img src="index_files/figure-html/plot-all-pooling-types-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/plot-all-pooling-types-1.png" width="100%" /&gt;
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/plot-all-pooling-types-subset-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/plot-all-pooling-types-subset-1.png" width="100%" /&gt;
 
 ???
 
@@ -1093,20 +1162,14 @@ background-size: contain
 ---
 background-color: black
 
-
-```
-## Inverted geom defaults of fill and color/colour.
-## To change them back, use invert_geom_defaults().
-```
-
-&lt;img src="index_files/figure-html/topo-map-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/topo-map-1.png" width="100%" /&gt;
 
 ---
 class: middle, center
 background-color: black
 
 
-&lt;img src="index_files/figure-html/partial-pooling-summary-1.png" width="864" /&gt;
+&lt;img src="index_files/figure-html/partial-pooling-summary-1.png" width="100%" /&gt;
 
 ---
 class: middle
@@ -1114,7 +1177,7 @@ background-color: black
 
 .pull-left[
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
 .white[
 - Multilevel models use the grouping variables to learn about the nested structure of the data
 
@@ -1128,7 +1191,7 @@ background-color: black
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/partial-pooling-summary2-1.png" width="504" /&gt;
+&lt;img src="index_files/figure-html/partial-pooling-summary2-1.png" width="100%" /&gt;
 ]
 
 ---
@@ -1217,6 +1280,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
