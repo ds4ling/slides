@@ -592,7 +592,7 @@ background-size: contain
 
 ---
 
-<iframe src="http://mfviz.com/hierarchical-models/" height="100%" width="100%" title="mlm" style="border:none;"></iframe>
+<iframe src="https://mfviz.com/hierarchical-models/" height="100%" width="100%" title="mlm" style="border:none;"></iframe>
 
 ---
 class: title-slide-section-grey, middle
