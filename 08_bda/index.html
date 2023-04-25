@@ -12,7 +12,7 @@
     <script src="assets/tile-view/tile-view.js"></script>
     <link href="assets/panelset/panelset.css" rel="stylesheet" />
     <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"e574023abbeb4a4ba77a69f0122356f8","expires":14}</script>
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xe17e529e8eb415d90f78c326bcec66e","expires":14}</script>
     <script src="assets/himalaya/himalaya.js"></script>
     <script src="assets/js-cookie/js.cookie.js"></script>
     <link href="assets/editable/editable.css" rel="stylesheet" />
@@ -26,10 +26,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Data Science for Linguists
+]
+.subtitle[
 ## Bayesian inference
+]
+.author[
 ### Joseph V. Casillas, PhD
-### Rutgers University</br>Spring 2021</br>Last update: 2021-04-22
+]
+.date[
+### Rutgers University</br>Spring 2023</br>Last update: 2023-04-25
+]
 
 ---
 
@@ -45,14 +53,40 @@ class: center, middle, inverse, title-slide
 
 
 class: title-slide-section-grey, middle
+background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
+background-size: contain
+background-position: 100% 50%
 
 # What is probability?
 
----
+???
 
-class: title-slide-section-grey, middle
+Before we get started I'd like to ask you to take a second and think about "probability". 
+
+What does is it mean? 
+
+What do you understand if somebody asks you the probability you are going to be on time?
+
+What is the probability it will rain tomorrow?
+
+Over the next two days we will be thinking about the notion of probability and how define it in light of the research that we do
+
+---
+background-image: url(./assets/img/worldview.png)
+background-size: contain
+background-color: black
 
 # The world according to frequentists
+
+???
+
+A key reason for *why* we will talk about probability has to do with frequentism
+
+You might have heard this term before, but if not, that's fine. 
+
+I'm certain you already have a grasp of what it is. 
+
+Over the next few days we will be thinking a lot about frequentism and comparing it directly with Bayesian methods. 
 
 ---
 background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
@@ -62,6 +96,7 @@ background-position: 100% 50%
 # What is frequentism?
 
 .pull-left[
+.large[
 - A blanket term used to refer to "classical" statistics
 
 - Population parameters are fixed, actually exist
@@ -71,6 +106,7 @@ background-position: 100% 50%
 - A sample of data is the result of one of an infinite number of exactly repeated experiments
 
 - Data are random, result from sampling a fixed population distribution
+]
 ]
 
 ???
@@ -94,35 +130,35 @@ class: middle
 
 
 
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b1-1.png" width="936" /&gt;
+&lt;img src="index_files/figure-html/cars-f-vs-cars-b1-1.png" width="100%" /&gt;
 
 ---
 class: middle
 count: false
 
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b2-1.png" width="936" /&gt;
+&lt;img src="index_files/figure-html/cars-f-vs-cars-b2-1.png" width="100%" /&gt;
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/cars-b-draws1-1.png" width="936" /&gt;
-
----
-class: middle
-count: false
-
-&lt;img src="index_files/figure-html/cars-b-draws2-1.png" width="936" /&gt;
+&lt;img src="index_files/figure-html/cars-b-draws1-1.png" width="100%" /&gt;
 
 ---
 class: middle
 count: false
 
-&lt;img src="index_files/figure-html/cars-b-draws3-1.png" width="936" /&gt;
+&lt;img src="index_files/figure-html/cars-b-draws2-1.png" width="100%" /&gt;
+
+---
+class: middle
+count: false
+
+&lt;img src="index_files/figure-html/cars-b-draws3-1.png" width="100%" /&gt;
 
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b-2-1.png" width="936" /&gt;
+&lt;img src="index_files/figure-html/cars-f-vs-cars-b-2-1.png" width="100%" /&gt;
 
 ???
 
@@ -134,6 +170,49 @@ Bayesian: There is a distribution of lines of fit...some more plausible than oth
 background-color: black
 background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_bey.png)
 background-size: contain
+
+---
+class: middle, center
+
+# Bayesian inference &lt;br&gt;is all about the posterior
+
+???
+
+One key idea that I'd like you to hold on to for right now is that Bayesian inference is all about what we call the posterior distribution
+
+I'm going to spend the rest of my time in this brief presentation building up intuition about the posterior.
+
+In other words, in Bayesian data analysis we produce/approximate a posterior distribution of possible parameters that we can then summarize in different ways to answer questions and quantify uncertainty
+
+This is a fundamental difference with regard to frequentistism
+That is to say, there is no posterior distribution in frequentist statistics, you only estimate 1 single value for a parameter
+
+I am going to walk us through applying this idea to regression
+
+---
+class: middle
+
+# .center[Applied to regression]
+
+## .blue[Classical]: There is a single "true" line of best fit, and I'll give my best estimate of it.
+
+???
+
+As many of us already know, in standard linear regression in a frequentist framework, we typically estimate what we call a line of best fit, either using OLS or maximum likelihood estimation
+
+It's actually quite simple at it's core, we have some blob of data and we try to shove a line through it to describe it the best we can
+
+--
+
+## **Bayesian**: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
+
+???
+
+Under a Bayesian framework, we derive a distribution of lines that are compatible with our data and our prior assumptions
+
+Some of these lines are more plausible than others, so we can use standard methods to summarize and quantify uncertainty about them
+
+Let's illustrate this to make it clear
 
 ---
 
@@ -157,7 +236,7 @@ background-size: contain
 
 .pull-right[
 &lt;br&gt;
-&lt;img src="index_files/figure-html/normal-dist-1.png" width="432" /&gt;
+&lt;img src="index_files/figure-html/normal-dist-1.png" width="100%" /&gt;
 
 ]
 
@@ -169,6 +248,7 @@ background-size: contain
 
 ### More cars
 
+.large[
 - Let's explore the `mpg` variable
 
 - N = 32
@@ -182,35 +262,25 @@ background-size: contain
 - The 95% quantiles are 10.4, 32.7375
 
 - We'll fit an intercept only model. 
-
+]
 ]
 
 .pull-right[
 
 &lt;/br&gt;&lt;/br&gt;
-&lt;img src="index_files/figure-html/mtcars-mpg-plot-1.png" width="504" /&gt;
+&lt;img src="index_files/figure-html/mtcars-mpg-plot-1.png" width="100%" /&gt;
 
-]
-
---
-
-.pull-left[
-.center[
-
-`$$mpg \sim \alpha + \epsilon$$`
-
-```lm(mpg ~ 1)```
-
-]
 ]
 
 ---
 
 # A trivial example
 
-We'll fit an intercept only model. The mean `mpg` is 20.090625. 
-
 ### Frequentist model
+
+We'll fit an intercept only model. The mean `mpg` is 20.09 ±6.03 SD. 
+
+.pull-left[
 
 
 ```r
@@ -218,59 +288,107 @@ lm(mpg ~ 1, data = mtcars) %&gt;% summary()
 ```
 
 ```
-## 
-## Call:
-## lm(formula = mpg ~ 1, data = mtcars)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -9.6906 -4.6656 -0.8906  2.7094 13.8094 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   20.091      1.065   18.86   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 6.027 on 31 degrees of freedom
+
+Call:
+lm(formula = mpg ~ 1, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.6906 -4.6656 -0.8906  2.7094 13.8094 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   20.091      1.065   18.86   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.027 on 31 degrees of freedom
 ```
+
+]
+
+.pull-right[
+.center[
+.large[
+
+|           |        |                      |
+| --------: | :----- | :------------------- |
+| `\(mpg_{i}\)` | `\(\sim\)` | `\(N(\mu_{i}, \sigma)\)` |
+| `\(\mu_{i}\)` | `\(=\)`    | `\(\alpha\)`             |
+
+`lm(mpg ~ 1)`
+
+]
+]
+]
 
 ---
 
 # A trivial example
 
-We'll fit an intercept only model. The mean `mpg` is 20.090625. 
-
---
-
 ### Bayesian model
+
+We'll fit an intercept only model. The mean `mpg` is 20.09 ±6.03 SD. 
+.pull-left[
 
 
 ```r
-brm(mpg ~ 1, data = mtcars) %&gt;% summary
+brm(mpg ~ 1, data = mtcars) %&gt;% summary()
 ```
 
 
 ```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: mpg ~ 1 
-##    Data: mtcars (Number of observations: 32) 
-## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 4000
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept    20.06      1.04    18.06    22.25 1.00     2880     2280
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma     6.14      0.79     4.84     7.87 1.00     3106     2113
-## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
+ Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: mpg ~ 1 
+   Data: mtcars (Number of observations: 32) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Population-Level Effects: 
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept    20.06      1.04    18.06    22.25 1.00     2881     2280
+
+Family Specific Parameters: 
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     6.14      0.79     4.84     7.87 1.00     3106     2113
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
+
+]
+
+.pull-right[
+.center[
+.large[
+
+|           |        |                      |
+| --------: | :----- | :------------------- |
+| `\(mpg_{i}\)` | `\(\sim\)` | `\(N(\mu_{i}, \sigma)\)` |
+| `\(\mu_{i}\)` | `\(=\)`    | `\(\alpha\)`             |
+
+`brm(mpg ~ 1)`
+
+]
+]
+]
+
+---
+class: title-slide-section-grey, middle, center
+
+# So what's the difference?
+
+???
+
+At this point you might be saying to yourself "So what? The models are the same?" and you would have a good point. 
+
+The information we have looked at in the summaries is essentially the same. 
+
+The main difference, and the key take away from this section, is that the bayesian model provides a posterior distribution of values for the parameters it estimates, the intercept and sigma. 
+
+Let's see what we can do with a posterior distribution
 
 ---
 
@@ -284,25 +402,25 @@ cp &lt;- as_tibble(cars_bayes_int)
 
 
 ```
-## # A tibble: 4,000 x 1
-##    b_Intercept
-##          &lt;dbl&gt;
-##  1        21.9
-##  2        21.5
-##  3        19.1
-##  4        20.5
-##  5        19.7
-##  6        20.8
-##  7        19.5
-##  8        20.0
-##  9        20.4
-## 10        19.9
-## # … with 3,990 more rows
+# A tibble: 15 × 2
+   b_Intercept sigma
+         &lt;dbl&gt; &lt;dbl&gt;
+ 1        21.9  5.18
+ 2        21.5  5.28
+ 3        19.1  6.23
+ 4        20.5  5.17
+ 5        19.7  4.86
+ 6        20.8  8.18
+ 7        19.5  5.13
+ 8        20.0  5.37
+ 9        20.4  6.78
+10        19.9  5.83
+11        20.2  6.90
+12        21.1  6.07
+13        19.7  6.27
+14        20.9  6.45
+15        21.6  5.92
 ```
-
-- The posterior distribution is just like any other distribution of data we've seen
-
-- We can analyze it however we want
 
 ]
 
@@ -310,15 +428,23 @@ cp &lt;- as_tibble(cars_bayes_int)
 
 .pull-right[
 
-&lt;img src="index_files/figure-html/cars-post-plot-1.png" width="504" /&gt;
+- This posterior distribution has 4000 draws of mean and SD values that are compatible with our data
+
+- The posterior is just like any other distribution of data
+
+- We can analyze/summarize it however we want
 
 
 ```r
-mean(cp); quantile(cp, probs = c(0.025, 0.975))
+mean(cp$b_Intercept)
 ```
 
 ```
 ## [1] 20.06213
+```
+
+```r
+quantile(cp$b_Intercept, probs = c(0.025, 0.975))
 ```
 
 ```
@@ -327,6 +453,14 @@ mean(cp); quantile(cp, probs = c(0.025, 0.975))
 ```
 
 ]
+
+---
+
+&lt;img src="index_files/figure-html/cars-post-plot-1.png" width="100%" /&gt;
+
+---
+
+&lt;img src="index_files/figure-html/ar-post-paramspace-plot-1.png" width="100%" /&gt;
 
 ---
 class: title-slide-section-grey, middle
@@ -508,24 +642,26 @@ class: title-slide-section-grey, middle
 
 # Frequentism vs. Bayesianism
 
+.large[
 .center[
 In essence the frequentist approach assess the probability of the data given a specific hypothesis
 ]
 
-.large[
 `$$P(data | H_{x})$$`
+
 ]
 
 &lt;br&gt;
 
 --
 
+.large[
 .center[
 Through Bayes formula one is able to asses the probability of a specific hypothesis given the data
 ]
 
-.large[
 `$$P(H_{x} | data)$$`
+
 ]
 
 &lt;br&gt;
@@ -534,7 +670,9 @@ Through Bayes formula one is able to asses the probability of a specific hypothe
 
 .center[
 .content-box-blue[
+.large[
 This is what we pretty much always want in science &lt;br&gt;(and what many people think they are doing with frequentist statistics)
+]
 ]
 ]
 
@@ -661,23 +799,15 @@ class: title-slide-section-grey, middle
 
 
 
-```r
-str(df_sleep)
 ```
-
-```
-## tibble[,3] [183 × 3] (S3: tbl_df/tbl/data.frame)
+## tibble [183 × 3] (S3: tbl_df/tbl/data.frame)
 ##  $ Reaction: num [1:183] 250 259 251 321 357 ...
 ##  $ Days    : num [1:183] 0 1 2 3 4 5 6 7 8 9 ...
 ##  $ Subject : chr [1:183] "308" "308" "308" "308" ...
 ```
 
-```r
-head(df_sleep)
 ```
-
-```
-## # A tibble: 6 x 3
+## # A tibble: 6 × 3
 ##   Reaction  Days Subject
 ##      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
 ## 1     250.     0 308    
@@ -693,7 +823,7 @@ head(df_sleep)
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot0-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot0-1.png" width="100%" /&gt;
 
 ---
 class: middle
@@ -730,7 +860,7 @@ class: middle
 ---
 class: middle
 
-&lt;img src="index_files/figure-html/ss-plot1-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/ss-plot1-1.png" width="100%" /&gt;
 
 ---
 
@@ -772,8 +902,8 @@ class: middle
 ##   Links: mu = identity; sigma = identity 
 ## Formula: Reaction ~ Days + (Days | Subject) 
 ##    Data: df_sleep (Number of observations: 183) 
-## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup samples = 4000
+##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+##          total post-warmup draws = 4000
 ## 
 ## Group-Level Effects: 
 ## ~Subject (Number of levels: 20) 
@@ -791,44 +921,83 @@ class: middle
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 ## sigma    25.79      1.52    23.03    28.93 1.00     3622     2961
 ## 
-## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).
 ```
 
 ---
 
-&lt;img src="index_files/figure-html/sleep-draws-main-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/sleep-draws-main-1.png" width="100%" /&gt;
 
 ---
 
-&lt;img src="index_files/figure-html/sleep-draws-forest-1.png" width="1008" /&gt;
-
----
-background-color: black
-
-&lt;img src="index_files/figure-html/sleep-draws-solar-system-1.png" width="1008" /&gt;
-
----
-
-&lt;img src="index_files/figure-html/sleep-draws-spaghetti-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/sleep-draws-forest-1.png" width="100%" /&gt;
 
 ---
 background-color: black
 
-&lt;img src="index_files/figure-html/sleep-multiverse-1.png" width="1008" /&gt;
+&lt;img src="index_files/figure-html/sleep-draws-solar-system-1.png" width="100%" /&gt;
+
+---
+class: center, middle
+background-color: black
+background-image: url(./assets/img/dark_density_posterior.png)
+background-size: contain
+
+
+
+---
+
+&lt;img src="index_files/figure-html/sleep-draws-spaghetti-1.png" width="100%" /&gt;
+
+---
+background-color: black
+
+&lt;img src="index_files/figure-html/sleep-multiverse-1.png" width="100%" /&gt;
 
 ---
 class: middle
 background-color: black
 
-&lt;img src="index_files/figure-html/unnamed-chunk-1-1.png" width="972" /&gt;
+&lt;img src="index_files/figure-html/bayes-infographic-1.png" width="100%" /&gt;
 
 ---
 class: middle, center
 background-color: black
 
 # .white["We put a tiny sliver of scientific information into the model and then we bet on the things that can happen a large number of ways"]
+
+---
+
+# Takeaways
+
+.Large[
+- There are primarily two camps in statistics: frequentists and Bayesians
+
+- The two camps see probability in different ways
+
+- **Bayesian statistics is all about the posterior**
+]
+
+???
+
+- There are primarily two camps in statistics: frequentists and Bayesians
+- The two camps see probability in different ways
+- Frequentists: parameters are real/true, provide best estimate of it
+- Bayesians: there are distributions of possible parameters, we summarize the distribution
+- Bayesian statistics is all about the posterior
+
+---
+background-color: black
+background-image: url(https://i.pinimg.com/originals/1b/58/77/1b58772e23bb5b761ded9aa1d1e1d7e4.gif)
+background-size: contain
+
+???
+
+With this in mind, you are now on your way to becoming Bayesians
+
+We will continue building intuitions about these core ideas
 
 ---
 background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
@@ -914,6 +1083,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
