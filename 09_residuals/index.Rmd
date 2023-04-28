@@ -2,7 +2,7 @@
 title   : 'Data Science for Linguists'
 subtitle: 'Residuals'
 author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2021</br>Last update: `r Sys.Date()`"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: assets
@@ -17,29 +17,45 @@ output:
       in_header: "../assets/partials/header.html"
 ---
 
-```{r setup, include=FALSE}
+```{r}
+#| label: setup
+#| include: false
 options(htmltools.dir.version = FALSE)
 ```
 
-```{r xaringan-extra-all-the-things, echo=FALSE}
+```{r}
+#| label: global-setup
+#| echo: false
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  out.width = "100%", 
+  fig.asp = 0.5625, 
+  fig.retina = 2, 
+  dpi = 300, 
+  message = FALSE, 
+  warning = FALSE
+  )
+```
+
+```{r}
+#| label: xaringan-extra-all-the-things
+#| echo: false
 xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable" 
+  c("tile_view", "panelset", "editable", "freezeframe"
     #"scribble", "search", "webcam"
     )
 )
 ```
 
-```{r, 'helpers', echo=FALSE, message=F, warning=F}
+```{r}
+#| label: helpers
 source(here::here("assets", "scripts", "helpers.R"))
 ```
 
-```{r, load_refs, echo=FALSE, cache=FALSE, warning=F, message=F}
+```{r}
+#| label: load-refs
 bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
 ui <- "- "
-```
-
-```{r 'global_setup', echo=FALSE}
-opts_chunk$set(fig.retina=2, cache=FALSE)
 ```
 
 class: title-slide-section-grey, middle
@@ -115,7 +131,7 @@ background-position: 90% 50%
 # We do literate programming
 
 .pull-left[
-
+.large[
 - This means we write code in a way that clearly documents 
 what we did.
 
@@ -125,7 +141,7 @@ what we told the computer to do and *why*.
 
 - Importantly, we don't separate our code from the report/essay/manuscript
 we are writing. Everyting is together, in a single document.  
-
+]
 ]
 
 ---
