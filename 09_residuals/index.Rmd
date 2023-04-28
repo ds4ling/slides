@@ -179,6 +179,21 @@ background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/
 background-size: contain
 
 ---
+layout: false
+class: middle
+
+```{r}
+#| label: tiktok1
+t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6969954394909576453"
+t1 <- tiktok_embed(t1_url)
+t1
+```
+
+<!--
+need more methods
+--> 
+
+---
 layout: true
 
 # What we've seen
@@ -234,6 +249,16 @@ background-size: 750px
 ---
 background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_knowledge.png)
 background-size: contain
+
+---
+
+<blockquote align='center' class="twitter-tweet" data-lang="de">
+<a href="https://twitter.com/phdemetri/status/1634568517688127488"></a>
+</blockquote>
+
+<!--
+make a table tweet
+--> 
 
 ---
 class: title-slide-section-grey, middle

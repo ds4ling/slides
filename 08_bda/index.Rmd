@@ -78,6 +78,21 @@ What is the probability it will rain tomorrow?
 Over the next two days we will be thinking about the notion of probability and how define it in light of the research that we do
 
 ---
+layout: false
+class: middle
+
+```{r}
+#| label: tiktok1
+t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6977375589225286917"
+t1 <- tiktok_embed(t1_url)
+t1
+```
+
+<!--
+general bayes
+-->
+
+---
 background-image: url(./assets/img/worldview.png)
 background-size: contain
 background-color: black
@@ -1321,6 +1336,21 @@ background-color: black
 - Frequentists: parameters are real/true, provide best estimate of it
 - Bayesians: there are distributions of possible parameters, we summarize the distribution
 - Bayesian statistics is all about the posterior
+
+---
+layout: false
+class: middle
+
+```{r}
+#| label: tiktok2
+t2_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806"
+t2 <- tiktok_embed(t2_url)
+t2
+```
+
+<!--
+bayes posterior
+-->
 
 ---
 background-color: black
