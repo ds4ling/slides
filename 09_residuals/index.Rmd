@@ -64,19 +64,19 @@ class: title-slide-section-grey, middle
 # .white[What is Data Science again?]
 
 ---
-background-image: url("../../sources/img/workflow/data_science1.png")
+background-image: url("../assets/img/workflow/data_science1.png")
 background-size: contain
 
 ---
-background-image: url("../../sources/img/workflow/data_science2.png")
+background-image: url("../assets/img/workflow/data_science2.png")
 background-size: contain
 
 ---
-background-image: url("../../sources/img/workflow/data_science3.png")
+background-image: url("../assets/img/workflow/data_science3.png")
 background-size: contain
 
 ---
-background-image: url("../../sources/img/workflow/datascience_workflow1.png")
+background-image: url("../assets/img/workflow/datascience_workflow1.png")
 background-size: contain
 
 --
@@ -84,7 +84,7 @@ background-size: contain
 .center[.big[**You have learned how to version control this process!**]]
 
 ---
-background-image: url("../../sources/img/workflow/datascience_workflow2.png"), url(../../sources/img/workflow/workflow_10.png)
+background-image: url("../assets/img/workflow/datascience_workflow2.png"), url(../assets/img/workflow/workflow_10.png)
 background-size: 600px, 700px
 background-position: 15% 90%, 95% 40%
 
@@ -99,12 +99,12 @@ class: title-slide-section-grey, middle
 again?]
 
 --
-background-image: url("../../sources/img/workflow/final_doc.png")
+background-image: url("../assets/img/workflow/final_doc.png")
 background-size: 525px
 background-position: 100% 50%
 
 ---
-background-image: url("../../sources/img/workflow/datascience_workflow3.png")
+background-image: url("../assets/img/workflow/datascience_workflow3.png")
 background-size: 600px
 background-position: 10% 50%
 
@@ -114,17 +114,22 @@ background-position: 10% 50%
 
 .pull-right[
 
-```{r, warning=FALSE, message=FALSE, fig.retina=2, fig.height=5}
-library(tidyverse)
+```{r}
+#| label: stats-example
+#| warning: false
+#| message: false 
+#| fig.retina: 2 
+#| fig.height: 5
+
 ggplot(mtcars, aes(x = disp, y = mpg)) + 
   geom_point() + 
-  {{geom_smooth(method = 'lm')}}
+ {{geom_smooth(method = 'lm', formula = "y ~ x")}}
 ```
 
 ]
 
 ---
-background-image: url("../../sources/img/workflow/datascience_workflow4.png")
+background-image: url("../assets/img/workflow/datascience_workflow4.png")
 background-size: 500px
 background-position: 90% 50%
 
