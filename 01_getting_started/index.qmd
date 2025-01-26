@@ -1,0 +1,532 @@
+---
+title   : 'Data Science for Linguists'
+subtitle: 'Getting started'
+author: "Joseph V. Casillas, PhD"
+institute: "Rutgers University<mybr>Spring 2025<br>Last update: `r Sys.Date()`"
+---
+
+```{r}
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
+#| cache: false
+source(here::here("assets", "scripts", "helpers.R"))
+```
+
+# What is Data Science? {.transition}
+
+---
+
+```{r}
+#| label: data-science-1
+#| fig-align: 'center'
+include_graphics(here("assets", "img", "workflow", "data_science1.png"))
+```
+
+---
+
+## {visibility="uncounted"}
+
+```{r}
+#| label: data-science-2
+#| fig-align: 'center'
+include_graphics(here("assets", "img", "workflow", "data_science2.png"))
+```
+
+---
+
+## {visibility="uncounted"}
+
+```{r}
+#| label: data-science-3
+#| fig-align: 'center'
+include_graphics(here("assets", "img", "workflow", "data_science3.png"))
+```
+
+---
+
+## {visibility="uncounted"}
+
+![](../assets/img/workflow/datascience_workflow2.png){.absolute top="200" left="20" width="1024" height="320"} 
+
+. . .
+
+::: {.r-fit-text .emph .p-font}
+This process should be version controlled!
+:::
+
+---
+
+## {visibility="uncounted"}
+
+![](../assets/img/workflow/datascience_workflow2.png){.absolute top="95" left="0" width="600" height="188"} 
+![](../assets/img/workflow/workflow_10.png){.absolute bottom="0" right="0" width="800" height="402"} 
+
+. . .
+
+::: {.r-fit-text .emph .p-font}
+This process should be version controlled!
+:::
+
+---
+
+## {background-color="#272822"}
+
+<br><br><br>
+
+:::: {.columns}
+::: {.column width="50%"}
+::: {.r-fit-text .p-font}
+So what is version <mybr>control?
+:::
+:::
+::::
+
+---
+
+## {background-color="#272822" background-image="../assets/img/workflow/final_doc.png" background-size="contain" background-position="right" visibility="uncounted"}
+
+<br><br><br>
+
+::: columns
+::: {.column width="50%"}
+::: {.r-fit-text .p-font}
+So what is version <mybr>control?
+:::
+:::
+:::
+
+---
+
+::: columns
+::: {.column width="55%"}
+::: {.r-fit-text .emph .p-font}
+Don't forget the stats...
+:::
+<br><br><br>
+![](../assets/img/workflow/datascience_workflow3.png)
+:::
+
+::: {.column width="45%"}
+
+<br><br><br>
+
+```{r}
+#| label: stats-example
+#| fig-asp: 0.7
+#| fig-width: 4.5
+#| echo: true
+
+mtcars |>
+  ggplot() + 
+  aes(x = disp, y = mpg) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', formula = "y ~ x")
+```
+:::
+:::
+
+
+# Literate programming {.smaller}
+
+::: columns
+::: {.column width="45%"}
+- This means we write code in a way that clearly documents 
+what we did.
+
+- Instead of writing code with the purpose of telling the 
+computer what to do, we write code that tells other humans 
+what we told the computer to do and *why*. 
+
+- Importantly, we don't separate our code from the report/essay/manuscript
+we are writing. Everything is together, in a single document (usually).  
+:::
+:::
+
+![](../assets/img/workflow/datascience_workflow4.png){.absolute top="200" right="-80" width="600" height="187"}
+
+
+#
+
+::: {.r-stack .p-font style="font-size: 1.6em;"}
+**In this class you will learn to...**
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font .emph style="font-size: 1.2em;"}
+**manage version controlled research projects**
+:::
+
+::: {.r-stack .p-font}
+[in a way that facilitates <u>collaboration</u> and <u>honesty</u>]{style="font-size: 0.8em;"}
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**get** and [**tidy**]{style="font-size: 1.6em; color: #497dd7;"} data
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**transform** and [**visualize**]{style="font-size: 1.6em" .emph} your data  
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**fit** statistical [**models**]{style="font-size: 1.6em; color: #497dd7;"} to your data and **test** hypotheses  
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**communicate** your results using [**literate programming**]{style="font-size: 1.6em" .emph}
+:::
+
+# 
+
+::: {.r-stack .p-font}
+This is [**reproducible research**]{style="font-size: 1.4em;" .emph}
+:::
+
+# What you'll need... {background-color="#cc0033" background-image="https://media.giphy.com/media/3o7aTwT5vjBVfsYEj6/giphy.gif" background-size="600px" background-position="96% 50%"}
+
+[Programs and packages]{.p-font}
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- Slack
+- [R]{style="color: grey;"}
+- [RStudio]{style="color: grey;"}
+- [GitHub account]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**Slack**
+:::
+
+::: {style="font-size: 0.8em;"}
+- Slack is a communication platform we'll use to discuss specific topics outside 
+of class. 
+- It also serves as a resource for students to ask questions and exchange 
+information relevant to the course. 
+- You will receive an email with an invitation link to join the course Slack ([www.ru-ds4ling.slack.com](https://join.slack.com/t/ru-datasci4ling/shared_invite/zt-kx9sghzo-teEa8XE92ACYEeCrDlbh4A))
+- For personal matters (only) you can email the professor.
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/slack_setup/index.html)
+:::
+:::
+::::
+
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- Slack
+- [R]{style="color: grey;"}
+- [RStudio]{style="color: grey;"}
+- [GitHub account]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**Slack app**
+:::
+
+::: {style="font-size: 0.8em;"}
+- Get class notifications 24/7, everywhere you go 🤓
+- There is a downloadable app so that you don't have to use the web interface
+    - [Mobile](https://itunes.apple.com/us/app/slack/id618783545?mt=8) 
+    - [Desktop](https://itunes.apple.com/us/app/slack/id803453959?l=es&mt=12)
+![](./index_files/img/slack.png)
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- R
+- [RStudio]{style="color: grey;"}
+- [GitHub]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**R**
+:::
+
+::: {style="font-size: 0.8em;"}
+- R is the statistical programming language we will learn about in this class. 
+
+- You can download R here: https://cran.r-project.org 
+
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/r_install/index.html)
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- [R]{style="color: grey;"}
+- RStudio
+- [GitHub]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**RStudio** [(Posit, Positron)]{style="color: black;"}
+:::
+
+::: {style="font-size: 0.8em;"}
+- We will interface with R using RStudio (Posit), a fully feautred IDE. 
+
+- RStudio (Posit) is available to download here:  
+<https://posit.co/download/rstudio-desktop/#download>
+
+- Need help? [Instructions](https://www.ds4ling.jvcasillas.com/misc/tutorials/rstudio_install/index.html)
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- R
+- [RStudio]{style="color: grey;"}
+- [GitHub]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**R packages we will use** 
+:::
+
+::: {style="font-size: 0.7em;"}
+[Obligatory]{style="color: black;"}
+
+- [tidyverse]{style="color: #497dd7;"}: Install and load tidy verse packages
+
+- [ds4ling]{style="color: #497dd7;"}: Functions and datasets used in this course
+
+- [knitr]{style="color: #497dd7;"}: Dynamic report generation
+
+- [rmarkdown]{style="color: #497dd7;"}: Dynamic documents
+
+- [papaja]{style="color: #497dd7;"}: Reproducible APA manuscripts in RMarkdown
+
+- [xaringan]{style="color: #497dd7;"}: HTML presentations in RMarkdown
+
+- [here]{style="color: #497dd7;"}: Reproducible way to set working directory
+
+- [devtools]{style="color: #497dd7;"}: Install packages from GitHub
+
+You can download a package in r using the following command: 
+
+```{r}
+#| label: install-ex
+#| eval: false
+#| echo: true
+
+install.packages("packageName")
+```
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- R
+- [RStudio]{style="color: grey;"}
+- [GitHub]{style="color: grey;"}
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**R packages we will use** 
+:::
+
+::: {style="font-size: 0.7em;"}
+[Helpful]{style="color: black;"}
+
+- [lme4]{style="color: #497dd7;"}: Multilevel models
+
+- [brms]{style="color: #497dd7;"}: Bayesian data analysis
+
+- [patchwork]{style="color: #497dd7;"}: Combine ggplots
+
+- [broom]{style="color: #497dd7;"}: Stat models to tidy dataframe
+
+- [learnr]{style="color: #497dd7;"}: Interactive tutorials
+
+- [stringr]{style="color: #497dd7;"}: For manipulating strings
+
+- [sjPlot]{style="color: #497dd7;"}: For making plots and tables from model objects
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- [R]{style="color: grey;"}
+- [RStudio]{style="color: grey;"}
+- GitHub
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**Github** 
+:::
+
+::: {style="font-size: 0.7em;"}
+- Github is a Web-based Git version control repository hosting service. 
+
+- It is mostly used for computer code (like Dropbox for nerds). 
+
+- We will use GitHub for project management and sharing reproducible reports.
+
+- Need help? [Instructions](https://ds4ling.jvcasillas.com/misc/tutorials/github_setup/index.html)
+
+:::
+:::
+::::
+
+---
+
+:::: columns
+::: {.column width="35%"}
+::: {.p-font style="font-size: 1.1em;"}
+**Programs we will use**
+:::
+
+::: {.p-font style="font-size: 0.8em;"}
+- [Slack]{style="color: grey;"}
+- [R]{style="color: grey;"}
+- [RStudio]{style="color: grey;"}
+- GitHub
+:::
+:::
+
+
+::: {.column width="65%"}
+::: {style="font-size: 1.1em;" .emph .p-font}
+**Github Desktop** 
+:::
+
+::: {style="font-size: 0.7em;"}
+- This can make interacting with Git much easier
+
+- You can download the app here: https://desktop.github.com
+
+![](./index_files/img/github.png)
+:::
+:::
+::::
+
+
+
+## {.final visibility="uncounted"}
+
+![](https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png){.absolute top="5" right="0" width="55" height="55"}
+
+::: {.p-font .emph style="font-size: 1.5em;"}
+Data Science for Linguists 
+:::
+
+<br>
+
+### [Getting help]{style="color: white;"}
+
+### [If you have problems setting up any of the aforementioned]{style="color: white;"}
+### [software ask for help in the slack channel]{style="color: white;"}
+
+<br>
+
+### You can find some very basic tutorials related to 
+### R, RStudio, RMarkdown, GitHub, and Slack [here][here]
+
+[here]: https://wwww.ds4ling.jvcasillas.com/misc/tutorials/index.html

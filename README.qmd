@@ -1,0 +1,33 @@
+---
+title: "ds4ling slides"
+format: gfm
+---
+
+```{r}
+#| label: download-bib
+#| echo: false
+
+link <- "https://www.jvcasillas.com/syllabi/589/refs/bib/ds4ling_refs.bib"
+
+download.file(
+  url = link, 
+  destfile = here::here("assets", "bib", "ds4ling_refs.bib"), 
+  method = "curl"
+)
+```
+
+```{r}
+#| label: links-to-slides
+#| echo: false
+#| results: 'asis'
+
+base <- "https://www.ds4ling.jvcasillas.com/slides/"
+slides <- c(
+  "01_getting_started", "02_distributions", "03_nhst", "04_correlation",
+  "05_lm/01_bivariate_regression", "05_lm/02_assumptions_diagnostics", 
+  "05_lm/03_mrc", "05_lm/04_general_linear_model", "05_lm/05_model_tuning", 
+  "06_glm", "07_mlm", "08_bda", "09_residuals")
+
+glue::glue("1. [{slides}]({base}{slides}/)")[1:13]
+
+```

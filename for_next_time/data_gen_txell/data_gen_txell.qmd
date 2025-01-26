@@ -1,0 +1,71 @@
+---
+title: "data_gen_txell"
+---
+
+```{r}
+
+library("tidyverse")
+library("glue")
+
+tribble(
+  ~"id", ~"group", ~"sex", ~"age", ~"edu", ~"proficiency", ~"warmth_friendly", ~"warmth_likeable", ~"warmth_helpful", ~"competence_intelligent", ~"competence_successful", ~"competence_ambitious", 
+  
+  
+  
+  
+  
+)
+
+gen_participant <- function(group) {
+  
+  out_temp <- tibble(
+    id  = glue("00{sample(1000:9999, 1)}_{group}_{sample(c('male', 'female'), 1)}"), 
+    age = sample(18:35, 1), 
+    edu = sample(c("hs", "college", "higher"), 1)
+  )
+  
+  if (group == "heritage") {
+    out_add <- tibble(
+      proficiency            = rnorm(1, 25, sd = 5) |> round(), 
+      warmth_friendly        = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      warmth_likeable        = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      warmth_helpful         = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      competence_intelligent = sample(1:4, 1, prob = c(0.8, 0.7, 0.2, 0.1)),
+      competence_successful  = sample(1:4, 1, prob = c(0.8, 0.7, 0.2, 0.1)),
+      competence_ambitious   = sample(1:4, 1, prob = c(0.8, 0.7, 0.2, 0.1))
+    )
+  } else {
+    out_add <- tibble(
+      proficiency            = rnorm(1, 35, sd = 5) |> round(), 
+      warmth_friendly        = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      warmth_likeable        = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      warmth_helpful         = sample(1:4, 1, prob = c(0.1, 0.2, 0.7, 0.8)),
+      competence_intelligent = sample(1:4, 1, prob = c(0.1, 0.1, 0.7, 0.8)),
+      competence_successful  = sample(1:4, 1, prob = c(0.1, 0.1, 0.7, 0.8)),
+      competence_ambitious   = sample(1:4, 1, prob = c(0.1, 0.1, 0.7, 0.8))
+    )
+  }
+
+  out <- bind_cols(out_temp, out_add)
+  return(out)
+}
+
+gen_data <- function(n, group) {
+  set.seed(20230422)
+  out <- replicate(n, gen_participant(group = group), simplify = T) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  lapply(., unlist) %>% 
+  as_tibble()
+  return(out)
+}
+
+
+dat <- bind_rows(
+  gen_data(n = 20, group = "heritage"), 
+  gen_data(n = 20, group = "monolingual")
+) %>% 
+  write_csv("attitude_data.csv")
+
+```
+

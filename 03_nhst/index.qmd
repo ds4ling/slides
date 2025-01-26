@@ -1,0 +1,1728 @@
+---
+title    : 'Data Science for Linguists'
+subtitle : 'NHST'
+author   : "Joseph V. Casillas, PhD"
+institute: "Rutgers University<mybr>Spring 2025<br>Last update: `r Sys.Date()`"
+---
+
+```{r}
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
+#| cache: false
+source(here::here("assets", "scripts", "helpers.R"))
+```
+
+# {.transition visibility="uncounted"}
+
+{{< tweet user=hadleywickham id=565516733516349441 >}}
+
+# More about z-scores {.transition}
+
+---
+
+[More about z-scores]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column style="font-size: 0.6em;" .incremental}
+- The normal distribution is defined by a mean
+and SD: *N*(μ, σ)  
+i.e., "sample x follows a normal distribution with a mean of 15 and a SD of 2": [*N*(15, 2)]{.emph}
+- An important case of the normal distribution is the *standard normal distribution* (using z-scores): [*N*(0, 1)]{color="blue"}
+- Same characteristics as a non-standardized normal:
+  - 68% of the data fall within 1σ of µ
+  - 95% of the data fall within 2σ of µ
+  - 99.7% of the data fall within 3σ of µ
+  - [**Sum of area under the curve = 1**]{.emph}
+- Thus we can make probability statements about a sample distribution
+:::
+
+::: {.column}
+```{r}
+#| label: standard-normal
+#| fig-asp: 0.9
+#| fig-align: 'right'
+# Save PDF of normal to object for plot
+pdf_tex2 <- "$f(x)= \\frac{1}{\\sqrt{2 \\pi}\\times 2}\\, e^{-\\,\\frac{(x - 15 )^2}{2}}$"
+pdf_tex4 <- "$f(x)= \\frac{1}{\\sqrt{2 \\pi}}\\, e^{\\,-\\frac{x^2}{2}}$"
+
+standard_x <- c(
+  TeX('-4$\\sigma$'), 
+  TeX('-3$\\sigma$'), 
+  TeX('-2$\\sigma$'), 
+  TeX('-1$\\sigma$'), 
+  TeX('0$\\sigma$'), 
+  TeX('1$\\sigma$'), 
+  TeX('2$\\sigma$'), 
+  TeX('3$\\sigma$'), 
+  TeX('4$\\sigma$')
+)
+
+normalp1 <- plot_dist(range = c(5, 25), mean = 15, sd = 2) + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) 
+
+normalp2 <- plot_dist(range = c(-4, 4), font_color = "darkblue") + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x) 
+
+normalp1 / normalp2
+```
+
+:::
+:::
+
+---
+
+## Probability
+
+::: {.columns}
+::: {.column style="font-size: 0.75em;" .incremental}
+- [**The total area under the probability density function = 1**]{.emph}
+- A portion of the area under the curve is = to some proportion of 1
+- area = ratio = probability 
+- We can determine the probability of finding a value less than, greater than, or between a value of x
+- We can make probability statements about our data if we standardize it and compare it with the normal distribution 
+- Let's practice
+:::
+
+::: {.column}
+```{r}
+#| label: standard-normal2
+#| fig-asp: 0.9
+#| fig-align: 'right'
+normalp3 <- plot_dist(
+    range = c(-4, 4), 
+    tex = "$\\textit{P}(x)$", 
+    font_color = "black"
+  ) + 
+  geom_vline(xintercept = 0, lty = 3) + 
+  labs(y = NULL, x = NULL, title = 'Probability Density Function') + 
+  scale_y_continuous(position = "right") + 
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x) +
+  annotate("text", x = 2.5, y = 0.3, size = 7, 
+    label = TeX(pdf_tex4, output = "character"), parse = T) 
+
+normalp4 <- plot_dist(
+    distribution = "pnorm", 
+    range = c(-4, 4), 
+    tex = "$\\textit{D}(x)$", 
+    font_color = "black"
+  ) + 
+  geom_hline(yintercept = 0.5, lty = 3) + 
+  labs(y = NULL, x = NULL, title = 'Distribution Function') + 
+  scale_y_continuous(position = "right") + 
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x)
+
+normalp3 / normalp4
+```
+
+:::
+:::
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column style="font-size: 0.6em;" .incremental}
+Test scores are *N*(80, 5)
+
+1. The shaded [**area**]{.emph} in (1) is 0.5
+2. The [**ratio**]{.emph} of students who scored 80 points or more is 0.5 (50%)
+3. If we randomly select one score from all students tested, the [**probability**]{.emph} that the student's score is 80 or more is 0.5 (50%)
+
+If we standardize the scores: *N*(0, 1)...
+
+1. The shaded [**area**]{.emph} in (2) is 0.5
+2. The [**ratio**]{.emph} of students w/ a standard score of 0 or more is 0.5 (50%)
+3. When one student is randomly chosen from all students tested, the 
+[**probability**]{.emph} that the student's standard score is 0 or more is 0.5 (50%)
+:::
+
+::: {.column}
+```{r}
+#| label: standard-normal3a
+#| fig-asp: 0.9
+#| fig-align: 'right'
+normalp50 <- ggplot(data = data.frame(x = c(60, 100))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 80, sd = 5), linewidth = 1) + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = seq(60, 100, 5), labels = seq(60, 100, 5)) + 
+  ds4ling_theme() 
+
+normalp50_build <- ggplot_build(normalp50)$data[[1]] |> 
+  mutate(to_shade = ifelse(x >= 80, yes = 'shade', no = 'no_shade'))
+
+p50 <- normalp50 + 
+  geom_area(
+    data = normalp50_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, 
+    alpha = 0.4, 
+  ) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(
+    x = 80, xend = 80, 
+    y = 0, yend = max(normalp50_build$y), 
+    lty = 2
+  ) 
+
+normalp5a <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = seq(-4, 4, 1), labels = standard_x) + 
+  ds4ling_theme() 
+
+normalp5a_build <- ggplot_build(normalp5a)$data[[1]] |> 
+  mutate(to_shade = ifelse(x >= 0, yes = 'shade', no = 'no_shade'))
+
+p5a <- normalp5a + geom_area(
+    data = normalp5a_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, 
+    alpha = 0.4
+  ) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(
+    x = 0, xend = 0, 
+    y = 0, yend = max(normalp5a_build$y), 
+    lty = 2
+  ) 
+
+p50 / p5a + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+:::
+:::
+
+---
+
+## {.smaller}
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+```{r}
+#| label: standard-normal3b
+#| fig-asp: 0.35
+#| fig-align: 'center'
+
+normalp5b <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = seq(0, 1), labels = c(0, TeX("$z_1$"))) +
+  ds4ling_theme() 
+
+normalp5b_build <- ggplot_build(normalp5b)$data[[1]] %>% 
+  mutate(to_shade = if_else(x >= 0 & x <= 1.02, 'shade', 'no_shade'))
+
+p5b <- normalp5b + geom_area(
+    data = normalp5b_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, 
+    alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(
+    x = 0, xend = 0, 
+    y = 0, yend = max(normalp5b_build$y), 
+    lty = 2
+  ) + 
+  geom_segment(x = 1.03, xend = 1.03, y = 0, yend = 0.2395, lty = 2)  
+
+p5aNewX <- p5a + scale_x_continuous(breaks = 0, labels = 0)
+
+p5aNewX + p5b + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+- Since the total area under the curve is equal to 1 it follows from the 
+symmetry in the curve that the **area** under the curve in the region x > 0 in (1) is equal to 0.5.
+
+. . .
+
+- In (2) the shaded area is the probability that $Z$ takes values between 0 and 
+$z_1$.
+
+. . .
+
+- If we know $z_1$ we can look for the value of the shaded area (the 
+probability) in a z-table. 
+
+::: footer
+[z-table of standard normal probabilities](https://ds4ling.github.io/slides/03_nhst/assets/img/ztable.pdf)
+:::
+
+---
+
+## Probability <mybr>[What are the probabilities that $Z$...]{style="font-size: 0.7em; color: #666666;"} {data-menu-title="Examples"}
+
+1. ...takes values between 0 and 1.9?
+2. ...takes values between 0 and 2
+3. ...takes values between 0 and 2.33 
+4. Find the probability that $Z$ takes values bewteen 1 and 2.
+5. What is the probability that $Z$ > 2?
+6. What is the probability that $Z$ < 2?
+7. What is the probability that −2 < $Z$ < 0?
+8. What is the probability that −1 < $Z$ < 2?
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[1. What is the probability that $Z$ takes values between 0 and 1.9?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q1
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: 'center'
+
+q1 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 1.9), labels = c(0, 1.9)) +
+  ds4ling_theme() 
+
+q1_build <- ggplot_build(q1)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 1.9, 'shade', 'no_shade'))
+
+q1_x1_ht <- as.data.frame(
+  q1_build[q1_build$x >= 0 & q1_build$x <= 0.1, 'y']
+  ) |> 
+  pull()
+
+q1_x2_ht <- as.data.frame(
+  q1_build[q1_build$x >= 1.9 & q1_build$x <= 2, 'y']
+  ) |> 
+  pull()
+
+q1 + geom_area(
+    data = q1_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4 
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q1_x1_ht, lty = 2) + 
+  geom_segment(x = 1.9, xend = 1.9, y = 0, yend = q1_x2_ht, lty = 2)  
+```
+
+The probability that $Z$ takes values between 0 and 1.9 is 
+
+. . .
+
+**`r pnorm(1.9, 0, 1) - 0.5`**
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[2. What is the probability that $Z$ takes values between 0 and 2?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q2
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: 'center'
+
+q2 <- ggplot(data = data.frame(x = c(-4, 4))) +
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
+  ds4ling_theme() 
+
+q2_build <- ggplot_build(q2)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2.1, 'shade', 'no_shade'))
+
+q2_x1_ht <- as.data.frame(
+  q2_build[q2_build$x >= 0 & q2_build$x <= 0.1, 'y']
+  ) |> 
+  pull()
+
+q2_x2_ht <- as.data.frame(
+  q2_build[q2_build$x >= 2 & q2_build$x <= 2.1, 'y']
+  ) |> 
+  pull()
+
+q2 + geom_area(
+    data = q2_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q2_x1_ht, lty = 2) + 
+  geom_segment(x = 2.1, xend = 2.1, y = 0, yend = q2_x2_ht, lty = 2)  
+```
+
+The probability that $Z$ takes values between 0 and 2 is 
+
+. . .
+
+**`r pnorm(2, 0, 1) - 0.5`**
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[3. What is the probability that $Z$ takes values between 0 and 2.33?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q3
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: 'center'
+
+q3 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 1) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 2.33), labels = c(0, 2.33)) +
+  ds4ling_theme() 
+
+q3_build <- ggplot_build(q3)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2.33, 'shade', 'no_shade'))
+
+q3_x1_ht <- as.data.frame(
+  q3_build[q3_build$x >= 0 & q3_build$x <= 0.1, 'y']
+  ) |> 
+  pull()
+
+q3_x2_ht <- as.data.frame(
+  q3_build[q3_build$x >= 2.32 & q3_build$x <= 2.4, 'y']
+  ) |> 
+  pull()
+
+q3 + geom_area(
+    data = q3_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = q3_x1_ht, lty = 2) + 
+  geom_segment(x = 2.33, xend = 2.33, y = 0, yend = q3_x2_ht, lty = 2)  
+```
+
+The probability that $Z$ takes values between 0 and 2.33 is 
+
+. . .
+
+**`r pnorm(2.33, 0, 1) - 0.5`**
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[4. Find the probability that $Z$ takes values bewteen 1 and 2.]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q4
+#| fig-asp: 0.3
+#| fig-align: 'center'
+
+q4 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 0.8) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 1, 2), labels = c(0, 1, 2)) +
+  ds4ling_theme() 
+
+q4_build <- ggplot_build(q4)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 1 & x <= 2, 'shade', 'no_shade'))
+
+q4_build_a <- ggplot_build(q4)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
+
+q4_build_b <- ggplot_build(q4)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 1, 'shade', 'no_shade'))
+
+q4_x1_ht <- as.data.frame(
+  q4_build[q4_build$x >= 1 & q4_build$x <= 1.1, 'y']
+  ) |> 
+  pull()
+
+q4_x2_ht <- as.data.frame(
+  q4_build[q4_build$x >= 2 & q4_build$x <= 2.1, 'y']
+  ) |> 
+  pull()
+
+q4p1 <- q4 + geom_area(
+    data = q4_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
+
+q4p2 <- q4 + geom_area(
+    data = q4_build_a, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q4_x2_ht, lty = 2) 
+
+q4p3 <- q4 + geom_area(
+    data = q4_build_b, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 1, xend = 1, y = 0, yend = q4_x1_ht, lty = 2)  
+
+q4p1 + q4p2 + q4p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+The probability that $Z$ takes values between 1 and 2 is 
+
+. . .
+
+[**`r pnorm(2, 0, 1) - pnorm(1, 0, 1)`**]{.emph}
+
+. . .
+
+Probalitiy of (1) = (2) - (3)
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[5. What is the probability that $Z$ > 2?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q5
+#| fig-asp: 0.3
+#| fig-align: 'center'
+
+q5 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 0.8) +
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
+  ds4ling_theme() 
+
+q5_build <- ggplot_build(q5)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 2, 'shade', 'no_shade'))
+
+q5_build_a <- ggplot_build(q5)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0, 'shade', 'no_shade'))
+
+q5_build_b <- ggplot_build(q5)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
+
+q5_x1_ht <- as.data.frame(
+  q5_build[q5_build$x >= 2 & q5_build$x <= 2.1, 'y']
+  ) |> 
+  pull()
+
+q5p1 <- q5 + geom_area(
+    data = q5_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2) 
+
+q5p2 <- q5 + geom_area(
+    data = q5_build_a, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) 
+
+q5p3 <- q5 + geom_area(
+    data = q5_build_b, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q5_x1_ht, lty = 2)  
+
+q5p1 + q5p2 + q5p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+The probability that $Z$ > 2 is 
+
+. . .
+
+[**`r pnorm(2, 0, 1, lower.tail = FALSE)`**]{.emph}
+
+. . .
+
+Probalitiy of (1) = (2) - (3)
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[6. What is the probability that $Z$ < 2?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q6
+#| fig-asp: 0.3
+#| fig-align: 'center'
+
+q6 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 0.8) + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(0, 2), labels = c(0, 2)) +
+  ds4ling_theme() 
+
+q6_build <- ggplot_build(q6)$data[[1]] |> 
+  mutate(to_shade = if_else(x <= 2, 'shade', 'no_shade'))
+
+q6_build_a <- ggplot_build(q6)$data[[1]] |> 
+  mutate(to_shade = if_else(x <= 0, 'shade', 'no_shade'))
+
+q6_build_b <- ggplot_build(q6)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
+
+q6_x1_ht <- as.data.frame(
+  q6_build[q6_build$x >= 2 & q6_build$x <= 2.1, 'y']
+  ) |> 
+  pull()
+
+q6p1 <- q6 + geom_area(
+    data = q6_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2) 
+
+q6p2 <- q6 + geom_area(
+    data = q6_build_a, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) 
+
+q6p3 <- q6 + geom_area(
+    data = q6_build_b, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) + 
+  geom_segment(x = 2, xend = 2, y = 0, yend = q6_x1_ht, lty = 2)  
+
+q6p1 + q6p2 + q6p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+The probability that $Z$ < 2 is 
+
+. . .
+
+[**`r pnorm(2, 0, 1, lower.tail = TRUE)`**]{.emph}
+
+. . .
+
+Probalitiy of (1) = 0.5 + (3)
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[7. What is the probability that −2 < $Z$ < 0?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q7
+#| fig-asp: 0.3
+#| fig-align: 'center'
+
+q7 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 0.8) + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(-2, 0), labels = c(-2, 0)) +
+  ds4ling_theme() 
+
+q7_build <- ggplot_build(q7)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= -2 & x <= 0, 'shade', 'no_shade'))
+
+q7_build_a <- ggplot_build(q7)$data[[1]] |> 
+  mutate(to_shade = if_else(x <= 2 & x >= 0, 'shade', 'no_shade'))
+
+q7_x1_ht <- as.data.frame(
+  q7_build[q7_build$x >= -2.1 & q7_build$x <= -2, 'y']
+  ) |> 
+  pull()
+
+q7p1 <- q7 + geom_area(
+    data = q7_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = -2, xend = -2, y = 0, yend = q7_x1_ht, lty = 2) 
+
+q7p2 <- q7 + geom_area(
+    data = q7_build_a, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q7_x1_ht, lty = 2) 
+
+q7p1 + q7p2 + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+The probability that  −2 < $Z$ < 0 is 
+
+. . .
+
+[**`r (0.5 - pnorm(2, 0, 1, lower.tail = FALSE))`**]{.emph}
+
+. . .
+
+Probalitiy of (1) = (2)
+
+---
+
+[Probability]{.emph .p-font style="font-size: 1.75em;"}
+
+[8. What is the probability that −1 < $Z$ < 2?]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: q8
+#| fig-asp: 0.3
+#| fig-align: 'center'
+
+q8 <- ggplot(data = data.frame(x = c(-4, 4))) + 
+  aes(x = x) +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 1), linewidth = 0.8) + 
+  labs(y = NULL, x = NULL) + 
+  scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(-1, 0, 2), labels = c(-1, 0, 2)) +
+  ds4ling_theme() 
+
+q8_build <- ggplot_build(q8)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= -1 & x <= 2, 'shade', 'no_shade'))
+
+q8_build_a <- ggplot_build(q8)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 1, 'shade', 'no_shade'))
+
+q8_build_b <- ggplot_build(q8)$data[[1]] |> 
+  mutate(to_shade = if_else(x >= 0 & x <= 2, 'shade', 'no_shade'))
+
+q8_x1_ht <- as.data.frame(
+  q8_build[q8_build$x >= -1.1 & q8_build$x <= -1, 'y']
+  ) |> 
+  pull()
+
+q8_x2_ht <- as.data.frame(
+  q8_build[q8_build$x >= -2.1 & q8_build$x <= -2, 'y']
+  ) |> 
+  pull()
+
+q8p1 <- q8 + geom_area(
+    data = q8_build, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = -1, xend = -1, y = 0, yend = q8_x1_ht, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
+
+q8p2 <- q8 + geom_area(
+    data = q8_build_a, 
+    aes(x = x, y = y, fill = to_shade), 
+   show.legend = FALSE, alpha = 0.4 
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = '', values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 1, xend = 1, y = 0, yend = q8_x1_ht, lty = 2) 
+
+q8p3 <- q8 + geom_area(
+    data = q8_build_b, 
+    aes(x = x, y = y, fill = to_shade), 
+    show.legend = FALSE, alpha = 0.4
+  ) + 
+  coord_cartesian(ylim = c(0, 0.4)) + 
+  scale_fill_manual(name = NULL, values = c("white", "thistle")) + 
+  geom_hline(yintercept = 0, linewidth = 1) + 
+  geom_segment(x = 0, xend = 0, y = 0, yend = 0.4, lty = 2) +
+  geom_segment(x = 2, xend = 2, y = 0, yend = q8_x2_ht, lty = 2) 
+
+q8p1 + q8p2 + q8p3 + plot_annotation(tag_levels = '1', tag_suffix = ".")
+```
+
+The probability that  −1 < $Z$ < 2 is 
+
+. . .
+
+[**`r (pnorm(1, 0, 1, lower.tail = TRUE) - 0.5) + (pnorm(2, 0, 1, lower.tail = TRUE) - 0.5)`**]{.emph}
+
+. . .
+
+Probalitiy of (1) = (2) + (3)
+
+
+# 
+
+<center>
+[But what is the relationship between a given sample distribution]{.p-font style="font-size: 1.2em; color: #666666"}
+[and the normal distribution?]{.p-font style="font-size: 1.2em; color: #666666"}
+</center>
+
+
+
+
+# Central limit theorem {.transition visibility="uncounted"}
+
+---
+
+## CLT {.smaller data-menu-title="Definition"}
+
+<ru-blockquote>
+The CLT states that given i.i.d. (independent, identically distributed) samples from a distribution with mean and variance, the sample mean has a distribution that converges to a Gaussian as the number of samples n increases.
+</ru-blockquote>
+
+. . .
+
+<br>
+
+[Huh?]{.p-font style="font-size: 1.7em; color: #666666;"}
+
+. . .
+
+<br>
+
+...if you take many samples from a population, and calculate the averages of 
+each one, the collection of those averages will be normally distributed... and 
+it doesn’t matter what the shape of the source distribution is.
+
+---
+
+## {data-menu-title="Shiny app" background-iframe="https://www.jvcasillas.com/shiny_clt/" background-interactive=TRUE}
+
+::: footer
+<https://www.jvcasillas.com/shiny_clt/>
+:::
+
+---
+
+## CLT <mybr>[Why is this important/useful?]{style="font-size: 0.7em; color: #666666;"} {.smaller data-menu-title="Why?"}
+
+- If we know the population mean and standard deviation, then we also know that the distribution of means across repeated samples will be normal with a mean equal to the population mean and a standard deviation equal to the population standard deviation divided by the square root of n.
+
+. . .
+
+- The CLT allows us to make probability statements about the possible 
+range of values a sample mean can have
+
+. . .
+
+- Because we know exactly what the distribution of means will look like for a given population, we can take the mean from a single sample and compare it to the sampling distribution to assess the likelihood that our sample comes from the same population. 
+
+. . .
+
+- In other words, the CLT allows us to test the hypothesis that our sample represents a population distinct from the known population.
+
+---
+
+## Ex 1 - IQ {background-color="#cc0033" visibility="uncounted"}
+
+---
+
+## {.smaller} 
+
+[Ex 1 - IQ]{.emph .p-font style="font-size: 1.75em;"}
+
+The population distribution of IQ in the general public is known to have a mean of 100 with a standard deviation of 15.[^1]
+
+<br>
+
+::: {.columns}
+::: {.column}
+```{webr-r}
+#| label: iq-pop
+
+# Our population
+draws    <- 1e+5 
+pop_mean <- 100  # mu
+pop_sd   <- 15   # sigma
+
+# Generate distribution
+pop_iq <- rnorm(
+  n = draws,
+  mean = pop_mean, 
+  sd = pop_sd
+)
+```
+:::
+
+::: {.column .fragment}
+```{r}
+#| label: p6
+#| fig-height: 6
+# Our population
+draws    <- 1e+5 
+pop_mean <- 100  # mu
+pop_sd   <- 15   # sigma
+
+# Generate distribution
+pop_iq <- rnorm(
+  n = draws,
+  mean = pop_mean, 
+  sd = pop_sd
+)
+
+p6 <- tibble(x = pop_iq) |> 
+  ggplot() + 
+  aes(x = x) +
+  geom_density(color = 'black', fill = 'thistle') + 
+  geom_vline(xintercept = mean(pop_iq), lty = 2, color = 'red') + 
+  annotate("text", x = mean(pop_iq) + 7, y = 0.01, 
+    label = paste0('Mean = ', round(mean(pop_iq)))) + 
+  labs(x = 'IQ', y = 'Density', title = 'Density plot of IQ') + 
+  ds4ling_theme()
+print(p6)
+```
+:::
+:::
+
+[^1]: https://en.wikipedia.org/wiki/Intelligence_quotient
+
+---
+
+## {.smaller background-color="#666666" background-image="https://cdn.cnn.com/cnnnext/dam/assets/160504160857-03-donald-trump-0504-full-169.jpg" background-size="580px" background-position="90% 50%"}
+
+[Ex 1 - IQ]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column width="55%"}
+- We take a sample of 36 members of the Trump family and would like to determine if these individuals are systematically smarter than the rest of the population. 
+- To answer this question, we calculate the mean for our sample and consider how likely it would be to observe this value if the Trumps were actually not any different (the null hypothesis).
+- The sample mean IQ we observe is 103.  We know that, even if the Trumps were not any different from the general public, we still might observe a 103 due to random chance. 
+- Let's test it.
+:::
+::: 
+
+::: notes
+Example based off of exercise found [here](https://www.methodsconsultants.com/tutorial/the-central-limit-theorem-and-its-implications-for-statistical-inference/)
+:::
+
+---
+
+## {.smaller}
+
+[Ex 1 - IQ]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+- Given the central limit theorem, we know that the distribution of sample means will be normal with a mean of 100 and a standard deviation of `15 / sqrt(36)` = `r 15 / sqrt(36)`. 
+- We can compare our own mean to this distribution as follows:
+
+```{r}
+#| label: iq-sample
+#| echo: true
+sample_n    <- 36  # Sample size
+sample_mean <- 103 # xbar (trump family mean)
+dist_mean   <- pop_mean
+sample_sd   <- pop_sd / sqrt(sample_n)
+
+# Generate sample
+trumps <- rnorm(
+  n = draws, 
+  mean = dist_mean, 
+  sd = sample_sd
+)
+```
+:::
+
+::: {.column}
+```{r}
+#| label: p7
+#| fig-asp: 0.8
+#| fig-align: 'right'
+p7 <- tibble(x = trumps) |> 
+  ggplot() +
+  aes(x = x) + 
+  geom_density(color = 'black', fill = 'thistle') + 
+  labs(x = 'IQ', y = 'Density', title = 'Density plot of IQ', 
+       caption = "n = 36") + 
+  ds4ling_theme()
+
+p7_build <- ggplot_build(p7)$data[[1]] |> 
+  mutate(trumps = if_else(x >= sample_mean, 'Trumps', 'Population'))
+
+p7 + geom_area(
+    data = p7_build, 
+    aes(x = x, y = y, fill = trumps)
+  ) + 
+  scale_fill_manual(name = NULL, values = c("lightblue", "thistle")) + 
+  geom_segment(
+    x = sample_mean + 1, xend = sample_mean + 3, 
+    y = 0.005, yend = 0.015, color = 'black', linewidth = 0.75
+  ) + 
+  geom_segment(
+    x = sample_mean, xend = sample_mean, 
+    y = 0, yend = 0.11, color = 'black', linewidth = 0.75
+  ) + 
+  annotate("text", x = sample_mean, y = 0.12, label = "Sample\nmean", 
+    size = 4) + 
+  annotate("text", x = sample_mean + 5, y = 0.02, size = 4, 
+    label = "Probability of observing\nlarger mean") + 
+  theme(legend.position = 'bottom')
+```
+:::
+:::
+
+---
+
+[Ex 1 - IQ]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {style="font-size: 0.5em;"}
+- If the probability of observing our Trump sample mean or something larger is really small (let's say less than .05), then we can reject the hypothesis that the Trumps are just like the general public. 
+- This probability will be equal to the area under the normal curve above our observed sample value, indicated by the [blue]{color="blue"} color in the plot.
+- To simplify the process of finding the area in the tail of the distribution, we typically convert our mean to a z-score as follows:
+:::
+
+::: {style="font-size: 0.7em;"}
+$$\color{red}{z} = \frac{\color{blue}{\bar{x}} - \color{green}{\mu}}{\color{purple}{\sigma} \div \color{orange}{\sqrt[]{\color{grey}{n}}}}$$
+:::
+
+::: {style="font-size: 0.5em;"}
+Where [**z**]{.emph} is derived by calculating the difference between the [sample mean]{color="blue"} and the [population mean]{color="green"} and dividing it by the [population standard deviation]{color="purple"} divided by the [square root]{color="orange"} of the [sample size]{color="grey"}. 
+:::
+
+<mybr>
+
+```{r}
+#| label: z_conversion
+#| echo: true
+sample_z <- (sample_mean - pop_mean) / (pop_sd / sqrt(sample_n))
+dist_z  <- (trumps - pop_mean) / (pop_sd / sqrt(sample_n))
+print(sample_z) 
+```
+
+---
+
+```{r}
+#| label: p8
+#| fig-height: 7.5
+#| fig-width: 14
+
+p8 <- tibble(x = dist_z) |> 
+  ggplot() + 
+  aes(x = x) +
+  geom_density(color = 'black', fill = 'thistle') + 
+  labs(x = 'IQ', y = 'Density', title = 'Density plot of IQ', 
+       caption = "n = 36") + 
+  ds4ling_theme()
+
+p8_build <- ggplot_build(p8)$data[[1]] |> 
+  mutate(trumps = if_else(x >= sample_z, 'Trumps', 'Population'))
+
+p8 + geom_area(data = p8_build, aes(x = x, y = y, fill = trumps)) + 
+  scale_fill_manual(name = NULL, values = c("lightblue", "thistle")) + 
+  geom_segment(x = sample_z, xend = sample_z, 
+    y = 0, yend = 0.195, color = 'black', linewidth = 0.75) + 
+  geom_segment(x = sample_z + 0.25, xend = sample_z + 1, 
+    y = 0.025, yend = 0.05, color = 'black', linewidth = 0.75) + 
+  annotate("text", x = sample_z + 0.2, y = 0.23, label = "Sample\nmean", size = 5) + 
+  annotate("text", x = sample_z + 1.6, y = 0.07, size = 5,
+    label = "Probability of observing\nlarger mean") + 
+  theme(legend.position = 'bottom')
+```
+
+::: {style="font-size: 0.7em;"}
+- This probability is related to what you know as a p-value (we'll come back to this).
+:::
+
+---
+
+::: {.columns}
+::: {.column}
+![](./index_files/img/ztable.png)
+:::
+
+::: {.column}
+</br>
+
+- We can check the area under the curve to the right or left of different z-scores by using the z-table
+- In this case we see that the area to the right of **1.2** equals 1 - 0.8849, or `r 1 - 0.8849`
+- This implies that the probability of observing a sample IQ of 103 is .12
+:::
+:::
+
+---
+
+## Ex 2 - Exams {background-color="#cc0033" visibility="uncounted"}
+
+---
+
+[Ex 2 - Exams]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {style="font-size: 0.7em;"}
+Assume that the test scores of a college entrance exam fits a normal 
+distribution. Furthermore, the mean test score is 72, and the standard 
+deviation is 15.2. What is the percentage of students scoring 84 or 
+more in the exam?
+
+1. Calculate the z-score
+2. Check z-table
+:::
+
+. . .
+
+```{r}
+#| label: ex2-zscores
+#| echo: true
+# (score - mean) / sd
+(84 - 72) / 15.2
+```
+
+::: {style="font-size: 0.7em;"}
+The z-score is: `r (84 - 72) / 15.2`. Look this value up in z-table.
+:::
+
+. . .
+
+[We can do this in R]{.p-font color="#666666;"}
+
+```{r}
+#| label: ex2-pnorm
+#| echo: true
+pnorm(q = 84, mean = 72, sd = 15.2, lower.tail = FALSE) 
+```
+
+
+
+# 
+
+<center>
+[**As a linguist you will probably never do this**]{.emph .p-font}
+</center>
+
+. . .
+
+<center>
+[but it helps us understand the importance of <br>
+the [normal distribution]{color="#497dd7"} and the [CLT]{color="#497dd7"}... <br>
+they allow us to answer questions like this <br>
+and to do hypothesis testing.]{color="#666666" .p-font}
+</center>
+
+
+
+
+
+# Null hypothesis significance testing {.transition data-menu-title="NHST" visibility="uncounted"}
+
+---
+
+## {background-image="https://i.imgflip.com/2sdkd6.jpg" background-size="contain" background-position="50% 50%" background-color="black"}
+
+<!-- meme of karl pearson "do you have a moment to talk about NHST" --> 
+
+---
+
+## [NHST]{color="white"} {background-image="./index_files/img/gavel.JPG" background-size="contain" background-color="black" data-menu-title="The basics"}
+
+. . .
+
+<br>
+
+::: {.columns}
+::: {.column}
+[In a trial, the </br>
+[[**null hypothesis**]{color="yellow"} ([H<sub>0</sub>]{color="yellow"})]{style="font-size: 1.3em;" .p-font} </br> 
+is innocence.]{color="white"}
+:::
+:::
+
+. . .
+
+::: {.absolute bottom="0"}
+[The objective is to see if the evidence [[(]{color="white"}**the data**[)]{color="white"}]{.p-font .emph style="font-size: 1.5em;"} contradicts this hypothesis, supporting an [**alternative hypothesis**]{.p-font style="font-size: 1.3em;" color="green"} [([H<sub>1</sub>]{.p-font style="font-size: 1.1em;" color="green"})]{style="font-size: 1.4em;"}, guilt.]{color="white" style="font-size: 0.8em;"}
+:::
+
+---
+
+## {background-image="https://api.time.com/wp-content/uploads/2019/01/ruth-bader-ginsburg-supreme-court-justice-portrait.jpg" background-size="contain" background-color="black"}
+
+[NHST]{color="white" .p-font style="font-size: 1.75em;"}
+
+<!-- RBG headshot --> 
+
+. . .
+
+::: {.columns}
+::: {.column .absolute bottom="0" left="0"}
+[If there is no evidence, </br>the accused cannot be </br> found 
+guilty.]{color="white"}
+
+[We [[**fail to reject**]{.emph} [H<sub>0</sub>]{color="yellow"}]{style="font-size: 1.6em;" .p-font}]{color="white" style="font-size: 0.8em;"}
+:::
+
+::: {.column .fragment .absolute bottom="0" right="0"}
+[If there is evidence of guilt beyond a reasonable doubt, 
+the accused is found guilty.]{color="white"}
+
+[We [[**reject**]{color="grey"} H<sub>0</sub>]{style="font-size: 1.6em;" .p-font}]{color="white" style="font-size: 0.8em;"}
+:::
+:::
+
+---
+
+## {background-image="https://www.snopes.com/tachyon/2017/03/Ruth_Bader_Ginsburg_fb.jpg?resize=1200,630&quality=65" background-size="contain" background-color="black" data-menu-title="p-values? significance?"}
+
+<br>
+
+[So what's a [p-value]{color="yellow"}?]{.p-font color="white" style="font-size: 1.75em"}
+
+<!-- RBG headshot --> 
+
+. . .
+
+[**p-value**]{.emph .p-font}: [the probability of obtaining </br>your data, if H<sub>0</sub> is TRUE.]{color="white" .p-font}
+
+. . .
+
+<br>
+
+[...and "[significant]{color="yellow"}"?]{.p-font style="font-size: 1.75em;"}
+
+. . .
+
+[**Significance**]{.emph .p-font}: [obtaining a p-value below </br>an arbitrary threshold]{color="white" .p-font}
+
+::: notes
+- It is a poor choice of word
+- All it means is that an effect is not statistically equal to zero
+- It may be an effect of trivial magnitude
+- Basically, the prediction is better than nothing
+- It doesn't mean "significant" in terms of importance
+:::
+
+# {background-color="black"}
+
+<center>
+[High p-value: your data are likely with a true null.]{.p-font style="font-size: 1.35em; color: grey;"}
+
+[Low p-value: your data are unlikely with a true null.]{.p-font style="font-size: 1.35em; color: grey;"}
+</center>
+
+. . .
+
+<br>
+
+::: {.columns}
+::: {.column}
+<center>
+[Low p-values do not tell you how likely your hypothesis is!]{.emph .p-font style="font-size: 1.55em;"}
+</center>
+:::
+
+::: {.column .fragment}
+<center>
+[Low p-values are not "more significant" than high p-values!]{.emph .p-font style="font-size: 1.55em;"}
+</center>
+:::
+:::
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst1.png" background-size="contain"}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst2.png" background-size="contain"}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues_wrong.png" background-size="contain"}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png" background-size="contain"}
+
+---
+
+## {background-color="black" background-image="https://larspsyll.files.wordpress.com/2014/07/i_do_not_think_it_significant_means_what_you_think_it_means.jpg" background-size="contain"}
+
+---
+
+## {background-color="black" visibility="uncounted" .center}
+
+<center>
+<iframe height="390" width= "520" src="https://www.tiktok.com/player/v1/6821961902101466374?&music_info=1&description=1" allow="fullscreen" title="test"></iframe>
+</center>
+
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/6821961902101466374>
+:::
+
+<!-- trending towards significance tiktoks -->
+
+---
+
+## {visibility="uncounted" background-color="black" .center}
+
+<center>
+<iframe height="390" width= "520" src="https://www.tiktok.com/player/v1/7073346137440439598?&music_info=1&description=1" allow="fullscreen" title="test"></iframe>
+</center>
+
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/7073346137440439598>
+:::
+
+<!-- trending towards significance tiktoks -->
+
+---
+
+## {visibility="uncounted" background-color="black" .center}
+
+<center>
+<iframe height="390" width= "520" src="https://www.tiktok.com/player/v1/7073335593823898923?&music_info=1&description=1" allow="fullscreen" title="test"></iframe>
+</center>
+
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/7073335593823898923>
+:::
+
+<!-- trending towards significance tiktoks -->
+
+---
+
+## {background-image="./index_files/img/power.png" background-size="contain" background-position="100% 50%" background-color="#000" data-menu-title="Power?" .center}
+
+[What is [**power**]{.emph}?]{color="white" .p-font style="font-size: 1.75em;"}
+
+[The probability of (correctly) rejecting]{.p-font style="font-size: 1.35em; color: grey;"}
+
+[[**H<sub>0</sub>**]{.emph} when [**H<sub>1</sub>**]{color="yellow"} is true.]{.p-font style="font-size: 1.35em; color: grey;"}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/power.png" background-size="contain"}
+
+---
+
+## {background-image="../assets/img/pensar2.png" background-size="250px" background-position="95% 5%"}
+
+[Hypothesis testing in context]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {style="font-size: 0.75em;" .incremental}
+- We have a question. We want to know the truth™.
+- Generally we compare [**sample distributions**]{.emph} of population(s)  
+i.e., we want to know if a group is different from another  
+group with respect to something
+- In other words, we hypothesize something about a [population]{color="#497dd7"} or about 
+the relationship between two [populations]{color="#497dd7"}
+- What we hypothesize is considered an *alternative* to a *null* hypothesis
+	- [**Null hypothesis**]{.emph} (H<sub>0</sub>): the difference between the 
+	populations = 0
+	- [Alternative hypothesis]{color="#497dd7"} (H<sub>1</sub>): the difference 
+	between the populations $\neq$ 0
+:::
+
+::: notes
+Theory Falsification
+- Scientific theories are fallible and require testing
+- Basically, there's no way to prove a theory, we can only support it:
+- We **can** disprove a theory if our observations or experimental results disconfirm it
+- Research should be designed in a way that subjects theory to risk of falsification, it should attempt to disconfirm the theory
+- It must be possible at least in principle to disconfirm a scientific theory
+:::
+
+---
+
+## {data-menu-title="Type I/II errors" .center}
+
+```{r}
+#| label: nhst-decisions
+#| results: 'asis'
+tribble(
+ ~' ',       ~'  ',                ~`H0 is true`,  ~`H0 is false`,
+  'Decision', 'Fail to reject H0',  'Correct',      'Type II error',
+  'Decision', 'Reject H0',          'Type I error', 'Correct') |>  
+  mutate( 
+    `H0 is true` = cell_spec(
+      x = `H0 is true`, 
+      format = "html", 
+      color = 'white', 
+      background = factor(
+        x = `H0 is true`, 
+        levels = c("Correct", "Type I error"), 
+        labels = c("blue", "#cc0033")
+      )
+    ), 
+    `H0 is false` = cell_spec(
+      x = `H0 is false`, 
+      format = "html", 
+      color = 'white', 
+      background = factor(
+        x = `H0 is false`, 
+        levels = c("Type II error", "Correct"), 
+        labels = c("#cc0033", "blue")
+      )
+    )
+  ) |> 
+  kable(format = 'html', escape = F) |> 
+  kable_styling("hover", full_width = F, font_size = 26) |>
+  column_spec(1, bold = T) |>
+  column_spec(2, width = "10em", border_right = TRUE) |> 
+  collapse_rows() |> 
+  add_header_above(c("", "", "Reality" = 2)) 
+```
+
+. . .
+
+<br>
+
+{{< tweet user=drob id=781276244310622209 >}}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error1.png" background-size="contain"}
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error2.png" background-size="contain"}
+
+---
+
+## Hypothesis testing in context {background-image="../assets/img/pensar2.png" background-size="250px" background-position="95% 5%" data-menu-title="NHST in context"}
+
+::: {style="font-size: 0.6em;"}
+- We have a question. We want to know the truth™.
+- Generally we compare [**sample distributions**]{.emph} of population(s)  
+i.e., we want to know if a group is different from another  
+group with respect to something
+- In other words, we hypothesize something about a [population]{color="#497dd7"} or about 
+the relationship between two [populations]{color="#497dd7"}
+- What we hypothesize is considered an *alternative* to a *null* hypothesis
+	- [**Null hypothesis**]{.emph} (H<sub>0</sub>): the difference between the 
+	populations = 0
+	- [Alternative hypothesis]{color="#497dd7"} (H<sub>1</sub>): the difference 
+	between the populations $\neq$ 0
+- We determine which statistical test is most appropriate according to the 
+nature of our data
+- Set alpha
+- Conduct relevant test and...
+  - reject the null hypothesis (if there is sufficient evidence)
+  - fail to reject the null hypothesis 
+:::
+
+---
+
+## {background-image="../assets/img/confundido.png" background-size="300px" background-position="85% 50%"}
+
+[Which test do I use?]{.emph .p-font style="font-size: 1.75em;"}
+
+[There are many...]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+---
+
+## {background-image="./index_files/img/procedures_flowchart.png" background-size="contain"}
+
+
+
+
+# The t-test {.transition}
+
+---
+
+## The basics 
+
+::: {style="font-size: 0.58em;" .incremental}
+- Compares two sample distributions to determine if they are different
+- What do we mean by 'different'?
+- We consider the sample distributions 'different' if the relationship between them is due to something other than random chance
+- Normally we analyze the probability that a real relationship exists
+- A t-test determines if the diference between two averages = 0
+:::
+
+. . .
+
+```{r}
+#| label: t-test-prep
+#| fig-align: 'center'
+#| fig-asp: 0.35
+some_data <- tibble(
+    Groups = c(rep('g1', 3000), rep('g2', 3000)), 
+    var = c(rnorm(n = 3000, mean = -10, sd = 20), 
+            rnorm(n = 3000, mean = 10, sd = 20))
+  )
+
+some_means <- some_data |> 
+  group_by(Groups) |> 
+  summarize(means = mean(var)) %>% 
+  split(.$Groups)
+
+some_data |> 
+  ggplot() + 
+  aes(var) + 
+  geom_density(aes(lty = Groups, fill = Groups), alpha = 0.6) + 
+  geom_vline(xintercept = some_means$g1$means) + 
+  geom_vline(xintercept = some_means$g2$means, lty = 2) + 
+  scale_fill_viridis_d(begin = 0.2, end = 0.8) + 
+  labs(y = "Density", x = "Some score") + 
+  ds4ling_bw_theme(base_size = 18) + 
+  theme(
+    legend.position = "inside", 
+    legend.justification = c(1, 1), 
+    legend.background = element_blank()
+  )
+```
+
+---
+
+## The basics {data-menu-title="Independent vs. paired"}
+
+::: {style="font-size: 0.8em;"}
+- There are several types of t-tests
+- We are interested in two:
+	1. independent samples
+	2. paired samples
+:::
+
+. . .
+
+<mybr>
+
+::: {.columns}
+::: {.column}
+### Independent samples
+
+```{r}
+#| label: independent-samples-ex
+#| results: 'asis'
+ind_samp <- tribble(
+  ~'name', ~'group', ~'score', 
+   'Juan',     'g1',      250, 
+   'Jorge',    'g1',      340, 
+   'Jacobo',   'g2',      460, 
+   'José',     'g2',      200
+  )
+
+mutate(
+  .data = ind_samp, 
+  group  = cell_spec(
+    x = group, 
+    format = "html", 
+    color = 'white', 
+    background = factor(group, c("g1", "g2"), c("blue", "#cc0033"))
+  )
+) |>
+kable(format = 'html', escape = F) 
+```
+:::
+
+::: {.column .fragment}
+### Paired samples
+
+```{r}
+#| label: paired-samples-ex
+#| results: 'asis'
+
+prd_samp <- tribble(
+  ~'name',     ~'test1', ~'test2', 
+   'Miguel',         35,       67, 
+   'Marta',          50,       46, 
+   'Marisa',         90,       86, 
+   'Marcos',         78,       91
+  )
+
+kable(prd_samp, format = 'html', escape = F) |> 
+column_spec(2, color = 'blue') |> 
+column_spec(3, color = '#cc0033')
+```
+:::
+:::
+
+
+---
+
+## Ex. independent samples
+
+<br>
+
+::: {.columns}
+::: {.column width="45%"}
+```{r}
+#| label: dummy-print
+#| eval: false
+ind_samp <- tribble(
+  ~'name', ~'group', ~'score', 
+   'Juan',     'g1',      250, 
+   'Jorge',    'g1',      340, 
+   'Jacobo',   'g2',      460, 
+   'José',     'g2',      200
+  )
+```
+
+```{r}
+#| label: ind-samp-table
+#| results: 'asis'
+mutate(
+  .data = ind_samp, 
+  group  = cell_spec(
+    x = group, 
+    format = "html", 
+    color = 'white', 
+    background = factor(group, c("g1", "g2"), c("blue", "#cc0033"))
+  )
+) |>
+kable(format = 'html', escape = F) 
+```
+
+<br>
+
+```{r}
+#| label: ind-means-table
+ind_samp |> 
+  group_by(group) |> 
+  summarize(avg = mean(score)) |> 
+  pivot_wider(names_from = group, values_from = avg) |> 
+  mutate(diff = g1 - g2)
+```
+:::
+
+::: {.column width="55%" .fragment}
+```{r}
+#| label: 'ind-samp'
+#| echo: true
+# t-test: # independent 2-group
+t.test(score ~ group, data = ind_samp)
+```
+:::
+:::
+
+---
+
+## Ex. paired samples
+
+<br>
+
+::: {.columns}
+::: {.column width="45%"}
+```{r}
+#| label: paired-print-dummy
+#| eval: false
+prd_samp <- tribble(
+  ~'name',     ~'test1', ~'test2', 
+   'Miguel',         35,       67, 
+   'Marta',          50,       46, 
+   'Marisa',         90,       86, 
+   'Marcos',         78,       91
+  )
+```
+
+```{r}
+#| label: prd-colored-table
+#| results: 'asis'
+kable(prd_samp, format = 'html', escape = F) |> 
+  column_spec(2, color = 'blue') |> 
+  column_spec(3, color = '#cc0033')
+```
+
+<br>
+
+```{r}
+#| label: prd-means-table
+prd_samp |> 
+  summarize(across(test1:test2, mean)) |> 
+  mutate(diff = test1 - test2)
+```
+:::
+
+::: {.column width="55%" .fragment}
+```{r}
+#| label: paired-output
+#| echo: true
+# t-test: paired sample
+t.test(prd_samp$test1, prd_samp$test2, paired = TRUE)
+```
+:::
+:::
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst3.png" background-size="contain" background-color="black"}
+
+---
+
+## {data-menu-title="Shiny app" background-iframe="https://jvcasillas.shinyapps.io/r_for_linguists/" background-interactive=TRUE}
+
+::: footer
+<https://jvcasillas.shinyapps.io/r_for_linguists/>
+:::
+
+
+
+
+# [References]{.emph} {.final}
+
+::: notes
+@wickham2016r
+@qml_ch1
+@manga2009
+:::

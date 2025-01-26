@@ -4,6 +4,7 @@
 library("ds4ling")
 library("lingStuff")
 library("untidydata")
+library("academicWriteR")
 
 # Tidyverse
 library("dplyr")
@@ -12,6 +13,8 @@ library("readr")
 library("purrr")
 library("here")
 library("forcats")
+library("stringr")
+library("glue")
 
 # Modeling
 library("lme4")
@@ -31,10 +34,8 @@ library("kableExtra")
 library("latex2exp")
 library("broom")
 library("fGarch")
-library("RefManageR")
 library("equatiomatic")
-
-# xaringan stuff
+library("countdown")
 library("tiktokrmd")
 
 # set seed for reproducibility

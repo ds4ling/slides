@@ -1,5 +1,5 @@
-ds4ling slides
-================
+# ds4ling slides
+
 
 1.  [01_getting_started](https://www.ds4ling.jvcasillas.com/slides/01_getting_started/)
 2.  [02_distributions](https://www.ds4ling.jvcasillas.com/slides/02_distributions/)

@@ -1,0 +1,101 @@
+---
+title             : "GLM - Poisson regression"
+shorttitle        : "Poisson regression"
+
+author: 
+  - name          : "Your Name"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+
+affiliation:
+  - id            : "1"
+    institution   : "Rutgers University"
+
+author_note: >
+  Complete departmental affiliations for each author (note the indentation, if you start a new paragraph).
+
+  Enter author note here.
+
+abstract: >
+  Enter abstract here (note the indentation, if you start a new paragraph).
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+figsintext        : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+lineno            : yes
+
+lang              : "english"
+class             : "man"
+output            : papaja::apa6_word
+---
+
+```{r include = FALSE}
+library("papaja")
+```
+
+# Read R scripts into .Rmd file
+
+- We can load R scripts into our .Rmd manuscript
+
+```{r, 'source_libs', echo=TRUE}
+source("../scripts/libs.R")
+```
+
+- Take note of the path. Where does `libs.R` live? Where does **this** .Rmd file 
+live?
+
+- How can we load the `poisson_regression.R` script into this article so that 
+we have access to our models/plots and other objects?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+
+# Methods
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}

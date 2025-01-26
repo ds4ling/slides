@@ -1,0 +1,84 @@
+---
+title: "data_gen_steph"
+---
+
+```{r}
+
+library("tidyverse")
+library("glue")
+
+
+
+gen_participant <- function(mind) {
+  
+  out_temp <- tibble(
+    id  = glue("09{sample(1000:9999, 1)}_{mind}"), 
+    age = sample(28:45, 1)
+  )
+  
+  if (mind == 0) {
+    out_add <- tibble(
+      bl = rnorm(1,  80, 10) |> round(),
+      ls = rnorm(1, 110, 20) |> round(),
+      hs = rnorm(1, 140, 20) |> round(),
+    )
+  } else {
+    out_add <- tibble(
+      bl = rnorm(1,  70, 15) |> round(),
+      ls = rnorm(1, 100, 20) |> round(),
+      hs = rnorm(1, 100, 20) |> round(),
+    )
+  }
+
+  out <- bind_cols(out_temp, out_add)
+  return(out)
+}
+
+gen_data <- function(n, mind) {
+  set.seed(20230427)
+  out <- replicate(n, gen_participant(mind = mind), simplify = T) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  lapply(., unlist) %>% 
+  as_tibble()
+  return(out)
+}
+
+dat <- bind_rows(
+  gen_data(n = 20, mind = 0), 
+  gen_data(n = 20, mind = 1)
+) %>% 
+  write_csv("mindfullness_data.csv")
+
+```
+
+
+```{r}
+tidy_dat <- dat %>% 
+  separate(id, into = c("id", "mindfullness"), sep = "_") %>% 
+  pivot_longer(cols = bl:hs, names_to = "measure", values_to = "hr") 
+
+tidy_dat %>% 
+  ggplot() + 
+  aes(x = mindfullness, y = hr, color = measure) + 
+  geom_point() + 
+  stat_summary(fun.data = mean_se, geom = "pointrange")
+```
+
+```{r}
+
+library(lme4)
+
+mod <- glmer(hr ~ mindfullness * measure + (1|id), family = "poisson", data = tidy_dat)
+summary(mod)
+
+library(emmeans)
+
+emmeans(
+  object = mod, 
+  specs = ~ mindfullness | measure, 
+  type = "response"
+)
+
+```
+

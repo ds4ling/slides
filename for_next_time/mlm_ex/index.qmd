@@ -1,0 +1,94 @@
+---
+title: "MLM"
+format: html
+---
+
+```{r}
+#| label: load-libs
+library("tidyverse")
+library("here")
+library("lme4")
+```
+
+
+
+```{r}
+#| label: get-data
+url <- "https://www.ds4ling.jvcasillas.com/slides/assets/data/tidy_ratings.csv"
+
+ratings_temp <- read_csv(url)
+
+glimpse(ratings_temp)
+head(ratings_temp)
+```
+
+```{r}
+#| label: tidy
+
+ratings <- ratings_temp %>% 
+  filter(id != "Anonymous ID")
+```
+
+
+
+```{r}
+#| label: plot1
+
+ratings %>% 
+  ggplot() + 
+  aes(x = week, y = enjoy) + 
+  geom_line(aes(group = id, color = id)) + 
+  geom_point(aes(color = id)) + 
+  geom_smooth() + 
+  coord_cartesian(ylim = c(0, 1))
+
+ratings %>% 
+  ggplot() + 
+  aes(x = week, y = difficulty) + 
+  geom_line(aes(group = id, color = id)) + 
+  geom_point(aes(color = id)) + 
+  geom_smooth(method = lm) + 
+  coord_cartesian(ylim = c(0, 1))
+
+ratings %>% 
+  ggplot() + 
+  aes(x = difficulty, y = enjoy) + 
+  facet_wrap(~ id) + 
+  geom_point() + 
+  geom_smooth(method = lm) + 
+  coord_cartesian(ylim = c(0, 1))
+```
+
+
+```{r}
+#| label: models
+
+ratings %>% 
+  group_by(id) %>% 
+  summarize(difficulty = mean(difficulty), 
+            enjoy = mean(enjoy)) %>% 
+  ggplot() + 
+  aes(x = difficulty, y = enjoy) + 
+  geom_point() + 
+  geom_smooth(method = lm)
+
+mod_wrong <- lm(enjoy ~ difficulty, data = ratings)
+summary(mod_wrong)
+
+mod1 <- lmer(enjoy ~ difficulty + (1|id), 
+     data = ratings)
+summary(mod1)
+
+mod2 <- lmer(enjoy ~ difficulty + (1 + difficulty|id), 
+     data = ratings)
+summary(mod2)
+
+
+coef(mod2)$id
+ranef(mod2)$id
+
+
+
+
+```
+

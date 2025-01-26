@@ -1,0 +1,31 @@
+project:
+  title: "slides"
+
+format: rutgers-revealjs
+width: 1050
+margin: 0.075
+controlsTutorial: true
+hide-inactive-cursor: true
+dpi: 300
+fig-dpi: 300
+fig-asp: 0.5625
+fig-responsive: true
+engine: knitr
+bibliography: ./assets/bib/ds4ling_refs.bib
+csl: ./assets/bib/apa.csl
+citations-hover: true
+preload-iframes: true
+view-distance: 2
+cache: true
+
+webr: 
+  show-startup-message: false
+
+filters:
+  - code-fullscreen
+  - highlight-text
+  - webr
+  - tachyonsextra
+
+execute: 
+  out.width: "100%"

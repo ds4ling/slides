@@ -1,1474 +1,1335 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-  <head>
-    <title>Data Science for Linguists</title>
-    <meta charset="utf-8" />
-    <meta name="author" content="Joseph V. Casillas, PhD" />
-    <script src="assets/header-attrs/header-attrs.js"></script>
-    <link href="assets/remark-css/hygge.css" rel="stylesheet" />
-    <link href="assets/remark-css/rutgers.css" rel="stylesheet" />
-    <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
-    <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/tachyons/tachyons.min.css" rel="stylesheet" />
-    <link href="assets/panelset/panelset.css" rel="stylesheet" />
-    <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"c4f7cbcef19f422889fe87ec81a8f210","expires":14}</script>
-    <script src="assets/himalaya/himalaya.js"></script>
-    <script src="assets/js-cookie/js.cookie.js"></script>
-    <link href="assets/editable/editable.css" rel="stylesheet" />
-    <script src="assets/editable/editable.js"></script>
-    <script src="assets/kePrint/kePrint.js"></script>
-    <link href="assets/lightable/lightable.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/5235085b15.js"></script>
-  </head>
-  <body>
-    <textarea id="source">
-class: center, middle, inverse, title-slide
-
-.title[
-# Data Science for Linguists
-]
-.subtitle[
-## The linear model:</br>.lightgrey[Assumptions, diagnostics, and interpretation]
-]
-.author[
-### Joseph V. Casillas, PhD
-]
-.date[
-### Rutgers University</br>Spring 2023</br>Last update: 2023-02-26
-]
-
----
-
-
-
-
-
-
-
-
-class: inverse, middle
-
-&lt;blockquote align='center' class="twitter-tweet" data-lang="de"&gt;
-&lt;a href="https://twitter.com/thomasp85/status/963836721866661889"&gt;&lt;/a&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- tweet about mtcars --&gt; 
-
----
-class: title-slide-section-grey, middle
-
-# Assumptions
-
----
-layout: true
-
-# Assumptions
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png)
-background-size: 350px
-background-position: 95% 50%
-
-### Statistical assumptions
-
-.Large[
-- Every model has assumptions that need  
-to be met in  order for the model to work  
-properly and be trustworthy
-
-- It is not standard practice to report  
-whether all assumptions have been met when  
-writing up your results... .RUred[but it should be].
-
-- Make a habit of assessing your models and  
-incorporating the relevant information in  
-your writing. 
-]
-
----
-
-### Regression assumptions
-
-.Large[
-We can break the assumptions up into 3 areas: 
-
-1. Model specification
-
-2. Measurement error
-
-3. The error term
-]
-
----
-
-### Model specification
-
-.Large[
-There should be no specification error
-
-- The relationship between x&lt;sub&gt;i&lt;/sub&gt; and y&lt;sub&gt;i&lt;/sub&gt; is linear: 
-`\(y_i = \alpha + \beta x_i + \epsilon _i\)`
-
-- Including irrelevant variables 🤷🏽
-
-- Omitting relevant variables 👎🏽
-]
-
---
-
-### Importance: **HIGH**
-
----
-background-image: url(./assets/img/sin.png)
-background-size: 400px
-background-position: 95% 50%
-
-### Including an irrelevant variable (sin of commission): 🤷🏽
-
-.pull-left[
-.large[
-- Similar to a Type I error
-
-- Adds to the error of prediction, but it does not bias the parameter estimates 
-
-- If model includes multiple predictors, other estimates are not influenced by 
-the irrelevant variable
-
-- Though the parameter estimates won't be biased, the standard error terms 
-around each beta weight will increase (this affects t-ratio and p-value)
-]
-]
-
----
-background-image: url(./assets/img/sin.png)
-background-size: 400px
-background-position: 95% 50%
-
-### Including an irrelevant variable (sin of commission): 🤷🏽
-
-.pull-left[
-.large[
-- For example, imagine a situation in which you model employee performance as a 
-function of a bunch of good predictors
-
-- Adding the variable of astrological horoscope sign will not bias the other 
-estimates
-
-- You are considering something that doesn't matter, i.e., astrology
-]
-]
-
----
-background-image: url(./assets/img/sin.png)
-background-size: 400px
-background-position: 95% 50%
-
-### Excluding a relevant variable (sin of omission): 👎🏽
-
-.pull-left[
-.Large[
-- Similar to a Type II error
-
-- This is much more serious!
-
-- This will bias your parameter estimates
-
-- You are leaving something important out (variance left unexplained)
-]
-]
-
----
-background-image: url(./assets/img/sin.png)
-background-size: 400px
-background-position: 95% 50%
-
-### Excluding a relevant variable (sin of omission): 👎🏽
-
-.pull-left[
-.large[
-- For example, if you want to model RT as a function of working memory but you 
-forget to look at age
-
-- Then your prediction might be wrong
-
-- You don’t know which way you are biasing things either!
-
-- You could be either overestimating or underestimating the other regression 
-parameters
-]
-]
-
----
-
-### What to Do
-
-#### After including an irrelevant predictor:
-
-- Drop the irrelevant variable
-
-- Not much of a problem
-
---
-
-#### After excluding a relevant predictor:
-
-- Look at data again to see if it is in there
-
-- Hope and Pray!
-
-- If it’s not in you data, you are SOL
-
-- You need to repeat the study!
-
-- There is a problem in your design and there is no mathematical solution to 
-fix this problem
-
----
-
-### Measurement error
-
-.Large[
-There should be no measurement error
-
-- Variables x&lt;sub&gt;i&lt;/sub&gt; and y&lt;sub&gt;i&lt;/sub&gt; should be as accurate as possible
-]
-
---
-
-### Importance: .RUred[high]
-
----
-
-### About the error term
-
-#### The error term should meet the following characteristics...
-
-.large[
-- Mean = 0
-
-- Homoskedasticity
-
-- No autocorrelation
-
-- Predictor not correlated with error term
-
-- Error is normally distributed 
-]
-
----
-
-### About the error term
-
-#### Mean of 0
-
-.Large[
-- Slope estimates will not be biased
-
-- Intercept can be biased
-]
-
---
-
-### Importance: .blue[low]... unless you are interested in the intercept.
-
----
-
-### About the error term
-
-#### Homoskedasticity
-
-.large[
-- Variance around predicted values should be consistent
-
-- Common simple inspection is to look at scatter plot of fitted vs. x-values 
-(should look like blob with no interesting patterns)
-
-- If variance is heteroskedastic you will typically see fan-like patterns
-
-- Will not bias parameter estimates
-
-- Will increase confidence intervals, thus affects t-ratios and p-values
-]
-
---
-
-### Importance: .orange[medium/high]
-
----
-
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/7076276399505558827" data-video-id="7076276399505558827" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>Homosksksksksksedasticity <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statstiktok</a></p> <a target="_blank" title="♬ original sound - JaySean" href="https://www.tiktok.com/music/original-sound-7024957585556097798?refer=embed">♬ original sound - JaySean</a> </section> </blockquote> 
-<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
-<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
-<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-
----
-
-### About the error term
-
-#### No autocorrelation
-
-.large[
-- If the residuals are autocorrelated, it means that the prediction error of a 
-given observation depends on that of the previous observation
-
-- This shows up as a clear unexplained pattern in the y variable 
-
-- Most common in repeated measures and longitudinal data
-
-- Will not bias parameter estimates
-
-- Will affect confidence intervals, t-ratios, p-values
-
-- Increased chance of Type II error
-]
-
---
-
-### Importance: .RUred[High], but uncommon in standard regression
-
----
-
-### Predictor not correlated with error term
-
-.Large[
-- Typically the result of omitting a relevant variable (sin of omission)
-
-- Will bias parameter estimates
-
-- Solution: include missing variable
-]
-
---
-
-### Importance: .RUred[high]
-
----
-
-### Normally Distributed Errors 
-
-.large[
-- There is no a priori reason for error to be anything but normally distributed 
-
-- It should become standard practice for you to examine your residuals to see 
-if they are normally distributed or not
-
-- If they aren't normally distributed there is a substantial possibility of 
-Type II error
-
-- If this is the case, then the residuals may not be "pure" error, and you may 
-have omitted a relevant variable from the equation that is making the residuals 
-not be normally distributed
-
-- In other words, the residuals may contain systematic variance that can still 
-be explained by something else
-
-- You cannot conclude with 100% certainty that a Type II error has been 
-committed, but you might strongly suspect it
-]
-
----
-
-### Summarizing
-
-&lt;p&gt;&lt;/p&gt;
-.large[
-- Model specification
-  - The relationship between x&lt;sub&gt;i&lt;/sub&gt; and y&lt;sub&gt;i&lt;/sub&gt; is linear
-  - Including irrelevant variables 
-  - Omitting relevant variables
-]
-
-&lt;p&gt;&lt;/p&gt;
-.large[
-- Measurement error
-]
-
-&lt;p&gt;&lt;/p&gt;
-.large[
-- The error term
-  - Mean = 0
-  - Homoskedasticity
-  - No autocorrelation
-  - Predictor not correlated with error term
-  - Error is normally distributed 
-]
-
----
-
-
-
-
-
-
-
-
-
-class: title-slide-section-grey, middle
-layout: false
-
-# Diagnostics
-
----
-layout: true
-
-# Diagnostics
-
----
-
-### Remember those "residuals"?
-
-&lt;p&gt;&lt;/p&gt;
-.large[
-- A residual represents prediction error in our model with regard 
-to a single point. 
-  - Our `mtcars` model predicted that a 6 ton car should get 5.22 mpg. 
-  - If in reality it gets 10.22 mpg, then the residual for that specific 
-data point would be 5 mpg. 
-]
-
---
-
-.large[
-- Remember: All models are wrong. 
-]
-
---
-
-.large[
-- Our models will always be off by at least a little bit for most 
-of the observations we try to fit. 
-
-- Nonetheless, it is good practice to examine the residuals of 
-your models in order to help assess how well it fits your data.
-
-- Specifically, we need to make sure that there aren't any unexpected 
-patterns because that would suggest that our model does not properly 
-fit our data.
-]
-
----
-background-image: url(https://www.realitybytesinc.com/images/sick-computer.jpg)
-background-size: 400px
-background-position: 95% 50%
-
-### 1. Model assumptions
-
-### 2. Outliers
-
----
-
-### The relationship between x&lt;sub&gt;i&lt;/sub&gt; and y&lt;sub&gt;i&lt;/sub&gt; is linear.
-
-1. Double check linear specification
-2. Eyeball it
-
-
-
-.pull-left[
-
-&lt;img src="index_files/figure-html/assumptions_linear_plot-1.png" width="504" /&gt;
-
-]
-
-.pull-right[
-
-&lt;img src="index_files/figure-html/assumptions_quadratic_plot-1.png" width="504" /&gt;
-
-]
-
----
-
-### The mean of residuals is zero
-
-1. Check model summary
-2. Test manually
-
-.pull-left[
-
-
-
-&lt;table class="table table-striped" style="font-size: 13px; margin-left: auto; margin-right: auto;"&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Min. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 1st Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 3rd Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Max. &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -5.36 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.35 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.65 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-```
-## [1] -9.506965e-18
-```
-
-]
-
-.pull-right[
-
-
-
-&lt;table class="table table-striped" style="font-size: 13px; margin-left: auto; margin-right: auto;"&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Min. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 1st Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Median &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; 3rd Qu. &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Max. &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -3.34 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -2.39 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.46 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.84 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12.87 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-```
-## [1] -6.612868e-16
-```
-
-]
-
----
-
-### Homoskedasticity of residuals
-
-&lt;img src="index_files/figure-html/homoskedasticity_linear-1.png" width="1008" /&gt;
-
-.footnote[mod1]
-
----
-
-### Homoskedasticity of residuals
-
-&lt;img src="index_files/figure-html/homoskedasticity_quadratic-1.png" width="1008" /&gt;
-
-.footnote[mod2]
-
----
-
-### No autocorrelation of residuals
-
-&lt;img src="index_files/figure-html/linear_autocorrelation-1.png" width="468" style=float:right /&gt;
-
-1. Visual inspection
-2. Durbin-Watson test
-
-
-```
-
-	Durbin-Watson test
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="index_files/libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="index_files/libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/tachyonsextra-0.0.1/tachyonsextra.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.39">
+
+  <meta name="author" content="Joseph V. Casillas, PhD">
+  <title>Data Science for Linguists</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0b6b91b2de75f5d35ca427df115379fc.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <img width="150" src="https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_new.png">
+  <h1 class="title">Data Science for Linguists</h1>
+  <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Assumptions, diagnotics, and interpretation</span></h3>
+  <p class="author">Joseph V. Casillas, PhD</p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-01-22</mybr></p>
+</section>
+<section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
+<h1></h1>
+<p></p><div id="tweet-52679"></div><script>tweet={"url":"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784","author_name":"Chelsea Parlett-Pelleriti","author_url":"https:\/\/twitter.com\/ChelseaParlett","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EDon’t waste your time, this movie isn’t about what you think it’s about \uD83D\uDE45\uD83C\uDFFB‍♀️\uD83D\uDE24 \u003Ca href=\"https:\/\/t.co\/D0hqYQ72lY\"\u003Epic.twitter.com\/D0hqYQ72lY\u003C\/a\u003E\u003C\/p\u003E&mdash; Chelsea Parlett-Pelleriti (@ChelseaParlett) \u003Ca href=\"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784?ref_src=twsrc%5Etfw\"\u003EJanuary 22, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-52679").innerHTML = tweet["html"];</script><p></p>
+<!-- regression the movie tweet -->
+</section>
+
+<section>
+<section id="assumptions" class="title-slide slide level1 transition center">
+<h1>Assumptions</h1>
+
+</section>
+<section id="assumptions-1" class="slide level2" data-background-image="./index_files/img/assumptions.png" data-background-size="350px" data-background-position="95% 50%" data-menu-title="General assumptions">
+<h2>Assumptions</h2>
+<h3 id="we-make-a-lot-of-assumptions">We make a lot of assumptions</h3>
+<div class="columns">
+<div class="column" style="font-size: 0.7em; width: 75%;">
+<p><ru-blockquote> <span style="color: lightblue;">1.</span> the act of assuming or taking for granted<br>
+<span style="color: lightblue;">2.</span> a hypothesis that is taken for granted<br>
+<span style="color: lightblue;">3.</span> a thing that is accepted as true or as certain to happen, without proof </ru-blockquote></p>
+</div></div>
+<div class="columns">
+<div class="column closelist absolute" style="font-size: 0.7em;bottom: 10%; ">
+<ul>
+<li>About the world</li>
+<li>About others</li>
+<li>About reactions</li>
+<li>About academia</li>
+</ul>
+</div><div class="column closelist absolute" style="font-size: 0.7em;bottom: 10%; right: 0px; ">
+<ul>
+<li>The sun will rise tomorrow</li>
+<li>People are generally X</li>
+<li>They will find my joke funny</li>
+<li>Reviewer 2 is evil</li>
+</ul>
+</div></div>
+</section>
+<section id="assumptions-2" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png" data-background-size="350px" data-background-position="95% 50%" data-menu-title="Statistical assumptions">
+<h2>Assumptions</h2>
+<h3 id="statistical-assumptions">Statistical assumptions</h3>
+<div class="columns">
+<div class="column" style="font-size: 0.9em; width: 75%;">
+<ul>
+<li>Every model has assumptions</li>
+<li>They need to be met for the model to work properly and be trustworthy</li>
+<li>It is not standard practice to report whether all assumptions have been met when writing up results… <span class="emph">but it should be</span></li>
+<li>We will make a habit of assessing models and incorporating the relevant information in prose</li>
+</ul>
+</div></div>
+</section>
+<section id="assumptions-3" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png" data-background-size="350px" data-background-position="95% 50%" data-menu-title="Regression assumptions">
+<h2>Assumptions</h2>
+<h3 id="regression-assumptions">Regression assumptions</h3>
+<p>We can break the assumptions up into 3 areas:</p>
+<ol type="1">
+<li>Model specification</li>
+<li>Measurement error</li>
+<li>The error term</li>
+</ol>
+</section></section>
+<section>
+<section id="model-specification" class="title-slide slide level1 transition center">
+<h1>Model specification</h1>
+
+</section>
+<section id="model-specification-1" class="slide level2" data-menu-title="Specification error">
+<h2>Model specification</h2>
+<h3 id="specification-error">Specification error</h3>
+<p>There should be no specification error</p>
+<ul>
+<li>The relationship between x<sub>i</sub> and y<sub>i</sub> is linear: <span class="math display">\[y_i = \alpha + \beta x_i + \epsilon _i\]</span></li>
+<li>Including irrelevant variables 🤷🏽</li>
+<li>Omitting relevant variables 👎🏽</li>
+</ul>
+<div class="fragment">
+<h3 id="importance-high">Importance: <span class="emph"><strong>HIGH</strong></span></h3>
+</div>
+</section>
+<section id="model-specification-2" class="slide level2" data-menu-title="Including an irrelevant variable" data-background-image="./index_files/img/sin.png" data-background-size="400px" data-background-position="95% 50%">
+<h2>Model specification</h2>
+<h3 id="including-an-irrelevant-variable-sin-of-commission">Including an irrelevant variable (sin of commission): 🤷🏽</h3>
+<div class="columns">
+<div class="column" style="font-size: 0.85em; width: 70%;">
+<ul>
+<li>Similar to a Type I error</li>
+<li>Adds to the error of prediction, but it does not bias the parameter estimates</li>
+<li>If model includes multiple predictors, other estimates are not influenced by the irrelevant variable</li>
+<li>Though the parameter estimates won’t be biased, the standard error terms around each beta weight will increase (this affects t-ratio and p-value)</li>
+</ul>
+</div></div>
+</section>
+<section id="section-1" class="slide level2" data-background-image="./index_files/img/sin.png" data-background-size="400px" data-background-position="95% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.85em;">Model specification</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">Including an irrelevant variable (sin of commission): 🤷🏽</span></p>
+<div class="columns">
+<div class="column" style="font-size: 0.85em; width: 70%;">
+<ul>
+<li>For example, imagine a situation in which you model employee performance as a function of a bunch of good predictors</li>
+<li>Adding the variable of astrological horoscope sign will not bias the other estimates</li>
+<li>You are considering something that doesn’t matter, i.e., astrology</li>
+</ul>
+</div></div>
+</section>
+<section id="model-specification-3" class="slide level2" data-background-image="./index_files/img/sin.png" data-background-size="400px" data-background-position="95% 50%" data-menu-title="Excluding a relevant variable">
+<h2>Model specification</h2>
+<h3 id="excluding-a-relevant-variable-sin-of-omission">Excluding a relevant variable (sin of omission): 👎🏽</h3>
+<div class="columns">
+<div class="column" style="font-size: 0.85em; width: 70%;">
+<ul>
+<li>Similar to a Type II error</li>
+<li>This is much more serious!</li>
+<li>This will bias your parameter estimates</li>
+<li>You are leaving something important out (variance left unexplained)</li>
+</ul>
+</div></div>
+</section>
+<section id="section-2" class="slide level2" data-background-image="./index_files/img/sin.png" data-background-size="400px" data-background-position="95% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.85em;">Model specification</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">Excluding a relevant variable (sin of omission): 👎🏽</span></p>
+<div class="columns">
+<div class="column" style="font-size: 0.85em; width: 70%;">
+<ul>
+<li>For example, if you want to model RT as a function of working memory but you forget to look at age</li>
+<li>Then your prediction might be wrong</li>
+<li>You don’t know which way you are biasing things either!</li>
+<li>You could be either overestimating or underestimating the other regression parameters</li>
+</ul>
+</div></div>
+</section>
+<section id="section-3" class="slide level2" data-background-image="./index_files/img/sin.png" data-background-size="400px" data-background-position="95% 50%" data-menu-title="What to do?">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.85em;">Model specification</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">What to do</span></p>
+<h4 id="after-including-an-irrelevant-predictor"><span style="color: black;">After including an irrelevant predictor:</span></h4>
+<div class="closelist" style="font-size: 0.8em;">
+<ul>
+<li>Drop the irrelevant variable</li>
+<li>Not much of a problem</li>
+</ul>
+</div>
+<p><mybr></mybr></p>
+<div class="fragment">
+<h4 id="after-excluding-a-relevant-predictor"><span style="color: black;">After excluding a relevant predictor:</span></h4>
+<div class="closelist" style="font-size: 0.8em;">
+<ul>
+<li>Look at data again to see if it is in there</li>
+<li>Hope and Pray!</li>
+<li>If it’s not in you data, you are SOL</li>
+<li>You need to repeat the study!</li>
+<li>There is a problem in your design and there is no mathematical solution to fix this problem</li>
+</ul>
+</div>
+</div>
+</section></section>
+<section>
+<section id="measurement-error" class="title-slide slide level1 center" data-background-image="./index_files/img/measure0.png" data-background-size="contain" data-background-position="100% 50%">
+<h1>Measurement error</h1>
+
+</section>
+<section id="measurement-error-1" class="slide level2" data-menu-title="Measuring is hard" data-background-image="https://media.tenor.com/AFJK9BNwiZIAAAAM/harry-styles-tape-measure.gif" data-background-size="300px" data-background-position="98% 10%">
+<h2>Measurement error</h2>
+<h3 id="measuring-things-is-hard">Measuring things is hard</h3>
+<div class="columns">
+<div class="column fragment absolute" style="top: 35%; left: 0px; width: 55%; ">
+<ul>
+<li>How far away is that lion?</li>
+<li>How much milk do I need?</li>
+<li>Can I park there?</li>
+<li>How much weight did I gain?</li>
+</ul>
+</div><div class="column absolute" style="top: 30%; right: 0px; width: 10%; ">
+
+</div><div class="column fragment absolute" style="top: 35%; right: 0px; width: 35%; ">
+<ul>
+<li>Human error</li>
+<li>Specificity</li>
+<li>Operationalizations</li>
+<li>Repeatability</li>
+</ul>
+</div></div>
+</section>
+<section id="measurement-error-2" class="slide level2" data-menu-title="Minimize measurement error" data-background-image="./index_files/img/measure1.png" data-background-size="contain" data-background-position="110% 50%">
+<h2>Measurement error</h2>
+<h3 id="there-should-be-no-measurement-error">There should be no measurement error</h3>
+<div class="columns">
+<div class="column absolute" style="top: 35%; ">
+<ul>
+<li>Variables x<sub>i</sub> and y<sub>i</sub> should be as accurate as possible</li>
+</ul>
+</div></div>
+<div class="absolute" style="bottom: 5%; ">
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span class="emph">high</span></span></p>
+</div>
+</section>
+<section id="measurement-error-3" class="slide level2" data-menu-title="Consequences" data-background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmV2M2xiZXBhemV3MGdhNzFreWpuNXg1Mmd5YnB4MDh0bnRwNWhnZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/k5lj4s1qxaSyI/giphy.webp" data-background-size="500px" data-background-position="98% 50%">
+<h2>Measurement error</h2>
+<h3 id="consequences-of-measurement-error">Consequences of measurement error</h3>
+<div class="columns">
+<div class="column" style="width: 65%; font-size: 0.9em;">
+<ul>
+<li class="fragment">Your models will estimate the parameters you specify</li>
+<li class="fragment">But you won’t know if the estimates are reliable</li>
+<li class="fragment">Large degree of unquantifiable uncertainty</li>
+<li class="fragment">Cannot “safely” do NHST</li>
+<li class="fragment">Your research may be reproducible, but probably will not be replicable</li>
+</ul>
+</div></div>
+<!-- anchorman gif, 60% of the time it works every time -->
+</section>
+<section id="measurement-error-4" class="slide level2" data-menu-title="What to do?" data-background-image="./index_files/img/measure2.gif" data-background-size="500px" data-background-position="98% 50%">
+<h2>Measurement error</h2>
+<h3 id="what-you-can-do">What you can do</h3>
+<div class="columns">
+<div class="column" style="width: 65%; font-size: 0.9em;">
+<ul>
+<li class="fragment">The solution to this problems revolves around proper planning a priori</li>
+<li class="fragment">Operationally define every feasible aspect of <em>how</em> and <em>what</em> you will measure
+<ul>
+<li class="fragment">Use previous literature, if available</li>
+<li class="fragment">Preregister decisions</li>
+</ul></li>
+<li class="fragment">Repeated measures, if possible</li>
+<li class="fragment">Random, 3rd party quality checks</li>
+<li class="fragment">Measurement error models, if possible</li>
+</ul>
+</div></div>
+<!-- anchorman gif, 60% of the time it works every time -->
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="the-error-term" class="title-slide slide level1 transition center">
+<h1>The error term</h1>
+
+</section>
+<section id="the-error-term-1" class="slide level2" data-menu-title="About the error term">
+<h2>The error term</h2>
+<h3 id="about-the-error-term">About the error term</h3>
+<p>The error term should meet the following characteristics…</p>
+<ul>
+<li>Mean = 0</li>
+<li>Homoskedasticity</li>
+<li>No autocorrelation</li>
+<li>Predictor not correlated with error term</li>
+<li>Error is normally distributed</li>
+</ul>
+</section>
+<section id="about-the-error-term-1" class="slide level2" data-menu-title="Mean of 0">
+<h2>About the error term</h2>
+<h3 id="mean-of-0">Mean of 0</h3>
+<p>If the mean of the error term deviates far from 0…</p>
+<ul>
+<li>Intercept can be biased</li>
+<li>Slope estimates will not be biased</li>
+</ul>
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span style="color: blue;">low</span>… unless you are interested in the intercept.</span></p>
+</section>
+<section id="about-the-error-term-2" class="slide level2" data-menu-title="Homoskedasticity">
+<h2>About the error term</h2>
+<h3 id="homoskedasticity">Homoskedasticity</h3>
+<div class="closelist">
+<ul>
+<li>Variance around predicted values should be consistent</li>
+<li>Common simple inspection is to look at scatter plot of fitted vs.&nbsp;x-values (should look like blob with no interesting patterns)</li>
+<li>If variance is heteroskedastic you will typically see fan-like patterns</li>
+<li>Will not bias parameter estimates</li>
+<li>Will increase confidence intervals, thus affects t-ratios and p-values</li>
+</ul>
+</div>
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span style="color: orange;">medium/high</span></span></p>
+</section>
+<section id="section-4" class="slide level2 center" data-background-color="black" data-visibility="uncounted">
+<h2></h2>
+<center>
+<iframe height="390" width="520" src="https://www.tiktok.com/player/v1/7076276399505558827?music_info=1&amp;description=1" allow="fullscreen" title="test">
+</iframe>
+</center>
+<div class="footer">
+<p><a href="https://www.tiktok.com/@chelseaparlettpelleriti/video/7076276399505558827" class="uri">https://www.tiktok.com/@chelseaparlettpelleriti/video/7076276399505558827</a></p>
+</div>
+<!-- homoskedasticity -->
+</section>
+<section id="about-the-error-term-3" class="slide level2" data-menu-title="Autocorrelation">
+<h2>About the error term</h2>
+<h3 id="no-autocorrelation">No autocorrelation</h3>
+<div style="font-size: 0.8em;">
+<ul>
+<li>If the residuals are autocorrelated, it means that the prediction error of a given observation depends on that of the previous observation</li>
+<li>This shows up as a clear unexplained pattern in the y variable</li>
+<li>Most common in repeated measures and longitudinal data</li>
+<li>Will not bias parameter estimates</li>
+<li>Will affect confidence intervals, t-ratios, p-values</li>
+<li>Increased chance of Type II error</li>
+</ul>
+</div>
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span class="emph">High</span>, but uncommon in standard regression</span></p>
+</section>
+<section id="about-the-error-term-4" class="slide level2" data-menu-title="Predictor correlation with error term">
+<h2>About the error term</h2>
+<h3 id="predictors-should-not-be-correlated-with-error-term">Predictor(s) should not be correlated with error term</h3>
+<ul>
+<li>Typically the result of omitting a relevant variable (sin of omission)</li>
+<li>Will bias parameter estimates</li>
+<li>Solution: include missing variable</li>
+</ul>
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span class="emph">high</span></span></p>
+</section>
+<section id="about-the-error-term-5" class="slide level2" data-menu-title="Normally distributed errors">
+<h2>About the error term</h2>
+<h3 id="error-residuals-should-be-normally-distributed">Error (residuals) should be normally distributed</h3>
+<div class="closelist" style="font-size: 0.8em;">
+<ul>
+<li class="fragment">There is no a priori reason for error to be anything but normally distributed</li>
+<li class="fragment">It should become standard practice for you to examine your residuals to see if they are normally distributed or not</li>
+<li class="fragment">If they aren’t normally distributed there is a substantial possibility of Type II error</li>
+<li class="fragment">If this is the case, then the residuals may not be “pure” error, and you may have omitted a relevant variable from the equation that is making the residuals not be normally distributed</li>
+<li class="fragment">In other words, the residuals may contain systematic variance that can still be explained by something else</li>
+<li class="fragment">You cannot conclude with 100% certainty that a Type II error has been committed, but you might strongly suspect it</li>
+</ul>
+</div>
+<p><span class="p-font fragment" style="font-size: 1.2em; color: #666666;">Importance: <span class="emph">high</span></span></p>
+</section></section>
+<section id="summing-up" class="title-slide slide level1 smaller center">
+<h1>Summing up</h1>
+<div class="closelist">
+<ul>
+<li>Model specification
+<ul>
+<li>The relationship between x<sub>i</sub> and y<sub>i</sub> is linear</li>
+<li>Including irrelevant variables</li>
+<li>Omitting relevant variables</li>
+</ul></li>
+</ul>
+</div>
+<ul>
+<li>Measurement error</li>
+</ul>
+<div class="closelist">
+<ul>
+<li>The error term
+<ul>
+<li>Mean = 0</li>
+<li>Homoskedasticity</li>
+<li>No autocorrelation</li>
+<li>Predictor not correlated with error term</li>
+<li>Error is normally distributed</li>
+</ul></li>
+</ul>
+</div>
+</section>
+
+<section>
+<section id="diagnostics-examples" class="title-slide slide level1 transition center">
+<h1>Diagnostics Examples</h1>
+
+</section>
+<section id="diagnostics" class="slide level2 smaller" data-menu-title="More about residuals">
+<h2>Diagnostics</h2>
+<h3 id="remember-those-residuals">Remember those “residuals”?</h3>
+<div class="closelist">
+<ul>
+<li>A residual represents prediction error in our model with regard to a single point.
+<ul>
+<li>Our <code>mtcars</code> model predicted that a 6 ton car should get 5.22 mpg.</li>
+<li>If in reality it gets 10.22 mpg, then the residual for that specific data point would be 5 mpg.</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Remember: All models are wrong.</li>
+</ul>
+</div>
+<div class="closelist fragment">
+<ul>
+<li>Our models will always be off by at least a little bit for most of the observations we try to fit.</li>
+<li>Nonetheless, it is good practice to examine the residuals of your models in order to help assess how well it fits your data.</li>
+<li>Specifically, we need to make sure that there aren’t any unexpected patterns because that would suggest that our model does not properly fit our data.</li>
+</ul>
+</div>
+</section>
+<section id="section-5" class="slide level2" data-background-image="./index_files/img/sick-computer.png" data-background-size="400px" data-background-position="95% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666">Considerations for model diagnostics</span></p>
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.2em;">1. Model assumptions</span></p>
+<p><span class="p-font" style="font-size: 1.2em;">2. Outliers</span></p>
+</section>
+<section id="section-6" class="slide level2 smaller" data-menu-title="Assumption of linear relationship">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="the-relationship-between-xi-and-yi-is-linear.">The relationship between x<sub>i</sub> and y<sub>i</sub> is linear.</h3>
+<ol type="1">
+<li>Double check linear specification</li>
+<li>Eyeball it</li>
+</ol>
+<p><mybr></mybr></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/assumptions_linear_plot-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/assumptions_quadratic_plot-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-7" class="slide level2 smaller" data-menu-title="Mean of residuals = 0">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="the-mean-of-residuals-is-zero">The mean of residuals is zero</h3>
+<ol type="1">
+<li>Fit model</li>
+<li>Get residuals</li>
+<li>Test manually</li>
+</ol>
+<p><mybr></mybr></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Linear relationship</span></span>
+<span id="cb1-2"><a href=""></a><span class="co"># Fit model and print summary</span></span>
+<span id="cb1-3"><a href=""></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> assumptions_data)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">summary</span>(mod1<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-5.35585 -0.35308  0.08629  0.00000  0.50464  1.64502 </code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="co"># Non-linear relationship</span></span>
+<span id="cb3-2"><a href=""></a><span class="co"># Fit model and print summary# Fit mod</span></span>
+<span id="cb3-3"><a href=""></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_quad <span class="sc">~</span> x, <span class="at">data =</span> assumptions_data)</span>
+<span id="cb3-4"><a href=""></a><span class="fu">summary</span>(mod2<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-3.3442 -2.3855 -1.4617  0.0000  0.8409 12.8664 </code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-8" class="slide level2" data-menu-title="Homoskedasticity of residuals">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="homoskedasticity-of-residuals">Homoskedasticity of residuals</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/homoskedasticity_linear-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>mod1</p>
+</div></aside></section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666">Homoskedasticity of residuals</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/homoskedasticity_quadratic-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>mod2</p>
+</div></aside></section>
+<section id="section-9" class="slide level2" data-menu-title="No autocorrelation of residuals">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="no-autocorrelation-of-residuals">No autocorrelation of residuals</h3>
+<div class="columns">
+<div class="column">
+<ol type="1">
+<li>Visual inspection</li>
+<li>Durbin-Watson test</li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
 
 data:  mod1
 DW = 1.119, p-value = 0.0002656
-alternative hypothesis: true autocorrelation is greater than 0
-```
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/linear_autocorrelation-1.png" class="img-fluid" style="float:right" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 
-.footnote[mod1]
+<aside><div>
+<p>mod1</p>
+</div></aside></section>
+<section class="slide level2">
 
----
-
-### No autocorrelation of residuals
-
-&lt;img src="index_files/figure-html/quadratic_autocorrelation-1.png" width="468" style=float:right /&gt;
-
-1. Visual inspection
-2. Durbin-Watson test
-
-
-```
-
-	Durbin-Watson test
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">No autocorrelation of residuals</span></p>
+<div class="columns">
+<div class="column">
+<ol type="1">
+<li>Visual inspection</li>
+<li>Durbin-Watson test</li>
+</ol>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
 
 data:  mod2
 DW = 0.26212, p-value &lt; 2.2e-16
-alternative hypothesis: true autocorrelation is greater than 0
-```
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/quadratic_autocorrelation-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 
-.footnote[mod2]
+<aside><div>
+<p>mod2</p>
+</div></aside></section>
+<section class="slide level2">
 
----
-
-### No autocorrelation of residuals - Correction
-
-&lt;img src="index_files/figure-html/auto_cor_fix-1.png" width="468" style=float:right /&gt;
-
-
-```
-
-	Durbin-Watson test
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">No autocorrelation of residuals - Correction</span></p>
+<div class="columns">
+<div class="column small-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>autocor_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href=""></a>  assumptions_data, </span>
+<span id="cb7-3"><a href=""></a>  <span class="at">resid_mod2 =</span> mod2<span class="sc">$</span>residuals</span>
+<span id="cb7-4"><a href=""></a>)</span>
+<span id="cb7-5"><a href=""></a></span>
+<span id="cb7-6"><a href=""></a>autocor_data1 <span class="ot">&lt;-</span> DataCombine<span class="sc">::</span><span class="fu">slide</span>(</span>
+<span id="cb7-7"><a href=""></a>  autocor_data, </span>
+<span id="cb7-8"><a href=""></a>  <span class="at">Var =</span> <span class="st">"resid_mod2"</span>, </span>
+<span id="cb7-9"><a href=""></a>  <span class="at">NewVar =</span> <span class="st">"lag1"</span>, </span>
+<span id="cb7-10"><a href=""></a>  <span class="at">slideBy =</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb7-11"><a href=""></a>)</span>
+<span id="cb7-12"><a href=""></a>autocor_data2 <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(autocor_data1)</span>
+<span id="cb7-13"><a href=""></a>mod2_fix <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_quad <span class="sc">~</span> x <span class="sc">+</span> lag1, <span class="at">data =</span> autocor_data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
 
 data:  mod2_fix
 DW = 2.6825, p-value = 0.9875
-alternative hypothesis: true autocorrelation is greater than 0
-```
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/auto-cor-fix-plot-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="footer">
+<p>mod2</p>
+</div>
+</section>
+<section id="section-10" class="slide level2" data-menu-title="Predictors and residuals are uncorrelated">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="predictors-and-residuals-are-uncorrelated">Predictors and residuals are uncorrelated</h3>
+<div class="closelist small-code">
+<ul>
+<li>Test for correlation</li>
+<li>Think about your study</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  assumptions_data$x and mod1$residuals
+t = -5.72e-16, df = 49, p-value = 1
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2755837  0.2755837
+sample estimates:
+          cor 
+-8.171416e-17 </code></pre>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>mod1</p>
+</div></aside></section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Predictors and residuals are uncorrelated</span></p>
+<div class="closelist small-code">
+<ul>
+<li>Test for correlation</li>
+<li>Think about your study</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  assumptions_data$x and mod2$residuals
+t = -5.0882e-16, df = 49, p-value = 1
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.2755837  0.2755837
+sample estimates:
+          cor 
+-7.268887e-17 </code></pre>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>mod2</p>
+</div></aside></section>
+<section id="section-11" class="slide level2 smaller" data-menu-title="Normality of residuals">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Diagnostics</span></p>
+<h3 id="normality-of-residuals">Normality of residuals</h3>
+<ul>
+<li>QQplots</li>
+</ul>
+
+<img data-src="index_files/figure-revealjs/normal_resids_linear-quadratic-1.png" class="img-fluid quarto-figure quarto-figure-center r-stretch" width="3000"></section></section>
+<section>
+<section id="dealing-with-influential-data-points" class="title-slide slide level1 center" data-menu-title="Influential data points">
+<h1>Dealing with influential data points</h1>
+
+</section>
+<section id="sdkjfaj" class="slide level2">
+<h2>sdkjfaj</h2>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
 
-.footnote[mod2]
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":false,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"hideMissingTitles":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
 
----
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
 
-### Predictors and residuals are uncorrelated
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
 
-- Test for correlation
-- Think about your study
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
 
+        // Display a presentation progress bar
+        progress: true,
 
-```
-## 
-## 	Pearson's product-moment correlation
-## 
-## data:  assumptions_data$x and mod1$residuals
-## t = 2.6324e-16, df = 49, p-value = 1
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.2755837  0.2755837
-## sample estimates:
-##          cor 
-## 3.760527e-17
-```
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
 
-.footnote[mod1]
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
 
----
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
 
-### Predictors and residuals are uncorrelated
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
 
-- Test for correlation
-- Think about your study
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
 
+        // Push each slide change to the browser history
+        history: true,
 
-```
-## 
-## 	Pearson's product-moment correlation
-## 
-## data:  assumptions_data$x and mod2$residuals
-## t = -3.4581e-17, df = 49, p-value = 1
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  -0.2755837  0.2755837
-## sample estimates:
-##          cor 
-## -4.94017e-18
-```
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
 
-.footnote[mod2]
+        // Enable the slide overview mode
+        overview: true,
 
----
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
 
-### Normality of residuals
+        // Vertical centering of slides
+        center: false,
 
-- QQplots
+        // Enables touch navigation on devices with touch input
+        touch: true,
 
---
+        // Loop the presentation
+        loop: false,
 
-&lt;img src="index_files/figure-html/normal_resids_linear-quadratic-1.png" width="864" style="display: block; margin: auto;" /&gt;
+        // Change the presentation direction to be RTL
+        rtl: false,
 
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
 
----
-layout: false
-class: title-slide-section-grey, middle
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
 
-# Dealing with influential data points
-
----
-layout: true
-
-# Diagnostics
-
----
-
-### Outliers/influential data points
-
-- An influential point is one that would significantly change the fit if 
-removed from the data 
-
-- .blue[Cook’s distance] is a commonly used influence measure 
-
-#### Leverage
-
-- The leverage of an observation measures its ability to move the regression 
-line by simply moving up/down along the y-axis.
-
-- The measurement represents the amount by which the predicted value would 
-change if the observation was shifted one unit in the y-direction.
-
-- The leverage always takes values between 0 and 1.
-
-- A point with 0 leverage does not effect the regression line.
-
----
-
-### Influential data points
-
-.pull-left[
-
-&lt;img src="index_files/figure-html/cooks_distance_linear-1.png" width="504" /&gt;
-
-]
-
-.pull-right[
-
-&lt;img src="index_files/figure-html/cooks_distance_quadratic-1.png" width="504" /&gt;
-
-]
-
----
-
-### Influential data points
-
-&lt;img src="index_files/figure-html/leverage_linear_quadratic2-1.png" width="864" style="display: block; margin: auto;" /&gt;
-
----
-
-### Influential data points
-
-.pull-left[
-
-&lt;img src="index_files/figure-html/mod1_with_outlier-1.png" width="504" /&gt;
-
-]
-
-.pull-right[
-
-#### .RUred[Mod1 with influential data point]:
-
-.content-box-red[
-
-`$$y = -0.07 + -1.71 x$$`
-
-]
-
-#### .blue[Mod1 without influential data point]: 
-
-.content-box-blue[
-
-`$$y = 0.07 + -2.04 x$$`
-
-]
-]
-
----
-
-### Global test of model assumptions
-
-.Large[
-- It is also possible to use the package `gvlma` to test model assumptions. 
-
-- It seems rather conservative
-
-- I don't know too much about it. 
-]
-
----
-
-
-```
-## 
-## Call:
-## lm(formula = y ~ x, data = assumptions_data)
-## 
-## Coefficients:
-## (Intercept)            x  
-##    -0.06577     -1.71081  
-## 
-## 
-## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
-## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
-## Level of Significance =  0.05 
-## 
-## Call:
-##  gvlma(x = mod1) 
-## 
-##                      Value   p-value                   Decision
-## Global Stat        557.334 0.000e+00 Assumptions NOT satisfied!
-## Skewness            73.855 0.000e+00 Assumptions NOT satisfied!
-## Kurtosis           457.890 0.000e+00 Assumptions NOT satisfied!
-## Link Function        6.284 1.218e-02 Assumptions NOT satisfied!
-## Heteroscedasticity  19.304 1.115e-05 Assumptions NOT satisfied!
-```
-
----
-
-
-```
-## 
-## Call:
-## lm(formula = y ~ x, data = assumptions_data[1:50, ])
-## 
-## Coefficients:
-## (Intercept)            x  
-##     0.07471     -2.04296  
-## 
-## 
-## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
-## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
-## Level of Significance =  0.05 
-## 
-## Call:
-##  gvlma(x = noOut) 
-## 
-##                     Value p-value                Decision
-## Global Stat        2.4877  0.6468 Assumptions acceptable.
-## Skewness           0.6541  0.4186 Assumptions acceptable.
-## Kurtosis           0.3175  0.5731 Assumptions acceptable.
-## Link Function      0.9478  0.3303 Assumptions acceptable.
-## Heteroscedasticity 0.5683  0.4509 Assumptions acceptable.
-```
-
----
-
-
-```
-## 
-## Call:
-## lm(formula = y_quad ~ x, data = assumptions_data)
-## 
-## Coefficients:
-## (Intercept)            x  
-##       2.838       -1.600  
-## 
-## 
-## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
-## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
-## Level of Significance =  0.05 
-## 
-## Call:
-##  gvlma(x = mod2) 
-## 
-##                     Value   p-value                   Decision
-## Global Stat        87.100 0.000e+00 Assumptions NOT satisfied!
-## Skewness           25.674 4.042e-07 Assumptions NOT satisfied!
-## Kurtosis           14.082 1.750e-04 Assumptions NOT satisfied!
-## Link Function      45.552 1.487e-11 Assumptions NOT satisfied!
-## Heteroscedasticity  1.793 1.806e-01    Assumptions acceptable.
-```
-
----
-layout: false
-class: middle, center
-
-&lt;iframe src="https://gallery.shinyapps.io/slr_diag/" style="border:none;" height="600" width="1300"&gt;&lt;/iframe&gt;
-
-&lt;!-- assumptions shiny app --&gt;
-
----
-layout: false
-class: title-slide-section-grey, middle
-
-# Interpretation
-
----
-layout: true
-
-# Interpretation
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-
-Call:
-lm(formula = mpg ~ wt, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--4.5432 -2.3647 -0.1252  1.4096  6.8727 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
-wt           -5.3445     0.5591  -9.559 1.29e-10 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.046 on 30 degrees of freedom
-Multiple R-squared:  0.7528,	Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model residuals
-3. Model coefficients
-4. Significance codes
-5. Variance explained
-6. F-ratio
-
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-lm(formula = mpg ~ wt, data = mtcars)
-```
-
-]
-
-.pull-right[
-
-1. Function .RUred[call]
-2. Model residuals
-3. Model coefficients
-4. Significance codes
-5. Variance explained
-6. F-ratio
-
-.content-box-blue[
-- This is the model you fit using `lm()`. 
-- It is the exact same code you typed into R. 
-- Use to double check to see if you made any typos.
-]
-
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
--4.5432 -2.3647 -0.1252  0.0000  1.4096  6.8727 
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model .RUred[residuals]
-3. Model coefficients
-4. Significance codes
-5. Variance explained
-6. F-ratio
-
-.content-box-blue[
-- Should be normally distributed
-- Absolute values of 1Q and 3Q should be similar
-- Mean = 0, median close to 0
-- If anything is off you can see it here, but check residual plots
-]
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-             Estimate Std. Error   t value     Pr(&gt;|t|)
-(Intercept) 37.285126   1.877627 19.857575 8.241799e-19
-wt          -5.344472   0.559101 -9.559044 1.293959e-10
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model residuals
-3. Model .RUred[coefficients]
-4. Significance codes
-5. Variance explained
-6. F-ratio
-
-.content-box-blue[
-- Meat and potatoes of the output
-- Parameter estimates of intercept and predictor(s)
-- Expresses strength of relationship between predictor(s) and outcome variable
-- One unit change in predictor will change outcome by...
-]
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-
-Call:
-lm(formula = mpg ~ wt, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--4.5432 -2.3647 -0.1252  1.4096  6.8727 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
-wt           -5.3445     0.5591  -9.559 1.29e-10 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.046 on 30 degrees of freedom
-Multiple R-squared:  0.7528,	Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model residuals
-3. Model coefficients
-4. .RUred[Significance codes]
-5. Variance explained
-6. F-ratio
-
-.content-box-blue[
-- Assessment of statistical significance of predictor(s) and the intercept 
-- Everything except "." is probably "good"
-]
-]
-
----
-
-### Statistical Significance
-
-.Large[
-- As long as the effect is not statistically equivalent to 0 it is called 
-statistically significant
-
-- It may be an effect of trivial magnitude
-
-- Basically, it means that this prediction is better than nothing
-
-- It doesn’t really mean it is really “significant” in the terms that we 
-  think of as significance
-
-- It doesn’t indicate importance
-]
-
----
-
-### Significance versus Importance 
-
-#### How do we know if the “significant” effect we found is actually important?
-
-.large[
-- The coefficient of determination (r-squared) tells you how much of the 
-variance you have explained
-
-- It tells us how big the effect is and not just that it is not equal to zero
-
-- You want to know if your predictions are better than chance alone (F-ratio) 
-but you also want to know how explanatory your predictions are (r-squared)
-]
-
-#### How important are the chosen predictors?
-
-.large[
-- The numerators in both ratios are similar
-
-- They represent the predicted portion of the variance
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-
-Call:
-lm(formula = mpg ~ wt, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--4.5432 -2.3647 -0.1252  1.4096  6.8727 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
-wt           -5.3445     0.5591  -9.559 1.29e-10 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.046 on 30 degrees of freedom
-Multiple R-squared:  0.7528,	Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model residuals
-3. Model coefficients
-4. Significance codes
-5. .RUred[Variance explained]
-6. F-ratio
-
-.content-box-blue[
-- Assessment of R&lt;sup&gt;2&lt;/sup&gt;
-- More variance explained is better
-- Should pretty much always be reported
-]
-]
-
----
-
-### Make sense of it all
-
-.pull-left[
-
-
-```
-
-Call:
-lm(formula = mpg ~ wt, data = mtcars)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--4.5432 -2.3647 -0.1252  1.4096  6.8727 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
-wt           -5.3445     0.5591  -9.559 1.29e-10 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 3.046 on 30 degrees of freedom
-Multiple R-squared:  0.7528,	Adjusted R-squared:  0.7446 
-F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10
-```
-
-]
-
-.pull-right[
-
-1. Function call
-2. Model residuals
-3. Model coefficients
-4. Significance codes
-5. Variance explained
-6. .RUred[F-ratio]
-
-.content-box-blue[
-- Assesses overall significance... omnibus model
-- If F-ratio is significant, at least one predictor or intercept is too
-- If F-ratio is not significant your experiment is over
-]
-]
-
----
-
-### A note about F-ratios
-
-#### If you have an ANOVA background... Mean Squared Deviations
-
-`$$MS_{Total} = \frac{\sum{(y_i - \bar{y})^2}}{n-1}$$`  
-
-`$$MS_{Predicted} = \frac{\sum{(\hat{y}_i - \bar{y})^2}}{k}$$`  
-
-`$$MS_{Error} = \frac{\sum{(y_i - \hat{y}_i)^2}}{n - k - 1}$$`
-
-.content-box-green[
-#### `$$F_{(k),(n-k-1)} = \frac{\sum{(\hat{y}_i - \bar{y})^2} / (k)}{\sum{(y_i - \hat{y}_i)^2} / (n - k - 1)}$$`
-]
-
----
-
-### A note about F-ratios
-
-#### If you have an ANOVA background... Mean Squared Deviations
-
-`$$MS_{Total} = \frac{SS_{Total}}{df_{Total}}$$`
-
-`$$MS_{Predicted} = \frac{SS_{Predicted}}{df_{Predicted}}$$`
-
-`$$MS_{Error} = \frac{SS_{Error}}{df_{Error}}$$`
-
-.content-box-green[
-#### `$$F = \frac{MS_{Predicted}}{MS_{Error}}$$`
-]
-
----
-
-### Degrees of Freedom
-
-#### Derived from the number of sample statistics used in your computation:
-
-.Large[
-- e.g., for a standard deviation, you subtract all the raw scores from the mean
-
-- Since you used the sample mean, you used up 1 df
-
-- df = n - 1
-]
-
----
-
-### Degrees of Freedom
-
-#### In the denominator of the standard deviation, you are using a sample statistic, not a population parameter, so you have df = n - 1:
-
-.large[
-- n - 1 reflects the fact that you used a statistic and if you know one number 
-(the mean) there is less uncertainty remaining
-- If you know the mean and you have 10 scores, then you only need 9 of the 
-remaining scores to predict all 10 of them
-]
-
-#### Usually we have an F-table with associated degrees of freedom to show us whether the F-ratio is "statistically significant":
-
-.large[
-- Numerator df = k 
-- Denominator df = n - k - 1
-]
-
----
-
-### Degrees of Freedom
-
-### `$$df_{Total} = n - 1$$` 
-
-### `$$df_{Predicted} = k$$` 
-
-### `$$df_{Error} = n - k - 1$$`
-
-## `$$df_{Total} = df_{Predicted} + df_{Error}$$`
-
----
-layout: false
-class: middle
-
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189" data-video-id="6811647290709757189" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>Always check your assumptions 📈<a title="statistics" target="_blank" href="https://www.tiktok.com/tag/statistics?refer=embed">#statistics</a> <a title="math" target="_blank" href="https://www.tiktok.com/tag/math?refer=embed">#math</a> <a title="linearregression" target="_blank" href="https://www.tiktok.com/tag/linearregression?refer=embed">#linearregression</a> <a title="fyp" target="_blank" href="https://www.tiktok.com/tag/fyp?refer=embed">#fyp</a></p> <a target="_blank" title="♬ is it me, Jesus? - Mackenzie Lee" href="https://www.tiktok.com/music/is-it-me-Jesus-6732518990188415749?refer=embed">♬ is it me, Jesus? - Mackenzie Lee</a> </section> </blockquote> 
-<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
-<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
-<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-
---
-
-.footnote[
-[Exercises](https://www.ds4ling.jvcasillas.com/slides/05_lm/02_assumptions_diagnostics/assets/scripts/assumptions_walkthrough_ex.R)
-]
-
----
-layout: false
-class: title-slide-final, left
-
-# References
-
-
-
-- 
-&lt;p&gt;&lt;cite&gt;Wickham, H. and G. Grolemund
-(2016).
-&lt;em&gt;R for Data Science: Import, Tidy, Transform, Visualize, and Model Data&lt;/em&gt;.
-O'Reilly Media.&lt;/cite&gt;&lt;/p&gt;
-- 
-&lt;p&gt;&lt;cite&gt;Lewis-Beck, M.
-(1980).
-&amp;ldquo;Bivariate Regression: Assumptions and Inferences&amp;rdquo;.
-In: 
-&lt;em&gt;Applied Regression: An Introduction&lt;/em&gt;.
-Ed. by M. Lewis-Beck.
-Sage University Paper Series on Quantitative Applications in the Social Sciences - 22.
-Newbury Park, CA: Sage, pp. 26&amp;ndash;46.
-ISBN: 9781483381497.&lt;/cite&gt;&lt;/p&gt;
-- 
-&lt;p&gt;&lt;cite&gt;Schroeder, L., D. Sjoquist, and P. Stephan
-(1986).
-&amp;ldquo;Linear Regression&amp;rdquo;.
-In: 
-&lt;em&gt;Understanding Regression Analysis: An Introductory Guide&lt;/em&gt;.
-Ed. by L. Schroeder, D. Sjoquist and P. Stephan.
-Sage University Paper Series on Quantitative Applications in the Social Sciences - 57.
-Newbury Park, CA: Sage, pp. 11&amp;ndash;28.
-ISBN: 9780803927582.&lt;/cite&gt;&lt;/p&gt;
-
-- Figueredo, A. J. (2013).  Multiple Regression. *Statistical 
-Methods in Psychological Research*.
-
-
-
-    </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script src="https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js"></script>
-<script src="https://platform.twitter.com/widgets.js"></script>
-<script>var slideshow = remark.create({
-"highlightStyle": "default",
-"highlightLines": true,
-"countIncrementalSlides": false,
-"ratio": "16:9"
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})(document);
-
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
-})();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
-(function() {
-  "use strict"
-  // Replace <script> tags in slides area to make them executable
-  var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container script'
-  );
-  if (!scripts.length) return;
-  for (var i = 0; i < scripts.length; i++) {
-    var s = document.createElement('script');
-    var code = document.createTextNode(scripts[i].textContent);
-    s.appendChild(code);
-    var scriptAttrs = scripts[i].attributes;
-    for (var j = 0; j < scriptAttrs.length; j++) {
-      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
-    }
-    scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-})();
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
-
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
-
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: true,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: true,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 2,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 7.5e-2,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
       }
-    }
-    i++;
-  }
-};
-slideshow._releaseMath(document);
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+<script src="https://platform.twitter.com/widgets.js"></script>
+</body></html>

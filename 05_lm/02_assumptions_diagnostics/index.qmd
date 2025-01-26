@@ -1,0 +1,776 @@
+---
+title   : 'Data Science for Linguists'
+subtitle : 'The linear model: [Assumptions, diagnotics, and interpretation]{style="color: #888; font-size: 0.9em;"}'
+author   : "Joseph V. Casillas, PhD"
+institute: "Rutgers University<mybr>Spring 2025<br>Last update: `r Sys.Date()`"
+---
+
+```{r}
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
+
+source(here::here("assets", "scripts", "helpers.R"))
+read_chunk(here("05_lm", "02_assumptions_diagnostics", "index_files", "scripts", "assumptions_diagnostics.R"))
+```
+
+# {.transition visibility="uncounted"}
+
+{{< tweet user=ChelseaParlett id=1352717277976694784 >}}
+<!-- regression the movie tweet --> 
+
+
+# Assumptions {.transition}
+
+---
+
+## Assumptions {background-image="./index_files/img/assumptions.png" background-size="350px" background-position="95% 50%" data-menu-title="General assumptions"}
+
+### We make a lot of assumptions
+
+::: {.columns}
+::: {.column style="font-size: 0.7em; width: 75%;"}
+<ru-blockquote>
+[1.]{color="lightblue"} the act of assuming or taking for granted  
+[2.]{color="lightblue"} a hypothesis that is taken for granted  
+[3.]{color="lightblue"} a thing that is accepted as true or as certain to happen, without proof
+</ru-blockquote>
+:::
+:::
+
+::: {.columns}
+::: {.column .closelist .absolute bottom="10%" style="font-size: 0.7em;"}
+- About the world
+- About others
+- About reactions
+- About academia
+:::
+
+::: {.column .closelist .absolute bottom="10%" right="0" style="font-size: 0.7em;"}
+- The sun will rise tomorrow
+- People are generally X
+- They will find my joke funny
+- Reviewer 2 is evil
+:::
+:::
+
+---
+
+## Assumptions {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png" background-size="350px" background-position="95% 50%" data-menu-title="Statistical assumptions"}
+
+### Statistical assumptions
+
+::: {.columns}
+::: {.column style="font-size: 0.9em; width: 75%;"}
+- Every model has assumptions 
+- They need to be met for the model to work properly and be trustworthy
+- It is not standard practice to report whether all assumptions have been met when writing up results... [but it should be]{.emph}
+- We will make a habit of assessing models and incorporating the relevant information in prose
+:::
+:::
+
+---
+
+## Assumptions {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_assumptions.png" background-size="350px" background-position="95% 50%" data-menu-title="Regression assumptions"}
+
+### Regression assumptions
+
+We can break the assumptions up into 3 areas: 
+
+1. Model specification
+2. Measurement error
+3. The error term
+
+
+
+# Model specification {.transition}
+
+---
+
+## Model specification {data-menu-title="Specification error"}
+
+### Specification error
+
+There should be no specification error
+
+- The relationship between x<sub>i</sub> and y<sub>i</sub> is linear: 
+$$y_i = \alpha + \beta x_i + \epsilon _i$$
+- Including irrelevant variables 🤷🏽
+- Omitting relevant variables 👎🏽
+
+::: {.fragment}
+### Importance: [**HIGH**]{.emph}
+:::
+
+---
+
+## Model specification {data-menu-title="Including an irrelevant variable" background-image="./index_files/img/sin.png" background-size="400px" background-position="95% 50%"}
+
+### Including an irrelevant variable (sin of commission): 🤷🏽
+
+::: {.columns}
+::: {.column style="font-size: 0.85em; width: 70%;"}
+- Similar to a Type I error
+- Adds to the error of prediction, but it does not bias the parameter estimates 
+- If model includes multiple predictors, other estimates are not influenced by the irrelevant variable
+- Though the parameter estimates won't be biased, the standard error terms 
+around each beta weight will increase (this affects t-ratio and p-value)
+:::
+:::
+
+---
+
+## {background-image="./index_files/img/sin.png" background-size="400px" background-position="95% 50%"}
+
+[Model specification]{.emph .p-font style="font-size: 1.85em;"}
+
+[Including an irrelevant variable (sin of commission): 🤷🏽]{.p-font style="font-size: 1.3em; color: #666666"}
+
+::: {.columns}
+::: {.column style="font-size: 0.85em; width: 70%;"}
+- For example, imagine a situation in which you model employee performance as a function of a bunch of good predictors
+- Adding the variable of astrological horoscope sign will not bias the other estimates
+- You are considering something that doesn't matter, i.e., astrology
+:::
+:::
+
+---
+
+## Model specification {background-image="./index_files/img/sin.png" background-size="400px" background-position="95% 50%" data-menu-title="Excluding a relevant variable"}
+
+### Excluding a relevant variable (sin of omission): 👎🏽
+
+::: {.columns}
+::: {.column style="font-size: 0.85em; width: 70%;"}
+- Similar to a Type II error
+- This is much more serious!
+- This will bias your parameter estimates
+- You are leaving something important out (variance left unexplained)
+:::
+:::
+
+---
+
+## {background-image="./index_files/img/sin.png" background-size="400px" background-position="95% 50%"}
+
+[Model specification]{.emph .p-font style="font-size: 1.85em;"}
+
+[Excluding a relevant variable (sin of omission): 👎🏽]{.p-font style="font-size: 1.3em; color: #666666"}
+
+::: {.columns}
+::: {.column style="font-size: 0.85em; width: 70%;"}
+- For example, if you want to model RT as a function of working memory but you forget to look at age
+- Then your prediction might be wrong
+- You don’t know which way you are biasing things either!
+- You could be either overestimating or underestimating the other regression parameters
+:::
+:::
+
+---
+
+## {background-image="./index_files/img/sin.png" background-size="400px" background-position="95% 50%" data-menu-title="What to do?"}
+
+[Model specification]{.emph .p-font style="font-size: 1.85em;"}
+
+[What to do]{.p-font style="font-size: 1.3em; color: #666666"}
+
+#### [After including an irrelevant predictor:]{color="black"}
+
+::: {.closelist style="font-size: 0.8em;"}
+- Drop the irrelevant variable
+- Not much of a problem
+:::
+
+<mybr>
+
+::: {.fragment}
+#### [After excluding a relevant predictor:]{color="black"}
+
+::: {.closelist style="font-size: 0.8em;"}
+- Look at data again to see if it is in there
+- Hope and Pray!
+- If it’s not in you data, you are SOL
+- You need to repeat the study!
+- There is a problem in your design and there is no mathematical solution to fix this problem
+:::
+:::
+
+
+
+# Measurement error {background-image="./index_files/img/measure0.png" background-size="contain" background-position="100% 50%"}
+
+---
+
+## Measurement error {data-menu-title="Measuring is hard" background-image="https://media.tenor.com/AFJK9BNwiZIAAAAM/harry-styles-tape-measure.gif" background-size="300px" background-position="98% 10%"}
+
+### Measuring things is hard
+
+::: {.columns}
+::: {.column .fragment .absolute left="0" top="35%" width="55%"}
+- How far away is that lion?
+- How much milk do I need?
+- Can I park there?
+- How much weight did I gain?
+:::
+
+::: {.column .absolute right="0" top="30%" width="10%"}
+:::
+
+::: {.column .fragment .absolute right="0" top="35%" width="35%"}
+- Human error
+- Specificity
+- Operationalizations
+- Repeatability
+:::
+:::
+
+---
+
+## Measurement error {data-menu-title="Minimize measurement error" background-image="./index_files/img/measure1.png" background-size="contain" background-position="110% 50%"}
+
+### There should be no measurement error
+
+::: {.columns}
+::: {.column .absolute top="35%"}
+- Variables x<sub>i</sub> and y<sub>i</sub> should be as accurate as possible
+:::
+:::
+
+::: {.absolute bottom="5%"}
+[Importance: [high]{.emph}]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+:::
+
+---
+
+## Measurement error {data-menu-title="Consequences" background-image="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmV2M2xiZXBhemV3MGdhNzFreWpuNXg1Mmd5YnB4MDh0bnRwNWhnZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/k5lj4s1qxaSyI/giphy.webp" background-size="500px" background-position="98% 50%"}
+
+### Consequences of measurement error
+
+::: {.columns}
+::: {.column .incremental style="width: 65%; font-size: 0.9em;"}
+- Your models will estimate the parameters you specify
+- But you won't know if the estimates are reliable
+- Large degree of unquantifiable uncertainty
+- Cannot "safely" do NHST
+- Your research may be reproducible, but probably will not be replicable
+:::
+:::
+
+<!-- anchorman gif, 60% of the time it works every time -->
+
+---
+
+## Measurement error {data-menu-title="What to do?" background-image="./index_files/img/measure2.gif" background-size="500px" background-position="98% 50%"}
+
+### What you can do
+
+::: {.columns}
+::: {.column .incremental style="width: 65%; font-size: 0.9em;"}
+- The solution to this problems revolves around proper planning a priori
+- Operationally define every feasible aspect of *how* and *what* you will measure
+  - Use previous literature, if available
+  - Preregister decisions
+- Repeated measures, if possible
+- Random, 3rd party quality checks
+- Measurement error models, if possible
+:::
+:::
+
+<!-- anchorman gif, 60% of the time it works every time -->
+
+---
+
+# The error term {.transition}
+
+---
+
+## The error term {data-menu-title="About the error term"}
+
+### About the error term
+
+The error term should meet the following characteristics...
+
+- Mean = 0
+- Homoskedasticity
+- No autocorrelation
+- Predictor not correlated with error term
+- Error is normally distributed 
+
+---
+
+## About the error term {data-menu-title="Mean of 0"}
+
+### Mean of 0
+
+If the mean of the error term deviates far from 0...
+
+- Intercept can be biased
+- Slope estimates will not be biased
+
+[Importance: [low]{color="blue"}... unless you are interested in the intercept.]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+
+---
+
+## About the error term {data-menu-title="Homoskedasticity"}
+
+### Homoskedasticity
+
+::: {.closelist}
+- Variance around predicted values should be consistent
+- Common simple inspection is to look at scatter plot of fitted vs. x-values (should look like blob with no interesting patterns)
+- If variance is heteroskedastic you will typically see fan-like patterns
+- Will not bias parameter estimates
+- Will increase confidence intervals, thus affects t-ratios and p-values
+:::
+
+[Importance: [medium/high]{color="orange"}]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+
+---
+
+## {background-color="black" visibility="uncounted" .center}
+
+<center>
+<iframe height="390" width= "520" src="https://www.tiktok.com/player/v1/7076276399505558827?music_info=1&description=1" allow="fullscreen" title="test"></iframe>
+</center>
+
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/7076276399505558827>
+:::
+
+<!-- homoskedasticity -->
+
+---
+
+## About the error term {data-menu-title="Autocorrelation"}
+
+### No autocorrelation
+
+::: {style="font-size: 0.8em;"}
+- If the residuals are autocorrelated, it means that the prediction error of a given observation depends on that of the previous observation
+- This shows up as a clear unexplained pattern in the y variable 
+- Most common in repeated measures and longitudinal data
+- Will not bias parameter estimates
+- Will affect confidence intervals, t-ratios, p-values
+- Increased chance of Type II error
+:::
+
+[Importance: [High]{.emph}, but uncommon in standard regression]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+
+---
+
+## About the error term {data-menu-title="Predictor correlation with error term"}
+
+### Predictor(s) should not be correlated with error term
+
+- Typically the result of omitting a relevant variable (sin of omission)
+- Will bias parameter estimates
+- Solution: include missing variable
+
+[Importance: [high]{.emph}]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+
+---
+
+## About the error term {data-menu-title="Normally distributed errors"}
+
+### Error (residuals) should be normally distributed
+
+::: {.incremental .closelist style="font-size: 0.8em;"}
+- There is no a priori reason for error to be anything but normally distributed 
+- It should become standard practice for you to examine your residuals to see if they are normally distributed or not
+- If they aren't normally distributed there is a substantial possibility of Type II error
+- If this is the case, then the residuals may not be "pure" error, and you may have omitted a relevant variable from the equation that is making the residuals not be normally distributed
+- In other words, the residuals may contain systematic variance that can still be explained by something else
+- You cannot conclude with 100% certainty that a Type II error has been 
+committed, but you might strongly suspect it
+:::
+
+[Importance: [high]{.emph}]{.p-font .fragment style="font-size: 1.2em; color: #666666;"}
+
+
+
+
+
+
+
+# Summing up {.smaller}
+
+::: {.closelist}
+- Model specification
+  - The relationship between x<sub>i</sub> and y<sub>i</sub> is linear
+  - Including irrelevant variables 
+  - Omitting relevant variables
+:::
+
+- Measurement error
+
+::: {.closelist}
+- The error term
+  - Mean = 0
+  - Homoskedasticity
+  - No autocorrelation
+  - Predictor not correlated with error term
+  - Error is normally distributed
+:::
+
+
+
+
+# Diagnostics Examples {.transition}
+
+---
+
+## Diagnostics {.smaller data-menu-title="More about residuals"}
+
+### Remember those "residuals"?
+
+::: {.closelist}
+- A residual represents prediction error in our model with regard to a single point. 
+  - Our `mtcars` model predicted that a 6 ton car should get 5.22 mpg. 
+  - If in reality it gets 10.22 mpg, then the residual for that specific data point would be 5 mpg. 
+:::
+
+::: {.fragment}
+- Remember: All models are wrong. 
+:::
+
+::: {.closelist .fragment}
+- Our models will always be off by at least a little bit for most of the observations we try to fit. 
+- Nonetheless, it is good practice to examine the residuals of your models in order to help assess how well it fits your data.
+- Specifically, we need to make sure that there aren't any unexpected patterns because that would suggest that our model does not properly fit our data.
+:::
+
+---
+
+## {background-image="./index_files/img/sick-computer.png" background-size="400px" background-position="95% 50%"}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+[Considerations for model diagnostics]{.p-font style="font-size: 1.2em; color: #666666"}
+
+<br>
+
+[1. Model assumptions]{.p-font style="font-size: 1.2em;"}
+
+[2. Outliers]{.p-font style="font-size: 1.2em;"}
+
+---
+
+## {data-menu-title="Assumption of linear relationship" .smaller}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### The relationship between x<sub>i</sub> and y<sub>i</sub> is linear.
+
+1. Double check linear specification
+2. Eyeball it
+
+```{r}
+#| label: fit_mods
+data(assumptions_data)
+mod1 <- lm(y ~ x, data = assumptions_data)
+mod2 <- lm(y_quad ~ x, data = assumptions_data)
+```
+
+<mybr>
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: assumptions_linear_plot
+#| fig-asp: 0.8
+assumptions_data |> 
+  ggplot() + 
+  aes(x = x, y = y) + 
+  geom_point(
+    pch = 21, color = 'darkgrey', fill = 'darkred', 
+    stroke = 1, size = 4
+  ) + 
+  ds4ling_bw_theme(base_size = 24)
+```
+:::
+
+::: {.column}
+```{r}
+#| label: assumptions_quadratic_plot
+#| fig-asp: 0.8
+assumptions_data |> 
+  ggplot() + 
+  aes(x = x, y = y_quad) + 
+  geom_point(
+    pch = 21, color = 'darkgrey', fill = 'darkred', 
+    stroke = 1, size = 4
+  ) + 
+  ds4ling_bw_theme(base_size = 24)
+```
+:::
+:::
+
+---
+
+## {data-menu-title="Mean of residuals = 0" .smaller}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### The mean of residuals is zero
+
+1. Fit model
+2. Get residuals
+3. Test manually
+
+<mybr>
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: model-ex-code1
+#| echo: true
+# Linear relationship
+# Fit model and print summary
+mod1 <- lm(y ~ x, data = assumptions_data)
+summary(mod1$residuals)
+```
+:::
+
+::: {.column}
+```{r}
+#| label: model-ex-code2
+#| echo: true
+# Non-linear relationship
+# Fit model and print summary# Fit mod
+mod2 <- lm(y_quad ~ x, data = assumptions_data)
+summary(mod2$residuals)
+```
+:::
+:::
+
+---
+
+## {data-menu-title="Homoskedasticity of residuals"}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### Homoskedasticity of residuals
+
+```{r}
+#| label: homoskedasticity_linear
+#| fig-asp: 0.45
+autoplot(mod1, which = c(1, 3)) + 
+  ds4ling_bw_theme(base_size = 18)
+```
+
+::: aside
+mod1
+:::
+
+---
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+[Homoskedasticity of residuals]{.p-font style="font-size: 1.2em; color: #666666"}
+
+```{r}
+#| label: homoskedasticity_quadratic
+#| fig-asp: 0.45
+autoplot(mod2, which = c(1, 3)) + 
+  ds4ling_bw_theme(base_size = 18)
+```
+
+::: aside
+mod2
+:::
+
+---
+
+## {data-menu-title="No autocorrelation of residuals"}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### No autocorrelation of residuals
+
+::: {.columns}
+::: {.column}
+1. Visual inspection
+2. Durbin-Watson test
+
+```{r}
+#| label: linear_durbin_watson
+#| comment: ''
+# formal test: Durbin-Watson test
+lmtest::dwtest(mod1)
+```
+:::
+
+::: {.column}
+```{r}
+#| label: linear_autocorrelation
+#| fig-asp: 0.8
+#| out-extra: "style=float:right"
+# visual inspection
+acf(mod1$residuals) 
+```
+:::
+:::
+
+::: aside
+mod1
+:::
+
+---
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+[No autocorrelation of residuals]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column}
+1. Visual inspection
+2. Durbin-Watson test
+
+```{r}
+#| label: quadratic_durbin_watson
+#| comment: ''
+# formal test: Durbin-Watson test
+lmtest::dwtest(mod2)
+```
+:::
+
+::: {.column}
+```{r}
+#| label: quadratic_autocorrelation
+#| fig-asp: 0.8
+# visual inspection
+acf(mod2$residuals) 
+```
+:::
+:::
+
+::: aside
+mod2
+:::
+
+---
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+[No autocorrelation of residuals - Correction]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column .small-code}
+```{r}
+#| label: auto_cor_fix
+#| fig-asp: 0.8
+#| echo: true
+autocor_data <- data.frame(
+  assumptions_data, 
+  resid_mod2 = mod2$residuals
+)
+
+autocor_data1 <- DataCombine::slide(
+  autocor_data, 
+  Var = "resid_mod2", 
+  NewVar = "lag1", 
+  slideBy = -1
+)
+autocor_data2 <- na.omit(autocor_data1)
+mod2_fix <- lm(y_quad ~ x + lag1, data = autocor_data2)
+```
+
+```{r}
+#| label: autocor-durbin-watson
+#| comment: ''
+lmtest::dwtest(mod2_fix)  # formal test: Durbin-Watson test
+```
+:::
+
+::: {.column}
+```{r}
+#| label: auto-cor-fix-plot
+#| fig-asp: 0.8
+acf(mod2_fix$residuals)
+```
+:::
+:::
+
+::: footer
+mod2
+:::
+
+---
+
+## {data-menu-title="Predictors and residuals are uncorrelated"}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### Predictors and residuals are uncorrelated
+
+::: {.closelist .small-code}
+- Test for correlation
+- Think about your study
+
+```{r}
+#| label: pred-resid-corr-test-linear
+# do correlation test 
+cor.test(assumptions_data$x, mod1$residuals)
+```
+:::
+
+::: aside
+mod1
+:::
+
+---
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+[Predictors and residuals are uncorrelated]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.closelist .small-code}
+- Test for correlation
+- Think about your study
+
+```{r}
+#| label: pred_resid_corr_test_quadratic
+# do correlation test 
+cor.test(assumptions_data$x, mod2$residuals)
+```
+:::
+
+::: aside
+mod2
+:::
+
+---
+
+## {data-menu-title="Normality of residuals" .smaller}
+
+[Diagnostics]{.emph .p-font style="font-size: 1.75em;"}
+
+### Normality of residuals
+
+- QQplots
+
+```{r}
+#| label: normal_resids_linear-quadratic
+#| fig-asp: 0.45
+#| fig-align: 'center'
+ap1 <- autoplot(mod1, which = 2) + 
+  ds4ling_bw_theme(base_size = 18)
+
+ap2 <- autoplot(mod2, which = 2) + 
+  ds4ling_bw_theme(base_size = 18)
+
+ap1 + ap2
+```
+
+
+
+
+
+# Dealing with influential data points {data-menu-title="Influential data points" .center}
+
+---
+
+## sdkjfaj
+
+

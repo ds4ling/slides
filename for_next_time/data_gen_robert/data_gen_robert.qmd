@@ -1,0 +1,92 @@
+---
+title: "data_gen_robert"
+---
+
+
+They investigated if mono ES and L2 ES differed in their perception of algunos/unos. 
+
+Showed a video to participants of 4 people, where 3 of them or 4 of them did some activity. 
+
+Then showed asked if a statement about the video using algunos/unos was felicitous.
+
+Something like:
+
+percent acceptance ~ Group(mono,L2) + Word (algunos/unos) + ParticipantsInVideo(3/4,4/4) + (1|participant)
+
+
+```{r}
+
+library("tidyverse")
+library("glue")
+
+
+
+gen_participant <- function(group) {
+  
+  out_temp <- tibble(
+    id  = glue("09{sample(1000:9999, 1)}_{group}"), 
+  )
+  
+  if (group == "es") {
+    out_add <- tibble(
+      algunos_44 = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0.1, .8, .1, 0, 0)),
+      algunos_34 = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, .05, .8, .15)),
+      unos_44    = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, .4, .8, 0)),
+      unos_34    = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, .8, .4, 0))
+    )
+  } else {
+    out_add <- tibble(
+      algunos_44 = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0.3, .7, 0, 0, 0)),
+      algunos_34 = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, 0, .8, .2)),
+      unos_44    = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, .6, .4, 0)),
+      unos_34    = sample(1:10, 1, prob = c(0, 0, 0, 0, 0, 0, 0, .8, .4, 0))
+    )
+  }
+
+  out <- bind_cols(out_temp, out_add)
+  return(out)
+}
+
+gen_data <- function(n, group) {
+  set.seed(20230428)
+  out <- replicate(n, gen_participant(group = group), simplify = T) %>% 
+  t() %>% 
+  as.data.frame() %>% 
+  lapply(., unlist) %>% 
+  as_tibble()
+  return(out)
+}
+
+dat <- bind_rows(
+    gen_data(n = 100, group = "es"), 
+    gen_data(n = 100, group = "l2")
+  ) %>% 
+  pivot_longer(
+    cols = -id, 
+    names_to = c("word", "condition"), 
+    names_sep = "_", 
+    values_to = "count") %>% 
+  mutate(n = 10) %>% 
+  mutate(preference = map2(count, n, 
+    ~ c(rep(1, .x), 
+        rep(0, .y - .x)))) %>% 
+  unnest(cols = c(preference)) %>% 
+  select(-count, -n) %>% 
+  group_by(id, word, condition) %>% 
+  mutate(item = glue::glue("item_{seq_along(id)}")) %>% 
+  ungroup() %>% 
+  write_csv("preference_data.csv")
+
+```
+
+
+```{r}
+tidy_dat <- dat %>% 
+  separate(id, into = c("id", "group"), sep = "_") 
+
+tidy_dat %>% 
+  ggplot() + 
+  aes(x = word, y = preference, color = condition) + 
+  facet_grid(. ~ group) + 
+  stat_summary(fun.data = mean_se, geom = "pointrange")
+```
