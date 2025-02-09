@@ -261,7 +261,7 @@ $z_1$.
 probability) in a z-table. 
 
 ::: footer
-[z-table of standard normal probabilities](https://ds4ling.github.io/slides/03_nhst/assets/img/ztable.pdf)
+[z-table of standard normal probabilities](https://www.ds4ling.jvcasillas.com/slides/03_nhst/index_files/img/ztable.pdf)
 :::
 
 ---
