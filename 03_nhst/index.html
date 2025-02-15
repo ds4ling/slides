@@ -2061,11 +2061,11 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">NHST</h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-09</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-15</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-85477"></div><script>tweet={"url":"https:\/\/twitter.com\/hadleywickham\/status\/565516733516349441","author_name":"Hadley Wickham","author_url":"https:\/\/twitter.com\/hadleywickham","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EYou&#39;re doing it right if you get frustrated: if you&#39;re not frustrated, you&#39;re (probably) not stretching yourself mentally\u003C\/p\u003E&mdash; Hadley Wickham (@hadleywickham) \u003Ca href=\"https:\/\/twitter.com\/hadleywickham\/status\/565516733516349441?ref_src=twsrc%5Etfw\"\u003EFebruary 11, 2015\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-85477").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-98407"></div><script>tweet={"url":"https:\/\/twitter.com\/hadleywickham\/status\/565516733516349441","author_name":"Hadley Wickham","author_url":"https:\/\/twitter.com\/hadleywickham","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EYou&#39;re doing it right if you get frustrated: if you&#39;re not frustrated, you&#39;re (probably) not stretching yourself mentally\u003C\/p\u003E&mdash; Hadley Wickham (@hadleywickham) \u003Ca href=\"https:\/\/twitter.com\/hadleywickham\/status\/565516733516349441?ref_src=twsrc%5Etfw\"\u003EFebruary 11, 2015\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-98407").innerHTML = tweet["html"];</script><p></p>
 </section>
 
 <section>
@@ -2472,39 +2472,40 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 <section id="ex-2---exams" class="slide level2" data-background-color="#cc0033" data-visibility="uncounted">
 <h2>Ex 2 - Exams</h2>
 </section>
-<section class="slide level2">
-
+<section id="section-7" class="slide level2 smaller">
+<h2></h2>
 <p><span class="emph p-font" style="font-size: 1.75em;">Ex 2 - Exams</span></p>
-<div style="font-size: 0.7em;">
-<p>Assume that the test scores of a college entrance exam fits a normal distribution. Furthermore, the mean test score is 72, and the standard deviation is 15.2. What is the percentage of students scoring 84 or more in the exam?</p>
+<p>Assume that the test scores of a college entrance exam fits a normal distribution. Furthermore, the mean test score is 72, and the standard deviation is 15. What is the percentage of students scoring 84 or more in the exam?</p>
 <ol type="1">
 <li>Calculate the z-score</li>
 <li>Check z-table</li>
 </ol>
-</div>
 <div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># (score - mean) / sd</span></span>
-<span id="cb4-2"><a href=""></a>(<span class="dv">84</span> <span class="sc">-</span> <span class="dv">72</span>) <span class="sc">/</span> <span class="fl">15.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href=""></a>score    <span class="ot">&lt;-</span> <span class="dv">84</span></span>
+<span id="cb4-3"><a href=""></a>mean_val <span class="ot">&lt;-</span> <span class="dv">72</span></span>
+<span id="cb4-4"><a href=""></a>std_dev  <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb4-5"><a href=""></a>(score <span class="sc">-</span> mean_val) <span class="sc">/</span> std_dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7894737</code></pre>
+<pre><code>[1] 0.8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>(<span class="dv">84</span> <span class="sc">-</span> <span class="dv">72</span>) <span class="sc">/</span> <span class="dv">15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8</code></pre>
 </div>
 </div>
-<div style="font-size: 0.7em;">
-<p>The z-score is: 0.7894737. Look this value up in z-table.</p>
-</div>
-</div>
-<div class="fragment">
-<p><span class="p-font" style="color: #666666;;">We can do this in R</span></p>
+<p>The z-score is: 0.8.</p>
+<p>Check z-table or do it in R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">84</span>, <span class="at">mean =</span> <span class="dv">72</span>, <span class="at">sd =</span> <span class="fl">15.2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">pnorm</span>(<span class="at">q =</span> <span class="dv">84</span>, <span class="at">mean =</span> <span class="dv">72</span>, <span class="at">sd =</span> <span class="dv">15</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2149176</code></pre>
+<pre><code>[1] 0.2118554</code></pre>
 </div>
 </div>
 </div>
 </section></section>
-<section id="section-7" class="title-slide slide level1 center">
+<section id="section-8" class="title-slide slide level1 center">
 <h1></h1>
 <center>
 <span class="emph p-font"><strong>As a linguist you will probably never do this</strong></span>
@@ -2521,7 +2522,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 <h1>Null hypothesis significance testing</h1>
 
 </section>
-<section id="section-8" class="slide level2" data-background-image="https://i.imgflip.com/2sdkd6.jpg" data-background-size="contain" data-background-position="50% 50%" data-background-color="black">
+<section id="section-9" class="slide level2" data-background-image="https://i.imgflip.com/2sdkd6.jpg" data-background-size="contain" data-background-position="50% 50%" data-background-color="black">
 <h2></h2>
 <!-- meme of karl pearson "do you have a moment to talk about NHST" -->
 </section>
@@ -2540,7 +2541,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div>
 </div>
 </section>
-<section id="section-9" class="slide level2" data-background-image="https://api.time.com/wp-content/uploads/2019/01/ruth-bader-ginsburg-supreme-court-justice-portrait.jpg" data-background-size="contain" data-background-color="black">
+<section id="section-10" class="slide level2" data-background-image="https://api.time.com/wp-content/uploads/2019/01/ruth-bader-ginsburg-supreme-court-justice-portrait.jpg" data-background-size="contain" data-background-color="black">
 <h2></h2>
 <p><span class="p-font" style="font-size: 1.75em;color: white;">NHST</span></p>
 <!-- RBG headshot -->
@@ -2555,7 +2556,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div></div>
 </div>
 </section>
-<section id="section-10" class="slide level2" data-background-image="https://www.snopes.com/tachyon/2017/03/Ruth_Bader_Ginsburg_fb.jpg?resize=1200,630&amp;quality=65" data-background-size="contain" data-background-color="black" data-menu-title="p-values? significance?">
+<section id="section-11" class="slide level2" data-background-image="https://www.snopes.com/tachyon/2017/03/Ruth_Bader_Ginsburg_fb.jpg?resize=1200,630&amp;quality=65" data-background-size="contain" data-background-color="black" data-menu-title="p-values? significance?">
 <h2></h2>
 <p><br></p>
 <p><span class="p-font" style="font-size: 1.75em;color: white;">So whatâ€™s a <span style="color: yellow;">p-value</span>?</span></p>
@@ -2591,7 +2592,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div>
 </section></section>
 <section>
-<section id="section-11" class="title-slide slide level1 center" data-background-color="black">
+<section id="section-12" class="title-slide slide level1 center" data-background-color="black">
 <h1></h1>
 <center>
 <p><span class="p-font" style="font-size: 1.35em; color: grey;">High p-value: your data are likely with a true null.</span></p>
@@ -2611,22 +2612,22 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div></div>
 </div>
 </section>
-<section id="section-12" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst1.png" data-background-size="contain">
+<section id="section-13" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst1.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-13" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst2.png" data-background-size="contain">
+<section id="section-14" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst2.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-14" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues_wrong.png" data-background-size="contain">
+<section id="section-15" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues_wrong.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-15" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png" data-background-size="contain">
+<section id="section-16" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_pvalues.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-16" class="slide level2" data-background-color="black" data-background-image="https://larspsyll.files.wordpress.com/2014/07/i_do_not_think_it_significant_means_what_you_think_it_means.jpg" data-background-size="contain">
+<section id="section-17" class="slide level2" data-background-color="black" data-background-image="https://larspsyll.files.wordpress.com/2014/07/i_do_not_think_it_significant_means_what_you_think_it_means.jpg" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-17" class="slide level2 center" data-background-color="black" data-visibility="uncounted">
+<section id="section-18" class="slide level2 center" data-background-color="black" data-visibility="uncounted">
 <h2></h2>
 <center>
 <iframe height="390" width="520" src="https://www.tiktok.com/player/v1/6821961902101466374?&amp;music_info=1&amp;description=1" allow="fullscreen" title="test">
@@ -2637,7 +2638,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div>
 <!-- trending towards significance tiktoks -->
 </section>
-<section id="section-18" class="slide level2 center" data-visibility="uncounted" data-background-color="black">
+<section id="section-19" class="slide level2 center" data-visibility="uncounted" data-background-color="black">
 <h2></h2>
 <center>
 <iframe height="390" width="520" src="https://www.tiktok.com/player/v1/7073346137440439598?&amp;music_info=1&amp;description=1" allow="fullscreen" title="test">
@@ -2648,7 +2649,7 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div>
 <!-- trending towards significance tiktoks -->
 </section>
-<section id="section-19" class="slide level2 center" data-visibility="uncounted" data-background-color="black">
+<section id="section-20" class="slide level2 center" data-visibility="uncounted" data-background-color="black">
 <h2></h2>
 <center>
 <iframe height="390" width="520" src="https://www.tiktok.com/player/v1/7073335593823898923?&amp;music_info=1&amp;description=1" allow="fullscreen" title="test">
@@ -2659,16 +2660,16 @@ i.e., â€œsample x follows a normal distribution with a mean of 15 and a SD of 2â
 </div>
 <!-- trending towards significance tiktoks -->
 </section>
-<section id="section-20" class="slide level2 center" data-background-image="./index_files/img/power.png" data-background-size="contain" data-background-position="100% 50%" data-background-color="#000" data-menu-title="Power?">
+<section id="section-21" class="slide level2 center" data-background-image="./index_files/img/power.png" data-background-size="contain" data-background-position="100% 50%" data-background-color="#000" data-menu-title="Power?">
 <h2></h2>
 <p><span class="p-font" style="font-size: 1.75em;color: white;">What is <span class="emph"><strong>power</strong></span>?</span></p>
 <p><span class="p-font" style="font-size: 1.35em; color: grey;">The probability of (correctly) rejecting</span></p>
 <p><span class="p-font" style="font-size: 1.35em; color: grey;"><span class="emph"><strong>H<sub>0</sub></strong></span> when <span style="color: yellow;"><strong>H<sub>1</sub></strong></span> is true.</span></p>
 </section>
-<section id="section-21" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/power.png" data-background-size="contain">
+<section id="section-22" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/power.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-22" class="slide level2" data-background-image="../assets/img/pensar2.png" data-background-size="250px" data-background-position="95% 5%">
+<section id="section-23" class="slide level2" data-background-image="../assets/img/pensar2.png" data-background-size="250px" data-background-position="95% 5%">
 <h2></h2>
 <p><span class="emph p-font" style="font-size: 1.75em;">Hypothesis testing in context</span></p>
 <div style="font-size: 0.75em;">
@@ -2699,7 +2700,7 @@ group with respect to something</li>
           display:block!important;
       }</style></aside>
 </section>
-<section id="section-23" class="slide level2 center" data-menu-title="Type I/II errors">
+<section id="section-24" class="slide level2 center" data-menu-title="Type I/II errors">
 <h2></h2>
 <table class="table table-hover" data-quarto-postprocess="true" style="font-size: 26px; width: auto !important; margin-left: auto; margin-right: auto;">
 <colgroup>
@@ -2742,13 +2743,13 @@ Reality
 
 <div class="fragment">
 <p><br></p>
-<p></p><div id="tweet-71615"></div><script>tweet={"url":"https:\/\/twitter.com\/drob\/status\/781276244310622209","author_name":"David Robinson","author_url":"https:\/\/twitter.com\/drob","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ERemember, mixing up Type I and Type II errors is called a Type III error\u003C\/p\u003E&mdash; David Robinson (@drob) \u003Ca href=\"https:\/\/twitter.com\/drob\/status\/781276244310622209?ref_src=twsrc%5Etfw\"\u003ESeptember 28, 2016\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-71615").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-44753"></div><script>tweet={"url":"https:\/\/twitter.com\/drob\/status\/781276244310622209","author_name":"David Robinson","author_url":"https:\/\/twitter.com\/drob","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ERemember, mixing up Type I and Type II errors is called a Type III error\u003C\/p\u003E&mdash; David Robinson (@drob) \u003Ca href=\"https:\/\/twitter.com\/drob\/status\/781276244310622209?ref_src=twsrc%5Etfw\"\u003ESeptember 28, 2016\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-44753").innerHTML = tweet["html"];</script><p></p>
 </div>
 </section>
-<section id="section-24" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error1.png" data-background-size="contain">
+<section id="section-25" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error1.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-25" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error2.png" data-background-size="contain">
+<section id="section-26" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_type12_error2.png" data-background-size="contain">
 <h2></h2>
 </section>
 <section id="hypothesis-testing-in-context" class="slide level2" data-background-image="../assets/img/pensar2.png" data-background-size="250px" data-background-position="95% 5%" data-menu-title="NHST in context">
@@ -2757,8 +2758,7 @@ Reality
 <ul>
 <li>We have a question. We want to know the truthâ„¢.</li>
 <li>Generally we compare <span class="emph"><strong>sample distributions</strong></span> of population(s)<br>
-i.e., we want to know if a group is different from another<br>
-group with respect to something</li>
+i.e., we want to know if a group is different from another group with respect to something</li>
 <li>In other words, we hypothesize something about a <span style="color: #497dd7;">population</span> or about the relationship between two <span style="color: #497dd7;">populations</span></li>
 <li>What we hypothesize is considered an <em>alternative</em> to a <em>null</em> hypothesis
 <ul>
@@ -2775,12 +2775,12 @@ group with respect to something</li>
 </ul>
 </div>
 </section>
-<section id="section-26" class="slide level2" data-background-image="../assets/img/confundido.png" data-background-size="300px" data-background-position="85% 50%">
+<section id="section-27" class="slide level2" data-background-image="../assets/img/confundido.png" data-background-size="300px" data-background-position="85% 50%">
 <h2></h2>
 <p><span class="emph p-font" style="font-size: 1.75em;">Which test do I use?</span></p>
 <p><span class="p-font" style="font-size: 1.2em; color: #666666;">There are manyâ€¦</span></p>
 </section>
-<section id="section-27" class="slide level2" data-background-image="./index_files/img/procedures_flowchart.png" data-background-size="contain">
+<section id="section-28" class="slide level2" data-background-image="./index_files/img/procedures_flowchart.png" data-background-size="contain">
 <h2></h2>
 </section></section>
 <section>
@@ -2948,8 +2948,8 @@ group with respect to something</li>
 </div>
 </div><div class="column fragment" style="width:55%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="co"># t-test: # independent 2-group</span></span>
-<span id="cb9-2"><a href=""></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> ind_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># t-test: # independent 2-group</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">t.test</span>(score <span class="sc">~</span> group, <span class="at">data =</span> ind_samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -3015,8 +3015,8 @@ mean in group g1 mean in group g2
 </div>
 </div><div class="column fragment" style="width:55%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># t-test: paired sample</span></span>
-<span id="cb12-2"><a href=""></a><span class="fu">t.test</span>(prd_samp<span class="sc">$</span>test1, prd_samp<span class="sc">$</span>test2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># t-test: paired sample</span></span>
+<span id="cb14-2"><a href=""></a><span class="fu">t.test</span>(prd_samp<span class="sc">$</span>test1, prd_samp<span class="sc">$</span>test2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -3033,10 +3033,10 @@ mean difference
 </div>
 </div></div>
 </section>
-<section id="section-28" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst3.png" data-background-size="contain" data-background-color="black">
+<section id="section-29" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_nhst3.png" data-background-size="contain" data-background-color="black">
 <h2></h2>
 </section>
-<section id="section-29" class="slide level2" data-menu-title="Shiny app" data-background-iframe="https://jvcasillas.shinyapps.io/r_for_linguists/" data-background-interactive="TRUE">
+<section id="section-30" class="slide level2" data-menu-title="Shiny app" data-background-iframe="https://jvcasillas.shinyapps.io/r_for_linguists/" data-background-interactive="TRUE">
 <h2></h2>
 <div class="footer">
 <p><a href="https://jvcasillas.shinyapps.io/r_for_linguists/" class="uri">https://jvcasillas.shinyapps.io/r_for_linguists/</a></p>

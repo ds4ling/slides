@@ -767,10 +767,642 @@ ap1 + ap2
 
 
 
-# Dealing with influential data points {data-menu-title="Influential data points" .center}
+# Dealing with influential data points {data-menu-title="Influential data points" .center .transition}
 
 ---
 
-## sdkjfaj
+## Outliers/influential data points {.smaller}
 
+- An influential point is one that would significantly change the fit if 
+removed from the data 
+- [Cook's distance]{color="blue"} is a commonly used influence measure 
+
+. . .
+
+**Leverage**
+
+- The leverage of an observation measures its ability to move the regression 
+line by simply moving up/down along the y-axis.
+- The measurement represents the amount by which the predicted value would 
+change if the observation was shifted one unit in the y-direction.
+- The leverage always takes values between 0 and 1.
+- A point with 0 leverage does not effect the regression line.
+
+---
+
+[Influential data points]{.emph .p-font style="font-size: 1.75em;"}
+
+<br>
+
+::: {.columns}
+::: {.column}
+
+```{r}
+#| label: cooks_distance_linear
+#| fig-asp: 0.9
+# autoplot(mod2, which = 4)
+# Cook's D plot
+cutoff <- function(model) {
+  # identify D values > 4 / (n-k-1)
+  n <- length(model$residuals)
+  k <- length(model$coefficients)
+  cutoff <- 4 / (n - k - 1)
+  return(cutoff)
+}
+
+tibble(
+  observation = as.numeric(names(cooks.distance(mod1))), 
+  cooksd = cooks.distance(mod1)
+  ) |>
+  arrange(observation) |> 
+  mutate(
+    label = if_else(
+      condition = cooksd > cutoff(mod1), 
+      true = as.character(observation), 
+      false = ' '
+    )
+  ) |> 
+ggplot() + 
+aes(x = observation, y = cooksd, label = label) + 
+geom_hline(yintercept = cutoff(mod1), lty = 3) + 
+geom_point() + 
+geom_text(nudge_y = 0.1) + 
+geom_segment(aes(xend = observation, y = 0, yend = cooksd)) + 
+labs(
+  x = "Obs. Number", 
+  y = "Cook's distance", 
+  title = "Cook's distance"
+) + 
+ds4ling_bw_theme(base_size = 22)
+```
+
+:::
+
+::: {.column}
+
+```{r}
+#| label: cooks_distance_quadratic
+#| fig-asp: 0.9
+tibble(
+  observation = as.numeric(names(cooks.distance(mod2))), 
+  cooksd = cooks.distance(mod2)
+  ) |>
+  arrange(observation) |> 
+  mutate(
+    label = if_else(
+      condition = cooksd > cutoff(mod2), 
+      true = as.character(observation), 
+      false = ' '
+    )
+  ) |> 
+  ggplot() +
+  aes(x = observation, y = cooksd, label = label) + 
+  geom_hline(yintercept = cutoff(mod2), lty = 3) + 
+  geom_point() + 
+  geom_text(nudge_y = 0.05) + 
+  geom_segment(aes(xend = observation, y = 0, yend = cooksd)) + 
+  labs(
+    x = "Obs. Number", 
+    y = "Cook's distance", 
+    title = "Cook's distance"
+  ) + 
+  ds4ling_bw_theme(base_size = 22)
+```
+:::
+:::
+
+
+---
+
+[Influential data points]{.emph .p-font style="font-size: 1.75em;"}
+
+```{r}
+#| label: leverage_linear_quadratic2
+#| fig-asp: 0.5
+ap3 <- autoplot(mod1, which = 5) + 
+  ds4ling_bw_theme(base_size = 18)
+
+ap4 <- autoplot(mod2, which = 5) + 
+  ds4ling_bw_theme(base_size = 18)
+
+ap3 + ap4
+```
+
+
+---
+
+## 
+
+[Influential data points]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+
+<br>
+
+```{r}
+#| label: mod1_with_outlier
+#| fig-asp: 0.9
+noOut <- lm(y ~ x, data = assumptions_data[1:50, ])
+
+assumptions_data |> 
+  mutate(
+    observation = row_number(),
+    label = if_else(
+      condition = observation == 51, 
+      true = "51", 
+      false = " "
+    )
+  ) |> 
+  ggplot() + 
+  aes(x = x, y = y, label = label) + 
+  geom_point(aes(color = label), size = 3, show.legend = FALSE) + 
+  geom_text(nudge_y = 0.3, size = 5, color = "darkred") + 
+  geom_smooth(method = lm, se = F, size = 1.5, color = "darkred", 
+    formula = "y ~ x") + 
+  geom_abline(intercept = noOut$coef[1], slope = noOut$coef[2], 
+              color = 'blue', size = 1.5) + 
+  scale_color_brewer(palette = "Set1", guide = FALSE, direction = -1) + 
+  ds4ling_bw_theme(base_size = 22)
+```
+:::
+
+
+::: {.column}
+
+#### **Mod1 with influential data point**:
+
+::: box-error
+
+```{r}
+#| label: model_print_with_outlier
+#| results: 'asis'
+b_with <- coef(mod1)
+cat(sprintf("$$y = %.02f + %.02f x$$", b_with[1], b_with[2]))
+```
+:::
+
+<br>
+
+#### [Mod1 without influential data point]{color="blue"}: 
+
+::: box-note
+
+```{r}
+#| label: model_print_without_outlier
+#| results: 'asis'
+b_without <- coef(noOut)
+cat(sprintf("$$y = %.02f + %.02f x$$", b_without[1], b_without[2]))
+```
+:::
+:::
+:::
+
+---
+
+## Global test of model assumptions
+
+- It is also possible to use the package `gvlma` to test model assumptions. 
+- It seems rather conservative
+- I don't know too much about it. 
+
+---
+
+```{r}
+#| label: gvlma_test_with
+#| comment: "##"
+library("gvlma")
+gvmodel_1with <- gvlma(mod1)
+gvmodel_1with
+```
+
+---
+
+```{r}
+#| label: gvlma_test_without
+#| comment: "##"
+gvmodel_1_without <- gvlma(noOut)
+gvmodel_1_without 
+```
+
+---
+
+```{r}
+#| label: gvlma_test_mod2
+#| comment: "##"
+gvmodel_2 <- gvlma(mod2)
+gvmodel_2
+```
+
+---
+
+## {.center}
+
+<iframe src="https://gallery.shinyapps.io/slr_diag/" style="border:none;" height="600" width="1300"></iframe>
+
+<!-- assumptions shiny app -->
+
+
+
+
+# Interpretation {.transition}
+
+---
+
+## Interpretation {.smaller data-menu-title="Make sense of it all"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| label: model_output
+#| comment: ''
+cars_mod <- lm(mpg ~ wt, data = mtcars)
+summary(cars_mod)
+```
+:::
+
+::: {.column width="40%"}
+
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model residuals
+3. Model coefficients
+4. Significance codes
+5. Variance explained
+6. F-ratio
+:::
+:::
+:::
+
+---
+
+## Interpretation {.smaller data-menu-title="Function call"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+
+```{r}
+#| label: model_output1
+#| comment: ''
+summary(cars_mod)$call
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function **[call]{.emph}**
+2. Model residuals
+3. Model coefficients
+4. Significance codes
+5. Variance explained
+6. F-ratio
+
+::: box-note
+- This is the model you fit using `lm()`. 
+- It is the exact same code you typed into R. 
+- Use to double check to see if you made any typos.
+:::
+:::
+:::
+:::
+
+
+---
+
+## Interpretation {.smaller data-menu-title="Model residuals"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+
+```{r}
+#| label: model_output2
+#| comment: ''
+#| results: 'hold'
+summary(cars_mod$residuals)
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model [**residuals**]{.emph}
+3. Model coefficients
+4. Significance codes
+5. Variance explained
+6. F-ratio
+
+::: box-note
+- Should be normally distributed
+- Absolute values of 1Q/3Q should be similar
+- Mean = 0, median close to 0
+- If anything is off you can see it here, but check residual plots
+:::
+:::
+:::
+:::
+
+
+---
+
+## Interpretation {.smaller data-menu-title="Model coefficients"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| label: model_output3
+#| comment: ''
+#| results: 'hold'
+summary(cars_mod)$coef
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model residuals
+3. Model [**coefficients**]{.emph}
+4. Significance codes
+5. Variance explained
+6. F-ratio
+
+::: box-note
+- Meat and potatoes of the output
+- Parameter estimates of intercept and predictor(s)
+- Expresses strength of relationship between predictor(s) and outcome variable
+- One unit change in predictor will change outcome by...
+:::
+:::
+:::
+:::
+
+
+---
+
+## Interpretation {.smaller data-menu-title="Significance™"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| label: model_output4
+#| comment: ''
+#| results: 'hold'
+summary(cars_mod)
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model residuals
+3. Model coefficients
+4. [**Significance**]{.emph} codes
+5. Variance explained
+6. F-ratio
+
+::: box-note
+- Assessment of statistical significance of predictor(s) and the intercept 
+- Everything except "." is probably "good"
+:::
+:::
+:::
+:::
+
+
+---
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[Statistical Significance]{.p-font style="font-size: 1.2em; color: #666666"}
+
+- As long as the effect is not statistically equivalent to 0 it is called 
+statistically significant
+
+- It may be an effect of trivial magnitude
+
+- Basically, it means that this prediction is better than nothing
+
+- It doesn’t really mean it is really "significant" in the terms that we think of as significance
+
+- It doesn’t indicate importance
+
+
+---
+
+## {.smaller}
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[Significance versus Importance]{.p-font style="font-size: 1.2em; color: #666666"}
+
+**How do we know if the "significant" effect we found is actually important?**
+
+- The coefficient of determination (r-squared) tells you how much of the variance you have explained
+- It tells us how big the effect is and not just that it is not equal to zero
+- You want to know if your predictions are better than chance alone (F-ratio) but you also want to know how explanatory your predictions are (r-squared)
+
+. . .
+
+**How important are the chosen predictors?**
+
+- The numerators in both ratios are similar
+- They represent the predicted portion of the variance
+
+
+---
+
+## Interpretation {.smaller data-menu-title="Variance explained"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| label: model_output5
+#| comment: ''
+#| results: 'hold'
+summary(cars_mod)
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model residuals
+3. Model coefficients
+4. Significance codes
+5. [**Variance explained**]{.emph}
+6. F-ratio
+
+::: box-note
+- Assessment of R<sup>2</sup>
+- More variance explained is better
+- Should pretty much always be reported
+:::
+:::
+:::
+:::
+
+---
+
+## Interpretation {.smaller data-menu-title="F-ratio"}
+
+### Make sense of it all
+
+::: {.columns}
+::: {.column width="60%"}
+```{r}
+#| label: model_output6
+#| comment: ''
+#| results: 'hold'
+summary(cars_mod)
+```
+:::
+
+::: {.column width="40%"}
+::: {style="font-size: 0.8em;"}
+1. Function call
+2. Model residuals
+3. Model coefficients
+4. Significance codes
+5. Variance explained
+6. [**F-ratio**]{.emph}
+
+::: box-note
+- Assesses overall significance... omnibus model
+- If F-ratio is significant, at least one predictor or intercept is too
+- If F-ratio is not significant your experiment is over
+:::
+:::
+:::
+:::
+
+
+---
+
+## {.smaller}
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[A note about F-ratios]{.p-font style="font-size: 1.3em; color: #666666"}
+
+**If you have an ANOVA background... Mean Squared Deviations**
+
+$$MS_{Total} = \frac{\sum{(y_i - \bar{y})^2}}{n-1}$$  
+
+$$MS_{Predicted} = \frac{\sum{(\hat{y}_i - \bar{y})^2}}{k}$$  
+
+$$MS_{Error} = \frac{\sum{(y_i - \hat{y}_i)^2}}{n - k - 1}$$
+
+::: box-tip
+$$F_{(k),(n-k-1)} = \frac{\sum{(\hat{y}_i - \bar{y})^2} / (k)}{\sum{(y_i - \hat{y}_i)^2} / (n - k - 1)}$$
+:::
+
+
+---
+
+## {.smaller}
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[A note about F-ratios]{.p-font style="font-size: 1.3em; color: #666666"}
+
+**If you have an ANOVA background... Mean Squared Deviations**
+
+$$MS_{Total} = \frac{SS_{Total}}{df_{Total}}$$
+
+$$MS_{Predicted} = \frac{SS_{Predicted}}{df_{Predicted}}$$
+
+$$MS_{Error} = \frac{SS_{Error}}{df_{Error}}$$
+
+::: box-tip
+$$F = \frac{MS_{Predicted}}{MS_{Error}}$$
+:::
+
+
+---
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[Degrees of Freedom]{.p-font style="font-size: 1.3em; color: #666666"}
+
+[**Derived from the number of sample statistics used in your computation:**]{style="font-size: 0.8em;"}
+
+- e.g., for a standard deviation, you subtract all the raw scores from the mean
+- Since you used the sample mean, you used up 1 df
+- df = n - 1
+
+
+---
+
+## {.smaller}
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[Degrees of Freedom]{.p-font style="font-size: 1.3em; color: #666666"}
+
+[**In the denominator of the standard deviation, you are using a sample statistic, not a population parameter, so you have df = n - 1:**]{style="font-size: 0.8em;"}
+
+- n - 1 reflects the fact that you used a statistic and if you know one number 
+(the mean) there is less uncertainty remaining
+- If you know the mean and you have 10 scores, then you only need 9 of the 
+remaining scores to predict all 10 of them
+
+[**Usually we have an F-table with associated degrees of freedom to show us whether the F-ratio is "statistically significant":**]{style="font-size: 0.8em;"}
+
+- Numerator df = k 
+- Denominator df = n - k - 1
+
+
+---
+
+[Interpretation]{.emph .p-font style="font-size: 1.75em;"}
+
+[Degrees of Freedom]{.p-font style="font-size: 1.3em; color: #666666"}
+
+[$$df_{Total} = n - 1$$]{style="color: #555555"}
+
+[$$df_{Predicted} = k$$]{style="color: #555555"}
+
+[$$df_{Error} = n - k - 1$$]{style="color: #555555"}
+
+[$$df_{Total} = df_{Predicted} + df_{Error}$$]{style="font-size: 1.1em;"}
+
+
+
+
+# [Exercises](https://www.ds4ling.jvcasillas.com/slides/05_lm/02_assumptions_diagnostics/index_files/scripts/assumptions_walkthrough_ex.R) {visibility="uncounted" .center data-menu-title="Exercises"}
+
+<center>
+<iframe height="390" width= "520" src="https://www.tiktok.com/player/v1/6811647290709757189?&music_info=1&description=1" allow="fullscreen" title="test"></iframe>
+</center>
+
+<!-- assumptions tiktoks 'is it me, jesus?' -->
+
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189>
+:::
+
+
+
+
+
+
+# [References]{.emph} {.final}
+
+::: notes
+@wickham2016r
+@qass22_ch2
+@qass57_ch1
+@figueredo_regression
+:::
 

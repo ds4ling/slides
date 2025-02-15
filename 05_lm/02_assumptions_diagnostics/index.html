@@ -97,7 +97,27 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-0b6b91b2de75f5d35ca427df115379fc.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -202,11 +222,11 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Assumptions, diagnotics, and interpretation</span></h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-01-26</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-15</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-58777"></div><script>tweet={"url":"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784","author_name":"Chelsea Parlett-Pelleriti","author_url":"https:\/\/twitter.com\/ChelseaParlett","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EDon’t waste your time, this movie isn’t about what you think it’s about \uD83D\uDE45\uD83C\uDFFB‍♀️\uD83D\uDE24 \u003Ca href=\"https:\/\/t.co\/D0hqYQ72lY\"\u003Epic.twitter.com\/D0hqYQ72lY\u003C\/a\u003E\u003C\/p\u003E&mdash; Chelsea Parlett-Pelleriti (@ChelseaParlett) \u003Ca href=\"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784?ref_src=twsrc%5Etfw\"\u003EJanuary 22, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-58777").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-16207"></div><script>tweet={"url":"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784","author_name":"Chelsea Parlett-Pelleriti","author_url":"https:\/\/twitter.com\/ChelseaParlett","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003EDon’t waste your time, this movie isn’t about what you think it’s about \uD83D\uDE45\uD83C\uDFFB‍♀️\uD83D\uDE24 \u003Ca href=\"https:\/\/t.co\/D0hqYQ72lY\"\u003Epic.twitter.com\/D0hqYQ72lY\u003C\/a\u003E\u003C\/p\u003E&mdash; Chelsea Parlett-Pelleriti (@ChelseaParlett) \u003Ca href=\"https:\/\/twitter.com\/ChelseaParlett\/status\/1352717277976694784?ref_src=twsrc%5Etfw\"\u003EJanuary 22, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-16207").innerHTML = tweet["html"];</script><p></p>
 <!-- regression the movie tweet -->
 </section>
 
@@ -881,14 +901,598 @@ sample estimates:
 
 <img data-src="index_files/figure-revealjs/normal_resids_linear-quadratic-1.png" class="img-fluid quarto-figure quarto-figure-center r-stretch" width="3000"></section></section>
 <section>
-<section id="dealing-with-influential-data-points" class="title-slide slide level1 center" data-menu-title="Influential data points">
+<section id="dealing-with-influential-data-points" class="title-slide slide level1 center transition" data-menu-title="Influential data points">
 <h1>Dealing with influential data points</h1>
 
 </section>
-<section id="sdkjfaj" class="slide level2">
-<h2>sdkjfaj</h2>
+<section id="outliersinfluential-data-points" class="slide level2 smaller">
+<h2>Outliers/influential data points</h2>
+<ul>
+<li>An influential point is one that would significantly change the fit if removed from the data</li>
+<li><span style="color: blue;">Cook’s distance</span> is a commonly used influence measure</li>
+</ul>
+<div class="fragment">
+<p><strong>Leverage</strong></p>
+<ul>
+<li>The leverage of an observation measures its ability to move the regression line by simply moving up/down along the y-axis.</li>
+<li>The measurement represents the amount by which the predicted value would change if the observation was shifted one unit in the y-direction.</li>
+<li>The leverage always takes values between 0 and 1.</li>
+<li>A point with 0 leverage does not effect the regression line.</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
 
+<p><span class="emph p-font" style="font-size: 1.75em;">Influential data points</span></p>
+<p><br></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/cooks_distance_linear-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/cooks_distance_quadratic-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Influential data points</span></p>
+
+<img data-src="index_files/figure-revealjs/leverage_linear_quadratic2-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-12" class="slide level2">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Influential data points</span></p>
+<div class="columns">
+<div class="column">
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/mod1_with_outlier-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<h4 id="mod1-with-influential-data-point"><strong>Mod1 with influential data point</strong>:</h4>
+<div class="box-error">
+<p><span class="math display">\[y = -0.07 + -1.71 x\]</span></p>
+</div>
+<p><br></p>
+<h4 id="mod1-without-influential-data-point"><span style="color: blue;">Mod1 without influential data point</span>:</h4>
+<div class="box-note">
+<p><span class="math display">\[y = 0.07 + -2.04 x\]</span></p>
+</div>
+</div></div>
+</section>
+<section id="global-test-of-model-assumptions" class="slide level2">
+<h2>Global test of model assumptions</h2>
+<ul>
+<li>It is also possible to use the package <code>gvlma</code> to test model assumptions.</li>
+<li>It seems rather conservative</li>
+<li>I don’t know too much about it.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = assumptions_data)
+## 
+## Coefficients:
+## (Intercept)            x  
+##    -0.06577     -1.71081  
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = mod1) 
+## 
+##                      Value   p-value                   Decision
+## Global Stat        557.334 0.000e+00 Assumptions NOT satisfied!
+## Skewness            73.855 0.000e+00 Assumptions NOT satisfied!
+## Kurtosis           457.890 0.000e+00 Assumptions NOT satisfied!
+## Link Function        6.284 1.218e-02 Assumptions NOT satisfied!
+## Heteroscedasticity  19.304 1.115e-05 Assumptions NOT satisfied!</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = assumptions_data[1:50, ])
+## 
+## Coefficients:
+## (Intercept)            x  
+##     0.07471     -2.04296  
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = noOut) 
+## 
+##                     Value p-value                Decision
+## Global Stat        2.4877  0.6468 Assumptions acceptable.
+## Skewness           0.6541  0.4186 Assumptions acceptable.
+## Kurtosis           0.3175  0.5731 Assumptions acceptable.
+## Link Function      0.9478  0.3303 Assumptions acceptable.
+## Heteroscedasticity 0.5683  0.4509 Assumptions acceptable.</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>## 
+## Call:
+## lm(formula = y_quad ~ x, data = assumptions_data)
+## 
+## Coefficients:
+## (Intercept)            x  
+##       2.838       -1.600  
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = mod2) 
+## 
+##                     Value   p-value                   Decision
+## Global Stat        87.100 0.000e+00 Assumptions NOT satisfied!
+## Skewness           25.674 4.042e-07 Assumptions NOT satisfied!
+## Kurtosis           14.082 1.750e-04 Assumptions NOT satisfied!
+## Link Function      45.552 1.487e-11 Assumptions NOT satisfied!
+## Heteroscedasticity  1.793 1.806e-01    Assumptions acceptable.</code></pre>
+</div>
+</div>
+</section>
+<section id="section-13" class="slide level2 center">
+<h2></h2>
+<iframe src="https://gallery.shinyapps.io/slr_diag/" style="border:none;" height="600" width="1300">
+</iframe>
+<!-- assumptions shiny app -->
 </section></section>
+<section>
+<section id="interpretation" class="title-slide slide level1 transition center">
+<h1>Interpretation</h1>
+
+</section>
+<section id="interpretation-1" class="slide level2 smaller" data-menu-title="Make sense of it all">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5432 -2.3647 -0.1252  1.4096  6.8727 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.046 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model residuals</li>
+<li>Model coefficients</li>
+<li>Significance codes</li>
+<li>Variance explained</li>
+<li>F-ratio</li>
+</ol>
+</div>
+</div></div>
+</section>
+<section id="interpretation-2" class="slide level2 smaller" data-menu-title="Function call">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-1">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>lm(formula = mpg ~ wt, data = mtcars)</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function <strong><span class="emph">call</span></strong></li>
+<li>Model residuals</li>
+<li>Model coefficients</li>
+<li>Significance codes</li>
+<li>Variance explained</li>
+<li>F-ratio</li>
+</ol>
+<div class="box-note">
+<ul>
+<li>This is the model you fit using <code>lm()</code>.</li>
+<li>It is the exact same code you typed into R.</li>
+<li>Use to double check to see if you made any typos.</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="interpretation-3" class="slide level2 smaller" data-menu-title="Model residuals">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-2">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-4.5432 -2.3647 -0.1252  0.0000  1.4096  6.8727 </code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model <span class="emph"><strong>residuals</strong></span></li>
+<li>Model coefficients</li>
+<li>Significance codes</li>
+<li>Variance explained</li>
+<li>F-ratio</li>
+</ol>
+<div class="box-note">
+<ul>
+<li>Should be normally distributed</li>
+<li>Absolute values of 1Q/3Q should be similar</li>
+<li>Mean = 0, median close to 0</li>
+<li>If anything is off you can see it here, but check residual plots</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="interpretation-4" class="slide level2 smaller" data-menu-title="Model coefficients">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-3">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) 37.285126   1.877627 19.857575 8.241799e-19
+wt          -5.344472   0.559101 -9.559044 1.293959e-10</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model residuals</li>
+<li>Model <span class="emph"><strong>coefficients</strong></span></li>
+<li>Significance codes</li>
+<li>Variance explained</li>
+<li>F-ratio</li>
+</ol>
+<div class="box-note">
+<ul>
+<li>Meat and potatoes of the output</li>
+<li>Parameter estimates of intercept and predictor(s)</li>
+<li>Expresses strength of relationship between predictor(s) and outcome variable</li>
+<li>One unit change in predictor will change outcome by…</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="interpretation-5" class="slide level2 smaller" data-menu-title="Significance™">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-4">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5432 -2.3647 -0.1252  1.4096  6.8727 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.046 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model residuals</li>
+<li>Model coefficients</li>
+<li><span class="emph"><strong>Significance</strong></span> codes</li>
+<li>Variance explained</li>
+<li>F-ratio</li>
+</ol>
+<div class="box-note">
+<ul>
+<li>Assessment of statistical significance of predictor(s) and the intercept</li>
+<li>Everything except “.” is probably “good”</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666">Statistical Significance</span></p>
+<ul>
+<li><p>As long as the effect is not statistically equivalent to 0 it is called statistically significant</p></li>
+<li><p>It may be an effect of trivial magnitude</p></li>
+<li><p>Basically, it means that this prediction is better than nothing</p></li>
+<li><p>It doesn’t really mean it is really “significant” in the terms that we think of as significance</p></li>
+<li><p>It doesn’t indicate importance</p></li>
+</ul>
+</section>
+<section id="section-14" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666">Significance versus Importance</span></p>
+<p><strong>How do we know if the “significant” effect we found is actually important?</strong></p>
+<ul>
+<li>The coefficient of determination (r-squared) tells you how much of the variance you have explained</li>
+<li>It tells us how big the effect is and not just that it is not equal to zero</li>
+<li>You want to know if your predictions are better than chance alone (F-ratio) but you also want to know how explanatory your predictions are (r-squared)</li>
+</ul>
+<div class="fragment">
+<p><strong>How important are the chosen predictors?</strong></p>
+<ul>
+<li>The numerators in both ratios are similar</li>
+<li>They represent the predicted portion of the variance</li>
+</ul>
+</div>
+</section>
+<section id="interpretation-6" class="slide level2 smaller" data-menu-title="Variance explained">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-5">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5432 -2.3647 -0.1252  1.4096  6.8727 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.046 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model residuals</li>
+<li>Model coefficients</li>
+<li>Significance codes</li>
+<li><span class="emph"><strong>Variance explained</strong></span></li>
+<li>F-ratio</li>
+</ol>
+<div class="box-note">
+<ul>
+<li>Assessment of R<sup>2</sup></li>
+<li>More variance explained is better</li>
+<li>Should pretty much always be reported</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="interpretation-7" class="slide level2 smaller" data-menu-title="F-ratio">
+<h2>Interpretation</h2>
+<h3 id="make-sense-of-it-all-6">Make sense of it all</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5432 -2.3647 -0.1252  1.4096  6.8727 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  37.2851     1.8776  19.858  &lt; 2e-16 ***
+wt           -5.3445     0.5591  -9.559 1.29e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.046 on 30 degrees of freedom
+Multiple R-squared:  0.7528,    Adjusted R-squared:  0.7446 
+F-statistic: 91.38 on 1 and 30 DF,  p-value: 1.294e-10</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<div style="font-size: 0.8em;">
+<ol type="1">
+<li>Function call</li>
+<li>Model residuals</li>
+<li>Model coefficients</li>
+<li>Significance codes</li>
+<li>Variance explained</li>
+<li><span class="emph"><strong>F-ratio</strong></span></li>
+</ol>
+<div class="box-note">
+<ul>
+<li>Assesses overall significance… omnibus model</li>
+<li>If F-ratio is significant, at least one predictor or intercept is too</li>
+<li>If F-ratio is not significant your experiment is over</li>
+</ul>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-15" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">A note about F-ratios</span></p>
+<p><strong>If you have an ANOVA background… Mean Squared Deviations</strong></p>
+<p><span class="math display">\[MS_{Total} = \frac{\sum{(y_i - \bar{y})^2}}{n-1}\]</span></p>
+<p><span class="math display">\[MS_{Predicted} = \frac{\sum{(\hat{y}_i - \bar{y})^2}}{k}\]</span></p>
+<p><span class="math display">\[MS_{Error} = \frac{\sum{(y_i - \hat{y}_i)^2}}{n - k - 1}\]</span></p>
+<div class="box-tip">
+<p><span class="math display">\[F_{(k),(n-k-1)} = \frac{\sum{(\hat{y}_i - \bar{y})^2} / (k)}{\sum{(y_i - \hat{y}_i)^2} / (n - k - 1)}\]</span></p>
+</div>
+</section>
+<section id="section-16" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">A note about F-ratios</span></p>
+<p><strong>If you have an ANOVA background… Mean Squared Deviations</strong></p>
+<p><span class="math display">\[MS_{Total} = \frac{SS_{Total}}{df_{Total}}\]</span></p>
+<p><span class="math display">\[MS_{Predicted} = \frac{SS_{Predicted}}{df_{Predicted}}\]</span></p>
+<p><span class="math display">\[MS_{Error} = \frac{SS_{Error}}{df_{Error}}\]</span></p>
+<div class="box-tip">
+<p><span class="math display">\[F = \frac{MS_{Predicted}}{MS_{Error}}\]</span></p>
+</div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">Degrees of Freedom</span></p>
+<p><span style="font-size: 0.8em;"><strong>Derived from the number of sample statistics used in your computation:</strong></span></p>
+<ul>
+<li>e.g., for a standard deviation, you subtract all the raw scores from the mean</li>
+<li>Since you used the sample mean, you used up 1 df</li>
+<li>df = n - 1</li>
+</ul>
+</section>
+<section id="section-17" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">Degrees of Freedom</span></p>
+<p><span style="font-size: 0.8em;"><strong>In the denominator of the standard deviation, you are using a sample statistic, not a population parameter, so you have df = n - 1:</strong></span></p>
+<ul>
+<li>n - 1 reflects the fact that you used a statistic and if you know one number (the mean) there is less uncertainty remaining</li>
+<li>If you know the mean and you have 10 scores, then you only need 9 of the remaining scores to predict all 10 of them</li>
+</ul>
+<p><span style="font-size: 0.8em;"><strong>Usually we have an F-table with associated degrees of freedom to show us whether the F-ratio is “statistically significant”:</strong></span></p>
+<ul>
+<li>Numerator df = k</li>
+<li>Denominator df = n - k - 1</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interpretation</span></p>
+<p><span class="p-font" style="font-size: 1.3em; color: #666666">Degrees of Freedom</span></p>
+<p><span style="color: #555555"><span class="math display">\[df_{Total} = n - 1\]</span></span></p>
+<p><span style="color: #555555"><span class="math display">\[df_{Predicted} = k\]</span></span></p>
+<p><span style="color: #555555"><span class="math display">\[df_{Error} = n - k - 1\]</span></span></p>
+<p><span style="font-size: 1.1em;"><span class="math display">\[df_{Total} = df_{Predicted} + df_{Error}\]</span></span></p>
+</section></section>
+<section id="exercises" class="title-slide slide level1 center" data-visibility="uncounted" data-menu-title="Exercises">
+<h1><a href="https://www.ds4ling.jvcasillas.com/slides/05_lm/02_assumptions_diagnostics/index_files/scripts/assumptions_walkthrough_ex.R">Exercises</a></h1>
+<center>
+<iframe height="390" width="520" src="https://www.tiktok.com/player/v1/6811647290709757189?&amp;music_info=1&amp;description=1" allow="fullscreen" title="test">
+</iframe>
+</center>
+<!-- assumptions tiktoks 'is it me, jesus?' -->
+<div class="footer">
+<p><a href="https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189" class="uri">https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189</a></p>
+</div>
+</section>
+
+<section id="references" class="title-slide slide level1 final smaller scrollable">
+<h1><span class="emph">References</span></h1>
+<aside class="notes">
+<p><span class="citation" data-cites="wickham2016r">Wickham &amp; Grolemund (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> <span class="citation" data-cites="qass22_ch2">Lewis-Beck (<a href="#/references" role="doc-biblioref" onclick="">1980</a>)</span> <span class="citation" data-cites="qass57_ch1">Schroeder et al. (<a href="#/references" role="doc-biblioref" onclick="">1986</a>)</span> <span class="citation" data-cites="figueredo_regression">Figueredo (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-figueredo_regression" class="csl-entry" role="listitem">
+Figueredo, A. J. (2013). Multiple regression. <em>Statistical Methods in Psychological Research</em>.
+</div>
+<div id="ref-qass22_ch2" class="csl-entry" role="listitem">
+Lewis-Beck, M. (1980). Bivariate regression: Assumptions and inferences. In M. Lewis-Beck (Ed.), <em>Applied regression: An introduction</em> (pp. 26–46). Newbury Park, CA: Sage.
+</div>
+<div id="ref-qass57_ch1" class="csl-entry" role="listitem">
+Schroeder, L. D., Sjoquist, D. L., &amp; Stephan, P. E. (1986). Linear regression. In L. D. Schroeder, D. L. Sjoquist, &amp; P. E. Stephan (Eds.), <em>Understanding regression analysis: An introductory guide</em> (pp. 11–28). Newbury Park, CA: Sage.
+</div>
+<div id="ref-wickham2016r" class="csl-entry" role="listitem">
+Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, transform, visualize, and model data</em>. O’Reilly Media.
+</div>
+</div>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
