@@ -1,0 +1,92 @@
+
+# {.transition visibility="uncounted"}
+
+{{< tweet user=AndrewsNotFunny id=1365382679877812224 >}}
+<!-- regression the movie tweet --> 
+
+
+
+# Multiple regression and correlation {.transition}
+
+---
+
+## MRC {data-menu-title="Multiple causation"}
+
+### Multiple Causation
+
+::: {.closelist}
+- In nature: a phenomenon may have more than a single cause
+- In statistics: criterion variable might have more than a single relevant predictor
+
+::: {.fragment}
+- Leaving a potential cause out of the equation would constitute "omitting 
+a relevant variable"
+  - This biases the parameter estimates for the other predictors
+  - We are not always sure of what those other predictors might be!
+:::
+:::
+
+---
+
+## MRC {.smaller data-menu-title="Overview"}
+
+### Overview
+
+::: {.closelist}
+- We have specified a linear formula that can account for the relationship between two continuous variables. 
+
+::: box-note
+$$Y = a + bX + e$$
+:::
+
+- It is uncommon for a given response variable to be determined by a single predictor
+- Most theories/models in social science predict complex relationships 
+between multiple predictors.
+  - Score ~ SES + IQ
+  - Duration ~ speech rate + number of syllables
+  - RT ~ working memory + word position
+- We can extend the linear model equation to account for multiple predictors.
+:::
+
+---
+
+## {.smaller}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Overview]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column width="50%"}
+- We want to construct the equivalent of an [**OR**]{.emph} statement or a *logical disjunction* 
+- Boolean Algebra tells us that an [**OR**]{.emph} statement implies *summing things*
+- In other words, all X's do not have to be high at once to have an effect on Y
+- For example, you can get an overall high GRE score by scoring high in verbal but (somewhat) low in math:
+  - They have to have a high total (or sum) 
+  - A sum is implicitly an [**OR**]{.emph} statement
+:::
+
+::: {.column width="20%"}
+:::
+
+::: {.column width="30%"}
+
+<center>
+| A</br>(x) | B</br>(y) | C</br>(x [**∨**]{.emph} y) |
+| :-------: | :-------: | :------------------------: |
+| 0         | 0         | [**0**]{.emph}             | 
+| 0         | 1         | [**1**]{.emph}             |
+| 1         | 0         | [**1**]{.emph}             |
+| 1         | 1         | [**1**]{.emph}             |
+
+<br>
+
+If A = 1  
+[**OR**]{.emph}  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+</center>
+
+:::
+:::
