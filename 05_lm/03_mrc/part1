@@ -90,3 +90,297 @@ Otherwise, C = 0
 
 :::
 :::
+
+---
+
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/lm_additive_effects.png" background-size="contain"}
+
+---
+
+## {background-image="../../assets/img/pensar2.png" background-position="95% 50%" background-size="500px"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Overview]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+- What if we based linguistics Grad School  
+acceptances solely on GRE scores?
+
+. . .
+
+- One shouldn't have to score high on all of  
+the entrance requirements, but just rank  
+high on the sum of all of them
+
+. . .
+
+- We could use a weighted sum
+
+---
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Overview]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+**Weighted sum**
+
+::: {.closelist}
+- Some things are more important than others in this overall sum
+- For example, GRE is actually a poor predictor of graduate student success
+- So we might want to weight this variable lower than something like GPA or letters of recommendation
+- We can use least squares estimation to get the b-weights with the lowest SS<sub>ERROR</sub>
+:::
+
+---
+
+## MRC {.smaller data-menu-title="The equation"}
+
+### The equation
+
+::: {.columns}
+::: {.column}
+::: box-note
+$$Y = a + bX + e$$
+:::
+:::
+
+::: {.column}
+::: box-error
+$$Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e$$
+:::
+:::
+:::
+
+<br>
+
+::: fragment
+
+### Least Squares Estimation 
+
+- R will estimate the b-weights that minimize the sum of the squared errors 
+(`r emojifont::emoji("no_good_woman")` by hand examples)
+- Ideally these are the b-weights that best represent how much each predictor 
+is really contributing to the variance in the criterion variable (y)
+- We will again use least squares estimation to achieve the best (optimal) 
+regression weights
+
+:::
+
+---
+
+## MRC {data-menu-title="Multiple predictors"}
+
+### Multiple predictors
+
+::: {style="font-size: 0.9em;"}
+- The multiple predictors represent different hypotheses regarding what might be affecting the criterion variable
+- In other words, multiple regression is just creating a sum of weighted predictors to explain the total variance in the criterion variable
+- The way that the predictors function together is not necessarily the same as the way that they each function alone
+- Bivariate regression is just a degenerate form ("special case") of multiple regression containing only one predictor
+:::
+
+---
+
+## MRC {data-menu-title="Interpretation"}
+
+### Interpretation
+
+#### Summarizing so far...
+
+::: {style="font-size: 0.9em;"}
+- In multiple regression we assume additivity and linearity
+- In Boolean Algebra, a sum (addition) represents a logical disjunction
+- The multiple regression "weighted sum" is a complex [**OR**]{.emph} statement
+:::
+
+<br>
+
+[What does this mean for our parameter estimates and how do we interpret them?]{.fragment .p-font style="color: #666666;"}
+
+---
+
+## MRC {data-menu-title="(Semi)partial betas"}
+
+[(Semi)partial betas]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+- [Intercept]{.emph} ( $a_{0}$ ): the value of the criterion variable when all predictors are equal to 0 (same as bivariate regression)
+- [Slope]{.emph} ( $b_{k}$ ): the change in the criterion associated with a 1-unit change in $X_k$... [*with all other predictors held constant*]{.fragment}
+
+. . .
+
+</br>
+
+### How can we calculate the unique contribution of each predictor?
+
+---
+
+## {background-image="./index_files/img/ballentine1.png" background-size="contain" background-position="125% 50%"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+---
+
+## {background-image="./index_files/img/ballentine2.png" background-size="contain" background-position="125% 50%"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+. . .
+
+[Recall that the b-weight <br>of the bivariate model is $r(\frac{s_y}{s_x})$]{style="font-size: 0.85em;"}
+
+---
+
+## {background-image="./index_files/img/ballentine3.png" background-size="contain" background-position="125% 50%"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+---
+
+## {background-image="./index_files/img/ballentine4a.png" background-size="contain" background-position="125% 50%" data-menu-title="The Ballantine"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+### The "Ballantine"
+
+[@cohen_1975]{style="font-size: 0.8em;"}
+
+---
+
+## {background-image="./index_files/img/ballentine4b.png" background-size="contain" background-position="125% 50%"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.incremental style="font-size: 0.85em;"}
+- $r^{2}_{x1,x2} = c + d$
+- $r^{2}_{y,x1} = a + c$
+- $r^{2}_{y,x2} = b + c$
+- $R^{2}_{y,x1,x2} = a + b + c$
+:::
+
+---
+
+## {.smaller background-image="./index_files/img/ballentine5.png" background-size="contain" background-position="125% 50%" data-menu-title="Squared semipartial correlation"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Squared semipartial correlation]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.incremental style="font-size: 0.85em;"}
+- $X_2$ removed from *explained*  
+variance
+- Represents unique contribution  
+of $X_1$
+- $sr^2 = R^{2}_{y,x1,x2} - r^{2}_{y,x2}$
+:::
+
+---
+
+## {.smaller background-image="./index_files/img/ballentine7.png" background-size="contain" background-position="125% 50%" data-menu-title="Squared partial correlation"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Squared partial<br>correlation]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.incremental style="font-size: 0.85em;"}
+- Y variance not accounted for by  
+$X_2$ is the area of A + E
+- The area explained by $X_1$ = A  
+(squared semipartial correlation)
+- Unqiue contribution of $X_1$ is  
+$A / (A + E)$ or...
+- $pr^{2}_{x1} = \frac{A}{A + E}$
+- We are pretending that $X_2$  
+doesn't exist (statistically)
+:::
+
+
+---
+
+## {.smaller background-image="./index_files/img/ballentine4b.png" background-size="350px" background-position="95% 20%" data-menu-title="Statistical control"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Statistical control<sup>1</sup>]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+- Not the same as [experimental control]{color="green"}
+  - We are interested in some treatment
+  - Some participants receive treatment, some do not
+  - *Only* looking at highly proficient bilinguals (not low, med. prof.)
+- We partial out the effects of predictor $X_1$ from all other predictors and use this error to determine $b_1$
+- We are estimating the effect of one predictor while holding the other predictors constant
+- This will only work if predictors are not correlated (i.e., there *cannot* be 
+multicollinearity)
+
+::: aside
+<sup>1</sup>This is a poor choice for a name. Ask why.
+
+:::
+
+---
+
+## {background-image="https://i.imgflip.com/25dwia.jpg" background-position="90% 50%" background-size="650px" data-menu-title="Conceptual understanding"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+[Conceptual understanding]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column}
+::: {style="font-size: 0.85em;"}
+- MRC is much more difficult to conceptualize than the bivariate linear regression
+- If we consider a simple three variable model (y ~ x<sub>1</sub> + x<sub>2</sub>) we are fitting a hyperplane to a three dimensional space
+- More variables = more complexity
+:::
+:::
+:::
+
+<!-- complex math meme "my model has more than two variables" -->
+
+---
+
+## {.center}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+```{r}
+#| label: additive_plots
+#| fig-asp: 0.4
+#| fig-align: "center"
+p1 <- ggplot(mtcars, aes(x = wt, y = mpg)) + 
+  geom_point() + 
+  geom_smooth(method = lm, formula = "y ~ x") + 
+  scale_y_continuous(breaks = seq(0, 35, 5)) + 
+  coord_cartesian(ylim = c(5, 35)) + 
+  ds4ling_bw_theme(base_size = 16)
+
+p2 <- ggplot(mtcars, aes(x = drat, y = mpg)) + 
+  geom_point() + 
+  geom_smooth(method = lm, formula = "y ~ x") + 
+  scale_y_continuous(
+    position = "right", 
+    breaks = seq(0, 35, 5)
+  ) + 
+  coord_cartesian(ylim = c(5, 35)) + 
+  labs(y = NULL) + 
+  ds4ling_bw_theme(base_size = 16)
+
+p1 + p2
+```
+
+. . .
+
+<center>
+[mpg ~ wt]{.emph} & [mpg ~ drat]{color="blue"}  
+!=  
+MRC
+</center>
+
+---
+
+## {background-color="black"}
+
+[MRC]{.emph .p-font style="font-size: 1.75em;"}
+
+<iframe src="./index_files/html/threejs1.html" width='1000' height='500' style="border:none;"></iframe>
+
+

@@ -52,9 +52,10 @@ library(htmlwidgets)
 library(threejs)
 
 threejs1 <- scatterplot3js(x, y, z, color=rainbow(length(z)), bg = 'black')
-#saveWidget(widget = threejs1, 
-#           file = here::here('static', 'slides', '05_lm', '03_mrc', 
-#                              'assets', 'html', 'threejs1.html'))
+#saveWidget(
+#  widget = threejs1, 
+#  file = here::here('05_lm', '03_mrc', 'index_files', 'html', 'threejs1.html')
+#)
 
 
 

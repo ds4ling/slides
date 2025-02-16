@@ -222,11 +222,11 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Multiple regression</span></h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-15</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-16</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-14461"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-14461").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-33962"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-33962").innerHTML = tweet["html"];</script><p></p>
 <!-- regression the movie tweet -->
 </section>
 
@@ -335,6 +335,223 @@ then C = 1<br>
 Otherwise, C = 0
 </center>
 </div></div>
+</section>
+<section id="section-2" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_additive_effects.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="section-3" class="slide level2" data-background-image="../../assets/img/pensar2.png" data-background-position="95% 50%" data-background-size="500px">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Overview</span></p>
+<ul>
+<li>What if we based linguistics Grad School<br>
+acceptances solely on GRE scores?</li>
+</ul>
+<div class="fragment">
+<ul>
+<li>One shouldn’t have to score high on all of<br>
+the entrance requirements, but just rank<br>
+high on the sum of all of them</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>We could use a weighted sum</li>
+</ul>
+</div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Overview</span></p>
+<p><strong>Weighted sum</strong></p>
+<div class="closelist">
+<ul>
+<li>Some things are more important than others in this overall sum</li>
+<li>For example, GRE is actually a poor predictor of graduate student success</li>
+<li>So we might want to weight this variable lower than something like GPA or letters of recommendation</li>
+<li>We can use least squares estimation to get the b-weights with the lowest SS<sub>ERROR</sub></li>
+</ul>
+</div>
+</section>
+<section id="mrc-2" class="slide level2 smaller" data-menu-title="The equation">
+<h2>MRC</h2>
+<h3 id="the-equation">The equation</h3>
+<div class="columns">
+<div class="column">
+<div class="box-note">
+<p><span class="math display">\[Y = a + bX + e\]</span></p>
+</div>
+</div><div class="column">
+<div class="box-error">
+<p><span class="math display">\[Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e\]</span></p>
+</div>
+</div></div>
+<p><br></p>
+<div class="fragment">
+<h3 id="least-squares-estimation">Least Squares Estimation</h3>
+<ul>
+<li>R will estimate the b-weights that minimize the sum of the squared errors (🙅 by hand examples)</li>
+<li>Ideally these are the b-weights that best represent how much each predictor is really contributing to the variance in the criterion variable (y)</li>
+<li>We will again use least squares estimation to achieve the best (optimal) regression weights</li>
+</ul>
+</div>
+</section>
+<section id="mrc-3" class="slide level2" data-menu-title="Multiple predictors">
+<h2>MRC</h2>
+<h3 id="multiple-predictors">Multiple predictors</h3>
+<div style="font-size: 0.9em;">
+<ul>
+<li>The multiple predictors represent different hypotheses regarding what might be affecting the criterion variable</li>
+<li>In other words, multiple regression is just creating a sum of weighted predictors to explain the total variance in the criterion variable</li>
+<li>The way that the predictors function together is not necessarily the same as the way that they each function alone</li>
+<li>Bivariate regression is just a degenerate form (“special case”) of multiple regression containing only one predictor</li>
+</ul>
+</div>
+</section>
+<section id="mrc-4" class="slide level2" data-menu-title="Interpretation">
+<h2>MRC</h2>
+<h3 id="interpretation">Interpretation</h3>
+<h4 id="summarizing-so-far">Summarizing so far…</h4>
+<div style="font-size: 0.9em;">
+<ul>
+<li>In multiple regression we assume additivity and linearity</li>
+<li>In Boolean Algebra, a sum (addition) represents a logical disjunction</li>
+<li>The multiple regression “weighted sum” is a complex <span class="emph"><strong>OR</strong></span> statement</li>
+</ul>
+</div>
+<p><br></p>
+<p><span class="fragment p-font" style="color: #666666;">What does this mean for our parameter estimates and how do we interpret them?</span></p>
+</section>
+<section id="mrc-5" class="slide level2" data-menu-title="(Semi)partial betas">
+<h2>MRC</h2>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">(Semi)partial betas</span></p>
+<ul>
+<li><span class="emph">Intercept</span> ( <span class="math inline">\(a_{0}\)</span> ): the value of the criterion variable when all predictors are equal to 0 (same as bivariate regression)</li>
+<li><span class="emph">Slope</span> ( <span class="math inline">\(b_{k}\)</span> ): the change in the criterion associated with a 1-unit change in <span class="math inline">\(X_k\)</span>… <span class="fragment"><em>with all other predictors held constant</em></span></li>
+</ul>
+<div class="fragment">
+<p><br></p>
+<h3 id="how-can-we-calculate-the-unique-contribution-of-each-predictor">How can we calculate the unique contribution of each predictor?</h3>
+</div>
+</section>
+<section id="section-4" class="slide level2" data-background-image="./index_files/img/ballentine1.png" data-background-size="contain" data-background-position="125% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+</section>
+<section id="section-5" class="slide level2" data-background-image="./index_files/img/ballentine2.png" data-background-size="contain" data-background-position="125% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<div class="fragment">
+<p><span style="font-size: 0.85em;">Recall that the b-weight <br>of the bivariate model is <span class="math inline">\(r(\frac{s_y}{s_x})\)</span></span></p>
+</div>
+</section>
+<section id="section-6" class="slide level2" data-background-image="./index_files/img/ballentine3.png" data-background-size="contain" data-background-position="125% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+</section>
+<section id="section-7" class="slide level2" data-background-image="./index_files/img/ballentine4a.png" data-background-size="contain" data-background-position="125% 50%" data-menu-title="The Ballantine">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<h3 id="the-ballantine">The “Ballantine”</h3>
+<p><span style="font-size: 0.8em;"><span class="citation" data-cites="cohen_1975">Cohen &amp; Cohen (<a href="#/references" role="doc-biblioref" onclick="">1975</a>)</span></span></p>
+</section>
+<section id="section-8" class="slide level2" data-background-image="./index_files/img/ballentine4b.png" data-background-size="contain" data-background-position="125% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<div style="font-size: 0.85em;">
+<ul>
+<li class="fragment"><span class="math inline">\(r^{2}_{x1,x2} = c + d\)</span></li>
+<li class="fragment"><span class="math inline">\(r^{2}_{y,x1} = a + c\)</span></li>
+<li class="fragment"><span class="math inline">\(r^{2}_{y,x2} = b + c\)</span></li>
+<li class="fragment"><span class="math inline">\(R^{2}_{y,x1,x2} = a + b + c\)</span></li>
+</ul>
+</div>
+</section>
+<section id="section-9" class="slide level2 smaller" data-background-image="./index_files/img/ballentine5.png" data-background-size="contain" data-background-position="125% 50%" data-menu-title="Squared semipartial correlation">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Squared semipartial correlation</span></p>
+<div style="font-size: 0.85em;">
+<ul>
+<li class="fragment"><span class="math inline">\(X_2\)</span> removed from <em>explained</em><br>
+variance</li>
+<li class="fragment">Represents unique contribution<br>
+of <span class="math inline">\(X_1\)</span></li>
+<li class="fragment"><span class="math inline">\(sr^2 = R^{2}_{y,x1,x2} - r^{2}_{y,x2}\)</span></li>
+</ul>
+</div>
+</section>
+<section id="section-10" class="slide level2 smaller" data-background-image="./index_files/img/ballentine7.png" data-background-size="contain" data-background-position="125% 50%" data-menu-title="Squared partial correlation">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Squared partial<br>correlation</span></p>
+<div style="font-size: 0.85em;">
+<ul>
+<li class="fragment">Y variance not accounted for by<br>
+<span class="math inline">\(X_2\)</span> is the area of A + E</li>
+<li class="fragment">The area explained by <span class="math inline">\(X_1\)</span> = A<br>
+(squared semipartial correlation)</li>
+<li class="fragment">Unqiue contribution of <span class="math inline">\(X_1\)</span> is<br>
+<span class="math inline">\(A / (A + E)\)</span> or…</li>
+<li class="fragment"><span class="math inline">\(pr^{2}_{x1} = \frac{A}{A + E}\)</span></li>
+<li class="fragment">We are pretending that <span class="math inline">\(X_2\)</span><br>
+doesn’t exist (statistically)</li>
+</ul>
+</div>
+</section>
+<section id="section-11" class="slide level2 smaller" data-background-image="./index_files/img/ballentine4b.png" data-background-size="350px" data-background-position="95% 20%" data-menu-title="Statistical control">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Statistical control<sup>1</sup></span></p>
+<ul>
+<li>Not the same as <span style="color: green;">experimental control</span>
+<ul>
+<li>We are interested in some treatment</li>
+<li>Some participants receive treatment, some do not</li>
+<li><em>Only</em> looking at highly proficient bilinguals (not low, med. prof.)</li>
+</ul></li>
+<li>We partial out the effects of predictor <span class="math inline">\(X_1\)</span> from all other predictors and use this error to determine <span class="math inline">\(b_1\)</span></li>
+<li>We are estimating the effect of one predictor while holding the other predictors constant</li>
+<li>This will only work if predictors are not correlated (i.e., there <em>cannot</em> be multicollinearity)</li>
+</ul>
+
+<aside><div>
+<p><sup>1</sup>This is a poor choice for a name. Ask why.</p>
+</div></aside></section>
+<section id="section-12" class="slide level2" data-background-image="https://i.imgflip.com/25dwia.jpg" data-background-position="90% 50%" data-background-size="650px" data-menu-title="Conceptual understanding">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Conceptual understanding</span></p>
+<div class="columns">
+<div class="column">
+<div style="font-size: 0.85em;">
+<ul>
+<li>MRC is much more difficult to conceptualize than the bivariate linear regression</li>
+<li>If we consider a simple three variable model (y ~ x<sub>1</sub> + x<sub>2</sub>) we are fitting a hyperplane to a three dimensional space</li>
+<li>More variables = more complexity</li>
+</ul>
+</div>
+</div></div>
+<!-- complex math meme "my model has more than two variables" -->
+</section>
+<section id="section-13" class="slide level2 center">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+
+<img data-src="index_files/figure-revealjs/additive_plots-1.png" class="img-fluid quarto-figure quarto-figure-center r-stretch" width="3000"><div class="fragment">
+<center>
+<span class="emph">mpg ~ wt</span> &amp; <span style="color: blue;">mpg ~ drat</span><br>
+!=<br>
+MRC
+</center>
+</div>
+</section>
+<section id="section-14" class="slide level2" data-background-color="black">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<iframe src="./index_files/html/threejs1.html" width="1000" height="500" style="border:none;">
+</iframe>
 </section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable">
 <h1><span class="emph">References</span></h1>
@@ -344,6 +561,9 @@ Berry, W. D., &amp; Feldman, S. (1985a). Multicollinearity. In W. D. Berry &amp;
 </div>
 <div id="ref-qass50_ch2" class="csl-entry" role="listitem">
 Berry, W. D., &amp; Feldman, S. (1985b). Specification error. In W. D. Berry &amp; S. Feldman (Eds.), <em>Multiple regression in practice</em> (pp. 18–25). Newbury Park, CA: Sage.
+</div>
+<div id="ref-cohen_1975" class="csl-entry" role="listitem">
+Cohen, J., &amp; Cohen, P. (1975). <em>Applied multiple regression/correlation analysis for the behavioral sciences</em>. Lawrence Erlbaum.
 </div>
 <div id="ref-figueredo_selection" class="csl-entry" role="listitem">
 Figueredo, A. J. (2013a). Empirical selection of variables. <em>Statistical Methods in Psychological Research</em>.
@@ -387,7 +607,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 <h1>Bonus <span style="color: white;">- Statistical control in MRC</span></h1>
 
 </section>
-<section id="section-2" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
+<section id="section-15" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
 <h2></h2>
 <aside class="notes">
 <p>We are interested in testing the hypothesis that taller people are better at math.</p>
@@ -433,7 +653,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 </div>
 </div>
 </section>
-<section id="section-3" class="slide level2 smaller center">
+<section id="section-16" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -473,7 +693,7 @@ F-statistic: 2.493e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-4" class="slide level2 smaller center">
+<section id="section-17" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -513,7 +733,7 @@ F-statistic: 5.447e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-5" class="slide level2 smaller center">
+<section id="section-18" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -558,7 +778,7 @@ F-statistic: 1.513e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-6" class="slide level2 smaller center">
+<section id="section-19" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">

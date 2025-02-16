@@ -57,8 +57,7 @@ source(here::here("05_lm", "03_mrc", "index_files", "scripts", "mrc.R"))
 ## {background-image="./index_files/img/mrc_math.png" background-size="contain"}
 
 ::: notes
-We are interested in testing the hypothesis that 
-taller people are better at math. 
+We are interested in testing the hypothesis that taller people are better at math. 
 
 A priori we know that this doesn't make sense. 
 
