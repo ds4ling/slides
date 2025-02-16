@@ -212,6 +212,8 @@
       margin-right: 0; 
     }
   </style>
+  <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -226,7 +228,7 @@
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-61241"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-61241").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-81156"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-81156").innerHTML = tweet["html"];</script><p></p>
 <!-- regression the movie tweet -->
 </section>
 
@@ -549,6 +551,219 @@ MRC
 <p><a href="https://www.ds4ling.jvcasillas.com/slides/05_lm/03_mrc/index_files/html/threejs1.html">3d viz</a></p>
 </div>
 </div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_3d-ls-1.png" class="img-fluid quarto-figure quarto-figure-center" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_3d-rs-1.png" class="img-fluid quarto-figure quarto-figure-center" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_3d_surface-ls-1.png" class="img-fluid quarto-figure quarto-figure-center" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_3d_surface-rs-1.png" class="img-fluid quarto-figure quarto-figure-center" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-14" class="slide level2" data-background-image="./index_files/img/additive_3d_corner.png" data-background-size="contain">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+</section>
+<section id="section-15" class="slide level2 smaller" data-menu-title="MRC in R">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<h3 id="doing-it-in-r">Doing it in R</h3>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt + drat, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.4159 -2.0452  0.0136  1.7704  6.7466 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   30.290      7.318   4.139 0.000274 ***
+wt            -4.783      0.797  -6.001 1.59e-06 ***
+drat           1.442      1.459   0.989 0.330854    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.047 on 29 degrees of freedom
+Multiple R-squared:  0.7609,    Adjusted R-squared:  0.7444 
+F-statistic: 46.14 on 2 and 29 DF,  p-value: 9.761e-10</code></pre>
+</div>
+</div>
+</div><div class="column">
+<p><span class="math display">\[mpg_{i} \sim \beta_{0} + \beta_{1}wt_{i} + \beta_{2}drat_{i} + \epsilon_{i}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> drat, <span class="at">data =</span> mtcars)</span>
+<span id="cb2-2"><a href=""></a><span class="fu">summary</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="section-16" class="slide level2 smaller" data-menu-title="CIs and significance tests">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<h3 id="cis-and-significance-tests">CIs and significance tests</h3>
+<p><mybr></mybr></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table" data-quarto-postprocess="true" style="font-size: 28px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">beta</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SE</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">95% LB</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">95% UB</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">t-ratio</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">30.29</td>
+<td style="text-align: right;">7.32</td>
+<td style="text-align: right;">15.32</td>
+<td style="text-align: right;">45.26</td>
+<td style="text-align: right;">4.14</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">wt</td>
+<td style="text-align: right;">-4.78</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">-6.41</td>
+<td style="text-align: right;">-3.15</td>
+<td style="text-align: right;">-6.00</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">drat</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">1.46</td>
+<td style="text-align: right;">-1.54</td>
+<td style="text-align: right;">4.43</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">0.33</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p><br></p>
+<div>
+<ul>
+<li class="fragment">Same as bivariate case, but we adjust t-value for k (added estimated parameters)</li>
+<li class="fragment">Statistical significance implies that the 95% CI doesn’t contain 0</li>
+<li class="fragment"><span class="emph"><strong>Rule of thumb</strong></span>: multiply SE of b-weight by 2 and add/subtract to/from b-weight</li>
+<li class="fragment">T-ratio: Parameter estimate divided by SE<br>
+<span class="fragment">(i.e., 30.29 / 7.32 = 4.14)</span></li>
+<li class="fragment"><span class="emph"><strong>Rule of thumb</strong></span>: |t| &gt; 2 = significant<sup>™</sup></li>
+</ul>
+</div>
+</section>
+<section id="section-17" class="slide level2 smaller" data-menu-title="R<sup>2</sup>">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<h3 id="coefficient-of-multiple-determination-r2">Coefficient of multiple determination: R<sup>2</sup></h3>
+<ul>
+<li>Adding variables will always explain more variance</li>
+<li>Not necessarily better</li>
+<li>There is an adjustment for exhausting degrees of freedom</li>
+</ul>
+<div class="fragment">
+<h3 id="note">Note</h3>
+<ul>
+<li><span style="color: green;">r</span>: pearson product moment correlation</li>
+<li><span style="color: purple;">r<sup>2</sup></span>: coefficient of determination; variance explained (bivariate case)</li>
+<li><span class="emph">R<sup>2</sup></span>: coefficient of multiple determination; variance explained (MRC)</li>
+</ul>
+</div>
+</section>
+<section id="section-18" class="slide level2 smaller" data-menu-title="Making predictions">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">MRC</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Making predictions</span></p>
+<ul>
+<li>Recall the multiple regression equation…</li>
+</ul>
+<p><span class="math display">\[Y = a_{0} + b_{1}X_{1}  + b_{2}X_{2} {...} b_{k}X_{k} + e\]</span></p>
+<ul>
+<li>Our <code>mtcars</code> model can be summarized as…</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><span class="math display">\[
+\begin{aligned}
+\widehat{mpg} &amp;= 30.29 + -4.78(wt) + 1.44(drat)
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div class="columns">
+<div class="column">
+<div class="fragment" style="font-size: 0.85em;">
+<p>What is the predicted <code>mpg</code> for a car that weighs 1 unit with a rear axel ratio (drat) of 2?<br>
+And one that weighs 1 with a drat of 4?<br>
+And one that weighs 3 with a drat of 2.5?</p>
+</div>
+</div><div class="column">
+<div class="fragment" style="font-size: 0.85em;">
+<ul>
+<li>28.39 <span class="math inline">\(mpg = 30.29 + -4.78 \times 1 + 1.44 \times 2\)</span></li>
+<li>31.28 <span class="math inline">\(mpg = 30.29 + -4.78 \times 1 + 1.44 \times 4\)</span></li>
+<li>19.55 <span class="math inline">\(mpg = 30.29 + -4.78 \times 3 + 1.44 \times 2.5\)</span></li>
+</ul>
+</div>
+</div></div>
 </section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable">
 <h1><span class="emph">References</span></h1>
@@ -604,7 +819,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 <h1>Bonus <span style="color: white;">- Statistical control in MRC</span></h1>
 
 </section>
-<section id="section-14" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
+<section id="section-19" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
 <h2></h2>
 <aside class="notes">
 <p>We are interested in testing the hypothesis that taller people are better at math.</p>
@@ -650,13 +865,13 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 </div>
 </div>
 </section>
-<section id="section-15" class="slide level2 smaller center">
+<section id="section-20" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">lm</span>(height <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">lm</span>(height <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -690,13 +905,13 @@ F-statistic: 2.493e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-16" class="slide level2 smaller center">
+<section id="section-21" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -730,13 +945,13 @@ F-statistic: 5.447e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-17" class="slide level2 smaller center">
+<section id="section-22" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -775,13 +990,13 @@ F-statistic: 1.513e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-18" class="slide level2 smaller center">
+<section id="section-23" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c <span class="sc">+</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c <span class="sc">+</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
