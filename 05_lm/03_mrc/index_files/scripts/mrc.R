@@ -51,7 +51,13 @@ fitpoints_int <- predict(fit_interact)
 library(htmlwidgets)
 library(threejs)
 
-threejs1 <- scatterplot3js(x, y, z, color=rainbow(length(z)), bg = 'black')
+threejs1 <- scatterplot3js(
+  x, y, z, 
+  color=rainbow(length(z)), 
+  bg = 'black', 
+  axisLabels = c("drat", "mpg", "wt"), 
+  flip.y = F
+)
 #saveWidget(
 #  widget = threejs1, 
 #  file = here::here('05_lm', '03_mrc', 'index_files', 'html', 'threejs1.html')

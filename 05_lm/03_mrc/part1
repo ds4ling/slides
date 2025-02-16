@@ -375,12 +375,6 @@ p1 + p2
 MRC
 </center>
 
----
-
-## {background-color="black"}
-
-[MRC]{.emph .p-font style="font-size: 1.75em;"}
-
-<iframe src="./index_files/html/threejs1.html" width='1000' height='500' style="border:none;"></iframe>
-
-
+::: footer
+[3d viz](https://www.ds4ling.jvcasillas.com/slides/05_lm/03_mrc/index_files/html/threejs1.html)
+:::
