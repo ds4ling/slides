@@ -24,7 +24,7 @@ source(here::here("05_lm", "03_mrc", "index_files", "scripts", "mrc.R"))
 ```{r}
 #| label: load-part-2
 #| child: "part2"
-#| eval: false
+#| eval: true
 ```
 
 
@@ -249,3 +249,4 @@ mrc_ex_data |>
   labs(title = "Math score as a function of height for each age") + 
   ds4ling_bw_theme(base_size = 14)
 ```
+

@@ -595,3 +595,396 @@ And one that weighs 3 with a drat of 2.5?
 :::
 :::
 :::
+
+
+# Interactions {.transition}
+
+---
+
+## {.smaller data-menu-title="Review"}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+[Recall]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column}
+::: {style="font-size: 0.8em;"}
+- Assumptions of Multiple Regression: 
+  - Additivity
+  - Linearity
+- In Boolean Algebra, a sum (addition) represents a logical disjunction: 
+  - Multiple regression "weighted sum" is a complex "OR" statement
+:::
+:::
+
+::: {.column}
+
+<center>
+
+::: {style="font-size: 0.8em;"}
+| A</br>(x) | B</br>(y) | C</br>(x [**∨**]{.emph} y) |
+| :-------: | :-------: | :------------------------: |
+| 0         | 0         |   [**0**]{.emph}           | 
+| 0         | 1         |   [**1**]{.emph}           |
+| 1         | 0         |   [**1**]{.emph}           |
+| 1         | 1         |   [**1**]{.emph}           |
+
+If A = 1  
+[**OR**]{.emph}  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+:::
+
+</center>
+
+:::
+:::
+
+---
+
+## {.smaller}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+[Recall]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {.columns}
+::: {.column}
+::: {style="font-size: 0.8em;"}
+- Assumptions of Multiple Regression: 
+  - Additivity
+  - Linearity
+- In Boolean Algebra, a sum (addition) represents a logical [disjunction]{color="blue"}: 
+  - Multiple regression "weighted sum" is a complex "OR" statement
+:::
+
+[Non-Additivity: Interaction Terms]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {style="font-size: 0.8em;"}
+- In Boolean Algebra, a product (multiplication) represents a logical [**conjunction**]{.emph}:
+  - Interaction terms represent "AND" terms
+  - These are included within the overall "OR" statement
+:::
+:::
+
+::: {.column}
+
+<center>
+
+::: {style="font-size: 0.8em;"}
+| A</br>(x) | B</br>(y) | C</br>(x [**∧**]{.emph} y) | </br>[(x ∨ y)]{color="grey"} |
+| :-------: | :-------: | :------------------------: | :-----------------: |
+| 0         | 0         |   [**0**]{.emph}           |   [0]{color="#666666"} |
+| 0         | 1         |   [**0**]{.emph}           |   [1]{color="#666666"} |
+| 1         | 0         |   [**0**]{.emph}           |   [1]{color="#666666"} |
+| 1         | 1         |   [**1**]{.emph}           |   [1]{color="#666666"} |
+
+If A = 1  
+[**AND**]{.emph}  
+B = 1,  
+then C = 1  
+Otherwise, C = 0
+:::
+
+</center>
+
+:::
+:::
+
+---
+
+## {.smaller data-menu-title="Genetics, drugs, and alcohol"}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+[Genetics example]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {style="font-size: 0.8em;"}
+- You share 50% of genes with your Mom (M) and 50% with your Dad (D)
+- But your parents don’t share that many genes
+- M and D are generally not genetically correlated with each other, but you (the M\*D interaction) are correlated with both M and D (more on this later)
+:::
+:::
+
+::: {.column .fragment}
+[Drugs and alcohol]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {style="font-size: 0.8em;"}
+Consider taking the upcoming midterm in one of the following conditions
+
+- Neither Drugs nor Alcohol:
+  - probably best, produce highest score
+- Alcohol alone:
+  - Probably lower midterm scores than doing neither
+- Drugs alone:
+  - Probably lower midterm scores than doing neither
+- Alcohol and Drugs together:
+  - Probably lowest scores on the midterm exam of all the four possible conditions
+:::
+:::
+:::
+
+---
+
+## {.smaller}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+[Drugs and alcohol continued]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+- Is the effect of alcohol and drugs together equal to the negative effect 
+of alcohol PLUS the negative effect of drugs?
+  - Probably not
+  - Alcohol and drugs are known to interact 
+- This effect is a negative interaction
+- If you mix alcohol and drugs they have a larger combined effect than adding up the effects of each acting separately:
+  - For example, if alcohol makes your score drop 10 points, and the drug drops it 15 points, when you take both your score will very likely drop more than just 25 points
+- This effect is not additive, it is multiplicative
+
+---
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+[Non-additivity of effects]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {style="font-size: 0.8em;"}
+- You cannot add the effect of alcohol to the effect of drugs to predict the effect "alcohol *AND* drugs"
+- Because you get an extra effect (a boosting effect) by combing them
+- There is a synergistic effect of combining the terms
+- In principle, could be either more or less effective
+- You include this multiplicative [**AND**]{.emph} term (A\*D) in *ADDITION* to the other terms in the model
+:::
+
+
+
+
+
+
+
+
+---
+
+## {.smaller}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+
+<br>
+
+[The multiple regression formula:]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+::: {style="font-size: 0.85em;"}
+$Y = a_{0} + b_{1}X_{1} + b_{2}X_{2} + (b_{1}X_{1} \times b_{2}X_{2}) + e$
+:::
+
+<br>
+
+[Including interactions in R]{.p-font style="font-size: 1.2em; color: #666666;"}
+
+- We do this using [:]{.emph}
+- Or [\*]{.emph}
+:::
+
+::: {.column .fragment}
+
+<br>
+
+```{r}
+#| label: nonadditive_mod
+#| echo: true
+m <- lm(mpg ~ wt + drat + wt:drat, data = mtcars) 
+summary(m)
+```
+:::
+:::
+
+---
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+### Visualization
+
+- Including an interaction affects the hyperplane fit to the data
+
+---
+
+## {background-color="black"}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: additive_interaction-l
+#| fig-asp: 1.0
+# compare additive and int models
+par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F, tick.col = 'white', 
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA))
+```
+
+:::
+
+::: {.column}
+```{r}
+#| label: additive_interaction-r
+#| fig-asp: 1.0
+# compare additive and int models
+par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+:::
+
+---
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: additive_interaction2-l
+#| fig-asp: 1.0
+# compare additive and int models
+#par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_add,  
+              facets = NA))
+```
+:::
+
+::: {.column}
+```{r}
+#| label: additive_interaction2-r
+#| fig-asp: 1.0
+# compare additive and int models
+#par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 50, phi = 10,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+:::
+
+---
+
+## {background-color="black"}
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: additive_interaction3-l
+#| fig-asp: 1.0
+# compare additive and int models
+par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 0, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+
+::: {.column}
+```{r}
+#| label: additive_interaction3-r
+#| fig-asp: 1.0
+# compare additive and int models
+par(bg = 'black')
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 90, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+:::
+
+---
+
+[Interactions]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column}
+```{r}
+#| label: additive_interaction4-l
+#| fig-asp: 1.0
+# compare additive and int models
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 0, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+
+::: {.column}
+```{r}
+#| label: additive_interaction4-r
+#| fig-asp: 1.0
+# compare additive and int models
+plot3D::scatter3D(x, y, z, 
+  pch = 1, cex = 0, bty = "bl", expand = 0.75,
+  theta = 90, phi = 5,  colkey = F,
+  xlab = "wt", ylab = "drat", zlab = "mpg", 
+  surf = list(x = x_pred, y = y_pred, z = z_pred_int,  
+              facets = NA))
+```
+:::
+:::
+
+
+
+# {background-color="#cc0033" data-menu-title="Interim summary" .smaller}
+
+### [Review]{.p-font style="font-size: 1.75em; color: #ffffff;"}
+
+<br><br>
+
+::: {.columns}
+::: {.column}
+### [What we've seen so far]{color="white"}
+
+- Bivariate regression
+- MRC
+- Additive effects
+- Interactions  
+(multiplicative effects)
+:::
+
+::: {.column}
+### [What's left]{color="white"}
+
+- Assumptions
+- Model specification
+- Alpha slippage
+- Empirical selection of variables
+- Reporting results
+:::
+:::

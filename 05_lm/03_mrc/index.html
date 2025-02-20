@@ -224,11 +224,11 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Multiple regression</span></h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-16</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-19</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-81156"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-81156").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-30844"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-30844").innerHTML = tweet["html"];</script><p></p>
 <!-- regression the movie tweet -->
 </section>
 
@@ -765,6 +765,589 @@ And one that weighs 3 with a drat of 2.5?</p>
 </div>
 </div></div>
 </section></section>
+<section>
+<section id="interactions" class="title-slide slide level1 transition center">
+<h1>Interactions</h1>
+
+</section>
+<section id="section-19" class="slide level2 smaller" data-menu-title="Review">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Recall</span></p>
+<div class="columns">
+<div class="column">
+<div style="font-size: 0.8em;">
+<ul>
+<li>Assumptions of Multiple Regression:
+<ul>
+<li>Additivity</li>
+<li>Linearity</li>
+</ul></li>
+<li>In Boolean Algebra, a sum (addition) represents a logical disjunction:
+<ul>
+<li>Multiple regression “weighted sum” is a complex “OR” statement</li>
+</ul></li>
+</ul>
+</div>
+</div><div class="column">
+<center>
+<div style="font-size: 0.8em;">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">A<br>(x)</th>
+<th style="text-align: center;">B<br>(y)</th>
+<th style="text-align: center;">C<br>(x <span class="emph"><strong>∨</strong></span> y)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="emph"><strong>0</strong></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="emph"><strong>1</strong></span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="emph"><strong>1</strong></span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="emph"><strong>1</strong></span></td>
+</tr>
+</tbody>
+</table>
+<p>If A = 1<br>
+<span class="emph"><strong>OR</strong></span><br>
+B = 1,<br>
+then C = 1<br>
+Otherwise, C = 0</p>
+</div>
+</center>
+</div></div>
+</section>
+<section id="section-20" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Recall</span></p>
+<div class="columns">
+<div class="column">
+<div style="font-size: 0.8em;">
+<ul>
+<li>Assumptions of Multiple Regression:
+<ul>
+<li>Additivity</li>
+<li>Linearity</li>
+</ul></li>
+<li>In Boolean Algebra, a sum (addition) represents a logical <span style="color: blue;">disjunction</span>:
+<ul>
+<li>Multiple regression “weighted sum” is a complex “OR” statement</li>
+</ul></li>
+</ul>
+</div>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Non-Additivity: Interaction Terms</span></p>
+<div style="font-size: 0.8em;">
+<ul>
+<li>In Boolean Algebra, a product (multiplication) represents a logical <span class="emph"><strong>conjunction</strong></span>:
+<ul>
+<li>Interaction terms represent “AND” terms</li>
+<li>These are included within the overall “OR” statement</li>
+</ul></li>
+</ul>
+</div>
+</div><div class="column">
+<center>
+<div style="font-size: 0.8em;">
+<table>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 41%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">A<br>(x)</th>
+<th style="text-align: center;">B<br>(y)</th>
+<th style="text-align: center;">C<br>(x <span class="emph"><strong>∧</strong></span> y)</th>
+<th style="text-align: center;"><br><span style="color: grey;">(x ∨ y)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="emph"><strong>0</strong></span></td>
+<td style="text-align: center;"><span style="color: #666666;">0</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="emph"><strong>0</strong></span></td>
+<td style="text-align: center;"><span style="color: #666666;">1</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="emph"><strong>0</strong></span></td>
+<td style="text-align: center;"><span style="color: #666666;">1</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="emph"><strong>1</strong></span></td>
+<td style="text-align: center;"><span style="color: #666666;">1</span></td>
+</tr>
+</tbody>
+</table>
+<p>If A = 1<br>
+<span class="emph"><strong>AND</strong></span><br>
+B = 1,<br>
+then C = 1<br>
+Otherwise, C = 0</p>
+</div>
+</center>
+</div></div>
+</section>
+<section id="section-21" class="slide level2 smaller" data-menu-title="Genetics, drugs, and alcohol">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Genetics example</span></p>
+<div style="font-size: 0.8em;">
+<ul>
+<li>You share 50% of genes with your Mom (M) and 50% with your Dad (D)</li>
+<li>But your parents don’t share that many genes</li>
+<li>M and D are generally not genetically correlated with each other, but you (the M*D interaction) are correlated with both M and D (more on this later)</li>
+</ul>
+</div>
+</div><div class="column fragment">
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Drugs and alcohol</span></p>
+<div style="font-size: 0.8em;">
+<p>Consider taking the upcoming midterm in one of the following conditions</p>
+<ul>
+<li>Neither Drugs nor Alcohol:
+<ul>
+<li>probably best, produce highest score</li>
+</ul></li>
+<li>Alcohol alone:
+<ul>
+<li>Probably lower midterm scores than doing neither</li>
+</ul></li>
+<li>Drugs alone:
+<ul>
+<li>Probably lower midterm scores than doing neither</li>
+</ul></li>
+<li>Alcohol and Drugs together:
+<ul>
+<li>Probably lowest scores on the midterm exam of all the four possible conditions</li>
+</ul></li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="section-22" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Drugs and alcohol continued</span></p>
+<ul>
+<li>Is the effect of alcohol and drugs together equal to the negative effect of alcohol PLUS the negative effect of drugs?
+<ul>
+<li>Probably not</li>
+<li>Alcohol and drugs are known to interact</li>
+</ul></li>
+<li>This effect is a negative interaction</li>
+<li>If you mix alcohol and drugs they have a larger combined effect than adding up the effects of each acting separately:
+<ul>
+<li>For example, if alcohol makes your score drop 10 points, and the drug drops it 15 points, when you take both your score will very likely drop more than just 25 points</li>
+</ul></li>
+<li>This effect is not additive, it is multiplicative</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Non-additivity of effects</span></p>
+<div style="font-size: 0.8em;">
+<ul>
+<li>You cannot add the effect of alcohol to the effect of drugs to predict the effect “alcohol <em>AND</em> drugs”</li>
+<li>Because you get an extra effect (a boosting effect) by combing them</li>
+<li>There is a synergistic effect of combining the terms</li>
+<li>In principle, could be either more or less effective</li>
+<li>You include this multiplicative <span class="emph"><strong>AND</strong></span> term (A*D) in <em>ADDITION</em> to the other terms in the model</li>
+</ul>
+</div>
+</section>
+<section id="section-23" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">The multiple regression formula:</span></p>
+<div style="font-size: 0.85em;">
+<p><span class="math inline">\(Y = a_{0} + b_{1}X_{1} + b_{2}X_{2} + (b_{1}X_{1} \times b_{2}X_{2}) + e\)</span></p>
+</div>
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Including interactions in R</span></p>
+<ul>
+<li>We do this using <span class="emph">:</span></li>
+<li>Or <span class="emph">*</span></li>
+</ul>
+</div><div class="column fragment">
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> drat <span class="sc">+</span> wt<span class="sc">:</span>drat, <span class="at">data =</span> mtcars) </span>
+<span id="cb3-2"><a href=""></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = mpg ~ wt + drat + wt:drat, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.8913 -1.8634 -0.3398  1.3247  6.4730 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)    5.550     12.631   0.439   0.6637  
+wt             3.884      3.798   1.023   0.3153  
+drat           8.494      3.321   2.557   0.0162 *
+wt:drat       -2.543      1.093  -2.327   0.0274 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.839 on 28 degrees of freedom
+Multiple R-squared:  0.7996,    Adjusted R-squared:  0.7782 
+F-statistic: 37.25 on 3 and 28 DF,  p-value: 6.567e-10</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<h3 id="visualization">Visualization</h3>
+<ul>
+<li>Including an interaction affects the hyperplane fit to the data</li>
+</ul>
+</section>
+<section id="section-24" class="slide level2" data-background-color="black">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction-l-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction-r-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction2-l-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction2-r-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-25" class="slide level2" data-background-color="black">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction3-l-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction3-r-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Interactions</span></p>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction4-l-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/additive_interaction4-r-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="section-26" class="title-slide slide level1 smaller center" data-background-color="#cc0033" data-menu-title="Interim summary">
+<h1></h1>
+
+</section>
+<h3 id="review"><span class="p-font" style="font-size: 1.75em; color: #ffffff;">Review</span></h3>
+<p><br><br></p>
+<div class="columns">
+<div class="column">
+<h3 id="what-weve-seen-so-far"><span style="color: white;">What we’ve seen so far</span></h3>
+<ul>
+<li>Bivariate regression</li>
+<li>MRC</li>
+<li>Additive effects</li>
+<li>Interactions<br>
+(multiplicative effects)</li>
+</ul>
+</div><div class="column">
+<h3 id="whats-left"><span style="color: white;">What’s left</span></h3>
+<ul>
+<li>Assumptions</li>
+<li>Model specification</li>
+<li>Alpha slippage</li>
+<li>Empirical selection of variables</li>
+<li>Reporting results</li>
+</ul>
+</div>
+</div></section>
+<section>
+<section id="assumptions-revisited" class="title-slide slide level1 center" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_ballantine.png" data-background-size="contain" data-background-position="100% 50%" data-background-color="#272822">
+<h1>Assumptions<br>(revisited)</h1>
+
+</section>
+<section id="a-new-assumption" class="slide level2 smaller" data-background-image="./index_files/img/ballentine4b.png, ./index_files/img/ballentine8.png" data-background-size="650px, 650px" data-background-position="25% 90%, 75% 90%" data-menu-title="Multicollinearity">
+<h2>A new assumption</h2>
+<h3 id="multicollinearity">Multicollinearity</h3>
+<ul>
+<li>Multicollinearity occurs when the predictors are correlated
+<ul>
+<li>height (x<sub>1</sub>) and weight (x<sub>2</sub>)</li>
+<li>intelligence (x<sub>1</sub>) and creativity (x<sub>2</sub>)</li>
+</ul></li>
+</ul>
+</section>
+<section id="section-27" class="slide level2 smaller" data-background-image="./index_files/img/ballentine4b.png, ./index_files/img/ballentine8.png" data-background-size="600px, 600px" data-background-position="95% 10%, 95% 90%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">A new assumption</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Multicollinearity</span></p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>Why is it a problem?
+<ul>
+<li>“Confounds” produce ambiguity of causal inference</li>
+</ul></li>
+<li>Least Squares Estimation in Linear Model:
+<ul>
+<li>Simultaneous estimation of additive effects of all model predictors</li>
+<li>Does not adequately partition variance among correlated predictors</li>
+</ul></li>
+<li>Least squares estimation is not adequate for dealing with multicollinearity
+<ul>
+<li>works best when predictors are uncorrelated</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="section-28" class="slide level2" data-menu-title="Shiny app: Multicollinearity in MRC" data-background-iframe="https://gallery.shinyapps.io/collinearity/" data-background-interactive="TRUE">
+<h2></h2>
+<aside class="notes">
+<p><a href="https://gallery.shinyapps.io/collinearity/" class="uri">https://gallery.shinyapps.io/collinearity/</a></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<!-- Multicollinearity in multiple regression -->
+</section>
+<section id="old-assumptions-revisited" class="slide level2 smaller">
+<h2>Old assumptions revisited</h2>
+<h3 id="model-specification-errors">Model specification errors</h3>
+<h4 id="avoid-excluding-relevant-variables"><span style="color: black;">Avoid excluding relevant variables</span></h4>
+<div>
+<ul>
+<li class="fragment">Use Multiple Working Hypotheses</li>
+<li class="fragment">This is how you safeguard against leaving out a variable that you might need later</li>
+<li class="fragment">But don’t put in everything but the kitchen sink…<span class="fragment">you also must avoid including irrelevant variables</span></li>
+<li class="fragment">Ideally you want to use plausible rival hypotheses</li>
+<li class="fragment">You need to have some theory behind your reasoning</li>
+<li class="fragment">Assuming you have done all of this, we need to figure out which predictors are relevant and which are not relevant</li>
+<li class="fragment">This is not nearly as a big of a problem as having excluded a relevant variable</li>
+</ul>
+</div>
+</section>
+<section id="section-29" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">How useful is the model output?</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Traditional t-test to determine if the b = 0</span></p>
+<div class="closelist">
+<ul>
+<li>Take b-weight, compute standard error</li>
+<li>Use SE<sub>b</sub> and the b-weight and construct a t-ratio:</li>
+</ul>
+<p><span class="math display">\[t_{b} = \frac{b}{SE_{b}}\]</span></p>
+<ul>
+<li>Theoretically this informs us of whether b = 0 or not</li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Problem</span></p>
+<div class="closelist">
+<ul>
+<li>The b-weights and the SE of the b-weight are both critically dependent on the model being correctly specified!</li>
+<li>If you made either kind of model specification error, the parameter estimates are invalid
+<ul>
+<li>The b-weights might have changed if you omitted a relevant variable</li>
+<li>The SE of the b-weights will have changed (increased) if you included an irrelevant variable</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section-30" class="slide level2 smaller" data-background-image="../../assets/img/frustracion.jpg" data-background-position="95% 20%" data-background-size="350px">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">How useful is the model output?</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">Your t-tests might not be informative</span></p>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li class="fragment">If the model is not correctly specified then it is based on incorrect values of either b or SE<sub>b</sub> or both</li>
+<li class="fragment">If you knew the model was correctly specified then you would have no need to use the t-tests in the first place</li>
+<li class="fragment">You only need to use them if you’re unsure whether the model is correctly specified</li>
+<li class="fragment">So the only conditions in which the tests are useful are the conditions in which they may be invalid!</li>
+<li class="fragment">But you only test this if you are questioning the specification of the model</li>
+</ul>
+</div></div>
+<div class="fragment">
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">How do you deal with this?</span></p>
+<div class="note">
+<p>Hierarchical partitioning of variance through nested model comparisons</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="hierarchical-partitioning-of-variance" class="title-slide slide level1 transition center">
+<h1>Hierarchical Partitioning of Variance</h1>
+
+</section>
+<section id="hierarchical-partitioning-of-variance-1" class="slide level2" data-menu-title="Nested model comparisons" data-background-image="./index_files/img/turtles.png" data-background-position="90% 50%" data-background-size="500px">
+<h2>Hierarchical Partitioning of Variance</h2>
+<h3 id="nested-model-comparisons">Nested model comparisons</h3>
+<div class="columns">
+<div class="column">
+<ul>
+<li>Comparison of “hierarchically nested” multiple regression models</li>
+<li>Requires theoretical specification and causal ordering of predictors</li>
+</ul>
+</div></div>
+</section>
+<section id="nested-model-comparisons-1" class="slide level2" data-menu-title="What is a nested model?" data-background-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvWty12X7seRPCGTHaZRccZNzwuoRHfxSGrHdjz69zugf5Ux6c01Mhp07bRjgxzghwTJA&amp;usqp=CAU" data-background-position="50% 95%" data-background-size="550px">
+<h2>Nested model comparisons</h2>
+<h3 id="what-is-a-nested-model">What is a nested model?</h3>
+<div class="box-note">
+<p>A nested model is when one model is nested inside the other such that there is a more inclusive model that contains more parameters and a less inclusive model (restricted model) that contains just a subset of specific variables you would like to test</p>
+</div>
+</section>
+<section id="section-31" class="slide level2">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<p><span class="p-font" style="font-size: 1.2em; color: #666666;">What is a nested model?</span></p>
+<div class="closelist" style="font-size: 0.85em;">
+<ul>
+<li>In nested model comparisons, you are testing whether those parameters not in the restricted model can be eliminated:
+<ul>
+<li>You want to see if those parameters not in the restricted models can be set to 0</li>
+<li>You want to see if these extra parameters are needed or if they can be taken out</li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="emph p-font" style="font-size: 1.2em; color: #666666;">How</span></p>
+<ul>
+<li>Test a more complicated model and then a less complicated one</li>
+</ul>
+</div>
+</section>
+<section id="section-32" class="slide level2" data-menu-title="Comparing nested models">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<h3 id="comparing-nested-models">Comparing nested models</h3>
+<div class="closelist">
+<ul>
+<li>You often cannot compare two different restricted models directly</li>
+<li>If the models do not overlap they cannot be directly compared</li>
+<li>You must construct an inclusive model such that both restricted models are nested within a common inclusive model</li>
+<li>Then, to do the nested model comparisons you run the alternative restricted models and test each against the same inclusive model</li>
+</ul>
+</div>
+</section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable">
 <h1><span class="emph">References</span></h1>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
@@ -819,7 +1402,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 <h1>Bonus <span style="color: white;">- Statistical control in MRC</span></h1>
 
 </section>
-<section id="section-19" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
+<section id="section-33" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
 <h2></h2>
 <aside class="notes">
 <p>We are interested in testing the hypothesis that taller people are better at math.</p>
@@ -865,13 +1448,13 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 </div>
 </div>
 </section>
-<section id="section-20" class="slide level2 smaller center">
+<section id="section-34" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">lm</span>(height <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">lm</span>(height <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -905,13 +1488,13 @@ F-statistic: 2.493e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-21" class="slide level2 smaller center">
+<section id="section-35" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -945,13 +1528,13 @@ F-statistic: 5.447e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-22" class="slide level2 smaller center">
+<section id="section-36" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -990,13 +1573,13 @@ F-statistic: 1.513e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-23" class="slide level2 smaller center">
+<section id="section-37" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c <span class="sc">+</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
-<span id="cb11-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">lm</span>(score <span class="sc">~</span> height_c <span class="sc">+</span> age_c, mrc_ex_data) <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:

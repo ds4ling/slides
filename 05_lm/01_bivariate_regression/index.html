@@ -32,6 +32,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -449,7 +514,7 @@
   };
 
   // Store cell data
-  globalThis.qwebrCellDetails = [{"code":"str(mtcars)","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"webr-mtcars-str","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"model <- lm(mpg ~ wt, data = mtcars)","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"mtcars_mod","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
+  globalThis.qwebrCellDetails = [{"code":"str(mtcars)","id":1,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"webr-mtcars-str","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"model <- lm(mpg ~ wt, data = mtcars)","id":2,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"mtcars_mod","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}},{"code":"","id":3,"options":{"autorun":"false","classes":"","comment":"","context":"interactive","dpi":72,"editor-font-scale":"0.5","editor-max-height":"","editor-quick-suggestions":"false","editor-word-wrap":"true","fig-cap":"","fig-height":5,"fig-width":7,"label":"unnamed-chunk-3","message":"true","out-height":"","out-width":"700px","output":"true","read-only":"false","results":"markup","warning":"true"}}];
 
   </script>
   <script type="module">
@@ -1996,7 +2061,7 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Bivariate regression</span></h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-01-09</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-20</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_tellmey.png" data-background-size="contain">
 <h1></h1>
@@ -2653,7 +2718,53 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 <section>
 <section id="section-18" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-77622"></div><script>tweet={"url":"https:\/\/twitter.com\/h_eecham\/status\/1773928616633434510","author_name":"Hisham","author_url":"https:\/\/twitter.com\/h_eecham","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ELinear regression line on a cardboard \u003Cbr\u003E\u003Cbr\u003E\uD83D\uDEC2 zetutor \u003Ca href=\"https:\/\/t.co\/bznkBmKb04\"\u003Epic.twitter.com\/bznkBmKb04\u003C\/a\u003E\u003C\/p\u003E&mdash; Hisham (@h_eecham) \u003Ca href=\"https:\/\/twitter.com\/h_eecham\/status\/1773928616633434510?ref_src=twsrc%5Etfw\"\u003EMarch 30, 2024\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-77622").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-77734"></div><script>tweet=<!DOCTYPE html>
+<html lang="en" class="dog">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X / ?</title>
+    <meta name="version" content="1">
+    <link href="https://abs.twimg.com/favicons/twitter.3.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://abs.twimg.com/errors/fullscreen_errors-047ca1475a6efac7c9c89a9ff92b7a20.css">
+  </head>
+  <body dir="auto">
+    <div class="top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1519 200">
+        <defs/>
+        <path d="M708 103l9-5 13 1 2-2 5 1h8l1-1 42-5h7l7 3v1l12-2a9368 9368 0 0129-6l2-5 12 1 6-2 3 1 2 1v-2l13-2v1l4 2 7-1h1l17-3 1 2 4-1 18-7 3-1 4-1h9l13-1 1-4 3-2 13 1v2l22-2 10-3h6l10 5 16-5 15-3 2-1 8-4 6-2 12-1 7-2 8 5 7 1 22-9h7l5-1v-1l25-3 1 2 5 2v1h11l2 1 8-4h3l-1 1h11l10-6 6 3 9-1 4-1 1 1 1-2 6-1 1-1 10-2h2l7-5v1h4l3-1c11 0 23 2 34-3 2-2 7 0 10 0l12 1 4 1 9 2 12-1 11-3 11 1h4l10-6 17 1 2 1c9 2 19-3 22-11l1-1 9 1 15-5c3-1 9 4 9-5 5 0 5 3 5 7l2 3 4-1 4-2 9-4 3-3h3l8-4 6-3 26 2 7-4h18l7 1c10 3 13-6 17-12l8 4 3-1 14-3 15-2a38 38 0 01-5-1l-8-4 7-8 8-4-10-136-922 71 16 205z"/>
+        <path d="M-36 193l9-5 13 1 2-2 5 1h8l1-1 42-5h7l7 3v1l12-2a9328 9328 0 0129-6l2-5 12 1 6-2 3 1 2 1v-2l13-2v1l4 2 7-1h1l17-3 1 2 4-1 18-7 3-1 4-1h9l13-1 1-4 3-2 13 1v2l22-2 10-3h6l10 5 16-5 15-3 2-1 8-4 6-2 12-1 7-2 8 5 7 1 22-9h7l5-1v-1l25-3 1 2 5 2v1h11l2 1 8-4h3l-1 1h9a6 6 0 002 0l10-6 6 3 9-1 4-1a6 6 0 001 1l1-2 6-1 1-1 10-2h2l7-5v1h4l3-1c11 0 23 2 34-3 2-2 7 0 10 0l12 1 4 1 9 2 12-1 11-3 11 1h4l10-6 17 1 2 1c9 2 19-3 22-11l1-1 9 1 15-5c3-1 9 4 9-5 5 0 5 3 5 7l2 3 4-1 4-2 9-4 3-3h3l8-4 6-3 26 2 7-4h18l7 1c10 3 13-6 17-12l8 4 3-1 14-3 15-2a37 37 0 01-5-1l-8-4 7-8 8-4-10-136-922 71 16 205z"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="content">
+        <a href="https://twitter.com" title="X logo">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="x-logo"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g></svg>
+        </a>
+        <h1 id="header">Nothing to see here</h1>
+        <p id="description">Looks like this page doesn’t exist. Here’s a picture of a poodle sitting in a chair for your trouble.</p>
+
+          <a id="button_search" href="/" class="button">Looking for this?</a>
+
+      </div>
+      <img id="image" src="https://abs.twimg.com/errors/ErrorState_NotFound.png" alt="A primped poodle with a bow in its hair sitting in a chair like a human.">
+      <div class="footer">
+        <ul>
+          <li><a href="https://twitter.com/" id="footer_home">Home</a></li>
+          <li><a href="https://status.twitterstat.us/" id="footer_status">Status</a></li>
+          <li><a href="https://twitter.com/tos" id="footer_tos">Terms of Service</a></li>
+          <li><a href="https://twitter.com/privacy" id="footer_privacy">Privacy Policy</a></li>
+          <li><a href="https://support.twitter.com/articles/20170514" id="footer_cookie">Cookie Policy</a></li>
+          <li><a href="https://legal.twitter.com/imprint" id="footer_imprint">Imprint</a></li>
+          <li><a href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html" id="footer_ads">Ads info</a></li>
+          <li dir="ltr">&copy; X Corp. <span id="copyright-year">&emsp;&emsp;&emsp;&emsp;</span></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="https://abs.twimg.com/errors/404-8651f633fd193e0b546010676a4fac06.js"></script>
+
+;document.getElementById("tweet-77734").innerHTML = tweet["html"];<p></p>
 <!-- least squares estimation video -->
 </section>
 <section id="section-19" class="slide level2 smaller" data-menu-title="Terminology review">
@@ -3262,7 +3373,53 @@ Error deviation: <span class="math inline">\(\color{red}{y_i} - \color{blue}{\ha
 <li>What is the predicted <code>mpg</code> for a car that weighs 1 unit? And one that weighs 3? And 6?</li>
 </ul>
 </div><div class="column" style="width:40%;">
-<p></p><div id="tweet-58391"></div><script>tweet={"url":"https:\/\/twitter.com\/thomasp85\/status\/963836721866661889","author_name":"Thomas Lin Pedersen","author_url":"https:\/\/twitter.com\/thomasp85","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ESome cars have high yield\u003Cbr\u003EAnd some cars are fast\u003Cbr\u003EThat’s some new data\u003Cbr\u003ELet’s see how it last\u003Ca href=\"https:\/\/t.co\/I173qGGU5U\"\u003Ehttps:\/\/t.co\/I173qGGU5U\u003C\/a\u003E\u003C\/p\u003E&mdash; Thomas Lin Pedersen (@thomasp85) \u003Ca href=\"https:\/\/twitter.com\/thomasp85\/status\/963836721866661889?ref_src=twsrc%5Etfw\"\u003EFebruary 14, 2018\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-58391").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-19942"></div><script>tweet=<!DOCTYPE html>
+<html lang="en" class="dog">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X / ?</title>
+    <meta name="version" content="1">
+    <link href="https://abs.twimg.com/favicons/twitter.3.ico" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://abs.twimg.com/errors/fullscreen_errors-047ca1475a6efac7c9c89a9ff92b7a20.css">
+  </head>
+  <body dir="auto">
+    <div class="top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1519 200">
+        <defs/>
+        <path d="M708 103l9-5 13 1 2-2 5 1h8l1-1 42-5h7l7 3v1l12-2a9368 9368 0 0129-6l2-5 12 1 6-2 3 1 2 1v-2l13-2v1l4 2 7-1h1l17-3 1 2 4-1 18-7 3-1 4-1h9l13-1 1-4 3-2 13 1v2l22-2 10-3h6l10 5 16-5 15-3 2-1 8-4 6-2 12-1 7-2 8 5 7 1 22-9h7l5-1v-1l25-3 1 2 5 2v1h11l2 1 8-4h3l-1 1h11l10-6 6 3 9-1 4-1 1 1 1-2 6-1 1-1 10-2h2l7-5v1h4l3-1c11 0 23 2 34-3 2-2 7 0 10 0l12 1 4 1 9 2 12-1 11-3 11 1h4l10-6 17 1 2 1c9 2 19-3 22-11l1-1 9 1 15-5c3-1 9 4 9-5 5 0 5 3 5 7l2 3 4-1 4-2 9-4 3-3h3l8-4 6-3 26 2 7-4h18l7 1c10 3 13-6 17-12l8 4 3-1 14-3 15-2a38 38 0 01-5-1l-8-4 7-8 8-4-10-136-922 71 16 205z"/>
+        <path d="M-36 193l9-5 13 1 2-2 5 1h8l1-1 42-5h7l7 3v1l12-2a9328 9328 0 0129-6l2-5 12 1 6-2 3 1 2 1v-2l13-2v1l4 2 7-1h1l17-3 1 2 4-1 18-7 3-1 4-1h9l13-1 1-4 3-2 13 1v2l22-2 10-3h6l10 5 16-5 15-3 2-1 8-4 6-2 12-1 7-2 8 5 7 1 22-9h7l5-1v-1l25-3 1 2 5 2v1h11l2 1 8-4h3l-1 1h9a6 6 0 002 0l10-6 6 3 9-1 4-1a6 6 0 001 1l1-2 6-1 1-1 10-2h2l7-5v1h4l3-1c11 0 23 2 34-3 2-2 7 0 10 0l12 1 4 1 9 2 12-1 11-3 11 1h4l10-6 17 1 2 1c9 2 19-3 22-11l1-1 9 1 15-5c3-1 9 4 9-5 5 0 5 3 5 7l2 3 4-1 4-2 9-4 3-3h3l8-4 6-3 26 2 7-4h18l7 1c10 3 13-6 17-12l8 4 3-1 14-3 15-2a37 37 0 01-5-1l-8-4 7-8 8-4-10-136-922 71 16 205z"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="content">
+        <a href="https://twitter.com" title="X logo">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="x-logo"><g><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></g></svg>
+        </a>
+        <h1 id="header">Nothing to see here</h1>
+        <p id="description">Looks like this page doesn’t exist. Here’s a picture of a poodle sitting in a chair for your trouble.</p>
+
+          <a id="button_search" href="/" class="button">Looking for this?</a>
+
+      </div>
+      <img id="image" src="https://abs.twimg.com/errors/ErrorState_NotFound.png" alt="A primped poodle with a bow in its hair sitting in a chair like a human.">
+      <div class="footer">
+        <ul>
+          <li><a href="https://twitter.com/" id="footer_home">Home</a></li>
+          <li><a href="https://status.twitterstat.us/" id="footer_status">Status</a></li>
+          <li><a href="https://twitter.com/tos" id="footer_tos">Terms of Service</a></li>
+          <li><a href="https://twitter.com/privacy" id="footer_privacy">Privacy Policy</a></li>
+          <li><a href="https://support.twitter.com/articles/20170514" id="footer_cookie">Cookie Policy</a></li>
+          <li><a href="https://legal.twitter.com/imprint" id="footer_imprint">Imprint</a></li>
+          <li><a href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html" id="footer_ads">Ads info</a></li>
+          <li dir="ltr">&copy; X Corp. <span id="copyright-year">&emsp;&emsp;&emsp;&emsp;</span></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  <script src="https://abs.twimg.com/errors/404-8651f633fd193e0b546010676a4fac06.js"></script>
+
+;document.getElementById("tweet-19942").innerHTML = tweet["html"];<p></p>
 <!-- tweet about mtcars -->
 </div></div>
 <div class="fragment">
@@ -3285,6 +3442,17 @@ Error deviation: <span class="math inline">\(\color{red}{y_i} - \color{blue}{\ha
 </section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable">
 <h1><span class="emph">References</span></h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-qml_ch2" class="csl-entry" role="listitem">
+Johnson, K. (2011). Patterns and tests. In K. Johnson (Ed.), <em>Quantitative methods in linguistics</em> (pp. 34–69). Wiley.
+</div>
+<div id="ref-qass22_ch1" class="csl-entry" role="listitem">
+Lewis-Beck, M. (1980). Bivariate regression: Fitting a straight line. In M. Lewis-Beck (Ed.), <em>Applied regression: An introduction</em> (pp. 9–25). Newbury Park, CA: Sage.
+</div>
+<div id="ref-wickham2016r" class="csl-entry" role="listitem">
+Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, transform, visualize, and model data</em>. O’Reilly Media.
+</div>
+</div>
 <aside class="notes">
 <p><span class="citation" data-cites="wickham2016r">Wickham &amp; Grolemund (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> <span class="citation" data-cites="qml_ch2">Johnson (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span> <span class="citation" data-cites="qass22_ch1">Lewis-Beck (<a href="#/references" role="doc-biblioref" onclick="">1980</a>)</span></p>
 <style type="text/css">
@@ -3298,19 +3466,100 @@ Error deviation: <span class="math inline">\(\color{red}{y_i} - \color{blue}{\ha
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
-<div id="ref-qml_ch2" class="csl-entry" role="listitem">
-Johnson, K. (2011). Patterns and tests. In K. Johnson (Ed.), <em>Quantitative methods in linguistics</em> (pp. 34–69). Wiley.
+<section>
+<section id="bonus-riverside-income-and-education-qass-22" class="title-slide slide level1 center">
+<h1>Bonus<br>Riverside income and education (qass 22)</h1>
+
+</section>
+<section id="explore-riverside-data" class="slide level2 smaller">
+<h2>Explore riverside data</h2>
+<p>Taken from QASS 22 (Ch. 1, Table 2)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">glimpse</span>(riverside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 32
+Columns: 3
+$ respondent &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, …
+$ education  &lt;dbl&gt; 4, 4, 6, 6, 6, 8, 8, 8, 8, 10, 10, 10, 11, 12, 12, 12, 12, …
+$ income     &lt;dbl&gt; 6281, 10516, 6898, 8212, 11744, 8618, 10011, 12405, 14664, …</code></pre>
 </div>
-<div id="ref-qass22_ch1" class="csl-entry" role="listitem">
-Lewis-Beck, M. (1980). Bivariate regression: Fitting a straight line. In M. Lewis-Beck (Ed.), <em>Applied regression: An introduction</em> (pp. 9–25). Newbury Park, CA: Sage.
-</div>
-<div id="ref-wickham2016r" class="csl-entry" role="listitem">
-Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, transform, visualize, and model data</em>. O’Reilly Media.
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">head</span>(riverside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  respondent education income
+1          1         4   6281
+2          2         4  10516
+3          3         6   6898
+4          4         6   8212
+5          5         6  11744
+6          6         8   8618</code></pre>
 </div>
 </div>
 </section>
+<section class="slide level2">
+
+
+<img data-src="index_files/figure-revealjs/fg-riverside-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="fit-model" class="slide level2">
+<h2>Fit model</h2>
+<p>First we’ll fit the model using <code>lm()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(income <span class="sc">~</span> education, <span class="at">data =</span> riverside)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Here is a table of the model summary:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">5077.512</td>
+<td style="text-align: right;">1497.8302</td>
+<td style="text-align: right;">3.389912</td>
+<td style="text-align: right;">0.0019753</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">education</td>
+<td style="text-align: right;">732.400</td>
+<td style="text-align: right;">117.5221</td>
+<td style="text-align: right;">6.232021</td>
+<td style="text-align: right;">0.0000007</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+
+<img data-src="index_files/figure-revealjs/fg-riverside2-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="making-predictions-1" class="slide level2">
+<h2>Making predictions</h2>
+<p>What is the predicted income of somebody with 6/10/16 years of education in Riverside?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="dv">5077</span> <span class="sc">+</span> (<span class="dv">732</span> <span class="sc">*</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>## [1] 9469</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Do it in R:</p>
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
