@@ -224,11 +224,11 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The linear model: <span style="color: #888; font-size: 0.9em;">Multiple regression</span></h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-19</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-02-20</mybr></p>
 </section>
 <section id="section" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1></h1>
-<p></p><div id="tweet-30844"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-30844").innerHTML = tweet["html"];</script><p></p>
+<p></p><div id="tweet-79219"></div><script>tweet={"url":"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224","author_name":"andrew","author_url":"https:\/\/twitter.com\/AndrewsNotFunny","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003Ey=mx+b jokes are great but at some point we&#39;ll have to draw the line\u003C\/p\u003E&mdash; andrew (@AndrewsNotFunny) \u003Ca href=\"https:\/\/twitter.com\/AndrewsNotFunny\/status\/1365382679877812224?ref_src=twsrc%5Etfw\"\u003EFebruary 26, 2021\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-79219").innerHTML = tweet["html"];</script><p></p>
 <!-- regression the movie tweet -->
 </section>
 
@@ -1347,6 +1347,100 @@ F-statistic: 37.25 on 3 and 28 DF,  p-value: 6.567e-10</code></pre>
 <li>Then, to do the nested model comparisons you run the alternative restricted models and test each against the same inclusive model</li>
 </ul>
 </div>
+</section>
+<section id="section-33" class="slide level2 smaller" data-menu-title="The semipartial R<sup>2</sup>" data-background-image="./index_files/img/ballentine5.png" data-background-size="600px" data-background-position="95% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<h3 id="the-semipartial-r2">The semipartial R<sup>2</sup></h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>The sr<sup>2</sup> doesn’t tell you if the predictor in question is statistically significant, but rather how to estimate the unique contributions of each variable</li>
+<li>We are attempting the elimination of irrelevant variables with this procedure:
+<ul>
+<li>We cannot address omission of a relevant variable this way (or in any other mathematical way because you cannot do math on variables that you didn’t measure in first place 🤦‍♀️)</li>
+<li>This method corrects Type I Errors only</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="section-34" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Inclusive Regression Model (R<sup>2</sup><sub>I</sub>):</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{1}x_{1} + b_{2}x_{2} + b_{3}x_{3} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model (R<sup>2</sup><sub>R</sub>):</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{1}x_{1} + b_{2}x_{2} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Nested Model Comparison:</span></p>
+<div class="box-error">
+<p><span class="math display">\[(R^2_{I} - R^2_{R}) = sr^2(y, x_{3} \times x_{1}, x_{2})\]</span></p>
+</div>
+</section>
+<section id="section-35" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons: (k<sub>I</sub> - k<sub>R</sub>) = 1</span></p>
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 1:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{1}x_{1} + b_{2}x_{2} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 2:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{1}x_{1} + b_{3}x_{3} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 3:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{2}x_{2} + b_{3}x_{3} + e\]</span></p>
+</section>
+<section id="section-36" class="slide level2 smaller">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons: (k<sub>I</sub> - k<sub>R</sub>) = 2</span></p>
+<p><br></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 4:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{1}x_{1} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 5:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{2}x_{2} + e\]</span></p>
+<p><span class="p-font" style="font-size: 1.4em; color: #666666;">Restricted Regression Model 6:</span></p>
+<p><span class="math display">\[\hat{y} = a + b_{3}x_{3} + e\]</span></p>
+</section>
+<section id="section-37" class="slide level2" data-background-image="./index_files/img/ballentine5.png" data-background-size="600px" data-background-position="95% 50%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<h3 id="how-do-we-test-semipartials">How do we test semipartials?</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div style="font-size: 0.85em;">
+<ul>
+<li>We will use a modification of the F-ratio (systematic variance over the error variance)</li>
+<li>F-ratio for sr<sup>2</sup> = the F-ratio for the hierarchical partitioning of variance using nested model comparisons</li>
+<li>The sr<sup>2</sup> of the variable of interest goes in the numerator</li>
+<li>The residual of the inclusive model goes in the denominator</li>
+</ul>
+</div>
+</div></div>
+</section>
+<section id="section-38" class="slide level2 smaller" data-background-image="./index_files/img/ballentine4b.png, ./index_files/img/ballentine4c.png" data-background-size="600px, 600px" data-background-position="95% 10%, 95% 90%">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Nested model comparisons</span></p>
+<h3 id="the-semipartial-f-ratio">The semipartial F-Ratio</h3>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="closelist">
+<ul>
+<li>This F-ratio is used like a “backward” traditional F-ratio:
+<ul>
+<li>It is a test of what you have eliminated to see if you can safely eliminate it</li>
+<li>You only eliminate variables if doing so does not result in a significant loss of explanatory power</li>
+</ul></li>
+</ul>
+</div>
+<p><br></p>
+<div class="closelist fragment">
+<ul>
+<li>It is not a test of whether what you have included is relevant:
+<ul>
+<li>It’s not what’s left in the model that is being tested</li>
+<li>It’s what’s not in the restrictive model that is being tested</li>
+</ul></li>
+</ul>
+</div>
+</div></div>
 </section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable">
 <h1><span class="emph">References</span></h1>
@@ -1402,7 +1496,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 <h1>Bonus <span style="color: white;">- Statistical control in MRC</span></h1>
 
 </section>
-<section id="section-33" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
+<section id="section-39" class="slide level2" data-background-image="./index_files/img/mrc_math.png" data-background-size="contain">
 <h2></h2>
 <aside class="notes">
 <p>We are interested in testing the hypothesis that taller people are better at math.</p>
@@ -1448,7 +1542,7 @@ Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, t
 </div>
 </div>
 </section>
-<section id="section-34" class="slide level2 smaller center">
+<section id="section-40" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -1488,7 +1582,7 @@ F-statistic: 2.493e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-35" class="slide level2 smaller center">
+<section id="section-41" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -1528,7 +1622,7 @@ F-statistic: 5.447e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-36" class="slide level2 smaller center">
+<section id="section-42" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -1573,7 +1667,7 @@ F-statistic: 1.513e+04 on 1 and 9998 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-37" class="slide level2 smaller center">
+<section id="section-43" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">

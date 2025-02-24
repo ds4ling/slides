@@ -933,6 +933,7 @@ imperf_plot_bestfit +
 # {.transition visibility="uncounted"}
 
 {{< tweet user=h_eecham id=1773928616633434510 >}}
+
 <!-- least squares estimation video --> 
 
 ---
