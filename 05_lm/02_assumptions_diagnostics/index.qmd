@@ -267,7 +267,7 @@ around each beta weight will increase (this affects t-ratio and p-value)
 
 ::: {.columns}
 ::: {.column .incremental style="width: 65%; font-size: 0.9em;"}
-- The solution to this problems revolves around proper planning a priori
+- The solution to this problem revolves around proper planning a priori
 - Operationally define every feasible aspect of *how* and *what* you will measure
   - Use previous literature, if available
   - Preregister decisions
@@ -279,7 +279,7 @@ around each beta weight will increase (this affects t-ratio and p-value)
 
 <!-- anchorman gif, 60% of the time it works every time -->
 
----
+
 
 # The error term {.transition}
 
@@ -436,7 +436,7 @@ committed, but you might strongly suspect it
 
 ::: {.closelist .fragment}
 - Our models will always be off by at least a little bit for most of the observations we try to fit. 
-- Nonetheless, it is good practice to examine the residuals of your models in order to help assess how well it fits your data.
+- Nonetheless, it is good practice to examine the residuals of your models in order to help assess goodness-of-fit.
 - Specifically, we need to make sure that there aren't any unexpected patterns because that would suggest that our model does not properly fit our data.
 :::
 
