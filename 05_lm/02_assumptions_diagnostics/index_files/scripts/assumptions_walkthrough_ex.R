@@ -27,8 +27,8 @@ mod2 <- lm(dist ~ speed, data = cars[1:20, ])
 
 # 3.
 # Homoscedasticity of residuals or equal variance
-# How to check? 
-# What are you looking for? The line should be more or less flat
+# How to check? autoplot, diagnosis functions
+# What are you looking for? more or less same 'blob' along x axis
 
 
 
@@ -50,7 +50,7 @@ bad_auto <- lm(pce ~ pop, data = economics)
 acf(bad_auto$residuals)  # highly autocorrelated from the picture.
 
 
-# 4c. Durbin-Watson test
+# 4b. Durbin-Watson test
 # lmtest::dwtest(mod1)
 # lmtest::dwtest(bad_auto)
 
@@ -73,7 +73,7 @@ acf(bad_auto$residuals)  # highly autocorrelated from the picture.
 # What happened? Adding the lag variable removes the autocorrelation so now 
 # we can interpret the parameter of interest.
 #
-# (you might never do this)
+# (you might never do this... we will learn a better way to deal with this later)
 #
 
 
@@ -81,6 +81,8 @@ acf(bad_auto$residuals)  # highly autocorrelated from the picture.
 # 5. predictor and residuals are not correlated
 # How to check? cor.test
 cor.test(mtcars$wt, mod1$residuals)
+
+
 
 
 
@@ -98,7 +100,7 @@ autoplot(bad_auto, which = 2)
 
 #
 # You can check some assumptions automatically
-#
+# (I don't really trust this method)
 gvlma::gvlma(mod1)
 gvlma::gvlma(mod2)
 gvlma::gvlma(bad_auto)
@@ -111,12 +113,12 @@ gvlma::gvlma(bad_auto)
 # 2. save mtcars to "data" (write_csv)
 # 3. load "mtcars" (read_csv)
 # 4. walk through diagnostics in Rscript 
-# 5. create ioslides
+# 5. create xaringan slides
+#   - install xaringan
 #   - sections
 #   - lists
 #   - bold, italics
 #   - r chunks
 # 6. add diagnostics to slides 
-# 7. convert to slidify 
+# 7. try template
 # 8. create repo, push, github pages
-# install xaringan

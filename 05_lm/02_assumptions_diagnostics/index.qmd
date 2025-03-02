@@ -1115,7 +1115,7 @@ summary(cars_mod$residuals)
 ### Make sense of it all
 
 ::: {.columns}
-::: {.column width="60%"}
+::: {.column width="55%"}
 ```{r}
 #| label: model_output3
 #| comment: ''
@@ -1124,7 +1124,7 @@ summary(cars_mod)$coef
 ```
 :::
 
-::: {.column width="40%"}
+::: {.column width="45%"}
 ::: {style="font-size: 0.8em;"}
 1. Function call
 2. Model residuals
@@ -1136,7 +1136,7 @@ summary(cars_mod)$coef
 ::: box-note
 - Meat and potatoes of the output
 - Parameter estimates of intercept and predictor(s)
-- Expresses strength of relationship between predictor(s) and outcome variable
+- Express strength of relationship between predictor(s) and criterion
 - One unit change in predictor will change outcome by...
 :::
 :::
@@ -1389,7 +1389,8 @@ remaining scores to predict all 10 of them
 <!-- assumptions tiktoks 'is it me, jesus?' -->
 
 ::: footer
-<https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189>
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/6811647290709757189>  
+[Exercises](https://www.ds4ling.jvcasillas.com/slides/05_lm/02_assumptions_diagnostics/index_files/scripts/assumptions_walkthrough_ex.R)
 :::
 
 
