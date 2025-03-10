@@ -1,7 +1,4 @@
-# 1. Install packages:
-#    - untidydata
-#    - plot3D
-#    - xaringan
+# 1. Install package: plot3D
 # 2. Load language_diversity dataset
 # 3. Explore variables, tidy (long to wide)
 # 4. Check normality, transform, plot
@@ -14,20 +11,21 @@
 
 
 
-library(tidyverse)
-library(ds4ling)
-library(plot3D)
-library(untidydata)
+library("tidyverse")
+library("ds4ling")
+library("untidydata")
+library("plot3D")
 
 glimpse(language_diversity)
 head(language_diversity)
 
-ld <- language_diversity %>% 
-  filter(., Continent == "Africa") %>% 
+ld <- language_diversity |> 
+  filter(Continent == "Africa") |> 
   pivot_wider(names_from = "Measurement", values_from = "Value")
 
-ld %>% 
-ggplot(., aes(x = Population, y = Langs, color = Area, label = Country)) +
+ld |> 
+ggplot() + 
+  aes(x = Population, y = Langs, color = Area, label = Country) +
   geom_text() + 
   geom_smooth(method = lm)
 
@@ -37,9 +35,11 @@ summary(my_mod)
 plot(my_mod, which = 1:4)
 ds4ling::diagnosis(my_mod)
 
-ld <- ld %>% 
-  mutate(., logPop = log(Population), 
-            logArea = log(Area))
+ld <- ld |> 
+  mutate(
+    logPop = log(Population), 
+    logArea = log(Area)
+  )
 
 hist(ld$Population)
 hist(ld$logPop)
@@ -48,10 +48,12 @@ hist(ld$logArea)
 
 
 
-ld %>% 
-ggplot(., aes(x = logPop, y = Langs, color = logArea, label = Country)) +
-  geom_text() + 
-  geom_smooth(method = lm)
+ld |> 
+ggplot() + 
+  aes(x = logPop, y = Langs) +
+  geom_text(aes(color = logArea, label = Country)) + 
+  geom_smooth(method = lm, formula = "y ~ x")
+
 
 # Fit a multiplicative model (number of languages as a function of lopPop and 
 # logArea)
