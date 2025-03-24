@@ -30,7 +30,7 @@ source(here::here("05_lm", "03_mrc", "index_files", "scripts", "mrc.R"))
 
 
 
-# [References]{.emph} {.final}
+# [References]{.emph} {.final visibility="uncounted"}
 
 ::: {#refs}
 :::
@@ -50,11 +50,11 @@ source(here::here("05_lm", "03_mrc", "index_files", "scripts", "mrc.R"))
 
 
 
-# Bonus [- Statistical control in MRC]{color="white"} {.transition}
+# Bonus [- Statistical control in MRC]{color="white"} {.transition visibility="uncounted"}
 
 ---
 
-## {background-image="./index_files/img/mrc_math.png" background-size="contain"}
+## {background-image="./index_files/img/mrc_math.png" background-size="contain" visibility="uncounted"}
 
 ::: notes
 We are interested in testing the hypothesis that taller people are better at math. 
@@ -72,6 +72,8 @@ and math (age is a confound)
 
 ---
 
+## {visibility="uncounted"}
+
 [Some data]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
 
 ```{r}
@@ -85,7 +87,7 @@ sample_n(mrc_ex_data, 10) |>
 
 ---
 
-## {.smaller .center}
+## {.smaller .center visibility="uncounted"}
 
 ::: {.columns}
 ::: {.column}
@@ -120,7 +122,7 @@ mrc_ex_data |>
 
 ---
 
-## {.smaller .center}
+## {.smaller .center visibility="uncounted"}
 
 ::: {.columns}
 ::: {.column}
@@ -155,7 +157,7 @@ mrc_ex_data |>
 
 ---
 
-## {.smaller .center}
+## {.smaller .center visibility="uncounted"}
 
 ::: {.columns}
 ::: {.column}
@@ -196,7 +198,7 @@ mrc_ex_data |>
 
 ---
 
-## {.smaller .center}
+## {.smaller .center visibility="uncounted"}
 
 ::: {.columns}
 ::: {.column}
@@ -236,6 +238,8 @@ mrc_ex_data |>
 
 ---
 
+## {visibility="uncounted"}
+
 ```{r}
 #| label: mrc-final
 #| fig-asp: 0.6
@@ -249,4 +253,3 @@ mrc_ex_data |>
   labs(title = "Math score as a function of height for each age") + 
   ds4ling_bw_theme(base_size = 14)
 ```
-

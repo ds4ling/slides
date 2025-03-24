@@ -1,4 +1,4 @@
-# Assumptions<br>(revisited) {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_ballantine.png" background-size="contain" background-position="100% 50%" background-color="#272822"}
+# Assumptions<br>(revisited) {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/lm_ballantine.png" background-size="contain" background-position="100% 50%" background-color="#272822" visibility="uncounted"}
 
 ---
 
@@ -118,7 +118,7 @@ Hierarchical partitioning of variance through nested model comparisons
 
 
 
-# Hierarchical Partitioning of Variance {.transition}
+# Hierarchical Partitioning of Variance {.transition visibility="uncounted"}
 
 ---
 
@@ -305,4 +305,884 @@ $$\hat{y} = a + b_{3}x_{3} + e$$
 :::
 :::
 
+---
 
+## Statistics of love example {background-color="#cc0033" background-image="./index_files/img/tinder.png" background-size="500px" background-position="90% 50%" data-menu-title="Ex: Statistics of love" .smaller}
+
+<br>
+
+::: {.columns}
+::: {.column width="60%"}
+- Imagine that you have a romantic partner that you are thinking of dumping 
+- It might be worthwhile to see if it is a good idea by doing the math first
+- So you consider what your life is like with your partner (inclusive model) and subtract what it would be like without your partner (restricted model)
+- If the answer is greater than zero, you might want to retain your partner
+- If it is less than or equal to zero, you may safely dump your partner
+:::
+:::
+
+---
+
+## Stop voicing example{background-image="./index_files/img/vot.png" background-size="800px" background-position="100% 50%" data-menu-title="Ex: stop voicing" .smaller}
+
+<br>
+
+::: {.columns}
+::: {.column width="55%"}
+- Imagine you are looking at how skewness (x~1~) and kurtosis (x~2~) of coronal stop bursts can predict voice-onset time (y)
+- You want to see if you can eliminate the kurtosis (x~2~) variable 
+- Your restricted model would be R^2^ (y, x~1~) 
+i.e., predicting VOT from skewness alone
+- If the semipartial F-ratio is not statistically significant, then you can eliminate the kurtosis variable from the model
+- If the F-ratio is significant, then you cannot eliminate that variable from the model
+:::
+:::
+
+---
+
+## {background-image="./index_files/img/vot.png" background-size="800px" background-position="100% 50%" .smaller}
+
+[Stop voicing example (cont)]{.p-font .emph style="font-size: 1.75em;"}
+
+::: {.columns}
+::: {.column width="55%"}
+- Suppose skewness and kurtosis can predict 40% of the variance in VOT
+- If skewness alone can predict 38% of this, then:
+  - The squared semipartial correlation of kurtosis is 40% - 38% = 2%
+  - Which is less than our total error variance because 1 - 40% = 60%
+- Then skewness does just fine on its own predicting VOT and we can eliminate kurtosis as a predictor
+  - Provided the F-ratio for the semipartial of kurtosis is not statistically significant
+  - This also may depend on sample size
+:::
+:::
+
+---
+
+## {background-image="./index_files/img/vot.png" background-size="800px" background-position="100% 50%" .smaller}
+
+[Stop voicing example (cont)]{.p-font .emph style="font-size: 1.75em;"}
+
+<br>
+
+::: {.columns}
+::: {.column width="55%"}
+- On the other hand, if skewness only accounts for say 10% of the variance
+  - Then 40% - 10% = 30%
+  - Then kurtosis might still be important and we cannot eliminate it from the model due to a statistically significant semipartial F-ratio
+- You are testing to see if skewness is strong enough to account for VOT in coronal stops without considering kurtosis
+- You want a non-significant semipartial F- ratio if you want to eliminate any variable
+:::
+:::
+
+
+---
+
+## Nested model comparisons {data-menu-title="Hierarchical tests of significance"}
+
+### Hierarchical tests of significance
+
+$$F_{(\color{red}{k_{I}}-\color{blue}{k_{R}}),(n - \color{red}{k_{I}} - 1)} = \frac{(\color{red}{R^2_{I}} - \color{blue}{R^2_{R}}) / (\color{red}{k_{I}} - \color{blue}{k_{R}})}{(1 - \color{red}{R^2_{I}}) / (n - \color{red}{k_{I}} - 1)}$$
+
+::: {.closelist .incremental style="font-size: 0.9em;"}
+- R^2^ = Squared multiple correlation
+- k = Model degrees of freedom (number of predictors)
+- n = Total sample size
+- [I]{.emph} = [Inclusive Model]{.emph} (Including All Predictors)
+- [R]{color="blue"} = [Restricted Model]{color="blue"} (Excluding Some Predictors)
+- ([R^2^~I~]{.emph} – [R^2^~R~]{color="blue"}) = Squared Semipartial Correlation
+:::
+
+---
+
+[Nested model comparisons]{.p-font .emph style="font-size: 1.75em;"}
+
+::: {style="font-size: 0.9em;"}
+- Results of hierarchical partitioning of variance and hierarchical tests of significance depend critically upon causal order specified among predictors:
+  - There is no purely mathematical solution to this problem
+  - Causal ordering of predictors must be specified by theory
+- Comparisons of hierarchically nested models permit testing of alternative hypotheses generated by rival causal theories
+- A "confound" is just an alternative hypothesis towards which one has a negative attitude
+:::
+
+. . .
+
+[What about likelihood ratio tests?]{.p-font style="font-size: 1.1em; color: #666666;"}
+
+---
+
+## Nested model comparisons {.smaller data-menu-title="Genetics example revisited"}
+
+### Genetics example revisited
+
+::: {.fragment}
+- You share 50% of genes with your Mom (M) and 50% with your Dad (D)
+- But your parents don’t share that many genes
+- M and D are generally not genetically correlated with each other, but you 
+(the M\*D interaction) are correlated with both M and D
+:::
+
+::: {.fragment}
+- So M and D are main (additive) effects and you are the M\*D (multiplicative) interaction
+- You are now correlated with both main effects
+- This causes *multicollinearity*
+- M and D may then argue over this shared variance
+- You have become a confound
+:::
+
+---
+
+## Nested model comparisons {.smaller data-menu-title="Dealing with multicollinearity"}
+
+### Dealing with multicollinearity
+
+::: {.incremental}
+- To test for the statistical significance of the interaction effect we use hierarchically nested model comparisons:
+  - This is a reasonable solution for the problem of multicollinearity
+  - Interaction terms (nonadditivity) ALWAYS create multicollinearity
+- If the main effects are already correlated, the multicollinearity is worse:
+  - But you still get multicollinearity even if the component main effects are not correlated
+- The purely additive model (main effects only) is simpler than the multiplicative model (including the interaction):
+  - So if additive model is good enough then go with it (more parsimonious)
+  - Leave out (eliminate) interaction effects first because they might be too confusing
+:::
+
+---
+
+## Nested model comparisons {data-menu-title="Ex: MRC with three predictors"}
+
+### Example: A multiple regression with three predictors
+
+<center>
+`y ~ a * b * c`
+</center>
+
+::: {.columns}
+::: {.column .incremental .fragment}
+::: {style="font-size: 0.7em;"}
+<br><br>
+**Main effects**: a, b, and c  
+**2-way interactions**: a:b, a:c, and b:c  
+**3-way interactions**: a:b:c
+
+- Which terms get causal priority in the hierarchical partitioning of variance?
+- Main effects, then 2-way interactions, then 3-way interactions, etc.
+:::
+:::
+
+::: {.column .fragment}
+::: {style="font-size: 0.7em;"}
+
+<br>
+
+### It is more parsimonious to use the main effects:
+
+- Fewer dfs are used and it is a less complicated model
+- Using a linear additive model is generally the most parsimonious way to go
+- Common variance should be given first to the main effects because they are conceptually more parsimonious
+:::
+:::
+:::
+
+---
+
+## Nested model comparisons {data-menu-title="Lack of parsimony"}
+
+### Lack of parsimony
+
+::: {style="font-size: 0.8em;"}
+- If you use an interaction term (e.g., a*b), you are claiming that you need BOTH in order to have an effect
+  - This is an extra substantive claim which needs to be supported 
+  - It’s an [**AND**]{.emph} statement not an [OR]{color="blue"} statement, so it’s a bit riskier
+- Inclusive model contains all interactions that you wish to test:
+  - Then you use restricted models to test each interaction separately
+- You can generate a ridiculous amount of hypotheses with a small number of variables and this might really compromise your model parsimony:
+  - You need a theoretical reason to include an interaction term
+:::
+
+---
+
+##
+
+[Nested model comparisons]{.p-font .emph style="font-size: 1.75em;"}
+
+[Summarizing]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+- Problem: Multicollinearity
+
+- Solution: Hierarchical partitioning of variance
+
+- Make an inclusive model and do hierarchical partitioning of variance
+
+- Determine which terms (lower order and higher order, additive and interactive), if any, can be eliminated
+
+---
+
+## Nested model comparisons {data-menu-title="Causal priority"}
+
+### Causal priority
+
+- So which one gets causal priority?
+
+- Main effects generally do:
+  - But now two-way interactions and squared terms are just as complicated
+  - So are three-way interactions and cubed terms, etc.
+
+- There is no convention for deciding which comes first:
+  - There is no mathematical solution to this problem
+  - We need a theoretical solution
+
+---
+
+## Nested model comparisons {data-menu-title="Principles of strong inference"}
+
+### Use principles of strong inference
+
+- Only test plausible rival hypotheses
+
+- Be careful and selective!
+
+- Even with a small number of primitive component terms (main effects), once you examine all the possible interactions you will have a complex model
+
+- You will exhaust your statistical power very quickly
+
+---
+
+## Nested model comparisons {data-menu-title="Ex: NMC in R"}
+
+### Doing it in R
+
+::: {style="font-size: 0.75em;"}
+- Fit all the relevant models
+:::
+
+```{r}
+#| label: mod_comp1
+#| echo: true
+mod_full <- lm(mpg ~ wt + drat + wt:drat, data = mtcars) # inclusive model
+mod_int  <- lm(mpg ~ wt + drat          , data = mtcars) # restricted model
+mod_drat <- lm(mpg ~ wt                 , data = mtcars) # restricted model
+mod_wt   <- lm(mpg ~ drat               , data = mtcars) # restricted model
+mod_null <- lm(mpg ~ 1                  , data = mtcars) # null model
+```
+
+<mybr>
+
+::: {.fragment .closelist style="font-size: 0.72em;"}
+- Test higher order variables and main effects using nested model comparisons 
+  - In R we do this with the [`anova()`]{.emph} function
+  - It is not an anova (for that we use the [`aov()`]{.emph} function)
+  - We include the restricted model and the inclusive model to test if removing 
+  the variable from the inclusive model significantly changes the goodness of it
+  - If it does, then we leave it in (it is important)
+  - If it doesn't, then we can take it out (it is not important)
+:::
+
+---
+
+[Nested model comparisons]{.emph .p-font style="font-size: 1.75em;"}
+
+[Doing it in R]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+```{r}
+#| label: mod_comp2
+#| comment: ""
+#| echo: true
+anova(mod_int, mod_full) # Test interaction effect
+```
+
+<br>
+
+::: {.incremental style="font-size: 0.77em;"}
+- There is a `wt` x `drat` interaction (*F*(1) = 5.41, p < 0.03)
+- Note: we report the df, the F-ratio, and the p-value from this output.
+:::
+
+
+
+
+# Capitalizing on Chance {background-image="./index_files/img/dice.png" background-size="300px" background-position="85% 50%" visibility="uncounted"}
+
+---
+
+## {.smaller visibility="uncounted"}
+
+[Inflated R<sup>2</sup>]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+::: {.closelist}
+- Least squares estimation capitalizes on chance associations
+- Including irrelevant variables increases R<sup>2</sup> non-significantly
+- Sample R<sup>2</sup> is systematically overestimated, or inflated
+:::
+
+. . .
+
+[As k increases, there is more capitalization on chance]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+::: {.closelist}
+- This is bad
+- Every variable you measure has some error in it, and some of this error can 
+be capitalized on by least squared estimation and this will boost our observed 
+R<sup>2</sup>
+- So sample R<sup>2</sup> deviates more from the true population R<sup>2</sup> 
+as k increases
+:::
+
+. . .
+
+[As n increases, the overestimation of R<sup>2</sup> is less:]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+::: {.closelist}
+- This is good
+- The bigger the sample we have, the closer our observed R<sup>2</sup> will be 
+to the real population R<sup>2</sup>
+- When n equals infinity, then our sample R<sup>2</sup> would equal the real 
+R<sup>2</sup>
+:::
+
+---
+
+## {visibility="uncounted"}
+
+[Alpha slippage]{.emph .p-font style="font-size: 1.75em;"}
+
+::: {.closelist}
+- Alpha is the probability of committing a Type I Error
+- Experiment-Wise alpha is a function of the Test-Wise alpha and the total number of significance tests conducted:
+:::
+
+$$\color{red}{\alpha _{e}} = 1 - (1 - \color{blue}{\alpha _{T}})^\color{green}{k}$$
+
+|                                 |                              |
+| ------------------------------: | :--------------------------- |
+| [α<sub>T</sub>]{color="blue"} = | Test-wise alpha              |
+| [k]{color="green"}            = | Number of significance tests |
+| [α<sub>E</sub>]{.emph}        = | Experiment-wise alpha        |
+
+---
+
+## {visibility="uncounted"}
+
+[Alpha slippage]{.emph .p-font style="font-size: 1.75em;"}
+
+<br>
+
+::: {.columns}
+::: {.column}
+
+<center>
+[.40]{.emph} = 1 - (1 - [0.05]{color="blue"})<sup>[10]{color="green"}</sup>
+</center>
+
+<br><br>
+
+::: {style="font-size: 0.7em;"}
+|                        |                              |
+| ---------------------: | :--------------------------- |
+| [0.05]{color="blue"} = | Test-wise alpha              |
+| [10]{color="green"}  = | Number of significance tests |
+| [.40]{.emph}         = | Experiment-wise alpha        |
+:::
+:::
+
+::: {.column}
+
+<center>
+[.64]{.emph} = 1 - (1 - [0.05]{color="blue"})<sup>[20]{color="green"}</sup>
+</center>
+
+<br><br>
+
+::: {style="font-size: 0.7em;"}
+|                        |                              |
+| ---------------------: | :--------------------------- |
+| [0.05]{color="blue"} = | Test-wise alpha              |
+| [20]{color="green"}  = | Number of significance tests |
+| [.64]{.emph}         = | Experiment-wise alpha        |
+:::
+:::
+:::
+
+---
+
+## {visibility="uncounted"}
+
+[Alpha slippage]{.emph .p-font style="font-size: 1.75em;"}
+
+<br>
+
+::: {.columns}
+::: {.column}
+
+<center>
+[.99]{.emph} = 1 - (1 - [0.05]{color="blue"})<sup>[100]{color="green"}</sup>
+</center>
+
+<br><br>
+
+::: {style="font-size: 0.7em;"}
+|                        |                              |
+| ---------------------: | :--------------------------- |
+| [0.05]{color="blue"} = | Test-wise alpha              |
+| [100]{color="green"} = | Number of significance tests |
+| [.99]{.emph}         = | Experiment-wise alpha        |
+:::
+:::
+
+::: {.column}
+
+<center>
+[.1.0]{.emph} = 1 - (1 - [0.05]{color="blue"})<sup>[500]{color="green"}</sup>
+</center>
+
+<br><br>
+
+::: {style="font-size: 0.7em;"}
+|                        |                              |
+| ---------------------: | :--------------------------- |
+| [0.05]{color="blue"} = | Test-wise alpha              |
+| [500]{color="green"} = | Number of significance tests |
+| [1.0]{.emph}         = | Experiment-wise alpha        |
+:::
+:::
+:::
+
+---
+
+## {.smaller visibility="uncounted"}
+
+[Alpha slippage]{.emph .p-font style="font-size: 1.75em;"}
+
+[Taking repeated risks]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+::: {.columns}
+::: {.column width="40%"}
+::: {style="font-size: 0.9em;"}
+- Every time you do a significance test (at .05) you take a risk of making a 
+Type I Error every 1 in 20 times
+- If you do it once you have a 95% chance of being right
+- But if you do it multiple times your chances of eventually making a Type I 
+Error greatly increases
+- If you have an issue of a journal with 20 articles in it (each using a .05 
+alpha), the chance of one of those articles reporting a Type I Error is pretty 
+high
+:::
+:::
+
+::: {.column width="60%"}
+
+```{r}
+#| label: alpha_slippage
+#| fig-asp: 0.9
+#| fig-align: "right"
+#| out-width: "90%"
+error_rate <- vector(mode = 'numeric', length = 100)
+
+for (i in 1:100) {
+  error_rate[i] <- 1 - (1 - 0.05)^i
+}
+
+tibble(x = 1:100, y = error_rate) |> 
+  ggplot() + 
+  aes(x = x, y = y) + 
+  geom_path(color = "#cc0033", linewidth = 1.5) + 
+  geom_point(pch = 21, color = "white", fill = '#cc0033', size = 5) + 
+  labs(x = "# of tests", y = "Type I error rate") + 
+  ds4ling::ds4ling_bw_theme(base_size = 24)
+```
+:::
+:::
+
+
+
+
+
+# Empirical selection of variables {.transition visibility="uncounted"}
+
+---
+
+## {.smaller data-menu-title="Overview"}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+<br>
+
+[We should strive to create theoretically specified models that test a priori alternative hypotheses:]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+- In these models (in a perfect world), all hypotheses are carefully 
+selected, plausible rival hypotheses
+- Higher order variables are included when theoretically motivated
+
+. . .
+
+[We should be discouraged from testing atheoretical ones:]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+- If you do all possible comparisons, you weaken your statistical 
+power and you get alpha slippage
+- When you try to correct for the alpha slippage (by making a more stringent 
+test-wise alpha) you run the risk of committing more Type II Errors
+
+---
+
+## 
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.75em;"}
+
+- There are other techniques in multiple regression that are completely different in basic objectives  i.e., empirical selection or exploratory regression techniques
+- There are two reasons why we would use exploratory regression techniques that 
+are not based on theory:
+  - Reason 1: Some people are interested in prediction and not causation, and 
+  predictions don’t require theory
+  - Reason 2: There may be an honest lack of theory in the area you are 
+  investigating
+
+---
+
+## {.smaller}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+[Reason 1: Some people are interested in prediction and not causation, and predictions don’t require theory]{.p-font style="font-size: 1.35em; color: #666666;"}
+
+<mybr>
+
+- For example, motorcycle ownership increases car insurance rates:
+  - Causally, this makes no sense
+  - But for predictive purposes, it does make sense
+
+<mybr>
+
+- Maybe motorcycle owners are riskier car drivers due to personality factors:
+  - High testosterone?
+  - Frontal lobe development?
+
+---
+
+## {.smaller}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+[Reason 2: There may be an honest lack of theory in the area you are investigating]{.p-font style="font-size: 1.35em; color: #666666;"}
+
+- It might be an entirely new area of scientific investigation
+- It might be the case that existing theory was found inadequate or 
+insufficiently supported by the evidence
+
+<mybr>
+
+- However, some people still use exploratory techniques even when they have a 
+theory that they could be testing 
+  - experimenter degrees of freedom
+  - p-hacking
+  - fishing expeditions
+  - pseudoscience
+
+<mybr>
+
+- This is unnecessary and wrong
+
+---
+
+## 
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.75em;"}
+
+[How should we do it?]{.p-font style="font-size: 1.25em; color: #666666;"}
+
+::: {style="font-size: 0.8em;"}
+- First, we must design the study:
+  - We need to sample a broad set of variables, and think as creatively and 
+  diversely as you can about what to include
+  - We need to go beyond the “usual suspects”
+- Second, we need to specify the model:
+  - How do we figure out which variables to include and which should be 
+  excluded without a theory?
+- Two elementary methods:
+  - Backward Elimination
+  - Forward Selection
+:::
+
+---
+
+## {.smaller data-menu-title="Backward elimination"}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Backward elimination
+
+::: {.incremental style="font-size: 0.8em;"}
+1. Include all your variables into a single simultaneous regression model:
+    - Get b-weights, R<sup>2</sup>, etc.
+    - Take a look at all the b-weights
+2. Try to eliminate any irrelevant variables:
+    - You are focusing on variables with the smallest effect sizes and the "least 
+  significant" b-weights
+    - Do this one step at time, because multicollinearity may be involved
+    - Remember this is not theoretically-based and there are no a priori 
+  hypotheses
+3. Re-fit the model with the weakest variable eliminated
+4. Compare new model to the original one and see if its better:
+    - Look at the new R<sup>2</sup> and then compare the R<sup>2</sup> of the model with that variable included with the model with that variable removed, and see if the new model is statistically acceptable
+5. If you could eliminate that variable, you now look at this model (not the 
+original model) and see which is the next weakest variable
+    - Try to eliminate this one, and do the same thing all over again
+:::
+
+---
+
+## 
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Backward elimination
+
+- Keep doing this until when everything left is significant
+
+- When removing something more results in a statistically significant sR^2^ F-ratio
+
+- Then you have to put that last variable back in, and that’s your final model
+
+- You are picking off the weakest variables until you can no longer validly eliminate anything else
+
+---
+
+## 
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Backward elimination - Problems
+
+- In true backward elimination, once you eliminate something you can’t go back 
+on that decision
+
+- Due to multicollinearity, one variable that was eliminated in an earlier step 
+might now be significant in a new context, but you have no way to know this
+
+- Remember significance is often context dependent
+
+- Variable A might have not been significant in step 2, but now that variables 
+B, C, and D have been removed it might be significant
+
+---
+
+## {.smaller data-menu-title="Forward selection"}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Forward selection
+
+- Correlate all the predictors with the criterion variable (do bivariate 
+correlations of all the predictors with the criterion):
+  - Pick the one with the best bivariate correlation
+  - Run the model with this correlation
+- Now, you don't want to include your next largest bivariate correlation from 
+the original correlations that you found:
+  - Instead, you partial out variable 1 from all remaining variables
+  - Then you take the one with the biggest sR^2^ after variable 1 was removed and run the next regression
+- To get variable 3, you partial out variable 1 and 2 and look at the variable 
+with the next biggest sR^2^, and then you put that one in
+
+---
+
+## {.smaller}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Forward selection
+
+::: {style="font-size: 0.85em;" .incremental}
+- After each step, you take the difference in your R^2^ values and 
+test it for significance to see if the newly added variable adds a significant 
+amount of variance to the previous model:
+  - If you have already added variables 1 and 2, and now you want to add 
+  variable 3 you need to compare the model with variables 1 and 2 with the 
+  model with variables 1, 2, and 3
+  - So you subtract the R^2^ and do the semi-partial F-ratio
+  - Just like an a priori hierarchical procedure!
+- Do this until the most recently added variable no longer adds significance 
+variance (sR^2^) to the model:
+  - And then throw that variable back!
+- Why not test the remaining ones?
+  - Because you were testing the ones with the largest sR^2^, so any 
+  remaining variables will have lower sR^2^ and will therefore not add 
+  any more significant variance to the model than your last tested variable
+:::
+
+---
+
+## 
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Forward selection - Problems
+
+Similar to Backward Elimination:
+
+::: {.closelist}
+- As you put things in there is no way for you to go back and change variables that you already added
+- So there is no way of going back and rethinking what you have already done
+- Even though variable 1 may have been good in the original context, but now that other variables have been added, it might not make so much sense anymore
+- So you can end up in two completely different places using the same data when you use forward selection and backward elimination
+:::
+
+---
+
+## {.smaller data-menu-title="Stepwise regression"}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+### Stepwise regression
+
+::: {style="font-size: 0.85em;"}
+- Stepwise Regression is the most popular procedure for exploratory regression:
+  - It is a combination of forward selection and backward elimination
+  - Not the same as hierarchical partitioning of variance!
+- Basically, you take one step forward, one step back, one step forward, etc.:
+  - Start with forward selection, then do backward elimination
+  - Until both of the procedures fail and you can’t add anything profitably and you can’t lose anything profitably
+- By combining the two procedures, you get to add something, but then you follow the addition immediately with a backward elimination to see if you can 
+eliminate something else:
+  - Which you couldn’t do previously with forward selection
+  - The backward elimination looks at everything, so you can eliminate anything and anytime as long as you don’t lose a significant amount of variance
+  - So you can eliminate variable 1 in step 8
+:::
+
+---
+
+## {.smaller}
+
+[Empirical selection of variables]{.emph .p-font style="font-size: 1.95em;"}
+
+[hi]{color="white"}
+
+### Benefits of using exploratory regression techniques:
+
+- You get to proceed in spite of lack of theoretical guidance
+- Produce hypotheses/theory building for future research
+
+<br>
+
+### Major problems involved:
+
+- No a priori theory involved, so the procedure is totally mindless
+- You are testing a very large number of variables and you are running a HUGE risk of committing Type I Errors due to massive capitalization on chance
+- In fact, you might end up with nothing but Type I Errors!
+
+
+
+
+
+# Reporting results {.transition visibility="uncounted"}
+
+---
+
+## Reporting {.smaller data-menu-title="Overview"}
+
+- The main purpose is to explain what you did in a manner that is understandable and reproducible. You should report: 
+
+::: {.columns}
+::: {.column width="45%"}
+[**General description**]{color="green"}: 
+
+- Model fit to the data
+- Variables included (criterion, predictors)
+- Coding/transformations 
+- Model assumptions/diagnostics
+- How you assessed main effects/interactions
+- Decision rules (e.g., alpha)
+:::
+
+::: {.column .fragment width="40%"}
+[**Results**]{color="blue"}
+
+- Model fit
+- Main effects (usually NMC)
+- Interactions (usually NMC)
+- Interpretations: 
+  - directionality
+  - effect-size 
+  - uncertainty 
+:::
+
+::: {.column width="15%" .fragment}
+
+<br><br><br>
+
+::: box-note
+<center>
+
+$\beta$  
+SE  
+CI  
+p-val
+
+</center>
+:::
+:::
+:::
+
+---
+
+## Reporting {background-image="./index_files/img/reporting1.png" background-size="1300px" background-position="50% 60%" data-menu-title="Examples"}
+
+### General description
+
+[@llompart2016lexically]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+
+---
+
+## {background-image="./index_files/img/reporting2.png" background-size="1000px" background-position="60% 60%"}
+
+[Reporting]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
+
+### Results
+
+[@llompart2016lexically]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+
+---
+
+## {background-image="./index_files/img/reporting3.png" background-size="1200px" background-position="60% 60%"}
+
+[Reporting]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
+
+### General description
+
+[@casillas2015production]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+
+---
+
+## {background-image="./index_files/img/reporting4.png" background-size="1300px" background-position="60% 55%"}
+
+[Reporting]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
+
+### Results
+
+[@casillas2015production]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+
+---
+
+## {background-image="./index_files/img/reporting_bayesian1.png" background-size="1200px" background-position="60% 70%"}
+
+[Reporting]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
+
+### General description
+
+[@casillas2023using]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+---
+
+## {background-image="./index_files/img/reporting_bayesian2.png" background-size="1300px" background-position="60% 60%"}
+
+[Reporting]{.emph .p-font style="font-size: 1.75em; color: #666666;"}
+
+### Results
+
+[@casillas2023using]{style="font-size: 0.5em; color: #666666;" .absolute bottom=-15 right="38%"}
+
+---
+
+## {background-color="#000" visibility="uncounted"}
+
+{{< tweet user=merm_bot id=1841652233651233066 >}}
+
+<!-- another day coding in R --> 
+
+<!-- https://www.react-graph-gallery.com/example/t-test-playground --> 
