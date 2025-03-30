@@ -1514,7 +1514,41 @@ gtsummary::tbl_merge(
 
 ## {background-color="black" background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" background-size="contain"}
 
+---
 
+## {.smaller}
+
+```{r} 
+#| label: null_model
+vocab_age_null <- lm(vocab ~ 1, data = vocab_sample)
+```
+
+```{r}
+#| label: model_comparisons
+#| echo: true
+anova(vocab_age_null, vocab_age_mod, vocab_additive_mod, vocab_int_mod)
+```
+
+. . .
+
+::: {style="font-size: 0.8em;"}
+The vocabulary data were analyzed using a general linear model. Estimated 
+vocabulary size was the criterion with *age* and *reader type* 
+(frequent/average) as predictors. The *reader type* factor was dummy coded with 
+average readers set as the reference group. Main effects and the *age* by 
+*reader type* interaction were assessed using nested model comparisons. 
+Experiment-wise alpha was set at 0.05. 
+
+There was a main effect of age (F(1) = 1649.49, p < 0.001), reader type 
+(F(1) = 243.34; p < 0.001), as well as an age by reader type interaction 
+(F(1) = 45.19; p < 0.001). The model containing the interaction provided the 
+best fit of the data (R<sup>2</sup> = 0.91). Overall, vocabulary size increased 
+as a function of age. However, the size of the effect was modulated by reader 
+type. Specifically, average readers showed an increase of approximately 1,111 
+words +/- 48.42 se (t = 22.94, p < 0.001) per year. Frequent readers showed an 
+additional increase of 466 words +/- 69.28 se per year 
+(1,577 words total, t = 6.72, p < 0.001). 
+:::
 
 
 

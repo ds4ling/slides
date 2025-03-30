@@ -224,7 +224,7 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The general linear model</h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-03-23</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-03-30</mybr></p>
 </section>
 <section id="section" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_family_deaths.png" data-background-size="contain" data-visibility="uncounted">
 <h2></h2>
@@ -2481,6 +2481,33 @@ F-statistic:   646 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="section-20" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" data-background-size="contain">
 <h2></h2>
+</section>
+<section id="section-21" class="slide level2 smaller">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">anova</span>(vocab_age_null, vocab_age_mod, vocab_additive_mod, vocab_int_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: vocab ~ 1
+Model 2: vocab ~ ages
+Model 3: vocab ~ ages + reader_type
+Model 4: vocab ~ ages * reader_type
+  Res.Df        RSS Df  Sum of Sq        F    Pr(&gt;F)    
+1    199 5208897978                                     
+2    198 1182686093  1 4026211885 1649.497 &lt; 2.2e-16 ***
+3    197  588724259  1  593961835  243.340 &lt; 2.2e-16 ***
+4    196  478410910  1  110313349   45.194 1.901e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div style="font-size: 0.8em;">
+<p>The vocabulary data were analyzed using a general linear model. Estimated vocabulary size was the criterion with <em>age</em> and <em>reader type</em> (frequent/average) as predictors. The <em>reader type</em> factor was dummy coded with average readers set as the reference group. Main effects and the <em>age</em> by <em>reader type</em> interaction were assessed using nested model comparisons. Experiment-wise alpha was set at 0.05.</p>
+<p>There was a main effect of age (F(1) = 1649.49, p &lt; 0.001), reader type (F(1) = 243.34; p &lt; 0.001), as well as an age by reader type interaction (F(1) = 45.19; p &lt; 0.001). The model containing the interaction provided the best fit of the data (R<sup>2</sup> = 0.91). Overall, vocabulary size increased as a function of age. However, the size of the effect was modulated by reader type. Specifically, average readers showed an increase of approximately 1,111 words +/- 48.42 se (t = 22.94, p &lt; 0.001) per year. Frequent readers showed an additional increase of 466 words +/- 69.28 se per year (1,577 words total, t = 6.72, p &lt; 0.001).</p>
+</div>
+</div>
 </section></section>
 <section id="references" class="title-slide slide level1 final smaller scrollable" data-visibility="uncounted">
 <h1><span class="emph">References</span></h1>
