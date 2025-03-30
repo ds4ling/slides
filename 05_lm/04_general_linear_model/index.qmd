@@ -1550,23 +1550,21 @@ additional increase of 466 words +/- 69.28 se per year
 (1,577 words total, t = 6.72, p < 0.001). 
 :::
 
+---
 
+## {data-menu-title="Shiny app: Multicollinearity in MRC" background-iframe="https://gallery.shinyapps.io/multi_regression/" background-interactive=TRUE}
 
+::: notes
+<https://gallery.shinyapps.io/multi_regression/>
+:::
 
+<!-- Multiple regression --> 
 
+---
 
+## Practice
 
-
-
-
-
-
-
-
-
-
-
-
+[dummy variable practice](./index_files/dummies_walkthrough/dummies.zip)
 
 
 
@@ -1580,4 +1578,10 @@ additional increase of 466 words +/- 69.28 se per year
 ::: notes
 @figueredo_cont
 @figueredo_glm
+@wickham2016r
+@qass93_ch2
+@qass93_ch3
+@qass93_ch4
 :::
+
+
