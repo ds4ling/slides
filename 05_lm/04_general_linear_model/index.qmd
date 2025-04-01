@@ -16,13 +16,15 @@ source(here::here("assets", "scripts", "helpers.R"))
 ## {background-image="https://www.jvcasillas.com/media/rstats/memes/lm_family_deaths.png" background-size="contain" visibility="uncounted"}
 
 
-# The general linear model {.transition visibility="uncounted"}
+# A quick review {.transition visibility="uncounted"}
 
 ---
 
-## A quick review {.smaller}
+## {.smaller data-menu-title="Classical MRC"}
 
-### Classical MRC
+[A quick review]{.p-font .emph style="font-size: 1.75em;"}
+
+[Classical MRC]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 - In classical Multiple Regression/Correlation (MRC) predictors are 
 continuous variables
@@ -47,9 +49,11 @@ gets a different treatment, this is also discontinuous
 
 ---
 
-## A quick review 
+## {data-menu-title="Classical ANOVA"}
 
-### Classical ANOVA
+[A quick review]{.p-font .emph style="font-size: 1.75em;"}
+
+[Classical ANOVA]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 - Classical Analysis of Variance (ANOVA) assumes that all predictors are 
 discontinuous variables
@@ -58,14 +62,14 @@ discontinuous variables
 
 ---
 
-## A quick review 
+[A quick review]{.p-font .emph style="font-size: 1.75em;"}
 
-### Both types of variables (continuous and categorical) exist in the world
+[Both types of variables (continuous and categorical) exist in the world]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {.columns}
 ::: {.column}
 
-### Categorical
+Categorical
 
 - Smoker/Non-smoker
 - Native speaker/L2 learner
@@ -76,7 +80,7 @@ discontinuous variables
 
 ::: {.column}
 
-### Continuous
+Continuous
 
 - Age
 - Weight
@@ -92,9 +96,11 @@ discontinuous variables
 
 ---
 
-## A quick review
+## {data-menu-title="The modern GLM"}
 
-### The modern GLM
+[A quick review]{.p-font .emph style="font-size: 1.75em;"}
+
+[The modern GLM]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 Modern GLM includes both MRC and ANOVA:
 
@@ -104,9 +110,9 @@ Modern GLM includes both MRC and ANOVA:
 
 ---
 
-## A quick review
+[A quick review]{.p-font .emph style="font-size: 1.75em;"}
 
-### A unified model
+[The modern GLM]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 - Before ANOVA and MRC were unified, we could not account for both levels of 
 measurement within the same model
@@ -148,7 +154,9 @@ perceptions
 
 ---
 
-## [A brief history]{.emph} {background-color="black" background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_socrates.png" background-size="contain" background-position="100%"}
+## {background-color="black" background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_socrates.png" background-size="contain" background-position="100%"}
+
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
 <br><br>
 
@@ -164,9 +172,11 @@ perceptions
 
 ---
 
-## A brief history {background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_plato.png" background-size="contain" background-position="100%"}
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_plato.png" background-size="contain" background-position="100%"}
 
-### How unification occurred
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
+
+[How unification occurred]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {.columns}
 ::: {.column style="font-size: 0.75em; width: 55%"}
@@ -179,21 +189,28 @@ perceptions
 
 ---
 
-## A brief history {background-image="./index_files/img/pos_wide1.png" background-size="contain" visibility="uncounted"}
+## {background-image="./index_files/img/pos_wide1.png" background-size="contain" visibility="uncounted"}
+
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
+
 
 ---
 
-## A brief history {background-image="./index_files/img/pos_wide2.png" background-size="contain" visibility="uncounted"}
+## {background-image="./index_files/img/pos_wide2.png" background-size="contain" visibility="uncounted"}
+
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
 ---
 
-## A brief history {background-image="./index_files/img/pos_wide3.png" background-size="contain" visibility="uncounted"}
+## {background-image="./index_files/img/pos_wide3.png" background-size="contain" visibility="uncounted"}
+
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### *Two Disciplines of Scientific Psychology* [@cronbach1957two]
+[*Two Disciplines of Scientific Psychology* [@cronbach1957two]]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 <br>
 
@@ -223,9 +240,10 @@ perceptions
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### The two disciplines
+[The two disciplines]{.p-font style="font-size: 1.25em; color: #666666;"}
+
 
 ::: {style="font-size: 0.8em;"}
 **MRC and ANOVA are both part of the same GLM model but, over time, they began to diverge from each other:**
@@ -245,9 +263,11 @@ test in an old paper
 
 ---
 
-## A brief history {background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" background-size="600px" background-position="90% 50%"}
+## {background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" background-size="600px" background-position="90% 50%"}
 
-### Sir Ronald Aylmer Fisher
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
+
+[Sir Ronald Aylmer Fisher]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {.columns}
 ::: {.column style="font-size: 0.8em; width: 55%;"}
@@ -288,9 +308,11 @@ test in an old paper
 
 ---
 
-## A brief history {background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" background-size="500px" background-position="90% 50%"}
+## {background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" background-size="500px" background-position="90% 50%"}
 
-### Sir Ronald Aylmer Fisher
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
+
+[Sir Ronald Aylmer Fisher]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 Invented ANOVA to support<mybr>the experimental method:
 
@@ -305,9 +327,9 @@ Invented ANOVA to support<mybr>the experimental method:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Fisher's method
+[Fisher's method]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {.closelist style="font-size: 0.7em;"}
 - Fisher's used random assignment, not random sampling 
@@ -327,9 +349,9 @@ Invented ANOVA to support<mybr>the experimental method:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Fisher's method
+[Fisher's method]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {style="font-size: 0.7em;"}
 - Using the central limit theorem, we know how the distribution of randomly selected group means will differ from the mean of the entire population
@@ -347,9 +369,9 @@ Invented ANOVA to support<mybr>the experimental method:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Fisher's method
+[Fisher's method]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {style="font-size: 0.7em;"}
 - This was designed for purely experimental purposes, not for naturally occurring phenomena, i.e., observational studies
@@ -364,9 +386,9 @@ Invented ANOVA to support<mybr>the experimental method:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Analysis of Variance (ANOVA)
+[Analysis of Variance (ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 - How did Sir Ronald Fisher build the ANOVA model?
 
@@ -374,9 +396,9 @@ Invented ANOVA to support<mybr>the experimental method:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Summed Linear Deviations (MRC)
+[Summed Linear Deviations (MRC)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 Sum of Linear Deviations:  
 
@@ -386,7 +408,7 @@ $$(y_{i} - \bar{y}) = (\hat{y}_{i} - \bar{y}) + (y_{i} - \hat{y}_{i})$$
 
 <center>
 
-### Total Deviation = Predicted Deviation + Error Deviation
+Total Deviation = Predicted Deviation + Error Deviation
 
 </center>
 
@@ -394,9 +416,9 @@ $$(y_{i} - \bar{y}) = (\hat{y}_{i} - \bar{y}) + (y_{i} - \hat{y}_{i})$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Multiple Regression/Correlation
+[Multiple Regression/Correlation]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 In MRC, the predicted y ( $\hat{y}_{i}$ ) is the score predicted based on the regression line:
 
@@ -407,9 +429,9 @@ In MRC, the predicted y ( $\hat{y}_{i}$ ) is the score predicted based on the re
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Summed Linear Deviations (ANOVA)
+[Summed Linear Deviations (ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 Sum of Linear Deviations:  
 
@@ -417,15 +439,15 @@ $$(y_{i} - \bar{y}_{G}) = (\bar{y}_{j} - \bar{y}_{G}) + (y_{i} - \bar{y}_{j})$$
 
 <center>
 
-### Total Deviation = Predicted Deviation + Error Deviation
+Total Deviation = Predicted Deviation + Error Deviation
 
 </center>
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Analysis of Variance
+[Analysis of Variance]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 In ANOVA, you are dealing with groups:
 
@@ -435,9 +457,9 @@ In ANOVA, you are dealing with groups:
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Analysis of Variance
+[Analysis of Variance]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 What is the best prediction you can make about any individual in a group if you don’t know anything else about that individual?
 
@@ -458,9 +480,9 @@ This is because my prediction for you (if I don’t know anything else about you
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Sums of Squared Deviations (MRC)
+[Sums of Squared Deviations (MRC)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 SS = Sum of squares: 
 
@@ -480,9 +502,9 @@ $$SS_{Total} = SS_{Predicted} + SS_{Error}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Sums of Squared Deviations (ANOVA)
+[Sums of Squared Deviations (ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 SS = Sum of squares: 
 
@@ -502,9 +524,9 @@ $$SS_{Total} = SS_{Predicted} + SS_{Error}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Squared Multiple Correlation Coefficient (MRC)
+[Squared Multiple Correlation Coefficient (MRC)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 $$R^2 = \frac{\sum (\hat{y}_{i} - \bar{y})^2} {\sum (y_{i} - \bar{y})^2}$$
 
@@ -515,9 +537,9 @@ Proportion of Variance Explained
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Squared Multiple Correlation Coefficient (ANOVA)
+[Squared Multiple Correlation Coefficient (ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 $$R^2 = \frac{\sum (\hat{y}_{j} - \bar{y}_{G})^2} {\sum (y_{i} - \bar{y}_{G})^2}$$
 
@@ -528,9 +550,9 @@ Proportion of Variance Explained
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Mean Squared Deviations (MRC)
+[Mean Squared Deviations (MRC)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 MS = Mean Squares (Variances):
 
@@ -545,9 +567,9 @@ $$F_{(k), (n-k-1)} = \frac{\sum (\hat{y}_{i} - \bar{y})^2 / (k)}
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Mean Squared Deviations (ANOVA)
+[Mean Squared Deviations (ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 MS = Mean Squares (Variances):
 
@@ -562,9 +584,9 @@ $$F_{(g-1), (n-g)} = \frac{\sum (\bar{y}_{j} - \bar{y}_{G})^2 / (g - 1)}
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Mean Squared Deviations (MRC/ANOVA)
+[Mean Squared Deviations (MRC/ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 MS = Mean Squares (Variances):
 
@@ -578,16 +600,16 @@ $$F-ratio = \frac{MS_{Predicted}} {MS_{Error}}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Degrees of Freedom
+[Degrees of Freedom]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 <br>
 
 ::: {.columns style="font-size: 0.8em;"}
 ::: {.column}
 
-### MRC
+[MRC]{.p-font style="font-size: 1.5em; color: #666666"}
 
 |                  |     |           |
 | :--------------- | :-: | :-------- |
@@ -600,7 +622,7 @@ $$df_{Total} = df_{Predicted} + df_{Error}$$
 
 ::: {.column}
 
-### ANOVA
+[ANOVA]{.p-font style="font-size: 1.5em; color: #666666"}
 
 |                  |     |       |
 | :--------------- | :-: | :---- |
@@ -614,9 +636,9 @@ $$df_{Total} = df_{Predicted} + df_{Error}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Equivalences
+[Equivalences]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {style="font-size: 0.8em;"}
 | MRC               |     | ANOVA      |
@@ -634,9 +656,9 @@ $$df_{Total} = df_{Predicted} + df_{Error}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### Equivalences (MRC/ANOVA)
+[Equivalences (MRC/ANOVA)]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {.incremental style="font-size: 0.86em;"}
 - ANOVA is just MRC where the predictors are categorical variables
@@ -651,9 +673,9 @@ $$df_{Total} = df_{Predicted} + df_{Error}$$
 
 ---
 
-## A brief history
+[A brief history]{.p-font .emph style="font-size: 1.75em;"}
 
-### The Logic of the F-Ratio
+[The Logic of the F-Ratio]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 - If we use random assignment, the means of the groups should only differ by random chance (individual differences) and nothing else
 - However, if we introduce an effective treatment, then the means will differ by random chance *plus* the effects of the treatment
@@ -666,7 +688,7 @@ $$df_{Total} = df_{Predicted} + df_{Error}$$
 
 ---
 
-## A brief history {background-image="https://www.jvcasillas.com/media/rstats/memes/lm_number.png, https://www.jvcasillas.com/media/rstats/memes/lm_type.png" background-position="20% 55%, 80% 55%" background-size="600px, 600px"}
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/lm_number.png, https://www.jvcasillas.com/media/rstats/memes/lm_type.png" background-position="20% 55%, 80% 55%" background-size="600px, 600px"}
 
 <br>
 
@@ -697,7 +719,7 @@ So how did unification occur?
 
 ---
 
-## The General Linear Model {background-image="https://jamanetwork.com/data/Journals/PSYCH/926697/m_yot8401f1.png" background-position="95% 35%" background-size="400px"}
+## The General Linear Model {background-image="https://jamanetwork.com/data/Journals/PSYCH/926697/m_yot8401f1.png" background-position="95% 35%" background-size="400px" data-menu-title="Jacob Cohen"}
 
 ### Jacob Cohen (1923-1998)
 
@@ -723,7 +745,7 @@ So how did unification occur?
 
 ---
 
-## The General Linear Model
+## The General Linear Model {data-menu-title="Dummy variables"}
 
 ### Dummy variables
 
@@ -747,9 +769,9 @@ So how did unification occur?
 
 ---
 
-## The General Linear Model
+[The General Linear Model]{.emph .p-font style="font-size: 1.75em;"}
 
-### Dummy variables
+[Dummy variables]{.p-font style="font-size: 1.25em; color: #666666;"}
 
 ::: {style="font-size: 0.8em;"}
 - In a sense Cohen took an Aristotelian approach in order to include both MRC and ANOVA within one *general* linear model
@@ -794,7 +816,7 @@ t1
 
 ---
 
-## Dummy variables
+## Dummy variables {data-menu-title="The Multiple Regression Equation"}
 
 ### The Multiple Regression Equation
 
@@ -814,7 +836,7 @@ What if the predictors are dummy variables?
 
 ---
 
-## Dummy variables
+## Dummy variables {data-menu-title="The Dummy Variable Equation"}
 
 ### The Dummy Variable Equation
 
@@ -833,7 +855,7 @@ Evaluating the function:
 
 ---
 
-## Dummy variables
+## Dummy variables {data-menu-title="Evaluating the function"}
 
 ### Evaluating the function
 
@@ -854,9 +876,9 @@ $$b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})$$
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### You get j-1 dummies
+[You get j-1 dummies]{.p-font style="font-size: 1.25em; color: #666666"}
 
 <br>
 
@@ -869,9 +891,9 @@ $$b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})$$
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### One level is taken as the *reference* or *baseline*. This is the intercept.
+[One level is taken as the *reference* or *baseline*. This is the intercept.]{.p-font style="font-size: 1.25em; color: #666666"}
 
 <br>
 
@@ -884,9 +906,9 @@ $$b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})$$
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### j-1 dummies = j-1 comparisons
+[j-1 dummies = j-1 comparisons]{.p-font style="font-size: 1.25em; color: #666666"}
 
 <br>
 
@@ -900,9 +922,9 @@ $$b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})$$
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### j-1 dummies = j-1 comparisons
+[j-1 dummies = j-1 comparisons]{.p-font style="font-size: 1.25em; color: #666666"}
 
 <br>
 
@@ -915,9 +937,9 @@ $$b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})$$
 |          |     | ⬆︎<br><br>[A]{.emph}[C]{color="blue"} |    |         |
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### j-1 dummies = j-1 comparisons
+[j-1 dummies = j-1 comparisons]{.p-font style="font-size: 1.25em; color: #666666"}
 
 <br>
 
@@ -1241,9 +1263,11 @@ mtcars |>
 
 ---
 
-## Dummy variables {background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_summary_long.png" background-position="100%" background-size="contain"}
+## {background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_summary_long.png" background-position="100%" background-size="contain"}
 
-### Categorical and continuous predictors<mybr>Mixed GLMs
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
+
+[Categorical and continuous predictors<mybr>Mixed GLMs]{.p-font style="font-size: 1.25em; color: #666666"}
 
 ::: {.columns}
 ::: {.column style="font-size: 0.78em;"}
@@ -1403,9 +1427,9 @@ vocab_sample |>
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### Categorical and continuous predictors - mixed GLMs
+[Categorical and continuous predictors - mixed GLMs]{.p-font style="font-size: 1.25em; color: #666666"}
 
 ::: {style="font-size: 0.9em;"}
 - A mixed GLM can account for continuous and categorical predictors
@@ -1417,9 +1441,9 @@ vocab_sample |>
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### Categorical and continuous predictors - mixed GLMs
+[Categorical and continuous predictors - mixed GLMs]{.p-font style="font-size: 1.25em; color: #666666"}
 
 - What does it mean to have an interaction between a dummy variable and a continuous predictor?
 - Remember that with a continuous variable we get an intercept and a slope, so if one is interacting with a categorical variable, it means that either the *intercepts* or the *slopes* of both might be different for each category
@@ -1427,9 +1451,9 @@ vocab_sample |>
 
 ---
 
-## Dummy variables
+[Dummy variables]{.emph .p-font style="font-size: 1.75em;"} 
 
-### Categorical and continuous predictors - mixed GLMs
+[Categorical and continuous predictors - mixed GLMs]{.p-font style="font-size: 1.25em; color: #666666"}
 
 - The problem is that using either classical ANOVA or classical MRC (or even "ANCOVA", which is a combination of both) does not permit you to handle interactions between these types of variables
 - But using Dummy or Contrast Coding Does!
@@ -1552,13 +1576,13 @@ additional increase of 466 words +/- 69.28 se per year
 
 ---
 
-## {data-menu-title="Shiny app: Multicollinearity in MRC" background-iframe="https://gallery.shinyapps.io/multi_regression/" background-interactive=TRUE}
+## {data-menu-title="Shiny app: GLM" background-iframe="https://gallery.shinyapps.io/multi_regression/" background-interactive=TRUE}
 
 ::: notes
 <https://gallery.shinyapps.io/multi_regression/>
 :::
 
-<!-- Multiple regression --> 
+<!-- GLM --> 
 
 ---
 

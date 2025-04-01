@@ -224,19 +224,20 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The general linear model</h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-03-30</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-03-31</mybr></p>
 </section>
 <section id="section" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_family_deaths.png" data-background-size="contain" data-visibility="uncounted">
 <h2></h2>
 </section>
 <section>
-<section id="the-general-linear-model" class="title-slide slide level1 transition center" data-visibility="uncounted">
-<h1>The general linear model</h1>
+<section id="a-quick-review" class="title-slide slide level1 transition center" data-visibility="uncounted">
+<h1>A quick review</h1>
 
 </section>
-<section id="a-quick-review" class="slide level2 smaller">
-<h2>A quick review</h2>
-<h3 id="classical-mrc">Classical MRC</h3>
+<section id="section-1" class="slide level2 smaller" data-menu-title="Classical MRC">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A quick review</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Classical MRC</span></p>
 <ul>
 <li>In classical Multiple Regression/Correlation (MRC) predictors are continuous variables</li>
 </ul>
@@ -263,20 +264,22 @@
 <li>Or… if an entire experimental group gets one treatment and another group gets a different treatment, this is also discontinuous</li>
 </ul>
 </section>
-<section id="a-quick-review-1" class="slide level2">
-<h2>A quick review</h2>
-<h3 id="classical-anova">Classical ANOVA</h3>
+<section id="section-2" class="slide level2" data-menu-title="Classical ANOVA">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A quick review</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Classical ANOVA</span></p>
 <ul>
 <li><p>Classical Analysis of Variance (ANOVA) assumes that all predictors are discontinuous variables</p></li>
 <li><p>ANOVA methods are often abused by forcing continuous variables into discontinuous form (this can reduce your statistical power by as much as 50%)</p></li>
 </ul>
 </section>
-<section id="a-quick-review-2" class="slide level2">
-<h2>A quick review</h2>
-<h3 id="both-types-of-variables-continuous-and-categorical-exist-in-the-world">Both types of variables (continuous and categorical) exist in the world</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A quick review</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Both types of variables (continuous and categorical) exist in the world</span></p>
 <div class="columns">
 <div class="column">
-<h3 id="categorical">Categorical</h3>
+<p>Categorical</p>
 <ul>
 <li>Smoker/Non-smoker</li>
 <li>Native speaker/L2 learner</li>
@@ -285,7 +288,7 @@
 <li>Etc.</li>
 </ul>
 </div><div class="column">
-<h3 id="continuous">Continuous</h3>
+<p>Continuous</p>
 <ul>
 <li>Age</li>
 <li>Weight</li>
@@ -295,12 +298,13 @@
 </ul>
 </div></div>
 </section>
-<section id="section-1" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_predictors2.png" data-background-size="contain">
+<section id="section-3" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_predictors2.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="a-quick-review-3" class="slide level2">
-<h2>A quick review</h2>
-<h3 id="the-modern-glm">The modern GLM</h3>
+<section id="section-4" class="slide level2" data-menu-title="The modern GLM">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A quick review</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">The modern GLM</span></p>
 <p>Modern GLM includes both MRC and ANOVA:</p>
 <ul>
 <li>MRC predictors are all continuous</li>
@@ -308,9 +312,10 @@
 <li>But both MRC and ANOVA are both part of the same big thing: the GLM</li>
 </ul>
 </section>
-<section id="a-quick-review-4" class="slide level2">
-<h2>A quick review</h2>
-<h3 id="a-unified-model">A unified model</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A quick review</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">The modern GLM</span></p>
 <ul>
 <li>Before ANOVA and MRC were unified, we could not account for both levels of measurement within the same model</li>
 <li>The modern GLM can accommodate any combination of categorical and continuous variables</li>
@@ -342,8 +347,9 @@
 </div>
 </div></div>
 </section>
-<section id="a-brief-history-1" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_socrates.png" data-background-size="contain" data-background-position="100%">
-<h2><span class="emph">A brief history</span></h2>
+<section id="section-5" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_socrates.png" data-background-size="contain" data-background-position="100%">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><br><br></p>
 <div class="columns">
 <div class="column" style="width:57%;">
@@ -352,9 +358,10 @@
 </center>
 </div></div>
 </section>
-<section id="a-brief-history-2" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_plato.png" data-background-size="contain" data-background-position="100%">
-<h2>A brief history</h2>
-<h3 id="how-unification-occurred">How unification occurred</h3>
+<section id="section-6" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_aristotle_plato.png" data-background-size="contain" data-background-position="100%">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">How unification occurred</span></p>
 <div class="columns">
 <div class="column" style="font-size: 0.75em; width: 55%">
 <ul>
@@ -365,18 +372,22 @@
 </ul>
 </div></div>
 </section>
-<section id="a-brief-history-3" class="slide level2" data-background-image="./index_files/img/pos_wide1.png" data-background-size="contain" data-visibility="uncounted">
-<h2>A brief history</h2>
+<section id="section-7" class="slide level2" data-background-image="./index_files/img/pos_wide1.png" data-background-size="contain" data-visibility="uncounted">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 </section>
-<section id="a-brief-history-4" class="slide level2" data-background-image="./index_files/img/pos_wide2.png" data-background-size="contain" data-visibility="uncounted">
-<h2>A brief history</h2>
+<section id="section-8" class="slide level2" data-background-image="./index_files/img/pos_wide2.png" data-background-size="contain" data-visibility="uncounted">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 </section>
-<section id="a-brief-history-5" class="slide level2" data-background-image="./index_files/img/pos_wide3.png" data-background-size="contain" data-visibility="uncounted">
-<h2>A brief history</h2>
+<section id="section-9" class="slide level2" data-background-image="./index_files/img/pos_wide3.png" data-background-size="contain" data-visibility="uncounted">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 </section>
-<section id="a-brief-history-6" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="two-disciplines-of-scientific-psychology-cronbach1957two"><em>Two Disciplines of Scientific Psychology</em> <span class="citation" data-cites="cronbach1957two">(<a href="#/references" role="doc-biblioref" onclick="">Cronbach, 1957</a>)</span></h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;"><em>Two Disciplines of Scientific Psychology</em> <span class="citation" data-cites="cronbach1957two">(<a href="#/references" role="doc-biblioref" onclick="">Cronbach, 1957</a>)</span></span></p>
 <p><br></p>
 <div class="columns">
 <div class="column">
@@ -399,9 +410,10 @@
 </div>
 </div></div>
 </section>
-<section id="a-brief-history-7" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="the-two-disciplines">The two disciplines</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">The two disciplines</span></p>
 <div style="font-size: 0.8em;">
 <p><strong>MRC and ANOVA are both part of the same GLM model but, over time, they began to diverge from each other:</strong></p>
 <ul>
@@ -418,9 +430,10 @@
 </div>
 </div>
 </section>
-<section id="a-brief-history-8" class="slide level2" data-background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" data-background-size="600px" data-background-position="90% 50%">
-<h2>A brief history</h2>
-<h3 id="sir-ronald-aylmer-fisher">Sir Ronald Aylmer Fisher</h3>
+<section id="section-10" class="slide level2" data-background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" data-background-size="600px" data-background-position="90% 50%">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Sir Ronald Aylmer Fisher</span></p>
 <div class="columns">
 <div class="column" style="font-size: 0.8em; width: 55%;">
 <ul>
@@ -431,7 +444,7 @@
 </ul>
 </div></div>
 </section>
-<section id="section-2" class="slide level2 center">
+<section id="section-11" class="slide level2 center">
 <h2></h2>
 <div class="box-note">
 <p>“There is, then, in this analysis of variance no indication of any other than innate and heritable factors at work.”</p>
@@ -439,7 +452,7 @@
 </div>
 <p><span class="absolute" style="right: 0px; ">– R.A. <span class="citation" data-cites="fisher1919causes">Fisher (<a href="#/references" role="doc-biblioref" onclick="">1919</a>)</span></span></p>
 </section>
-<section id="section-3" class="slide level2 center">
+<section id="section-12" class="slide level2 center">
 <h2></h2>
 <div class="box-note">
 <p>“Critical tests of this kind may be called tests of significance, and when such tests are available we may discover whether a second sample is or is not significantly different from the first.”</p>
@@ -447,12 +460,13 @@
 </div>
 <p><span class="absolute" style="right: 0px; ">– R.A. <span class="citation" data-cites="fisher1925statistical">Fisher (<a href="#/references" role="doc-biblioref" onclick="">1925</a>)</span>, p.43</span></p>
 </section>
-<section id="section-4" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_ronald_fisher.PNG" data-background-size="contain" data-visibility="uncounted">
+<section id="section-13" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_ronald_fisher.PNG" data-background-size="contain" data-visibility="uncounted">
 <h2></h2>
 </section>
-<section id="a-brief-history-9" class="slide level2" data-background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" data-background-size="500px" data-background-position="90% 50%">
-<h2>A brief history</h2>
-<h3 id="sir-ronald-aylmer-fisher-1">Sir Ronald Aylmer Fisher</h3>
+<section id="section-14" class="slide level2" data-background-image="https://geneonline.news/wp-content/uploads/2016/02/Ronald-Fisher-from-Royal-Society-e1455600445283-1024x850.jpg" data-background-size="500px" data-background-position="90% 50%">
+<h2></h2>
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Sir Ronald Aylmer Fisher</span></p>
 <p>Invented ANOVA to support<mybr>the experimental method:</mybr></p>
 <div class="columns">
 <div class="column" style="font-size: 0.7em; width: 65%;">
@@ -464,9 +478,10 @@
 </ul>
 </div></div>
 </section>
-<section id="a-brief-history-10" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="fishers-method">Fisher’s method</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Fisher’s method</span></p>
 <div class="closelist" style="font-size: 0.7em;">
 <ul>
 <li>Fisher’s used random assignment, not random sampling</li>
@@ -490,9 +505,10 @@
 </div>
 </div>
 </section>
-<section id="a-brief-history-11" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="fishers-method-1">Fisher’s method</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Fisher’s method</span></p>
 <div style="font-size: 0.7em;">
 <ul>
 <li>Using the central limit theorem, we know how the distribution of randomly selected group means will differ from the mean of the entire population</li>
@@ -509,9 +525,10 @@
 </div>
 </div>
 </section>
-<section id="a-brief-history-12" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="fishers-method-2">Fisher’s method</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Fisher’s method</span></p>
 <div style="font-size: 0.7em;">
 <ul>
 <li>This was designed for purely experimental purposes, not for naturally occurring phenomena, i.e., observational studies</li>
@@ -526,46 +543,51 @@
 </div>
 </div>
 </section>
-<section id="a-brief-history-13" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="analysis-of-variance-anova">Analysis of Variance (ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Analysis of Variance (ANOVA)</span></p>
 <ul>
 <li><p>How did Sir Ronald Fisher build the ANOVA model?</p></li>
 <li><p>He built it from the MRC model…</p></li>
 </ul>
 </section>
-<section id="a-brief-history-14" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="summed-linear-deviations-mrc">Summed Linear Deviations (MRC)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Summed Linear Deviations (MRC)</span></p>
 <p>Sum of Linear Deviations:</p>
 <p><span class="math display">\[(y_{i} - \bar{y}) = (\hat{y}_{i} - \bar{y}) + (y_{i} - \hat{y}_{i})\]</span></p>
 <div class="fragment">
 <center>
-<h3 id="total-deviation-predicted-deviation-error-deviation">Total Deviation = Predicted Deviation + Error Deviation</h3>
+<p>Total Deviation = Predicted Deviation + Error Deviation</p>
 </center>
 </div>
 </section>
-<section id="a-brief-history-15" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="multiple-regressioncorrelation">Multiple Regression/Correlation</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Multiple Regression/Correlation</span></p>
 <p>In MRC, the predicted y ( <span class="math inline">\(\hat{y}_{i}\)</span> ) is the score predicted based on the regression line:</p>
 <ul>
 <li><p>MRC is based on having individual scores as the criterion variable (y)</p></li>
 <li><p>Individual continuous variables are also the predictors for y</p></li>
 </ul>
 </section>
-<section id="a-brief-history-16" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="summed-linear-deviations-anova">Summed Linear Deviations (ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Summed Linear Deviations (ANOVA)</span></p>
 <p>Sum of Linear Deviations:</p>
 <p><span class="math display">\[(y_{i} - \bar{y}_{G}) = (\bar{y}_{j} - \bar{y}_{G}) + (y_{i} - \bar{y}_{j})\]</span></p>
 <center>
-<h3 id="total-deviation-predicted-deviation-error-deviation-1">Total Deviation = Predicted Deviation + Error Deviation</h3>
+<p>Total Deviation = Predicted Deviation + Error Deviation</p>
 </center>
 </section>
-<section id="a-brief-history-17" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="analysis-of-variance">Analysis of Variance</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Analysis of Variance</span></p>
 <p>In ANOVA, you are dealing with groups:</p>
 <ul>
 <li>Still trying to predict an individual’s score</li>
@@ -573,9 +595,10 @@
 <li>You are basing it on their group status</li>
 </ul>
 </section>
-<section id="a-brief-history-18" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="analysis-of-variance-1">Analysis of Variance</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Analysis of Variance</span></p>
 <p>What is the best prediction you can make about any individual in a group if you don’t know anything else about that individual?</p>
 <div class="closelist" style="font-size: 0.85em;">
 <ul>
@@ -593,9 +616,10 @@
 </div>
 </div>
 </section>
-<section id="a-brief-history-19" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="sums-of-squared-deviations-mrc">Sums of Squared Deviations (MRC)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Sums of Squared Deviations (MRC)</span></p>
 <p>SS = Sum of squares:</p>
 <p><span class="math display">\[\sum (y_{i} - \bar{y})^2 = \sum (\hat{y}_{i} - \bar{y})^2 + \sum (y_{i} - \hat{y}_{i})^2\]</span></p>
 <div class="fragment">
@@ -623,9 +647,10 @@
 </table>
 </div>
 </section>
-<section id="a-brief-history-20" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="sums-of-squared-deviations-anova">Sums of Squared Deviations (ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Sums of Squared Deviations (ANOVA)</span></p>
 <p>SS = Sum of squares:</p>
 <p><span class="math display">\[\sum (y_{i} - \bar{y}_{G})^2 = \sum (\bar{y}_{j} - \bar{y}_{G})^2 + \sum (y_{i} - \bar{y}_{j})^2\]</span></p>
 <div class="fragment">
@@ -653,25 +678,28 @@
 </table>
 </div>
 </section>
-<section id="a-brief-history-21" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="squared-multiple-correlation-coefficient-mrc">Squared Multiple Correlation Coefficient (MRC)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Squared Multiple Correlation Coefficient (MRC)</span></p>
 <p><span class="math display">\[R^2 = \frac{\sum (\hat{y}_{i} - \bar{y})^2} {\sum (y_{i} - \bar{y})^2}\]</span></p>
 <p><span class="math display">\[R^2 = \frac{SS_{Predicted}} {SS_{Total}}\]</span></p>
 <p>Coefficient of determination<br>
 Proportion of Variance Explained</p>
 </section>
-<section id="a-brief-history-22" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="squared-multiple-correlation-coefficient-anova">Squared Multiple Correlation Coefficient (ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Squared Multiple Correlation Coefficient (ANOVA)</span></p>
 <p><span class="math display">\[R^2 = \frac{\sum (\hat{y}_{j} - \bar{y}_{G})^2} {\sum (y_{i} - \bar{y}_{G})^2}\]</span></p>
 <p><span class="math display">\[R^2 = \frac{SS_{Predicted}} {SS_{Total}}\]</span></p>
 <p>Coefficient of determination<br>
 Proportion of Variance Explained</p>
 </section>
-<section id="a-brief-history-23" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="mean-squared-deviations-mrc">Mean Squared Deviations (MRC)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Mean Squared Deviations (MRC)</span></p>
 <p>MS = Mean Squares (Variances):</p>
 <table>
 <colgroup>
@@ -700,9 +728,10 @@ Proportion of Variance Explained</p>
 <p><span class="math display">\[F_{(k), (n-k-1)} = \frac{\sum (\hat{y}_{i} - \bar{y})^2 / (k)}
                           {\sum (y_{i} - \hat{y}_{i})^2 / (n - k - 1)}\]</span></p>
 </section>
-<section id="a-brief-history-24" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="mean-squared-deviations-anova">Mean Squared Deviations (ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Mean Squared Deviations (ANOVA)</span></p>
 <p>MS = Mean Squares (Variances):</p>
 <table>
 <colgroup>
@@ -731,9 +760,10 @@ Proportion of Variance Explained</p>
 <p><span class="math display">\[F_{(g-1), (n-g)} = \frac{\sum (\bar{y}_{j} - \bar{y}_{G})^2 / (g - 1)}
                           {\sum (y_{i} - \hat{y}_{j})^2 / (n - g)}\]</span></p>
 </section>
-<section id="a-brief-history-25" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="mean-squared-deviations-mrcanova">Mean Squared Deviations (MRC/ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Mean Squared Deviations (MRC/ANOVA)</span></p>
 <p>MS = Mean Squares (Variances):</p>
 <table>
 <tbody>
@@ -756,13 +786,14 @@ Proportion of Variance Explained</p>
 </table>
 <p><span class="math display">\[F-ratio = \frac{MS_{Predicted}} {MS_{Error}}\]</span></p>
 </section>
-<section id="a-brief-history-26" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="degrees-of-freedom">Degrees of Freedom</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Degrees of Freedom</span></p>
 <p><br></p>
 <div class="columns" style="font-size: 0.8em;">
 <div class="column">
-<h3 id="mrc">MRC</h3>
+<p><span class="p-font" style="font-size: 1.5em; color: #666666">MRC</span></p>
 <table>
 <tbody>
 <tr class="odd">
@@ -784,7 +815,7 @@ Proportion of Variance Explained</p>
 </table>
 <p><span class="math display">\[df_{Total} = df_{Predicted} + df_{Error}\]</span></p>
 </div><div class="column">
-<h3 id="anova">ANOVA</h3>
+<p><span class="p-font" style="font-size: 1.5em; color: #666666">ANOVA</span></p>
 <table>
 <tbody>
 <tr class="odd">
@@ -807,9 +838,10 @@ Proportion of Variance Explained</p>
 <p><span class="math display">\[df_{Total} = df_{Predicted} + df_{Error}\]</span></p>
 </div></div>
 </section>
-<section id="a-brief-history-27" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="equivalences">Equivalences</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Equivalences</span></p>
 <div style="font-size: 0.8em;">
 <table>
 <thead>
@@ -869,9 +901,10 @@ Proportion of Variance Explained</p>
 </table>
 </div>
 </section>
-<section id="a-brief-history-28" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="equivalences-mrcanova">Equivalences (MRC/ANOVA)</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Equivalences (MRC/ANOVA)</span></p>
 <div style="font-size: 0.86em;">
 <ul>
 <li class="fragment">ANOVA is just MRC where the predictors are categorical variables</li>
@@ -886,9 +919,10 @@ Proportion of Variance Explained</p>
 </ul>
 </div>
 </section>
-<section id="a-brief-history-29" class="slide level2">
-<h2>A brief history</h2>
-<h3 id="the-logic-of-the-f-ratio">The Logic of the F-Ratio</h3>
+<section class="slide level2">
+
+<p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">The Logic of the F-Ratio</span></p>
 <ul>
 <li>If we use random assignment, the means of the groups should only differ by random chance (individual differences) and nothing else</li>
 <li>However, if we introduce an effective treatment, then the means will differ by random chance <em>plus</em> the effects of the treatment</li>
@@ -896,11 +930,11 @@ Proportion of Variance Explained</p>
 <li>This is the denominator of the F-ratio!</li>
 </ul>
 </section>
-<section id="section-5" class="slide level2" data-background-image="./index_files/img/pos_wide4.png" data-background-size="contain">
+<section id="section-15" class="slide level2" data-background-image="./index_files/img/pos_wide4.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="a-brief-history-30" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_number.png, https://www.jvcasillas.com/media/rstats/memes/lm_type.png" data-background-position="20% 55%, 80% 55%" data-background-size="600px, 600px">
-<h2>A brief history</h2>
+<section id="section-16" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_number.png, https://www.jvcasillas.com/media/rstats/memes/lm_type.png" data-background-position="20% 55%, 80% 55%" data-background-size="600px, 600px">
+<h2></h2>
 <p><br></p>
 <div class="columns">
 <div class="column">
@@ -917,11 +951,11 @@ ANOVA
 </div>
 </section></section>
 <section>
-<section id="the-general-linear-model-1" class="title-slide slide level1 transition center" data-visibility="uncounted">
+<section id="the-general-linear-model" class="title-slide slide level1 transition center" data-visibility="uncounted">
 <h1>The General Linear Model</h1>
 
 </section>
-<section id="the-general-linear-model-2" class="slide level2" data-background-image="https://jamanetwork.com/data/Journals/PSYCH/926697/m_yot8401f1.png" data-background-position="95% 35%" data-background-size="400px">
+<section id="the-general-linear-model-1" class="slide level2" data-background-image="https://jamanetwork.com/data/Journals/PSYCH/926697/m_yot8401f1.png" data-background-position="95% 35%" data-background-size="400px" data-menu-title="Jacob Cohen">
 <h2>The General Linear Model</h2>
 <h3 id="jacob-cohen-1923-1998">Jacob Cohen (1923-1998)</h3>
 <div class="closelist" style="font-size: 0.75em;">
@@ -949,7 +983,7 @@ ANOVA
 </ul>
 </div>
 </section>
-<section id="the-general-linear-model-3" class="slide level2">
+<section id="the-general-linear-model-2" class="slide level2" data-menu-title="Dummy variables">
 <h2>The General Linear Model</h2>
 <h3 id="dummy-variables">Dummy variables</h3>
 <div class="closelist" style="font-size: 0.78em;">
@@ -977,9 +1011,10 @@ ANOVA
 </ul>
 </div>
 </section>
-<section id="the-general-linear-model-4" class="slide level2">
-<h2>The General Linear Model</h2>
-<h3 id="dummy-variables-1">Dummy variables</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">The General Linear Model</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666;">Dummy variables</span></p>
 <div style="font-size: 0.8em;">
 <ul>
 <li>In a sense Cohen took an Aristotelian approach in order to include both MRC and ANOVA within one <em>general</em> linear model</li>
@@ -1027,11 +1062,11 @@ ANOVA
 </div>
 </section></section>
 <section>
-<section id="dummy-variables-2" class="title-slide slide level1 center" data-background-color="#272822" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_dummy_variables.png" data-background-position="95% 50%" data-background-size="800px">
+<section id="dummy-variables-1" class="title-slide slide level1 center" data-background-color="#272822" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_dummy_variables.png" data-background-position="95% 50%" data-background-size="800px">
 <h1><span class="emph">Dummy variables</span></h1>
 
 </section>
-<section id="dummy-variables-3" class="slide level2">
+<section id="dummy-variables-2" class="slide level2" data-menu-title="The Multiple Regression Equation">
 <h2>Dummy variables</h2>
 <h3 id="the-multiple-regression-equation">The Multiple Regression Equation</h3>
 <p><span class="math display">\[\hat{y}_{i} = a + b_{1}x_{1} + b_{2}x_{2} + b_{3}x_{3} ...\]</span></p>
@@ -1064,7 +1099,7 @@ ANOVA
 </table>
 </div>
 </section>
-<section id="dummy-variables-4" class="slide level2">
+<section id="dummy-variables-3" class="slide level2" data-menu-title="The Dummy Variable Equation">
 <h2>Dummy variables</h2>
 <h3 id="the-dummy-variable-equation">The Dummy Variable Equation</h3>
 <p>A single dummy variable:</p>
@@ -1085,7 +1120,7 @@ ANOVA
 </table>
 </div>
 </section>
-<section id="dummy-variables-5" class="slide level2">
+<section id="dummy-variables-4" class="slide level2" data-menu-title="Evaluating the function">
 <h2>Dummy variables</h2>
 <h3 id="evaluating-the-function">Evaluating the function</h3>
 <table>
@@ -1104,9 +1139,10 @@ ANOVA
 <p><span class="math display">\[b_{1} = (\bar{y}_{(d1=1)} - \bar{y}_{(d1=0)})\]</span></p>
 </div>
 </section>
-<section id="dummy-variables-6" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="you-get-j-1-dummies">You get j-1 dummies</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">You get j-1 dummies</span></p>
 <p><br></p>
 <table>
 <thead>
@@ -1145,9 +1181,10 @@ ANOVA
 </tbody>
 </table>
 </section>
-<section id="dummy-variables-7" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="one-level-is-taken-as-the-reference-or-baseline.-this-is-the-intercept.">One level is taken as the <em>reference</em> or <em>baseline</em>. This is the intercept.</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">One level is taken as the <em>reference</em> or <em>baseline</em>. This is the intercept.</span></p>
 <p><br></p>
 <table>
 <colgroup>
@@ -1198,9 +1235,10 @@ ANOVA
 </tbody>
 </table>
 </section>
-<section id="dummy-variables-8" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="j-1-dummies-j-1-comparisons">j-1 dummies = j-1 comparisons</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">j-1 dummies = j-1 comparisons</span></p>
 <p><br></p>
 <table>
 <colgroup>
@@ -1258,9 +1296,10 @@ ANOVA
 </tbody>
 </table>
 </section>
-<section id="dummy-variables-9" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="j-1-dummies-j-1-comparisons-1">j-1 dummies = j-1 comparisons</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">j-1 dummies = j-1 comparisons</span></p>
 <p><br></p>
 <table>
 <colgroup>
@@ -1318,9 +1357,10 @@ ANOVA
 </tbody>
 </table>
 </section>
-<section id="dummy-variables-10" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="j-1-dummies-j-1-comparisons-2">j-1 dummies = j-1 comparisons</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">j-1 dummies = j-1 comparisons</span></p>
 <p><br></p>
 <table>
 <colgroup>
@@ -1378,7 +1418,7 @@ ANOVA
 </tbody>
 </table>
 </section>
-<section id="section-6" class="slide level2" data-background-image="./index_files/img/pos_wide.png" data-background-size="contain">
+<section id="section-17" class="slide level2" data-background-image="./index_files/img/pos_wide.png" data-background-size="contain">
 <h2></h2>
 <div class="fragment">
 <p><span class="absolute" style="bottom: 5%; right: 50%; ">Let’s see some examples…</span></p>
@@ -1389,11 +1429,11 @@ ANOVA
 <h1>Examples</h1>
 
 </section>
-<section id="section-7" class="slide level2 center">
+<section id="section-18" class="slide level2 center">
 <h2></h2>
 
 <img data-src="index_files/figure-revealjs/mtcars_p1-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-8" class="slide level2 center">
+<section id="section-19" class="slide level2 center">
 <h2></h2>
 <pre><code>lm(mpg ~ cyl, data = mtcars)</code></pre>
 <div style="font-size: 0.6em;">
@@ -1440,7 +1480,7 @@ ANOVA
 </div>
 
 <img data-src="index_files/figure-revealjs/mtcars-p2-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-9" class="slide level2 center">
+<section id="section-20" class="slide level2 center">
 <h2></h2>
 <pre><code>lm(mpg ~ cyl, data = mtcars)</code></pre>
 <div style="font-size: 0.6em;">
@@ -1487,7 +1527,7 @@ ANOVA
 </div>
 
 <img data-src="index_files/figure-revealjs/mtcars-p3-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-10" class="slide level2 center">
+<section id="section-21" class="slide level2 center">
 <h2></h2>
 <pre><code>lm(mpg ~ cyl, data = mtcars)</code></pre>
 <div style="font-size: 0.6em;">
@@ -1534,7 +1574,7 @@ ANOVA
 </div>
 
 <img data-src="index_files/figure-revealjs/mtcars-p4-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-11" class="slide level2 smaller center">
+<section id="section-22" class="slide level2 smaller center">
 <h2></h2>
 <div class="columns">
 <div class="column">
@@ -1630,7 +1670,7 @@ ANOVA
 </ul>
 </div>
 </section>
-<section id="section-12" class="slide level2 center smaller">
+<section id="section-23" class="slide level2 center smaller">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>mtcars <span class="sc">|&gt;</span></span>
@@ -1681,9 +1721,10 @@ ANOVA
 <li>Notice how the slopes have changed</li>
 </ul>
 </section>
-<section id="dummy-variables-11" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_summary_long.png" data-background-position="100%" data-background-size="contain">
-<h2>Dummy variables</h2>
-<h3 id="categorical-and-continuous-predictorsmixed-glms">Categorical and continuous predictors<mybr>Mixed GLMs</mybr></h3>
+<section id="section-24" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/philosophy_of_science_summary_long.png" data-background-position="100%" data-background-size="contain">
+<h2></h2>
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Categorical and continuous predictors<mybr>Mixed GLMs</mybr></span></p>
 <div class="columns">
 <div class="column" style="font-size: 0.78em;">
 <ul>
@@ -1693,15 +1734,15 @@ ANOVA
 </ul>
 </div></div>
 </section>
-<section id="section-13" class="slide level2 center">
+<section id="section-25" class="slide level2 center">
 <h2></h2>
 
 <img data-src="index_files/figure-revealjs/age-vocab-raw-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-14" class="slide level2 center">
+<section id="section-26" class="slide level2 center">
 <h2></h2>
 
 <img data-src="index_files/figure-revealjs/age-vocab-bivar-reg-1.png" class="img-fluid r-stretch" width="3000"></section>
-<section id="section-15" class="slide level2 smaller">
+<section id="section-27" class="slide level2 smaller">
 <h2></h2>
 <h3 id="bivariate-model">Bivariate model</h3>
 <p><span class="math display">\[vocab \sim age\]</span></p>
@@ -1741,7 +1782,7 @@ F-statistic: 674.1 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-16" class="slide level2 smaller">
+<section id="section-28" class="slide level2 smaller">
 <h2></h2>
 <h3 id="additive-model">Additive model</h3>
 <p><span class="math display">\[vocab \sim age + reader\]</span></p>
@@ -1782,12 +1823,13 @@ F-statistic:   773 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-17" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_predictors1.png" data-background-size="contain">
+<section id="section-29" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_predictors1.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="dummy-variables-12" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="categorical-and-continuous-predictors---mixed-glms">Categorical and continuous predictors - mixed GLMs</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Categorical and continuous predictors - mixed GLMs</span></p>
 <div style="font-size: 0.9em;">
 <ul>
 <li>A mixed GLM can account for continuous and categorical predictors</li>
@@ -1798,25 +1840,27 @@ F-statistic:   773 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 </section>
-<section id="dummy-variables-13" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="categorical-and-continuous-predictors---mixed-glms-1">Categorical and continuous predictors - mixed GLMs</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Categorical and continuous predictors - mixed GLMs</span></p>
 <ul>
 <li>What does it mean to have an interaction between a dummy variable and a continuous predictor?</li>
 <li>Remember that with a continuous variable we get an intercept and a slope, so if one is interacting with a categorical variable, it means that either the <em>intercepts</em> or the <em>slopes</em> of both might be different for each category</li>
 <li>“Homogeneity of slopes” assumes that your different groups have the same slope for the continuous variable</li>
 </ul>
 </section>
-<section id="dummy-variables-14" class="slide level2">
-<h2>Dummy variables</h2>
-<h3 id="categorical-and-continuous-predictors---mixed-glms-2">Categorical and continuous predictors - mixed GLMs</h3>
+<section class="slide level2">
+
+<p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Categorical and continuous predictors - mixed GLMs</span></p>
 <ul>
 <li>The problem is that using either classical ANOVA or classical MRC (or even “ANCOVA”, which is a combination of both) does not permit you to handle interactions between these types of variables</li>
 <li>But using Dummy or Contrast Coding Does!</li>
 <li>By virtue of the numerical nature of these “coded vectors”, which can be accommodated by MRC</li>
 </ul>
 </section>
-<section id="section-18" class="slide level2 smaller">
+<section id="section-30" class="slide level2 smaller">
 <h2></h2>
 <h3 id="multiplicative-model">Multiplicative model</h3>
 <p><span class="math display">\[vocab \sim age + reader + age:reader\]</span></p>
@@ -1858,7 +1902,7 @@ F-statistic:   646 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div></div>
 </section>
-<section id="section-19" class="slide level2 center">
+<section id="section-31" class="slide level2 center">
 <h2></h2>
 <div class="cell">
 <div class="cell-output-display">
@@ -2479,10 +2523,10 @@ F-statistic:   646 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-20" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" data-background-size="contain">
+<section id="section-32" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-21" class="slide level2 smaller">
+<section id="section-33" class="slide level2 smaller">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">anova</span>(vocab_age_null, vocab_age_mod, vocab_additive_mod, vocab_int_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2509,7 +2553,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="section-22" class="slide level2" data-menu-title="Shiny app: Multicollinearity in MRC" data-background-iframe="https://gallery.shinyapps.io/multi_regression/" data-background-interactive="TRUE">
+<section id="section-34" class="slide level2" data-menu-title="Shiny app: GLM" data-background-iframe="https://gallery.shinyapps.io/multi_regression/" data-background-interactive="TRUE">
 <h2></h2>
 <aside class="notes">
 <p><a href="https://gallery.shinyapps.io/multi_regression/" class="uri">https://gallery.shinyapps.io/multi_regression/</a></p>
@@ -2524,7 +2568,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<!-- Multiple regression -->
+<!-- GLM -->
 </section>
 <section id="practice" class="slide level2">
 <h2>Practice</h2>
