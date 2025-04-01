@@ -1276,7 +1276,7 @@ mtcars |>
 [Categorical and continuous predictors<mybr>Mixed GLMs]{.p-font style="font-size: 1.25em; color: #666666"}
 
 ::: {.columns}
-::: {.column style="font-size: 0.78em;"}
+::: {.column style="font-size: 0.73em;"}
 - One of the benefits of doing ANOVA with MRC is that you can include different types of predictors in your model, i.e., [categorical]{.emph} and [continuous]{color="blue"}.
 - Neither classical ANOVA nor classical MRC can handle combinations of these two predictors
 - This is possible because of dummy coding
