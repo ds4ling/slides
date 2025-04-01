@@ -224,7 +224,7 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">The general linear model</h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-03-31</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-04-01</mybr></p>
 </section>
 <section id="section" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_family_deaths.png" data-background-size="contain" data-visibility="uncounted">
 <h2></h2>
@@ -280,6 +280,7 @@
 <div class="columns">
 <div class="column">
 <p>Categorical</p>
+<div class="closelist">
 <ul>
 <li>Smoker/Non-smoker</li>
 <li>Native speaker/L2 learner</li>
@@ -287,8 +288,10 @@
 <li>Stressed/Unstressed syllable</li>
 <li>Etc.</li>
 </ul>
+</div>
 </div><div class="column">
 <p>Continuous</p>
+<div class="closelist">
 <ul>
 <li>Age</li>
 <li>Weight</li>
@@ -296,6 +299,7 @@
 <li>Miles per gallon</li>
 <li>VOT</li>
 </ul>
+</div>
 </div></div>
 </section>
 <section id="section-3" class="slide level2" data-background-image="https://www.jvcasillas.com/media/rstats/memes/lm_predictors2.png" data-background-size="contain">
@@ -363,7 +367,7 @@
 <p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666;">How unification occurred</span></p>
 <div class="columns">
-<div class="column" style="font-size: 0.75em; width: 55%">
+<div class="column" style="font-size: 0.7em; width: 55%">
 <ul>
 <li>Platonic and Aristotelian philosophy came back into European culture (the Essentialists and the Nominalists in Scholastic Philosophy)</li>
 <li>Nominalists assert that groups are mental constructs (not like Plato’s god-given groups)</li>
@@ -435,7 +439,7 @@
 <p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666;">Sir Ronald Aylmer Fisher</span></p>
 <div class="columns">
-<div class="column" style="font-size: 0.8em; width: 55%;">
+<div class="column" style="font-size: 0.76em; width: 55%;">
 <ul>
 <li>Did agricultural experiments with plants at Rothamsted Experimental Station at Harpenden, Hertfordshire, England (Studies in Crop Variation, 1919)</li>
 <li>Actually did controlled experiments</li>
@@ -482,7 +486,7 @@
 
 <p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666;">Fisher’s method</span></p>
-<div class="closelist" style="font-size: 0.7em;">
+<div class="closelist" style="font-size: 0.66em;">
 <ul>
 <li>Fisher’s used random assignment, not random sampling</li>
 <li>Random Sampling: any individual in the population has an equal chance of being in the sample</li>
@@ -600,7 +604,7 @@
 <p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666;">Analysis of Variance</span></p>
 <p>What is the best prediction you can make about any individual in a group if you don’t know anything else about that individual?</p>
-<div class="closelist" style="font-size: 0.85em;">
+<div class="closelist" style="font-size: 0.8em;">
 <ul>
 <li>Use the mean of the group to predict individual scores</li>
 <li>Our predicted score ( <span class="math inline">\(\hat{y}_{i}\)</span> ) now becomes our group mean ( <span class="math inline">\(\bar{y}_{j}\)</span> )</li>
@@ -609,7 +613,7 @@
 </div>
 <div class="fragment">
 <p>This is because my prediction for you (if I don’t know anything else about you) is based on your group’s mean</p>
-<div class="closelist" style="font-size: 0.85em;">
+<div class="closelist" style="font-size: 0.8em;">
 <ul>
 <li>The grand mean is <span class="math inline">\(\bar{y}_{G}\)</span> and the group mean is <span class="math inline">\(\bar{y}_{j}\)</span></li>
 </ul>
@@ -711,17 +715,17 @@ Proportion of Variance Explained</p>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(MS_{Total}\)</span></td>
 <td style="text-align: center;">=</td>
-<td style="text-align: left;"><span class="math inline">\(\frac{\sum (y_{i} - \bar{y})^2} {(n - 1)}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sum (y_{i} - \bar{y})^2 / (n - 1)\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><span class="math inline">\(MS_{Predicted}\)</span></td>
 <td style="text-align: center;">=</td>
-<td style="text-align: left;"><span class="math inline">\(\frac{\sum (\hat{y}_{i} - \bar{y})^2} {(k)}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sum (\hat{y}_{i} - \bar{y})^2 / (k)\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><span class="math inline">\(MS_{Error}\)</span></td>
 <td style="text-align: center;">=</td>
-<td style="text-align: left;"><span class="math inline">\(\frac{\sum (y_{i} - \hat{y}_{i})^2} {(n - k - 1)}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sum (y_{i} - \hat{y}_{i})^2 / (n - k - 1)\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -923,12 +927,14 @@ Proportion of Variance Explained</p>
 
 <p><span class="p-font emph" style="font-size: 1.75em;">A brief history</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666;">The Logic of the F-Ratio</span></p>
+<div style="font-size: 0.9em;">
 <ul>
 <li>If we use random assignment, the means of the groups should only differ by random chance (individual differences) and nothing else</li>
 <li>However, if we introduce an effective treatment, then the means will differ by random chance <em>plus</em> the effects of the treatment</li>
 <li>But if the treatment didn’t work, then the means will only differ by random chance</li>
 <li>This is the denominator of the F-ratio!</li>
 </ul>
+</div>
 </section>
 <section id="section-15" class="slide level2" data-background-image="./index_files/img/pos_wide4.png" data-background-size="contain">
 <h2></h2>
@@ -1028,7 +1034,7 @@ ANOVA
 <section id="the-glm-compromise" class="slide level2">
 <h2>The “GLM” Compromise</h2>
 <div class="columns">
-<div class="column" style="font-size: 0.65em; width: 65%">
+<div class="column" style="font-size: 0.62em; width: 65%">
 <ul>
 <li>The way he told the story (in 1968), MRC had seemingly “eaten” ANOVA:
 <ul>
@@ -1830,7 +1836,7 @@ F-statistic:   773 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
 
 <p><span class="emph p-font" style="font-size: 1.75em;">Dummy variables</span></p>
 <p><span class="p-font" style="font-size: 1.25em; color: #666666">Categorical and continuous predictors - mixed GLMs</span></p>
-<div style="font-size: 0.9em;">
+<div style="font-size: 0.85em;">
 <ul>
 <li>A mixed GLM can account for continuous and categorical predictors</li>
 <li>However, if the slope of two groups are different, then you must interact the categorical variable with the continuous one</li>
@@ -2523,10 +2529,14 @@ F-statistic:   646 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
-<section id="section-32" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" data-background-size="contain">
+<section id="section-32" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/all-age-plots-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-33" class="slide level2" data-background-color="black" data-background-image="https://www.jvcasillas.com/media/rstats/memes/rstats_analysis_section.png" data-background-size="contain">
 <h2></h2>
 </section>
-<section id="section-33" class="slide level2 smaller">
+<section id="section-34" class="slide level2 smaller">
 <h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">anova</span>(vocab_age_null, vocab_age_mod, vocab_additive_mod, vocab_int_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2553,7 +2563,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 </section>
-<section id="section-34" class="slide level2" data-menu-title="Shiny app: GLM" data-background-iframe="https://gallery.shinyapps.io/multi_regression/" data-background-interactive="TRUE">
+<section id="section-35" class="slide level2" data-menu-title="Shiny app: GLM" data-background-iframe="https://gallery.shinyapps.io/multi_regression/" data-background-interactive="TRUE">
 <h2></h2>
 <aside class="notes">
 <p><a href="https://gallery.shinyapps.io/multi_regression/" class="uri">https://gallery.shinyapps.io/multi_regression/</a></p>
