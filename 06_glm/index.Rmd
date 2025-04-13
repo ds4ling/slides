@@ -1,0 +1,1377 @@
+---
+title   : 'Data Science for Linguists'
+subtitle: 'The Generalized Linear Model'
+author  : "Joseph V. Casillas, PhD"
+date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: assets
+    css: ["hygge", "rutgers", "rutgers-fonts"]
+    nature:
+      beforeInit: ["https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js", "https://platform.twitter.com/widgets.js"]
+      highlightStyle: default
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+    includes:
+      in_header: "../assets/partials/header.html"
+---
+
+```{r}
+#| label: setup
+#| include: false
+options(htmltools.dir.version = FALSE)
+```
+
+```{r}
+#| label: global-setup
+#| echo: false
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  out.width = "100%", 
+  fig.asp = 0.5625, 
+  fig.retina = 2, 
+  dpi = 300, 
+  message = FALSE, 
+  warning = FALSE
+  )
+```
+
+```{r}
+#| label: xaringan-extra-all-the-things
+#| echo: false
+xaringanExtra::use_xaringan_extra(
+  c("tile_view", "panelset", "editable" 
+    #"scribble", "search", "webcam"
+    )
+)
+```
+
+```{r}
+#| label: helpers
+source(here::here("assets", "scripts", "helpers.R"))
+```
+
+```{r}
+#| label: load-refs
+bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
+ui <- "- "
+```
+
+
+class: title-slide-section-grey, middle
+
+# Review
+
+---
+background-image: url(./assets/img/01_distributions.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/02_clt.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/03a_nhst.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/03b_hypothesis_testing.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/03c_ttest.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/05_correlation.png)
+background-size: 400px
+
+--
+
+background-image: url(./assets/img/06a_bvar_reg.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/06b_bvar_reg.png)
+background-size: contain
+
+--
+
+background-image: url(./assets/img/07_general_lm01.png)
+background-size: contain
+
+---
+background-image: url(./assets/img/01_distributions.png), url(./assets/img/03a_nhst.png), url(./assets/img/05_correlation.png), url(./assets/img/06b_bvar_reg.png), url(./assets/img/07_general_lm01.png)
+background-size: 400px, 400px, 400px, 400px, 400px
+background-position: 5% 10%, 50% 50%, 95% 10%, 0% 95%, 100% 95%
+
+---
+
+# Review
+
+.pull-left[
+
+### What we know, where we've been
+
+.large[
+- Distributions
+  - Normal distribution
+  - CLT
+- Hypothesis testing
+  - z-tests
+  - t-tests
+- Bivariate correlation
+- The linear model
+  - Bivariate regression
+  - Multiple regression and correlation
+- The general linear model
+  - Continuous predictors
+  - Categorical predictors
+]
+]
+
+--
+
+.pull-right[
+
+### What they have in common
+
+.large[
+- Criterion
+  - Continuous
+  - Linear relationship with predictors
+  - $-\infty$ : $\infty$
+  - Errors are normally distributed
+]
+]
+
+---
+
+# (P)review
+
+### Where we're headed
+
+.large[
+- Sometimes we measure phenomena that are not continuous variables ranging from 
+  $-\infty$ : $\infty$
+]
+
+<p></p>
+
+.large[
+- For example, we often analyze binary outcomes
+  - Decisions
+  - The presence/absence of a linguistic feature
+  - Categorical perception 
+]
+
+<p></p>
+
+.large[
+- Sometimes we count things
+  - Number of languages in a given area
+  - Number of code switches during a linguistic interview
+]
+
+<p></p>
+
+.large[
+- We can extend our model in order to account for these different types of 
+*dependent* variables
+]
+
+---
+class: title-slide-section-grey, middle
+
+# The generalized linear model
+
+---
+
+# The generalized linear model
+
+### History
+
+- Formulated by Nelder and Wedderburn (1972)
+- The purpose was to unify (again) the different models being used at the time
+
+### How
+
+Recall that linear models contain a *systematic component* that specifies 
+predictors (*X*<sub>1</sub>, *X*<sub>2</sub> ... *X*<sub>*k*</sub>), which, 
+in turn, create our linear predictor (β<sub>0</sub> + β<sub>1</sub>*x*<sub>1</sub> ... β<sub>k</sub>*x*<sub>k</sub>). At a minimum, a GLM contains the following: 
+
+.pull-left[
+
+1) .blue[A data *distribution*]. This refers to the probability distribution of 
+the response variable.
+
+2) .blue[A *linking function*] that transforms the criterion used to model the 
+data. It *links* the data distribution of the response variable to the 
+systematic component of the model.
+
+]
+
+--
+
+.pull-right[
+
+3) .blue[An *estimator*], or method for obtaining parameter estimates
+
+You (the researcher) are responsible for selecting (1) and (2). (3) is always 
+the same.
+
+]
+
+---
+background-image: url(./assets/img/glm_distributions.png)
+background-size: 600px
+background-position: 95% 50%
+
+# The generalized linear model
+
+### Distributions
+
+#### .Large[Meet the (exponential) family]
+
+.Large[
+The exponential family is a series<br>of probability distributions, each<br>with its own properties. 
+
+There are ±12, but we'll focus on 3:
+
+- Gaussian 
+- Binomial 
+- Poisson 
+]
+
+---
+
+# The generalized linear model
+
+### Linking functions
+
+.Large[
+The linking function transforms the response variable in the manner most 
+appropriate given the data distribution you have selected. 
+
+- .RUred[Identity]: for gaussian response variable (normal distribution)
+
+- .blue[Logit]: for binary response variable (binomial distribution)
+
+- .green[Log]: for count response variable (poisson distribution)
+
+]
+
+--
+
+(more detail later)
+
+---
+
+# The generalized linear model
+
+### The estimator: Maximum Likelihood Estimation (MLE)
+
+<ru-blockquote>
+Maximum likelihood estimation is the method that determines the values of the
+parameters of the model. The parameter estimates are obtained in a way that 
+maximizes the likelihood that the process described by the model produced 
+the data that were actually observed.<sup>1</sup>
+</ru-blockquote>
+
+```{r}
+#| label: mle-ex
+#| fig.align: 'center'
+#| fig.asp: 0.4
+#| out.width: "75%"
+rnorm(100) %>% 
+  tibble(x = ., y = rep(-0.07, 100)) %>% 
+  ggplot() + 
+  aes(x = x, y = y) + 
+  ylim(-0.1, 1) + 
+  xlim(-4, 4) + 
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 0.5), 
+    color = 'red', linewidth = 1.5) + 
+  stat_function(fun = dnorm, args = list(mean = -1, sd = 1), 
+    color = 'blue', linewidth = 1.5) + 
+  stat_function(fun = dnorm, args = list(mean = 1, sd = 1), 
+    color = 'green', linewidth = 1.5) + 
+  geom_point(pch = 21, color = 'white', fill = 'blue', 
+    size = 5, stroke = 2, alpha = 0.9) + 
+  ds4ling_bw_theme(base_family = "Palatino")
+```
+
+.footnote[<sup>1</sup> [Brooks-Bartlett](https://towardsdatascience.com/probability-concepts-explained-maximum-likelihood-estimation-c7b4342fdbb1) (2018)]
+
+---
+background-image: url(./assets/img/06a_bvar_reg.png)
+background-size: 600px
+background-position: 98%
+class: middle
+
+.pull-left[
+
+## Recall that classical linear regression uses .RUred[*ordinary least squares estimation*] to determine the line that minimizes the residual sum of squares.
+
+]
+
+--
+
+.footnote[You don't need to know the details behind MLE,  
+but it never hurts to understand what is going on  
+under the hood. [Brooks-Bartlett](https://towardsdatascience.com/probability-concepts-explained-maximum-likelihood-estimation-c7b4342fdbb1) (2018)  
+is a good place to start if you are interested.]
+
+---
+count: false
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+--
+
+.pull-right[
+
+### Something new
+
+.Large["y as a function of x"]
+
+]
+
+---
+count: false
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
+.Large["y as a function of x"]
+
+.Large[y ~ x]
+
+]
+
+---
+count: false
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
+.Large[
+
+"y as a function of x"
+
+y ~ x
+
+|          |        |                                           |
+| :------- | :----: | :---------------------------------------- |
+| $y_{i}$  | $\sim$ | $Normal(\mu_{i}, \sigma)$                 |
+| $u_{i}$  | $=$    | $\alpha + \beta_{1} \times predictor_{i}$ |
+| $\sigma$ | $\sim$ | $Normal(0, \sigma^2)$                     |
+
+]
+]
+
+---
+
+# The generalized linear model
+
+.pull-left[
+
+### Something old
+
+- It turns out we've spent the previous 11 weeks working with the gaussian 
+distribution
+- Gaussian is another way of saying normal
+- This means we can think of standard linear regression in the general linear model as a special case of the generalized linear model
+  - The errors are normally (gaussian) distributed
+  - The criterion is associated with the linear predictors via an identity 
+  linking function 
+  - Instead of least squares estimation we use maximum likelihood estimation
+
+]
+
+.pull-right[
+
+### Something new
+
+- We can use different combinations of distributions and linking functions to 
+model different outcome variables
+- There are many options. Learning new modeling tools will open your mind to 
+new experimental possibilities (if you only have a hammer, everything is a nail)
+- We will focus on two types of regression that can be fit in the Generalized 
+Linear Model framework: 
+  1. Logistic regression (outcome variable is binary)
+  2. Poisson regression (outcome variable represents counts)
+
+]
+
+---
+
+# The generalized linear model
+
+### Assumptions
+
+.Large[
+- Data are independently distributed (independence of scores)
+
+- Dependent variable follows a distribution from the exponential family
+
+- Linear relationship between transformed response variable and predictors 
+(linear relationship is result of linking function)
+
+- Errors are independent (NOTE: they do not have to be normally distributed)
+]
+
+---
+
+# The generalized linear model
+
+### Doing it in R
+
+.Large[
+
+#### The `glm()` function
+
+- Thus far we have used the `lm()` function to fit models
+
+- The `glm()` function works in the same way
+
+]
+
+--
+
+```{r}
+#| label: glm-ex
+#| echo: true
+#| eval: false
+my_glm <- glm(
+  criterion ~ pred1 + pred2 + pred1:pred2, # model formula
+  data = my_df,                            # select dataframe
+  family = gaussian(link = "identity") #<<
+)
+```
+
+--
+
+- Steps
+  1. Specify the .blue[model formula]: `criterion ~ pred1 + pred2 + pred1:pred2`
+  2. Select the .red[dataframe]: `data = my_df`
+  3. Select a .green[distribution family] and .green[linking function]: 
+  `family = gaussian(link = "identity")`
+
+---
+
+# The generalized linear model
+
+.pull-left[
+
+```{r}
+#| label: lm-ex-print
+#| eval: false
+#| echo: true
+# Standard lm()
+lm(
+  formula = mpg ~ drat, 
+  data = mtcars
+  # No likelihood/linking function
+)
+```
+
+```{r}
+#| label: lm-ex-output
+#| echo: false
+lm(mpg ~ drat, data = mtcars) %>% 
+  tidy(.) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 16)
+```
+]
+
+.pull-right[
+
+```{r}
+#| label: glm-ex-print
+#| eval: false
+#| echo: true
+# glm() equivalent
+glm(
+  formula = mpg ~ drat, 
+  data = mtcars, 
+  family = gaussian(link = "identity") #<<
+)
+```
+
+```{r}
+#| label: glm-ex-output
+#| echo: false
+glm(mpg ~ drat, data = mtcars, 
+    family = gaussian(link = "identity")) %>% 
+  tidy(.) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 16)
+```
+
+]
+
+--
+
+</br>
+
+<div align="center">
+<img width="400" src="./assets/img/russian_dolls.png">
+</div>
+
+.center[**The standard linear model is a special case of the GLM**]
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+background-color: black
+class: middle
+
+```{r}
+#| label: log-reg-plot
+#| fig.asp: 0.6
+#| out.width: "60%"
+#| out.extra: "style='float:right'"
+seq(-10, 10, length.out = 300) %>% 
+  tibble(x = ., y = inv_logit_manual(.)) %>% 
+  ggplot() + 
+  aes(x = x, y = y) + 
+  geom_point(pch = 21, color = 'white', alpha = 0.7, size = 7) + 
+  labs(y = NULL, x = NULL) + 
+  annotate("text", x = -5, y = 0.75, color = 'white', parse = T, 
+    label = TeX("$\\frac{1}{1 + e^{-x}}$", output = "character"), 
+    fontface = 2, size = 8) + 
+  theme_dark(base_family = "Palatino") + 
+  theme(panel.border = element_rect(fill = NA, color = "black"),  
+        plot.background = element_rect(color = "black", fill = "black"), 
+        panel.background = element_rect(fill = "black", color  =  NA))
+
+```
+
+# Logistic regression
+
+---
+
+# Logistic regression
+
+.Large[
+### Model setup
+
+.pull-left[
+.center[y ~ x]
+
+- The criterion is binary (0/1)
+
+- The distribution for binary data is either the **bernoulli** or **binomial** distribution
+
+- The linking function is the **logit**
+]
+]
+
+--
+
+.pull-right[
+
+<br>
+
+.Large[
+|                |        |                           |
+| -------------: | :----- | :------------------------ |
+| $y_{i}$        | $\sim$ | $Bernoulli(1, p_{i})$     |
+| $logit(p)_{i}$ | $=$    | $\alpha + \beta_{1}x_{i}$ |
+]
+]
+
+---
+
+# Logistic regression
+
+### How it works
+
+.pull-left[
+.Large[
+- The logit linking function transforms the criterion so it can be modeled by the linear predictor
+
+$$logit(p) = log(\frac{p}{1 - p})$$
+]
+]
+
+--
+
+.pull-right[
+.Large[
+- In other words, the linking function transforms the dichotomous 0/1 outcomes to $-\infty$ : $\infty$
+
+$$log(\frac{p_{i}}{1 - p_{i}}) = \alpha + \beta_{1}X_{1}$$
+]
+]
+
+---
+layout: false
+class: middle
+
+```{r}
+#| label: tiktok1
+t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6871246394531876102"
+t1 <- tiktok_embed(t1_url)
+t1
+```
+
+---
+
+```{r}
+#| label: lin-log-comp
+mod_lin <-  lm(resp ~ vot, data = vot_logistic_data)
+mod_log <- glm(resp ~ vot, data = vot_logistic_data, family = "binomial")
+
+p_lin <- ggplot(vot_logistic_data) + 
+  aes(x = vot, y = resp) + 
+  geom_jitter(pch = 21, alpha = 0.1, height = 0.02, width = 6, 
+    color = viridis::viridis_pal(option = "D")(1)) + 
+  geom_smooth(method = lm, fullrange = TRUE, linewidth = 1, formula = "y ~ x") + 
+  geom_abline(intercept = coef(mod_lin)[1], slope = coef(mod_lin)[2], 
+    linewidth = 1) + 
+  coord_cartesian(ylim = c(-0.1, 1.1), xlim = c(-80, 80)) +
+  scale_y_continuous(breaks = seq(0, 1, 0.25)) + 
+  labs(y = "P(1|x)", x = NULL) + 
+  ds4ling_bw_theme(base_family = "Palatino")
+
+p_log <- ggplot(vot_logistic_data) + 
+  aes(x = vot, y = resp) + 
+  geom_jitter(pch = 21, alpha = 0.1, height = 0.05, width = 6, 
+    color = "#cc0033") + 
+  geom_smooth(method = glm, method.args = list(family = "binomial"), 
+    fullrange = T, linewidth = 1, formula = "y ~ x") +
+  stat_summary(aes(y = fitted(mod_log)), fun = mean, geom = "line") + 
+  coord_cartesian(ylim = c(-0.1, 1.1), xlim = c(-80, 80)) + 
+  scale_y_continuous(breaks = seq(0, 1, 0.25), position = "right") + 
+  labs(y = NULL, x = NULL) + 
+  ds4ling_bw_theme(base_family = "Palatino")
+
+p_lin + p_log
+```
+
+---
+
+# Logistic regression
+
+### What you need to know
+
+.large[
+- Logistic regression is the most appropriate way to model binary response 
+variables (0/1)
+
+- The model calculates the probability that y = 1, i.e., the probability of a 
+"success", or presence of something
+
+- Model output from logistic regression is similar to `lm()`
+
+- Model interpretation "works" the same way, i.e., a 1-unit change in 
+`predictor` is associated with a change of X in the criterion
+
+- But... the parameter estimates represent changes in the log-odds of y = 1
+
+- This is much less intuitive, much more difficult to understand without some 
+math
+]
+
+---
+
+# Logistic regression
+
+### Example
+
+.large[
+- You are interested in understanding the perception of stop voicing in 
+English bilabials 
+
+- You conducted an experiment in which participants heard a range of 
+bilabial stops that differed in voice-onset time
+
+- The stimuli ranged from -60 ms to 60 ms in 10 ms increments 
+
+- Participants were presented stimuli drawn at random from the continuum and 
+identified the sounds as /b/'s or /p/'s
+
+- A /p/ response is coded as a 1
+]
+
+---
+background-image: url(./assets/img/vot.png)
+background-size: contain
+
+---
+
+# Logistic regression
+
+.left-column[
+
+<br><br><br><br>
+```{r}
+#| label: log-reg-formula
+#| echo: true
+#| eval: false
+mod_log <- glm(
+  resp ~ vot, 
+  data = vot_logistic_data, 
+  family = "binomial"
+)
+```
+
+]
+
+.right-column[
+
+```{r}
+#| label: vot-ex
+#| comment: ""
+summary(mod_log)
+```
+
+]
+
+---
+
+# Logistic regression
+
+### Example
+
+.Large[
+- We can convert the log-odds to probabilities by calculating the inverse 
+logit<sup>1</sup>
+]
+
+```{r}
+#| label: inv-logit
+#| echo: true 
+inv_logit(mod_log) %>% kable(., format = 'html')
+```
+
+--
+
+.Large[
+- This is still difficult to interpret... a plot might help. 
+]
+
+</br></br>
+
+<sup>1</sup> Inverse logit = $\frac{1}{1 + exp(-x)}$
+
+---
+class: middle
+
+```{r}
+#| label: vot-plot
+glm_vot_plot <- ggplot(vot_logistic_data) +
+  aes(x = vot, y = resp) + 
+  geom_hline(yintercept = 0.5, lty = 3, linewidth = 0.7) + 
+  geom_jitter(pch = 21, alpha = 0.2, height = 0.02, width = 6, 
+    color = "#cc0033") + 
+  stat_summary(fun.data = mean_cl_boot, geom = 'pointrange') + 
+  stat_summary(fun = mean, geom = 'point', pch = 21, 
+    size = 6, fill = 'white') + 
+  geom_smooth(method = glm, method.args = list(family = "binomial"), 
+    fullrange = T, linewidth = 1, formula = "y ~ x") +
+  coord_cartesian(ylim = c(-0.05, 1.05)) + 
+  scale_y_continuous(breaks = seq(0, 1, 0.25)) + 
+  scale_x_continuous(breaks = seq(-60, 60, 10)) + 
+  labs(y = "P(voiceless)", x = "VOT (ms)") + 
+  ds4ling_bw_theme(base_size = 16, base_family = "Palatino")
+
+glm_vot_plot
+```
+
+---
+class: middle
+
+.pull-left[
+```{r}
+#| label: inv-logit-repeat
+#| echo: true
+inv_logit(mod_log) %>% kable(., format = 'html')
+```
+
+</br>
+
+- Now the intercept is interpretable  
+(note it is already centered)
+
+- What does the parameter estimate  
+for VOT mean?
+
+- Can calculate how the probability  
+differs from one specific point to  
+another?
+
+]
+
+.pull-right[
+
+```{r}
+#| label: repeat-glm-vot-plot
+#| fig.asp: 1
+glm_vot_plot
+```
+
+]
+
+---
+class: middle
+
+.pull-left[
+
+#### We can use the model coefficients
+
+```{r}
+#| label: vot-coef
+tidy(mod_log) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 16)
+```
+
+- Calculate the inverse logit of the  
+linear equation:  
+
+$$\alpha + \beta_{VOT} * 10ms$$
+
+```{r}
+#| label: mod-probs
+#| echo: true
+plogis(-0.846 + 0.057 * 10)
+```
+
+- What about the change in probability of selecting /p/ when shifting from 10 ms 
+to 20 ms?
+
+```{r}
+#| label: mod-probs2
+#| echo: true
+plogis(-0.846 + 0.057 * 20) - 
+plogis(-0.846 + 0.057 * 10)
+```
+
+]
+
+.pull-right[
+
+```{r}
+#| label: repeat-glm-vot-plot2
+#| fig.asp: 1
+glm_vot_plot
+```
+
+The shift from 10ms to 20 ms VOT corresponds  
+with a positive difference of 14% in 
+the probability of selecting /p/
+
+]
+
+---
+
+# Logistic regression
+
+### Summary
+
+.large[
+- Logistic regression is a powerful tool for modeling binary data
+
+- The `glm()` function works similarly to the `lm()` function 
+
+- We test for main effects and interactions the same way too, i.e., using 
+nested model comparisons with the `anova()` function
+
+- The exponential family and corresponding linking function are  
+`family = binomial(link = "logit")`
+
+- Interpretation of logistic regression works the same way as classic linear 
+regression 
+
+- Parameter estimates are evaluated in log odds (and require some work in order 
+to accurately interpret them)
+]
+
+---
+layout: false
+class: middle
+
+```{r}
+#| label: tiktok2
+t2_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6828303282482449669"
+t2 <- tiktok_embed(t2_url)
+t2
+```
+
+---
+
+# Practice
+
+- [Logistic regression practice](./assets/logistic_regression_walkthrough/glm_logistic.zip)
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+background-color: black
+class: middle
+
+```{r}
+#| label: poisson-plot
+#| out.width: "60%"
+#| out.extra: "style='float:right'"
+n     <- 500
+beta0 <- 5
+beta1 <- 0.2
+
+x  <- seq(0, 10, length.out = n)
+mu <- exp(beta0 + beta1 * x + rnorm(n, 0, 0.2))
+y  <- rpois(n = n, lambda = mu)
+
+poisson_plot <- tibble(x, y) %>%
+  ggplot() + 
+  aes(x = x, y = y) + 
+  geom_point(pch = 21, color = 'white', alpha = 0.5, size = 3) + 
+  labs(y = NULL, x = NULL) +
+  annotate("text", x = 2.5, y = 1000, color = 'white', parse = T, 
+    label = TeX("$Y \\sim P(\\mu)$", output = "character"), 
+    fontface = 2, size = 8) + 
+  geom_smooth(method = "glm", method.args = list(family = "poisson"), 
+    linewidth = 2, color = "#cc0033", se = F, formula = "y ~ x") + 
+  theme_dark(base_family = "Palatino") + 
+  theme(panel.border = element_rect(fill = NA, color = "black"),  
+        plot.background = element_rect(color = "black", fill = "black"), 
+        panel.background = element_rect(fill = "black", color  =  NULL))
+
+poisson_plot
+```
+
+# Poisson regression
+
+---
+
+# Poisson regression
+
+.pull-left[
+
+### Model setup
+
+- The criterion is a non-negative number (0, 1, 2...)
+
+- The distribution for count data is typically the **poisson** distribution
+
+- The linking function is **log** 
+
+### How it works
+
+- The log linking function transforms the criterion so that it can be modeled by 
+the linear predictor
+
+]
+
+.pull-right[
+
+<br><br><br>
+
+.Large[
+|                    |        |                           |
+| -----------------: | :----- | :------------------------ |
+| $y_{i}$            | $\sim$ | $Poisson(\lambda_{i})$     |
+| $log(\lambda)_{i}$ | $=$    | $\alpha + \beta_{1}x_{i}$ |
+]
+
+]
+
+---
+class: middle
+
+```{r}
+#| label: lin-poisson-comp
+mod_lin_count <-  lm(units ~ temp, data = ice_cream_poisson_data)
+mod_poisson   <- glm(units ~ temp, data = ice_cream_poisson_data, 
+                     family = poisson(link = "log"))
+
+p_lin_count <- ggplot(ice_cream_poisson_data) + 
+  aes(x = temp, y = units) + 
+  geom_point(pch = 21) + 
+  geom_smooth(method = lm, fullrange = TRUE, linewidth = 2, formula = "y ~ x") + 
+  scale_y_continuous(breaks = NULL, labels = NULL) + 
+  scale_x_continuous(breaks = NULL, labels = NULL) + 
+  labs(y = NULL, x = NULL) + 
+  ds4ling_bw_theme()
+
+p_poisson <- ggplot(ice_cream_poisson_data) + 
+  aes(x = temp, y = units) + 
+  geom_point(pch = 21) + 
+  geom_smooth(method = glm, method.args = list(family = "poisson"), 
+    fullrange = T, linewidth = 2, formula = "y ~ x") +
+  scale_y_continuous(breaks = NULL, labels = NULL, position = "right") + 
+  scale_x_continuous(breaks = NULL, labels = NULL) + 
+  labs(y = NULL, x = NULL) + 
+  ds4ling_bw_theme()
+
+p_lin_count + p_poisson
+```
+
+---
+
+# Poisson regression
+
+### What you need to know
+
+.large[
+- Poisson regression is the most appropriate way to model count data 
+(0, 1, 2...)
+
+- Model output from poisson regression is similar to `lm()`
+
+- Model interpretation "works" the same way, i.e., a 1-unit change in 
+`predictor` is associated with a change of X in the criterion
+
+- But... the parameter estimates represent changes in the criterion on a 
+logarithmic scale
+
+- The parameter estimates that can be interpreted as multiplicative effects
+
+- This is not too difficult to understand
+]
+
+---
+
+# Poisson regression
+
+### Example
+
+.pull-left[
+
+```{r}
+#| label: poisson-ex 
+#| echo: true
+#| eval: false
+glm(
+  units ~ temp, 
+  data = ice_cream_poisson_data, 
+  family = poisson(link = "log") #<<
+) 
+```
+
+```{r}
+#| label: mod-poisson
+mod_poisson %>% 
+  tidy(.) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 14)
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+#| label: icecream-plot1
+#| fig.asp: 0.8
+ggplot(ice_cream_poisson_data) + 
+  aes(x = temp, y = units) + 
+  geom_point(pch = 21, fill = 'grey80') + 
+  geom_smooth(method = glm, method.args = list(family = "poisson"), 
+    formula = "y ~ x") + 
+  scale_color_brewer(palette = "Set1", name = NULL) + 
+  labs(x = "Temperature", y = "Units ice cream sold") + 
+  ds4ling_bw_theme(base_size = 16, base_family = "Palatino")
+```
+
+]
+
+--
+
+.footnote[
+- A 1 unit change in temperature is associated with a  
+change of `r round(coef(mod_poisson)[2], 2)` log units in ice cream sold. 
+
+- We can exponentiate `r round(coef(mod_poisson)[2], 2)` to make it more  
+interpretable.  `exp(coef(mod_poisson)[2])` = 
+`r exp(coef(mod_poisson)[2])`
+
+- A 1 unit change in temperature gives a 4% positive  
+increase in ice cream sold.
+]
+
+---
+
+# Poisson regression
+
+### Example
+
+.pull-left[
+
+```{r}
+#| label: poisson-ex-2
+#| echo: true
+#| eval: false
+glm(
+  units ~ temp + city, #<<
+  data = ice_cream_poisson_data, 
+  family = poisson(link = "log")
+)
+```
+
+```{r}
+#| label: mod-poisson-city
+glm(units ~ temp + city, 
+    data = ice_cream_poisson_data, 
+    family = poisson(link = "log")) %>% 
+  tidy(.) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 14)
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+#| label: icecream-plot2
+#| fig.asp: 0.8
+ggplot(ice_cream_poisson_data) + 
+  aes(x = temp, y = units, color = city) + 
+  geom_point(pch = 21, fill = 'grey80') + 
+  geom_smooth(method = glm, method.args = list(family = "poisson"), 
+    formula = "y ~ x") + 
+  scale_color_brewer(palette = "Set1", name = NULL) + 
+  labs(x = "Temperature", y = "Units ice cream sold") + 
+  ds4ling_bw_theme(base_size = 20, base_family = "Palatino") + 
+  theme(legend.position = c(0.2, 0.9))
+```
+
+]
+
+--
+
+.footnote[
+- A 1 unit change in temperature is associated with a  
+positive difference of approx. 4% in ice cream sold  
+in NYC. 
+
+- When temp = 0, ice cream sold in Tucson is approx.  
+`r abs(round(exp(-0.542), 2) - 1) * 100`% less
+
+]
+
+---
+
+# Poisson regression
+
+### Example
+
+.pull-left[
+
+```{r}
+#| label: poisson-ex-3
+#| echo: true
+#| eval: false
+ice_cream_poisson_data %>% 
+  mutate(temp_c = temp - mean(temp)) %>% 
+  glm(units ~ temp_c + city, #<<
+      data = ., 
+      family = poisson(link = "log"))
+```
+
+```{r}
+#| label: mod-poisson-city-centered
+ice_cream_poisson_data %>% 
+  mutate(temp_c = temp - mean(temp)) %>% 
+  glm(units ~ temp_c + city, 
+      data = ., 
+      family = poisson(link = "log")) %>% 
+  tidy(.) %>% 
+  kable(., format = 'html', digits = 3) %>% 
+  kable_styling(., font_size = 14)
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r}
+#| label: icecream-plot3
+#| fig.asp: 0.8
+ice_cream_poisson_data %>% 
+  ggplot() + 
+  aes(x = (temp - mean(temp)), y = units, color = city) + 
+  geom_point(pch = 21, fill = 'grey80') + 
+  geom_smooth(method = glm, method.args = list(family = "poisson"), 
+    formula = "y ~ x") + 
+  geom_vline(xintercept = 0, lty = 3) + 
+  scale_color_brewer(palette = "Set1", name = NULL) + 
+  labs(x = "Temperature", y = "Units ice cream sold") + 
+  ds4ling_bw_theme(base_size = 20, base_family = "Palatino") + 
+  theme(legend.position = c(0.15, 0.9))
+```
+
+]
+
+--
+
+.footnote[
+- A 1 unit change in temperature is associated with a  
+positive difference of approx. 4% in ice cream sold  
+in NYC. 
+
+- At the average temperature (`r mean(ice_cream_poisson_data$temp)`), ice cream  
+sold in Tucson is (still) approx. `r abs(round(exp(-0.542), 2) - 1) * 100`% less
+
+]
+
+---
+
+# Poisson regression
+
+### Summary
+
+.large[
+- Poisson regression is a powerful tool for modeling count data
+
+- The `glm()` function works similarly to the `lm()` function 
+
+- We test for main effects and interactions the same way too, i.e., using 
+nested model comparisons with the `anova()` function
+
+- The exponential family and corresponding linking function are  
+`family = poisson(link = "log")`
+
+- Interpretation of poisson regression works the same way as classic linear 
+regression 
+
+- Parameter estimates are evaluated on a log (multiplicative) scale and are 
+not difficult to interpret
+]
+
+---
+
+<iframe src="https://jvcasillas.shinyapps.io/shiny_glm/" style="border:none;" height="800" width="100%"></iframe>
+
+---
+
+# Practice
+
+- [Poisson regression practice](./assets/poisson_regression_walkthrough/glm_poisson.zip)
+
+
+
+
+
+
+
+
+
+---
+exclude: true
+
+`r AutoCite(bib, c("wickham2016r", "qass93_ch2", "qass93_ch3", "qass93_ch4"))`
+
+---
+layout: false
+class: title-slide-final, left
+
+# References
+
+```{r, 'refs', results='asis', echo=FALSE, eval=TRUE, cache=FALSE}
+PrintBibliography(bib)
+```
+
+Nelder, J., Wedderburn, R. (1972). Generalized Linear Models. *Journal of the Royal Statistical Society*. 135 (3). 370–384.
