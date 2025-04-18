@@ -225,7 +225,7 @@
   <h1 class="title">Data Science for Linguists</h1>
   <h3 class="subtitle">Multilevel models</h3>
   <p class="author">Joseph V. Casillas, PhD</p>
-  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-04-15</mybr></p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-04-18</mybr></p>
 </section>
 <section class="slide level2">
 
@@ -446,8 +446,8 @@
 <ul>
 <li>Currently, the most popular solution is to use a multi-level or hierarchical model</li>
 <li>These models are commonly referred to as mixed effects models</li>
-<li>They include both fixed effects and random effects</li>
-<li>They provide a flexible framework that allows us to account for the hierarchical structure of our data (within-subjects variables, time-series data, etc.)</li>
+<li>They include both “fixed” effects and “random” effects</li>
+<li>They provide a flexible framework that allows us to account for the hierarchical structure of our data (within-subjects variables, time-series data, etc.) and provide <em>partial pooling</em> estimates</li>
 <li>Building on our knowledge of the linear model, understanding the basic idea of mixed effects models is trivial</li>
 </ul>
 </div>
@@ -551,7 +551,7 @@ response = intercept + \color{red}{slope} \times \color{blue}{FE} + \color{green
 <li>…but you will always find exceptions to this</li>
 <li>Most of the time you will see <strong><span class="emph">subjects</span></strong> and <strong><span class="emph">items</span></strong> as random effects (things that are repeated in the design)</li>
 <li>This typically implies that the model includes <strong><span class="emph">random intercepts</span></strong>, and/or <span style="color: blue;">random slopes</span></li>
-<li>Instead of trying to define random effects, let’s try to understand what they do</li>
+<li>Instead of trying to define random effects, let’s try to understand what they do (and come back to the idea later)</li>
 </ul>
 </div>
 </section>
@@ -905,8 +905,56 @@ response_{it} &amp; \sim N(\mu_{it}, \sigma) \\
 <section id="understanding-partial-pooling" class="title-slide slide level1 transition center">
 <h1>Understanding partial pooling</h1>
 <div style="font-size: 0.55em;">
-<p>Based on <span class="citation" data-cites="bates2011mixed">Bates (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span> and <span class="citation" data-cites="mahr2017plotting">Mahr (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span></p>
+<p>Based on <span class="citation" data-cites="bates2011mixed">Bates (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span> and <span class="citation" data-cites="mahr2017plotting">Mahr (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> with some help from <span class="citation" data-cites="mcelreath2018statistical">McElreath (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span></p>
 </div>
+</section>
+<section id="what-do-you-mean-by-multiple-levels" class="slide level2" data-background-image="./index_files/img/russian_dolls.png" data-background-size="400px" data-background-position="95% 20%">
+<h2>What do you mean by ‘multiple levels’?</h2>
+<p>We can think of multilevel models as <mybr>“<span class="emph">models within models</span>”</mybr></p>
+<div class="fragment">
+<div class="closelist" style="font-size: 0.7em;">
+<p><br> Generally:</p>
+<ul>
+<li>One level estimates observed groups/items/individuals/etc.</li>
+<li>Another level estimates populations of groups/individuals</li>
+</ul>
+<div class="columns">
+<div class="column fragment">
+<div class="box-note">
+<p>For this reason, some reasercheres (myself included) prefer to refer to <strong>grouping-level</strong> effects and <strong>population-level</strong> effects, as opposed to <em>random</em> effects and <em>fixed</em> effects</p>
+</div>
+</div><div class="column fragment">
+<p><br></p>
+<div class="box-warning">
+<p>
+</p>
+<p>Under this view, <em>random</em> intercepts and <em>random</em> slopes are conceptualized and <strong>varying</strong> intercepts and <strong>varying</strong> slopes</p>
+<p>
+</p>
+</div>
+</div></div>
+</div>
+</div>
+</section>
+<section id="so-what-is-pooling-all-about" class="slide level2" data-background-image="./index_files/img/memory.png" data-background-size="400px" data-background-position="95% 50%">
+<h2>So what is ‘pooling’ all about?</h2>
+<div class="columns">
+<div class="column" style="font-size: 0.75em;">
+<ul>
+<li>Some describe multilevel models as ‘models with memory’
+<ul>
+<li>The population-level model helps inform/learn about the grouping-level</li>
+<li>They learn faster, better</li>
+<li>They are robust to overfitting</li>
+</ul></li>
+<li>It has to do with how information is ‘pooled’
+<ol type="1">
+<li>Complete pooling</li>
+<li>No pooling</li>
+<li>Partial pooling</li>
+</ol></li>
+</ul>
+</div></div>
 </section>
 <section id="partial-pooling" class="slide level2">
 <h2>Partial pooling</h2>
@@ -1660,6 +1708,9 @@ Mahr, T. J. (2017). <em>Plotting partial pooling in mixed-effects models</em>. <
 </div>
 <div id="ref-mahr2019another" class="csl-entry" role="listitem">
 Mahr, T. J. (2019). <em>Another mixed effects model visualization</em>. <a href="https://www.tjmahr.com/another-mixed-effects-model-visualization/" class="uri">https://www.tjmahr.com/another-mixed-effects-model-visualization/</a>.
+</div>
+<div id="ref-mcelreath2018statistical" class="csl-entry" role="listitem">
+McElreath, R. (2015). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. CRC Press.
 </div>
 </div>
 <aside class="notes">

@@ -124,10 +124,10 @@ ChickWeight |>
 - Currently, the most popular solution is to use a multi-level or 
 hierarchical model
 - These models are commonly referred to as mixed effects models 
-- They include both fixed effects and random effects
+- They include both "fixed" effects and "random" effects
 - They provide a flexible framework that allows us to account for 
 the hierarchical structure of our data (within-subjects variables, 
-time-series data, etc.)
+time-series data, etc.) and provide *partial pooling* estimates
 - Building on our knowledge of the linear model, understanding 
 the basic idea of mixed effects models is trivial
 :::
@@ -216,7 +216,7 @@ answer
 - ...but you will always find exceptions to this
 - Most of the time you will see **[subjects]{.emph}** and **[items]{.emph}** as random effects (things that are repeated in the design)
 - This typically implies that the model includes **[random intercepts]{.emph}**, and/or [random slopes]{color="blue"}
-- Instead of trying to define random effects, let's try to understand what they do
+- Instead of trying to define random effects, let's try to understand what they do (and come back to the idea later)
 :::
 
 ---
@@ -588,7 +588,64 @@ glmer(
 # Understanding partial pooling {.transition}
 
 ::: {style="font-size: 0.55em;"}
-Based on @bates2011mixed and @mahr2017plotting
+Based on @bates2011mixed and @mahr2017plotting with some help from @mcelreath2018statistical
+:::
+
+---
+
+## What do you mean by 'multiple levels'? {background-image="./index_files/img/russian_dolls.png" background-size="400px" background-position="95% 20%"}
+
+We can think of multilevel models as <mybr>"[models within models]{.emph}"
+
+. . .
+
+::: {style="font-size: 0.7em;" .closelist}
+<br>
+Generally:
+
+- One level estimates observed groups/items/individuals/etc.
+- Another level estimates populations of groups/individuals
+
+::: {.columns}
+::: {.column .fragment}
+::: box-note
+For this reason, some reasercheres (myself included) prefer to refer to **grouping-level** effects and **population-level** effects, as opposed to *random* effects and *fixed* effects
+:::
+:::
+
+::: {.column .fragment}
+
+<br>
+
+::: box-warning
+
+<p></p>
+
+Under this view, *random* intercepts and *random* slopes are conceptualized and **varying** intercepts and **varying** slopes
+
+<p></p>
+
+:::
+:::
+:::
+:::
+
+---
+
+## So what is 'pooling' all about? {background-image="./index_files/img/memory.png" background-size="400px" background-position="95% 50%"}
+
+::: {.columns}
+::: {.column style="font-size: 0.75em;"}
+- Some describe multilevel models as 'models with memory'
+  - The population-level model helps inform/learn about the grouping-level
+  - They learn faster, better
+  - They are robust to overfitting
+
+- It has to do with how information is 'pooled'
+  1. Complete pooling
+  2. No pooling
+  3. Partial pooling
+:::
 :::
 
 ---
