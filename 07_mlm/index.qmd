@@ -632,11 +632,11 @@ Under this view, *random* intercepts and *random* slopes are conceptualized and 
 
 ---
 
-## So what is 'pooling' all about? {background-image="./index_files/img/memory.png" background-size="400px" background-position="95% 50%"}
+## So what is 'pooling' all about? {background-color="#000" background-image="./index_files/img/memoryx.png" background-size="750px" background-position="100% 100%"}
 
 ::: {.columns}
 ::: {.column style="font-size: 0.75em;"}
-- Some describe multilevel models as 'models with memory'
+- Some describe multilevel models as '[**models with memory**]{.emph}'
   - The population-level model helps inform/learn about the grouping-level
   - They learn faster, better
   - They are robust to overfitting
