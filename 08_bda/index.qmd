@@ -1,72 +1,23 @@
 ---
 title   : 'Data Science for Linguists'
-subtitle: 'Bayesian inference'
-author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    lib_dir: assets
-    css: ["hygge", "rutgers", "rutgers-fonts"]
-    nature:
-      beforeInit: ["https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js", "https://platform.twitter.com/widgets.js"]
-      highlightStyle: default
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
-    includes:
-      in_header: "../assets/partials/header.html"
+subtitle : 'Bayesian inference'
+author   : "Joseph V. Casillas, PhD"
+institute: "Rutgers University<mybr>Spring 2025<br>Last update: `r Sys.Date()`"
 ---
 
 ```{r}
-#| label: setup
-#| include: false
-options(htmltools.dir.version = FALSE)
-```
-
-```{r}
-#| label: global-setup
-#| echo: false
-knitr::opts_chunk$set(
-  echo = FALSE, 
-  out.width = "100%", 
-  fig.asp = 0.5625, 
-  fig.retina = 2, 
-  dpi = 300, 
-  message = FALSE, 
-  warning = FALSE
-  )
-```
-
-```{r}
-#| label: xaringan-extra-all-the-things
-#| echo: false
-xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "freezeframe"
-    #"scribble", "search", "webcam"
-    )
-)
-```
-
-```{r}
-#| label: helpers
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
 source(here::here("assets", "scripts", "helpers.R"))
+
+library("tidybayes")
 ```
 
-```{r}
-#| label: load-refs
-bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
-ui <- "- "
-```
+# What is probability? {background-color="black" background-image="https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg" background-size="contain" background-position="100% 50%"}
 
-class: title-slide-section-grey, middle
-background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
-background-size: contain
-background-position: 100% 50%
-
-# What is probability?
-
-???
-
+::: notes
 Before we get started I'd like to ask you to take a second and think about "probability". 
 
 What does is it mean? 
@@ -76,13 +27,16 @@ What do you understand if somebody asks you the probability you are going to be 
 What is the probability it will rain tomorrow?
 
 Over the next two days we will be thinking about the notion of probability and how define it in light of the research that we do
+:::
+
 
 ---
-layout: false
-class: middle
+
+## {.center}
 
 ```{r}
 #| label: tiktok1
+#| eval: false
 t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6977375589225286917"
 t1 <- tiktok_embed(t1_url)
 t1
@@ -93,14 +47,10 @@ general bayes
 -->
 
 ---
-background-image: url(./assets/img/worldview.png)
-background-size: contain
-background-color: black
 
-# The world according to frequentists
+## The world according to frequentists {background-image="./index_files/img/worldview.png" background-size="contain" background-color="black"}
 
-???
-
+::: notes
 A key reason for *why* we will talk about probability has to do with frequentism
 
 You might have heard this term before, but if not, that's fine. 
@@ -108,174 +58,205 @@ You might have heard this term before, but if not, that's fine.
 I'm certain you already have a grasp of what it is. 
 
 Over the next few days we will be thinking a lot about frequentism and comparing it directly with Bayesian methods. 
+:::
 
 ---
-background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
-background-size: contain
-background-position: 100% 50%
 
-# What is frequentism?
+## What is frequentism? {background-image="https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg" background-size="contain" background-position="100% 50%"}
 
-.pull-left[
-.large[
+::: {.columns}
+::: {.column style="font-size: 0.8em;"}
 - A blanket term used to refer to "classical" statistics
-
 - Population parameters are fixed, actually exist
-
 - Probability refers to the long-run frequency of a given event
-
 - A sample of data is the result of one of an infinite number of exactly repeated experiments
-
 - Data are random, result from sampling a fixed population distribution
-]
-]
+:::
+:::
 
-???
-
+::: notes
 - Frequentist statistics represent what we have been doing all semester
 - The frequentist view of probability is what leads to odd definitions of statistical machinery, like confidence intervals
 - This view of probability seems to be at odds with how we think/reason
   - What is the probability X candidate wins the election?
+:::
 
 ---
-class: center, middle
 
-# What if...
+## What if... {.center}
 
-### There isn't one true population parameter... <br>
---
-but an entire distribution of parameters, some more plausible than others
+[There isn't one true population parameter...]{.fragment} <br>
+[but an entire distribution of parameters, some more plausible than others]{.fragment}
 
 ---
-class: middle
+
+## {.center}
 
 ```{r}
 #| label: mtcars-ex
 mod_f <-  lm(mpg ~ drat, data = mtcars)
 mod_b <- brm(
-  mpg ~ drat, data = mtcars, 
+  formula = mpg ~ drat, data = mtcars, 
   file = here("assets", "mods", "cars_b")
-  )
+)
 
-cars_post <- as_tibble(mod_b) %>% 
+cars_post <- as_tibble(mod_b) |> 
   select(int = b_Intercept, b = b_drat)
 
-plot_base <- mtcars %>% 
+plot_base <- mtcars |> 
   ggplot() + 
   aes(x = drat, y = mpg) + 
-  geom_point(pch = 20, color = "black") + 
-  ds4ling_bw_theme(base_size = 18, base_family = "Palatino")
+  geom_point(pch = 21, color = "white", fill = "thistle", size = 3) + 
+  ds4ling_bw_theme(base_size = 14)
 
 plot_f <- plot_base + 
-  geom_smooth(method = lm, color = "darkred", formula = "y ~ x", 
-    linewidth = 1.5) + 
-  labs(title = "Frequentist model", subtitle = "Line of best fit")
+  geom_smooth(
+    method = lm, color = "black", 
+    formula = "y ~ x", linewidth = 1.5
+  ) + 
+  labs(
+    title = "Frequentist model", 
+    subtitle = "Line of best fit"
+  )
 
 plot_b <- plot_base + 
-  geom_abline(intercept = fixef(mod_b)[1, 1], slope = fixef(mod_b)[2, 1], 
-    color = "darkred", linewidth = 1.5) + 
-  labs(title = "Bayesian model", subtitle = "Most plausible line of best fit")
+  geom_abline(
+    intercept = fixef(mod_b)[1, 1], 
+    slope = fixef(mod_b)[2, 1], 
+    color = "black", linewidth = 1.25
+  ) + 
+  labs(
+    title = "Bayesian model", 
+    subtitle = "Most plausible line of best fit", 
+    y = NULL
+  ) + 
+  scale_y_continuous(position = "right")
 
 plot_b_20 <- plot_base + 
-  geom_abline(data = sample_n(cars_post, 20), 
-    aes(intercept = int, slope = b), color = "grey80", alpha = 0.5) + 
-  geom_abline(intercept = fixef(mod_b)[1, 1], slope = fixef(mod_b)[2, 1], 
-    color = "darkred", linewidth = 1.5) + 
-  labs(title = "Bayesian model", subtitle = "Median line +20 plausible lines")
+  geom_abline(
+    data = sample_n(cars_post, 20), 
+    aes(intercept = int, slope = b), 
+    color = "grey50", alpha = 0.5, linewidth = 0.5
+  ) + 
+  geom_abline(
+    intercept = fixef(mod_b)[1, 1], 
+    slope = fixef(mod_b)[2, 1], 
+    color = "black", linewidth = 1.5
+  ) + 
+  labs(
+    title = "Bayesian model", 
+    subtitle = "Median line +20 plausible lines"
+  )
 
 plot_b_50 <- plot_base + 
-  geom_abline(data = sample_n(cars_post, 50), 
-    aes(intercept = int, slope = b), color = "grey80", alpha = 0.5) + 
-  geom_abline(intercept = fixef(mod_b)[1, 1], slope = fixef(mod_b)[2, 1], 
-    color = "darkred", linewidth = 1.5) + 
-  labs(title = "Bayesian model", subtitle = "Median line +50 plausible lines")
+  geom_abline(
+    data = sample_n(cars_post, 50), 
+    aes(intercept = int, slope = b), 
+    color = "grey50", alpha = 0.5, linewidth = 0.5
+  ) + 
+  geom_abline(
+    intercept = fixef(mod_b)[1, 1], 
+    slope = fixef(mod_b)[2, 1], 
+    color = "black", linewidth = 1.5
+  ) + 
+  labs(
+    title = "Bayesian model", 
+    subtitle = "Median line +50 plausible lines", 
+    y = NULL, x = NULL
+  ) + 
+  theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())
 
 plot_b_200 <- plot_base + 
-  geom_abline(data = sample_n(cars_post, 200), 
-    aes(intercept = int, slope = b), color = "grey80", alpha = 0.5) + 
-  geom_abline(intercept = fixef(mod_b)[1, 1], slope = fixef(mod_b)[2, 1], 
-    color = "darkred", linewidth = 1.5) + 
-  labs(title = "Bayesian model", subtitle = "Median line +200 plausible lines")
+  geom_abline(
+    data = sample_n(cars_post, 200), 
+    aes(intercept = int, slope = b), 
+    color = "grey50", alpha = 0.25, linewidth = 0.5
+  ) + 
+  geom_abline(
+    intercept = fixef(mod_b)[1, 1], 
+    slope = fixef(mod_b)[2, 1], 
+    color = "black", linewidth = 1.5
+  ) + 
+  scale_y_continuous(position = "right") + 
+  labs(
+    title = "Bayesian model", 
+    subtitle = "Median line +200 plausible lines", 
+    y = NULL, x = NULL
+  )
 ```
 
 ```{r}
 #| label: cars-f-vs-cars-b1
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_f + plot_spacer() 
 ```
 
 ---
-class: middle
-count: false
+
+## {.center visibility="uncounted"}
 
 ```{r}
 #| label: cars-f-vs-cars-b2
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_f + plot_b 
 ```
 
 ---
-class: middle
+
+## {.center visibility="uncounted"}
 
 ```{r}
 #| label: cars-b-draws1
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_b_20 + plot_spacer() + plot_spacer()
 ```
 
 ---
-class: middle
-count: false
+
+## {.center visibility="uncounted"}
 
 ```{r}
 #| label: cars-b-draws2
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_b_20 + plot_b_50 + plot_spacer()
 ```
 
 ---
-class: middle
-count: false
+
+## {.center visibility="uncounted"}
 
 ```{r}
 #| label: cars-b-draws3
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_b_20 + plot_b_50 + plot_b_200
 ```
 
 ---
-class: middle
+
+## {.center visibility="uncounted"}
 
 ```{r}
 #| label: cars-f-vs-cars-b-2
-#| fig.width: 13
-#| fig.height: 5.5
+#| fig-asp: 0.6
 plot_f + plot_b_200
 ```
 
-???
-
+::: notes
 Classical: There is a single "true" line of best fit, and I'll give my best estimate of it.
 
 Bayesian: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
+:::
 
 ---
-background-color: black
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_bey.png)
-background-size: contain
 
----
-class: middle, center
+## {background-color="black" background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_bey.png" background-size="contain"}
+
+
+
 
 # Bayesian inference <br>is all about the posterior
 
-???
-
+::: notes
 One key idea that I'd like you to hold on to for right now is that Bayesian inference is all about what we call the posterior distribution
 
 I'm going to spend the rest of my time in this brief presentation building up intuition about the posterior.
@@ -286,163 +267,206 @@ This is a fundamental difference with regard to frequentistism
 That is to say, there is no posterior distribution in frequentist statistics, you only estimate 1 single value for a parameter
 
 I am going to walk us through applying this idea to regression
+:::
 
 ---
-class: middle
 
-# .center[Applied to regression]
+## Applied to regression {.center}
 
-## .blue[Classical]: There is a single "true" line of best fit, and I'll give my best estimate of it.
+[**Classical**]{color="blue"}: There is a single "true" line of best fit, and I'll give my best estimate of it.
 
-???
+. . .
 
+**[Bayesian]{.emph}**: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
+
+::: notes
 As many of us already know, in standard linear regression in a frequentist framework, we typically estimate what we call a line of best fit, either using OLS or maximum likelihood estimation
 
 It's actually quite simple at it's core, we have some blob of data and we try to shove a line through it to describe it the best we can
-
---
-
-## **Bayesian**: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
-
-???
 
 Under a Bayesian framework, we derive a distribution of lines that are compatible with our data and our prior assumptions
 
 Some of these lines are more plausible than others, so we can use standard methods to summarize and quantify uncertainty about them
 
 Let's illustrate this to make it clear
+:::
 
 ---
 
-# Distributions of plausible outcomes
+## Distributions of plausible outcomes
 
-.pull-left[
-
-- In Bayesian inference we attempt to approximate this (these) distribution(s)... we call it the **posterior distribution**
-
+::: {.columns}
+::: {.column style="font-size: 0.65em;"}
+- In Bayesian inference we attempt to approximate this (these) distribution(s)... we call it the **[posterior distribution]{.emph}**
 - Bayesian inference is all about the posterior
-
 - It represents a distribution of estimates that could arise from the data
-
 - Values that are more common (appear more often) are more plausible
-
 - For *very* simple problems we can calculate the posterior analytically by integrating (calculus)
-
 - For most problems (regression) we cannot calculate the posterior... so we approximate it via sampling (and calculus)
+:::
 
-]
+::: {.column width="5%"}
+:::
 
-.pull-right[
-<br>
+::: {.column width="45%"}
+<br><br>
+
 ```{r}
 #| label: normal-dist
-#| fig.asp: 0.85
+#| fig-asp: 0.75
 ggplot(data.frame(x = c(10, 90))) + 
   aes(x = x) +
-  stat_function(fun = dnorm, n = 100, args = list(mean = 50, sd = 10),
-    linewidth = 1, color = "darkred") + 
+  stat_function(
+    fun = dnorm, n = 100, args = list(mean = 50, sd = 10),
+    linewidth = 2, color = "#21908CFF"
+  ) + 
   labs(y = "Density", x = expression(beta)) + 
-  ds4ling::ds4ling_bw_theme(base_size = 18, base_family = "Palatino") 
+  ds4ling_bw_theme(base_size = 22) 
 ```
-
-]
+:::
+:::
 
 ---
 
-# A trivial example
+## A trivial example
 
-.pull-left[
+::: {.columns}
+::: {.column style="font-size: 0.8em;"}
+More cars
 
-### More cars
-
-.large[
 - Let's explore the `mpg` variable
-
 - N = `r length(mtcars$mpg)`
-
 - The range is `r range(mtcars$mpg)`. 
-
 - The mean is `r mean(mtcars$mpg)`. 
-
 - The SD is `r sd(mtcars$mpg)`.
-
 - The 95% quantiles are `r quantile(mtcars$mpg, probs = c(0.025, 0.975))`
-
 - We'll fit an intercept only model. 
-]
-]
+:::
 
-.pull-right[
+::: {.column}
+<br>
 
-</br></br>
 ```{r}
 #| label: mtcars-mpg-plot
-#| fig.asp: 0.8
+#| fig-asp: 0.8
 ggplot(mtcars) +
   aes(x = NA, y = mpg) + 
-  geom_point(size = 3, alpha = 0.7, color = "grey40", 
-    position = position_nudge(x = 0.1)) + 
-  stat_summary(fun.data = mean_sdl, geom = "pointrange", 
-    fun.args = list(mult = 1), pch = 21, fill = "white", size = 2, 
-    position = position_nudge(x = -0.1)) + 
-  labs(title = "Distribution of mpg", 
+  geom_point(
+    size = 10, pch = 21, alpha = 0.5, color = "white", 
+    fill = "#cc0033", position = position_nudge(x = 0.1)
+  ) + 
+  stat_summary(
+    fun.data = mean_sdl, geom = "pointrange", 
+    fun.args = list(mult = 1), 
+    pch = 21, fill = "#cc0033", linewidth = 2, size = 3, 
+    position = position_nudge(x = -0.1), 
+  ) + 
+  labs(
+    title = "Distribution of mpg", 
     subtitle = "Raw data and mean +/- SD", 
-    x = NULL) + 
+    x = NULL
+  ) + 
   coord_flip() + 
-  ds4ling_bw_theme(base_size = 18, base_family = "Palatino") + 
+  ds4ling_bw_theme(base_size = 24) + 
   theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())
 ```
-
-]
+:::
+:::
 
 ---
 
-# A trivial example
+## A trivial example
 
-### Frequentist model
+[Frequentist model]{.p-font style="font-size: 1.25em; color: #666666"}
 
-We'll fit an intercept only model. The mean `mpg` is `r round(mean(mtcars$mpg), 2)` ±`r round(sd(mtcars$mpg), 2)` SD. 
+::: {.columns}
+::: {.column width="41%"}
 
-.pull-left[
+::: {style="font-size: 0.72em;"}
+We'll fit an intercept only model: 
+:::
+
+::: {.fragment style="font-size: 0.8em;"}
+[.]{color="white"}
+<center>
+`lm(mpg ~ 1)`
+</center>
+:::
+
+::: {.fragment}
+$$
+\begin{align}
+mpg_{i} & \sim N(\mu_{i}, \sigma) \\
+\mu_{i} & = \alpha
+\end{align}
+$$
+:::
+
+::: {.fragment style="font-size: 0.72em;"}
+The mean `mpg` is `r round(mean(mtcars$mpg), 2)` ±`r round(sd(mtcars$mpg), 2)` SD. 
+:::
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column .fragment style="font-size: 0.7em; width: 57%"}
+<br><br>
 
 ```{r}
 #| label: cars-int-only-freq
 #| comment: ""
 #| echo: true
-lm(mpg ~ 1, data = mtcars) %>% summary()
+lm(mpg ~ 1, data = mtcars) |> summary()
 ```
-
-]
-
-.pull-right[
-.center[
-.large[
-
-|           |        |                      |
-| --------: | :----- | :------------------- |
-| $mpg_{i}$ | $\sim$ | $N(\mu_{i}, \sigma)$ |
-| $\mu_{i}$ | $=$    | $\alpha$             |
-
-`lm(mpg ~ 1)`
-
-]
-]
-]
+:::
+:::
 
 ---
 
-# A trivial example
+## A trivial example
 
-### Bayesian model
+[Bayesian model]{.p-font style="font-size: 1.25em; color: #666666"}
 
-We'll fit an intercept only model. The mean `mpg` is `r round(mean(mtcars$mpg), 2)` ±`r round(sd(mtcars$mpg), 2)` SD. 
-.pull-left[
+::: {.columns}
+::: {.column width="41%"}
+
+::: {style="font-size: 0.72em;"}
+We'll fit an intercept only model. 
+:::
+
+::: {.fragment style="font-size: 0.8em;"}
+[.]{color="white"}
+<center>
+`brm(mpg ~ 1)`
+</center>
+:::
+
+::: {.fragment}
+$$
+\begin{align}
+mpg_{i} & \sim N(\mu_{i}, \sigma) \\
+\mu_{i} & = \alpha
+\end{align}
+$$
+:::
+
+::: {.fragment style="font-size: 0.72em;"}
+The mean `mpg` is `r round(mean(mtcars$mpg), 2)` ±`r round(sd(mtcars$mpg), 2)` SD. 
+:::
+:::
+
+::: {.column width="2%"}
+:::
+
+::: {.column .fragment style="font-size: 0.62em; width: 57%"}
+<br>
 
 ```{r}
 #| label: cars-int-only-bayes-print
 #| eval: false
 #| echo: true
-brm(mpg ~ 1, data = mtcars) %>% summary()
+brm(mpg ~ 1, data = mtcars) |> summary()
 ```
 
 ```{r}
@@ -454,31 +478,74 @@ cars_bayes_int <- brm(
   )
 summary(cars_bayes_int)
 ```
-
-]
-
-.pull-right[
-.center[
-.large[
-
-|           |        |                      |
-| --------: | :----- | :------------------- |
-| $mpg_{i}$ | $\sim$ | $N(\mu_{i}, \sigma)$ |
-| $\mu_{i}$ | $=$    | $\alpha$             |
-
-`brm(mpg ~ 1)`
-
-]
-]
-]
+:::
+:::
 
 ---
-class: title-slide-section-grey, middle, center
 
-# So what's the difference?
+## A trivial example {.smaller}
 
-???
+### Let's compare
 
+::: {.columns}
+::: {.column}
+```r
+lm(mpg ~ 1, data = mtcars)
+```
+
+```{r}
+#| label: cars-int-only-freq-rep
+#| comment: ""
+lm(mpg ~ 1, data = mtcars) |> summary() |> coef()
+```
+:::
+
+::: {.column .fragment}
+```{r}
+#| label: cars-int-only-bayes-print-rep
+#| eval: false
+#| echo: true
+brm(mpg ~ 1, data = mtcars)
+```
+
+```{r}
+#| label: cars-int-only-bayes-rep
+#| comment: ""
+bind_rows(
+  cars_bayes_int |> 
+    fixef() |> 
+    as_tibble(), 
+  cars_bayes_int |> 
+    as_tibble() |> 
+    select(-b_Intercept, -lp__) |> 
+    summarize(
+      Estimate = mean(sigma), 
+      Est.Error = 0.79, 
+      Q2.5 = quantile(sigma, 0.025), 
+      Q97.5 = quantile(sigma, 0.975)
+    ) 
+  ) |> 
+  mutate(param = c("Intercept", "Sigma")) |> 
+  tibble::column_to_rownames(var = "param")
+```
+:::
+:::
+
+<br>
+
+::: {.fragment}
+- Recall that the mean `mpg` is `r round(mean(mtcars$mpg), 2)` ±`r round(sd(mtcars$mpg), 2)` SD
+- The Bayesian model estimates an additional paramter... which?
+- The Bayesian estimates are slightly different (but really close)... why?
+:::
+
+
+
+
+
+# So what's the difference? {.transition}
+
+::: notes
 At this point you might be saying to yourself "So what? The models are the same?" and you would have a good point. 
 
 The information we have looked at in the summaries is essentially the same. 
@@ -486,12 +553,14 @@ The information we have looked at in the summaries is essentially the same.
 The main difference, and the key take away from this section, is that the bayesian model provides a posterior distribution of values for the parameters it estimates, the intercept and sigma. 
 
 Let's see what we can do with a posterior distribution
+:::
 
 ---
 
-# Exploring the posterior
+## Exploring the posterior {.smaller}
 
-.pull-left[
+::: {.columns}
+::: {.column}
 ```{r}
 #| label: cars-int-posterior
 #| eval: false
@@ -503,43 +572,63 @@ cp <- as_tibble(cars_bayes_int)
 #| label: cars-int-posterior-show
 #| comment: ""
 cp <- as_tibble(cars_bayes_int)
-cp %>% select(b_Intercept, sigma) %>% slice(1:15)
+cp |> 
+  select(b_Intercept, sigma) |> 
+  slice(1:15) |> 
+  kable() |> 
+  kable_styling(font_size = 20)
 ```
+:::
 
-]
-
---
-
-.pull-right[
-
+::: {.column}
 - This posterior distribution has 4000 draws of mean and SD values that are compatible with our data
-
+```{r}
+#| label: cars-post-play0
+#| echo: true
+nrow(cp)
+```
 - The posterior is just like any other distribution of data
-
 - We can analyze/summarize it however we want
 
 ```{r}
-#| label: cars-post-play
+#| label: cars-post-play1
 #| echo: true
+#| comment: ""
 mean(cp$b_Intercept)
-quantile(cp$b_Intercept, probs = c(0.025, 0.975))
 ```
 
-]
+```{r}
+#| label: cars-post-play2
+#| echo: true
+quantile(cp$b_Intercept, probs = c(0.025, 0.975), names = F)
+```
+:::
+:::
 
 ---
 
 ```{r}
 #| label: cars-post-plot
-ggplot(tibble(mpg = cp$b_Intercept)) +  
-  aes(x = mpg, y = NA) + 
-  geom_point(data = mtcars, aes(x = mpg), size = 3, alpha = 0.7, 
-    color = "grey40", position = position_nudge(y = -0.1)) +
-  tidybayes::stat_halfeye(pch = 21, point_fill = "white", point_size = 5) + 
-  labs(title = "Distribution of mpg", 
-    subtitle = "Raw data and posterior mean ±95% CI", 
-    x = "mpg", y = NULL) + 
-  ds4ling_bw_theme(base_size = 16, base_family = "Palatino") + 
+#| fig-asp: 0.6
+tibble(mpg = cp$b_Intercept) |> 
+  ggplot() +  
+  aes(x = mpg, y = 0) + 
+  geom_point(
+    data = mtcars, 
+    aes(x = mpg), 
+    size = 5, alpha = 0.7, color = "white", pch = 21, fill = "#cc0033", 
+    position = position_nudge(y = -0.05)
+  ) +
+  stat_halfeye(
+    slab_fill = "#cc0033", slab_color = "grey95", 
+    pch = 21, point_fill = "white", point_size = 5
+  ) +
+  labs(
+    title = "Distribution of mpg", 
+    subtitle = "Raw data, posterior mean, and 95% credible interval", 
+    x = "mpg", y = NULL
+  ) + 
+  ds4ling_bw_theme(base_size = 16) + 
   theme(axis.ticks.y = element_blank(), axis.text.y = element_blank())
 ```
 
@@ -547,137 +636,139 @@ ggplot(tibble(mpg = cp$b_Intercept)) +
 
 ```{r}
 #| label: ar-post-paramspace-plot
-#| fig.height: 8
-#| fig.width: 12
-jp_plot <- cp %>%
-  ggplot(., aes(x = b_Intercept, y = sigma)) + 
-    geom_point(size = 3, pch = 16, alpha = 0.2, color = "#cc0033") + 
-    geom_point(data = tibble(
+#| fig-asp: 0.6
+jp_plot <- cp |>
+  ggplot() + 
+  aes(x = b_Intercept, y = sigma) + 
+  geom_point(size = 1, pch = 16, alpha = 0.2, color = "grey40") + 
+  geom_point(
+    data = tibble(
       b_Intercept = median(cp$b_Intercept), 
       sigma = median(cp$sigma)
-      ), 
-      size = 7, pch = 21, fill = "grey") + 
-    labs(y = expression(sigma), x = c(expression(mu), "Intercept")) + 
-    ds4ling::ds4ling_bw_theme(base_size = 26, base_family = "Palatino") 
+    ), 
+    size = 7, stroke = 2, pch = 21, fill = "#cc0033", color = "white"
+  ) + 
+  labs(y = expression(sigma), x = c(expression(mu), "Intercept")) + 
+  ds4ling_bw_theme(base_size = 22) 
 
-ggExtra::ggMarginal(jp_plot, type = "histogram", fill = "#cc0033")
-
+ggExtra::ggMarginal(
+  jp_plot, type = "histogram", 
+  fill = "#cc0033", color = "white"
+)
 ```
 
----
-class: title-slide-section-grey, middle
 
-# **How do we get a posterior?**
 
-### Let's talk about probability
+# How do we get a posterior? {.transition}
 
----
-class: middle, center
-
-.Large[
-$$P(\color{green}{y})$$
-]
-
---
-
-.Large["the probability of .green[y]"]
-
---
-
-.Large["the probability of .green[you getting an A in stats]"]
-
----
-class: middle, center
-
-.Large[
-$$P(\color{green}{y} | \color{red}{z} )$$
-]
-
---
-
-.Large["the probability of .green[y] given .red[z]"]
-
---
-
-.Large["the probability of .green[you getting an A in stats] given .red[you don't do the readings]"]
+[Let's talk about probability]{.p-font}
 
 ---
 
-# How do we get a posterior?
+## {.center}
 
-<br><br><br>
+$$
+P(\color{green}{y})
+$$
 
-.center[
-.Large[
+. . .
+
+<center>
+"the probability of [y]{color="green"}"
+</center>
+
+. . .
+
+<center>
+"the probability of [you getting an A in stats]{color="green"}"
+</center>
+
+---
+
+## {.center}
+
+$$
+P(\color{green}{y} | \color{red}{z} )
+$$
+
+. . .
+
+<center>
+"the probability of [y]{color="green"} given [z]{color="red"}"
+</center>
+
+. . .
+
+<center>
+"the probability of [you getting an A in stats]{color="green"} given [you don't do the readings]{color="red"}"
+</center>
+
+---
+
+## How do we get a posterior?
+
+<br>
+
 $$
 P(A | B) = \frac{P(B | A) \times P(A)}{P(B)}
 $$
-]
-]
 
---
+. . .
 
-Read as: 
-
-<ru-blockquote>
+::: {.columns style="font-size: 0.7em;"}
+::: {.column}
+::: box-note
 The probability of A given B is equal to the probability of B given A times the probability of A divided by the probability of B
-</ru-blockquote>
+:::
+:::
 
---
+::: {.column .fragment}
+::: box-warning
+You'll probably never actually use this, even though most texts on Bayesian inference start with this and base rate fallacy examples 
+:::
+:::
+:::
 
-.content-box-red[
-There is a good chance you never actually use this, even though most texts on Bayesian inference will start with this and base rate fallacy examples 
-]
-
-???
-
+::: notes
 It tells you how to convert one conditional probability into another one.
+:::
 
 ---
-background-image: url(./assets/img/bayes_theorem.gif)
-background-size: 600px
-background-position: 50% 40%
 
-# How do we get a posterior?
+## How do we get a posterior? {background-image="./index_files/img/bayes_theorem.gif" background-size="1000px" background-position="50% 40%"}
 
 ---
-background-image: url(./assets/img/bayes_theorem.png)
-background-size: 600px
-background-position: 50% 40%
 
-# How do we get a posterior?
+## How do we get a posterior? {background-image="./index_files/img/bayes_theorem.png" background-size="1000px" background-position="50% 40%"}
 
---
+. . .
 
-.footnote[
-.content-box-blue[
+<center>
+::: {.box-tip style="font-size: 0.55em;" .absolute bottom=0 left="15%"}
 The posterior distribution is the product of the likelihood and the prior...<br>
 (divided by the normalizing constant)
-]
-]
+:::
+</center>
 
-???
-
+::: notes
 This is much more interesting in the context of statistical modelling
 
 In a class on Bayesian inference we would dedicate a lot of time to understanding the likelihood and the prior...
 
 The prior is the most controversial part of Bayesian inference
+:::
 
 ---
 
-# How do we get a posterior?
+## How do we get a posterior?
 
-<br><br><br>
+<br>
 
-.Large[
 $$
 Posterior = \frac{Likelihood \times Prior}{Normalizing\ constant}
 $$
-]
 
-???
-
+::: notes
 Prior and posterior describe when information is obtained: what we know pre-data is our prior information, and what we learn post-data is the updated information (“posterior”).
 
 The likelihood in the equation says how likely the data is given the model parameters. 
@@ -687,139 +778,128 @@ The likelihood also encompasses the data-generating process behind the model.
 For example, if we assume that the observed data is normally distributed, then we evaluate the likelihood by using the normal probability density function. 
 You don't need to know what that last sentence means. 
 What's important is that the likelihood contains our built-in assumptions about how the data is distributed.
-
----
-class: middle
-
-<iframe src="https://seeing-theory.brown.edu/bayesian-inference/index.html" style="border:none;" width="100%" height="100%">
+:::
 
 ---
 
-# How do we get a posterior?
+## {data-menu-title="Seeing theory" background-iframe="https://seeing-theory.brown.edu/bayesian-inference/index.html" background-interactive=TRUE}
 
-<br><br><br>
 
-.Large[
+---
+
+## How do we get a posterior?
+
+<br>
+
 $$
 updated\ knowledge \propto Likelihood\ of\ data \times prior\ beliefs
 $$
-]
 
---
+. . .
 
-.footnote[
-.content-box-blue[
+::: {.box-tip style="font-size: 0.55em;" .absolute bottom=0 top="15P"}
 We can think of Bayes' theorem as a principled/systematic method for updating our knowledge in light of new data.
 
 - Update beliefs in proportion to how well the data fit those beliefs.
 - Because beliefs have probabilities, we can quantify our uncertainty about them.
-
-]
-]
+:::
 
 ---
 
-# How do we get a posterior?
+## How do we get a posterior?
 
-<br><br><br>
+<br><br>
 
-.Large[
+::: {style="font-size: 0.9em;"}
 $$
 P(unknown | observed) = \frac{\color{red}{P(observed | unknown)} \times P(unknown)}{P(observed)}
 $$
-]
+:::
 
-???
-
+::: notes
 We have some model that describes a data-generating process and we have some observed data, but we want to estimate some unknown model parameters. In that case, the formula reads like:
 
 When I was first learning Bayes, this form was my anchor for remembering the formula. The goal is to learn about unknown quantity from data, so the left side needs to be “unknown given data”.
+:::
+
+
+
+
+
+# Frequentism vs. Bayesianism {.transition}
 
 ---
-class: title-slide-section-grey, middle
 
-# Frequentism vs. Bayesianism
+## Frequentism vs. Bayesianism
 
----
-
-# Frequentism vs. Bayesianism
-
-.large[
-.center[
 In essence the frequentist approach assess the probability of the data given a specific hypothesis
-]
 
-$$P(data | H_{x})$$
+$$
+P(data | H_{x})
+$$
 
-]
+. . .
 
-<br>
-
---
-
-.large[
-.center[
 Through Bayes formula one is able to asses the probability of a specific hypothesis given the data
-]
 
-$$P(H_{x} | data)$$
 
-]
+$$
+P(H_{x} | data)
+$$
 
-<br>
+. . .
 
---
+::: {.columns}
+::: {.column width="22%"}
+:::
 
-.center[
-.content-box-blue[
-.large[
-This is what we pretty much always want in science <br>(and what many people think they are doing with frequentist statistics)
-]
-]
-]
+::: {.column width="56%"}
+::: {.box-tip style="font-size: 0.6em;"}
+
+<center>
+This is what we pretty much always want in science (and what many people think they are doing with frequentist statistics)
+</center>
+
+:::
+:::
+
+::: {.column width="22%"}
+:::
+:::
 
 ---
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_1.png)
-background-size: contain
+
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_1.png" background-size="contain"}
 
 ---
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_2.png)
-background-size: contain
+
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_2.png" background-size="contain"}
 
 ---
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_priors.png)
-background-size: contain
-background-position: 100% 50%
-background-color: black
 
-# About priors
+## About priors {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_priors.png" background-size="contain" background-position="100% 50%" background-color="black"}
 
-.pull-left[
-.white[
+::: {.columns}
+::: {.column style="font-size: 0.75em;"}
 - To approximate the posterior distribution we need priors and data
-
 - Priors = prior beliefs or assumptions
-
 - They represent a way for us to incorporate prior experience or domain expertise into the model 
-
 - You can set any prior you want (subjective)
-
 - Many object to Bayesian inference because of the priors
-
 - Counterpoint: priors force you to be explicit about your assumptions
-]
-]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_likelihoods.png)
-background-size: contain
-background-color: black
+:::
+:::
 
 ---
 
-# Why?
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_likelihoods.png" background-size="contain" background-color="black"}
 
-.pull-left[
+---
+
+## Why?
+
+::: {.columns style="font-size: 0.6em;"}
+::: {.column}
 ### Advantages
 
 - A more intuitive inferential framework
@@ -831,11 +911,9 @@ background-color: black
 - Multiple comparisons?
 - Evidence for the null?
 - Model convergence?
-]
+:::
 
---
-
-.pull-right[
+::: {.column .fragment}
 ### Disadvantages
 
 - Conceptually difficult
@@ -846,20 +924,20 @@ background-color: black
 - Less common, less accepted
 - Computationally costly, slow
 - There is no correct way to choose a prior
-]
+:::
+:::
+
+
+
+
+
+
+# Frequentism vs. Bayesianism? {.transition}
 
 ---
-class: title-slide-section-grey, middle
 
-# Frequentism vs. Bayesianism?
+## Frequentism vs. Bayesianism?
 
----
-
-# Frequentism vs. Bayesianism?
-
-<br>
-
-.Large[
 - A Bayesian estimate with flat priors is generally equivalent to a frequentist MLE
 
 - Frequentism is not wrong, just different
@@ -869,75 +947,89 @@ class: title-slide-section-grey, middle
 - It's about using the right tool for the job
 
 - Do whatever you need to do answer your questions
-]
+
+
+
+
+
+# How you do it? {.transition}
 
 ---
-class: title-slide-section-grey, middle
 
-# How you do it?
-
----
-
-# More sleep (but Bayesian)
+## More sleep (but Bayesian)
 
 ### `sleepstudy` dataset
 
-.pull-left[
-
+::: {.columns}
+::: {.column style="font-size: 0.9em;"}
 - Part of `lme4` package
-
 - Criterion = reaction time (`Reaction`)
-
 - Predictor = \# of days of sleep deprivation (`Days`)
-
 - 10 observations per participant
-
 - \+2 fake participants w/ incomplete data
 
-]
+:::
 
-.pull-right[
-
+::: {.column style="font-size: 0.75em;"}
 ```{r}
 #| label: ss-cleanup
 # Convert to tibble for better printing. 
 # Convert factors to strings
 library("lme4")
-sleepstudy <- sleepstudy %>% 
-  as_tibble() %>% 
+sleepstudy <- sleepstudy |> 
+  as_tibble() |> 
   mutate(Subject = as.character(Subject))
 
 # Add two fake participants
 df_sleep <- bind_rows(
-  sleepstudy,
-  tibble(Reaction = c(286, 288), Days = 0:1, Subject = "374"),
-  tibble(Reaction = 245, Days = 0, Subject = "373"))
+    sleepstudy,
+    tibble(Reaction = c(286, 288), Days = 0:1, Subject = "374"),
+    tibble(Reaction = 245, Days = 0, Subject = "373")
+  ) |> 
+  mutate(is_extra = if_else(Subject %in% c("373", "374"), TRUE, FALSE))
 ```
 
 ```{r}
-#| label: ss-add-subjs
+#| label: print-sleep-df
 str(df_sleep)
-head(df_sleep)
+df_sleep |> 
+  slice(1:12) |> 
+  kable() |> 
+  kable_styling(font_size = 18)
 ```
-
-]
+:::
+:::
 
 ---
-class: middle
+
+## {.center}
 
 ```{r}
 #| label: ss-plot0
-#| fig.width: 14
-#| fig.height: 8.5
-df_sleep %>% 
-  ggplot(., aes(x = Days, y = Reaction)) + 
-    geom_point(pch = 21, aes(fill = Subject)) + 
-    scale_x_continuous(breaks = 0:4 * 2) + 
-    ds4ling_bw_theme(base_size = 18, base_family = "Palatino")
+#| fig.asp: 0.6
+df_sleep |> 
+  ggplot() + 
+  aes(x = Days, y = Reaction) + 
+  geom_point(
+    aes(fill = Subject, shape = is_extra), 
+    size = 3, color = "white"
+  ) + 
+  scale_x_continuous(breaks = 0:4 * 2) + 
+  scale_fill_viridis_d(
+    name = NULL, end = 0.9, direction = -1, 
+    guide = guide_legend(override.aes = list(shape = 21))
+  ) + 
+  scale_shape_manual(name = NULL, values = c(21, 23), guide = "none") + 
+  ds4ling_bw_theme(base_size = 14) + 
+  theme(
+    plot.margin = margin(1, 0, 0, 0, "cm"), 
+    legend.key.size = unit(0.5, "cm")
+  )
 ```
 
 ---
-class: middle
+
+## {.center .smaller}
 
 ```{r}
 #| label: ss-plot-mod
@@ -946,12 +1038,12 @@ xlab <- "Days of sleep deprivation"
 ylab <- "Average reaction time (ms)"
 
 # No pooling
-df_no_pooling <- lmList(Reaction ~ Days | Subject, df_sleep) %>% 
-  coef() %>% 
-  tibble::rownames_to_column("Subject") %>% 
-  rename(Intercept = `(Intercept)`, Slope_Days = Days) %>% 
-  mutate(Model = "No pooling") %>% 
-  dplyr::filter(Subject != "373")
+df_no_pooling <- lmList(Reaction ~ Days | Subject, df_sleep) |> 
+  coef() |> 
+  tibble::rownames_to_column("Subject") |> 
+  rename(Intercept = `(Intercept)`, Slope_Days = Days) |> 
+  mutate(Model = "No pooling") |>
+  filter(Subject != "373")
 
 m_pooled <- lm(Reaction ~ Days, df_sleep) 
 
@@ -967,14 +1059,14 @@ df_pooled <- tibble(
 m <- lmer(Reaction ~ 1 + Days + (1 + Days | Subject), df_sleep)
 
 # Make a dataframe with the fitted effects
-df_partial_pooling <- coef(m)[["Subject"]] %>% 
-  tibble::rownames_to_column("Subject") %>% 
-  as_tibble() %>% 
-  rename(Intercept = `(Intercept)`, Slope_Days = Days) %>% 
+df_partial_pooling <- coef(m)[["Subject"]] |> 
+  tibble::rownames_to_column("Subject") |>
+  as_tibble() |> 
+  rename(Intercept = `(Intercept)`, Slope_Days = Days) |> 
   mutate(Model = "Partial pooling")
 
 df_models <- bind_rows(
-  df_pooled, df_no_pooling, df_partial_pooling) %>%
+  df_pooled, df_no_pooling, df_partial_pooling) |>
   left_join(df_sleep, by = "Subject", relationship = "many-to-many")
 
 
@@ -982,7 +1074,7 @@ p_model_comparison <- ggplot(df_models) +
   aes(x = Days, y = Reaction) + 
   geom_abline(
     aes(intercept = Intercept, slope = Slope_Days, color = Model),
-    size = .75
+    size = 0.75
   ) + 
   geom_point() +
   facet_wrap("Subject") +
@@ -991,30 +1083,28 @@ p_model_comparison <- ggplot(df_models) +
     subtitle = "No pooling vs. Complete pooling vs. Partial pooling") + 
   scale_x_continuous(breaks = 0:4 * 2) + 
   scale_color_brewer(palette = "Set1") + 
-  ds4ling_bw_theme(base_size = 18, base_family = "Palatino") + 
+  ds4ling_bw_theme(base_size = 12) + 
   theme(legend.position = "bottom", legend.justification = "left")
 
 summary(m)
 ```
 
 ---
-class: middle
+
+## {.center}
 
 ```{r}
 #| label: ss-plot1
-#| fig.width: 14
-#| fig.height: 8.5
+#| fig-asp: 0.6
 p_model_comparison
 ```
 
 ---
 
-# Bayesian version
+## Bayesian version
 
 ### Fitting the model
 
-.center[
-.Large[
 $$
 \begin{aligned}
 Reaction_{ij} & \sim normal(\mu, \sigma) \\
@@ -1024,29 +1114,24 @@ Reaction_{ij} & \sim normal(\mu, \sigma) \\
 \sigma & \sim normal(0, 1)
 \end{aligned}
 $$
-]
-]
 
---
-
+::: {.fragment}
 </br>
-.center[
-.Large[
-```
+```r
 brm(Reaction ~ 1 + Days + (1 + Days | Subject), data = sleepstudy)
 ```
-]
-]
+:::
 
 ---
-class: middle
+
+## {.center style="font-size: 0.8em;"}
 
 ```{r}
 #| label: sleep-brms-mod
 sleep_mod <- readRDS(here("assets", "mods", "sleep_mod.rds"))
 
 # Get a dataframe: One row per posterior sample
-df_posterior <- sleep_mod %>% 
+df_posterior <- sleep_mod |> 
   as_tibble()
 
 summary(sleep_mod)
@@ -1054,148 +1139,172 @@ summary(sleep_mod)
 
 ---
 
+## {.center}
+
 ```{r}
 #| label: sleep-draws-main
-#| fig.width: 14
-#| fig.height: 8.5
-
-df_sleep %>% 
-  ggplot(., aes(x = Days, y = Reaction)) + 
-    scale_x_continuous(breaks = 0:4 * 2) + 
-    geom_abline(data = sample_n(df_posterior, 250), color = "grey80", 
-      alpha = 0.2, size = 1, 
-      aes(intercept = b_Intercept, slope = b_Days)) + 
-    geom_point(pch = 21, fill = "black", size = 5, color = "white") + 
-    geom_abline(color = "white", size = 3.5, 
-      intercept = fixef(sleep_mod)[1, 1], slope = fixef(sleep_mod)[2, 1]) +
-    geom_abline(color = "darkred", size = 1.5, 
-      intercept = fixef(sleep_mod)[1, 1], slope = fixef(sleep_mod)[2, 1]) +
-    ds4ling_bw_theme(base_size = 18, base_family = "Palatino")
-
+#| fig-asp: 0.6
+df_sleep |> 
+  ggplot() + 
+  aes(x = Days, y = Reaction) + 
+  scale_x_continuous(breaks = 0:4 * 2) + 
+  geom_abline(
+    data = sample_n(df_posterior, 250), 
+    aes(intercept = b_Intercept, slope = b_Days), 
+    color = "grey80", alpha = 0.2, linewidth = 1 
+  ) + 
+  geom_point(pch = 21, fill = "black", size = 5, color = "white") + 
+  geom_abline(
+    color = "white", size = 3.5, 
+    intercept = fixef(sleep_mod)[1, 1], slope = fixef(sleep_mod)[2, 1]
+  ) +
+  geom_abline(
+    color = "darkred", size = 1.5, 
+    intercept = fixef(sleep_mod)[1, 1], slope = fixef(sleep_mod)[2, 1]
+  ) +
+  ds4ling_bw_theme(base_size = 18)
 ```
 
 ---
+
+## {.center}
 
 ```{r}
 #| label: sleep-draws-forest
-#| fig.width: 14
-#| fig.height: 8.5
-df_posterior %>% 
-  select(Intercept = b_Intercept, Days = b_Days) %>% 
-  pivot_longer(cols = everything(), names_to = "parameter", 
-    values_to = "estimate") %>% 
-  ggplot(., aes(x = estimate, y = parameter)) + 
-    geom_vline(xintercept = 0, lty = 3) + 
-    tidybayes::stat_halfeye(pch = 21, point_fill = "white", point_size = 3, 
-      .width = c(0.66, 0.95)) + 
-    labs(title = "BDA", 
-      subtitle = "Forest plot of population estimates", 
-      caption = "Posterior means +/- 66% and 95% CI", 
-      y = "Parameter", x = "Estimate") + 
-    ds4ling_bw_theme(base_size = 18, base_family = "Palatino")
+#| fig-asp: 0.6
+df_posterior |> 
+  select(Intercept = b_Intercept, Days = b_Days) |> 
+  pivot_longer(
+    cols = everything(), 
+    names_to = "parameter", 
+    values_to = "estimate"
+  ) |> 
+  ggplot() + 
+  aes(x = estimate, y = parameter) + 
+  geom_vline(xintercept = 0, lty = 3) + 
+  stat_halfeye(
+    pch = 21, point_fill = "white", point_size = 3, 
+    slab_fill = "thistle", .width = c(0.66, 0.95)
+  ) + 
+  labs(
+    title = "BDA", 
+    subtitle = "Forest plot of population estimates", 
+    caption = "Posterior means +/- 66% and 95% CI", 
+    y = NULL, x = "Estimate"
+  ) + 
+  ds4ling_bw_theme(base_size = 18) + 
+  theme(axis.text.y = element_text(angle = 90, hjust = 0.5))
 ```
 
 ---
-background-color: black
+
+## {background-color="black" .center}
 
 ```{r}
 #| label: sleep-draws-solar-system
-#| fig.width: 14
-#| fig.height: 8.5
+#| fig-asp: 0.6
 sleep_solar <- ggplot(df_posterior) + 
   aes(x = b_Intercept, y = b_Days) + 
   stat_density_2d(geom = "raster", aes(fill = after_stat(density)),
-    n = 200, contour = FALSE) +
+    n = 200, contour = FALSE, show.legend = F) +
   scale_fill_viridis_c(option = "A") + 
   labs(title = "Where's the average intercept and slope?", 
    x = "Estimate for average intercept", 
    y = "Estimate for average slope") + 
-  ggdark::dark_theme_gray(base_size = 14, base_family = "Palatino") 
+  ggdark::dark_theme_gray(base_size = 14, base_family = "Palatino")
 
 sleep_solar
 ```
 
 ---
-class: center, middle
-background-color: black
-background-image: url(./assets/img/dark_density_posterior.png)
-background-size: contain
 
-```{r, echo=F, eval=F}
+## {.center background-color="black" background-image="./index_files/img/dark_density_posterior.png" background-size="contain"}
+
+```{r}
+#| eval: false
 rayshader::plot_gg(sleep_solar, width = 7, height = 5, multicore = TRUE, 
   scale = 150, zoom = 0.5, theta = 10, phi = 30, windowsize = c(800, 800), 
   shadow_intensity = 0.1)
 Sys.sleep(0.2)
 rayshader::render_snapshot(
-  here("08_bda", "assests", "img", "dark_density_posterior.png"), 
-  clear = TRUE, color = "black")
+    here("08_bda", "index_files", "img", "dark_density_posterior.png"), 
+    clear = TRUE, color = "black"
+  )
 ```
 
 ---
 
 ```{r}
 #| label: sleep-draws-spaghetti 
-#| fig.width: 14
-#| fig.height: 8.5
-samples <- df_posterior %>% 
+#| fig-asp: 0.6
+samples <- df_posterior |> 
   mutate_at(
     .vars = vars(matches("Intercept\\]")), 
     .funs = ~ . + df_posterior$b_Intercept
-  ) %>% 
+  ) |> 
   mutate_at(
     .vars = vars(matches("Days\\]")), 
     .funs = ~ . + df_posterior$b_Days
-  ) %>% 
-  select(starts_with("r_Subject")) %>% 
-  pivot_longer(cols = everything(), names_to = c("Subject", ".value"), 
-    names_sep = ",") %>% 
-  transmute(Intercept = `Intercept]`, Days = `Days]`, 
-    Subject = stringr::str_remove(Subject, "r_Subject\\[")) 
+  ) |> 
+  select(starts_with("r_Subject")) |> 
+  pivot_longer(
+    cols = everything(), 
+    names_to = c("Subject", ".value"), 
+    names_sep = ","
+  ) |> 
+  transmute(
+    Intercept = `Intercept]`, Days = `Days]`, 
+    Subject = stringr::str_remove(Subject, "r_Subject\\[")
+  ) 
 
-df_sleep %>% 
-  ggplot(., aes(x = Days, y = Reaction)) + 
-    facet_wrap(~ Subject) + 
-    geom_point(color = "black") + 
-    geom_abline(
-      data = samples %>% group_by(Subject) %>% sample_n(., size = 50), 
-      aes(intercept = Intercept, slope = Days), 
-      color = "darkred", alpha = 0.1
-      ) + 
-  labs(x = xlab, y = ylab, 
+df_sleep |> 
+  ggplot() + 
+  aes(x = Days, y = Reaction) + 
+  facet_wrap(~ Subject) + 
+  geom_point(color = "black") + 
+  geom_abline(
+    data = samples %>% group_by(Subject) %>% sample_n(., size = 50), 
+    aes(intercept = Intercept, slope = Days), 
+    color = "darkred", alpha = 0.1
+  ) + 
+  labs(
+    x = xlab, y = ylab, 
     title = "BDA", 
-    subtitle = "50 draws of plausible lines of best fit for each subject") + 
+    subtitle = "50 draws of plausible lines of best fit for each subject"
+  ) + 
   scale_x_continuous(breaks = 0:4 * 2) + 
-  ds4ling_bw_theme(base_size = 18, base_family = "Palatino") + 
+  ds4ling_bw_theme(base_size = 12) + 
   theme(legend.position = "bottom", legend.justification = "left")
-
 ```
 
 ---
-background-color: black
+
+## {background-color="black"}
 
 ```{r}
 #| label: sleep-multiverse
-#| fig.width: 14
-#| fig.height: 8.5
-samples %>% 
-  ggplot(., aes(x = Intercept, y = Days)) + 
-    facet_wrap(~ Subject) + 
-    #stat_density_2d(aes(fill = stat(level)), geom = "polygon",
-    #  show.legend = F,contour_var = "ndensity") + 
-    stat_density_2d(geom = "raster", aes(fill = ..density..),
-    n = 100, contour = FALSE, show.legend = F, contour_var = "ndensity") + 
-    scale_fill_viridis_c(option = "A") + 
-    ggdark::dark_theme_gray(base_size = 14, base_family = "Palatino") 
+#| fig-asp: 0.6
+samples |>
+  ggplot() + 
+  aes(x = Intercept, y = Days) + 
+  facet_wrap(~ Subject) + 
+  #stat_density_2d(aes(fill = stat(level)), geom = "polygon",
+  #  show.legend = F,contour_var = "ndensity") + 
+  stat_density_2d(
+    geom = "raster", aes(fill = ..density..),
+    n = 100, contour = FALSE, show.legend = F, contour_var = "ndensity"
+  ) + 
+  scale_fill_viridis_c(option = "A") + 
+  ggdark::dark_theme_gray(base_size = 14, base_family = "Palatino") 
 ```
 
 ---
-class: middle
-background-color: black
+
+## {.center background-color="black"}
 
 ```{r}
 #| label: bayes-infographic
-#| fig.width: 13.5
-#| fig.height: 5
+#| fig-asp: 0.6
 data <- tibble(
   age = c(38, 45, 52, 61, 80, 74), 
   prop = c(0.146, 0.241, 0.571, 0.745, 0.843, 0.738)
@@ -1240,9 +1349,9 @@ fit_prior <- brm(
   file = here("assets", "mods", "log_curve_prior")
 )
 
-draws_prior <- data %>%
-  tidyr::expand(age = 0:100) %>%
-  tidybayes::add_fitted_draws(fit_prior, n = 100)
+draws_prior <- data |>
+  tidyr::expand(age = 0:100) |>
+  add_fitted_draws(fit_prior, n = 100)
 
 p1 <- ggplot(draws_prior) +
   aes(x = age, y = .value) +
@@ -1254,7 +1363,7 @@ p1 <- ggplot(draws_prior) +
   ) + 
   expand_limits(y = 0:1) +
   ggtitle("Plausible curves before seeing data") + 
-  ggdark::dark_theme_gray(base_size = 14)
+  ggdark::dark_theme_gray(base_size = 10)
 
 # Maximum likelihood estimate
 fm1 <- nls(prop ~ SSlogis(age, Asym, xmid, scal), data)
@@ -1273,7 +1382,7 @@ p2 <- ggplot(data) +
   expand_limits(y = 0:1) +
   expand_limits(x = c(0, 100)) +
   ggtitle("How well do the curves fit the data") + 
-  ggdark::dark_theme_gray(base_size = 14)
+  ggdark::dark_theme_gray(base_size = 10)
 
 
 fit <- brm(
@@ -1287,9 +1396,9 @@ fit <- brm(
   file = here("assets", "mods", "log_curve_mod")
 )
 
-draws_posterior <- data %>%
-  tidyr::expand(age = 0:100) %>%
-  tidybayes::add_fitted_draws(fit, n = 100) 
+draws_posterior <- data |>
+  tidyr::expand(age = 0:100) |>
+  add_fitted_draws(fit, n = 100) 
 
 p3 <- ggplot(draws_posterior) +
   aes(x = age, y = .value) +
@@ -1306,96 +1415,92 @@ p3 <- ggplot(draws_posterior) +
   ) +
   expand_limits(y = 0:1) +
   ggtitle("Plausible curves after seeing data") + 
-  ggdark::dark_theme_gray(base_size = 14)
+  ggdark::dark_theme_gray(base_size = 10)
 
 p1 + p2 + p3
 ```
 
 ---
-class: middle, center
-background-color: black
 
-# .white["We put a tiny sliver of scientific information into the model and then we bet on the things that can happen a large number of ways"]
+## {.center background-color="black"}
 
----
+<center>
+
+["We put a tiny sliver of scientific information into the model and then we bet on the things that can happen a large number of ways"]{color="white" .p-font style="font-size: 1.5em;"}
+
+</center>
+
+
+
 
 # Takeaways
 
-.Large[
 - There are primarily two camps in statistics: frequentists and Bayesians
-
 - The two camps see probability in different ways
-
 - **Bayesian statistics is all about the posterior**
-]
 
-???
-
+::: notes
 - There are primarily two camps in statistics: frequentists and Bayesians
 - The two camps see probability in different ways
 - Frequentists: parameters are real/true, provide best estimate of it
 - Bayesians: there are distributions of possible parameters, we summarize the distribution
 - Bayesian statistics is all about the posterior
+:::
 
 ---
-layout: false
-class: middle
+
+## {.center}
 
 ```{r}
 #| label: tiktok2
+#| eval: false
 t2_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806"
 t2 <- tiktok_embed(t2_url)
 t2
 ```
 
-<!--
-bayes posterior
--->
+<!-- bayes posterior -->
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806>
+:::
 
 ---
-background-color: black
-background-image: url(https://i.pinimg.com/originals/1b/58/77/1b58772e23bb5b761ded9aa1d1e1d7e4.gif)
-background-size: contain
 
-???
+## {background-color="black" background-image="https://i.pinimg.com/originals/1b/58/77/1b58772e23bb5b761ded9aa1d1e1d7e4.gif" background-size="contain"}
 
+::: notes
 With this in mind, you are now on your way to becoming Bayesians
-
 We will continue building intuitions about these core ideas
+:::
 
 ---
-background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
-background-size: contain
 
-.footnote[[BDA walkthrough](./assets/bda_walkthrough/bda_walkthrough.zip)]
+## {background-image="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" background-size="contain"}
 
----
-class: middle
-
-<iframe src="https://allisonhorst.github.io/palmerpenguins/" style="border:none;" height="100%", width="100%">
+::: footer
+[BDA walkthrough](./assets/bda_walkthrough/bda_walkthrough.zip)
+:::
 
 ---
-exclude: true
 
-`r AutoCite(bib, "mcelreath2018statistical")`
+## {data-menu-title="Seeing theory" background-iframe="https://allisonhorst.github.io/palmerpenguins/" background-interactive=TRUE}
 
----
-layout: false
-class: title-slide-final, left
 
-# References
 
-```{r}
-#| label: refs
-#| results: 'asis'
-PrintBibliography(bib)
-```
 
-[2] Bates, D. (2011). *Mixed models in R using the lme4 package Part 2: Longitudinal data, modeling interactions*. http://lme4.r-forge.r-project.org/slides/2011-03-16-Amsterdam/2Longitudinal.pdf
 
-[3] Mahr, T. (2017). *Plotting partial pooling in mixed-effects models*. https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/
 
-[4] Mahr, T. (2019). *Another mixed effects model visualization*. https://www.tjmahr.com/another-mixed-effects-model-visualization/
 
-[5] Mahr, T. (2020) *Bayes’ theorem in three panels*. https://www.tjmahr.com/bayes-theorem-in-three-panels/
+# [References]{.emph} {.final visibility="uncounted"}
+
+::: {#refs}
+:::
+
+::: notes
+@mcelreath2018statistical
+@bates2011mixed
+@mahr2017plotting
+@mahr2019another
+@mahr2020bayes
+:::
 

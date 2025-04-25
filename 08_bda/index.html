@@ -1,308 +1,488 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-  <head>
-    <title>Data Science for Linguists</title>
-    <meta charset="utf-8" />
-    <meta name="author" content="Joseph V. Casillas, PhD" />
-    <script src="assets/header-attrs/header-attrs.js"></script>
-    <link href="assets/remark-css/hygge.css" rel="stylesheet" />
-    <link href="assets/remark-css/rutgers.css" rel="stylesheet" />
-    <link href="assets/remark-css/rutgers-fonts.css" rel="stylesheet" />
-    <link href="assets/tile-view/tile-view.css" rel="stylesheet" />
-    <script src="assets/tile-view/tile-view.js"></script>
-    <link href="assets/panelset/panelset.css" rel="stylesheet" />
-    <script src="assets/panelset/panelset.js"></script>
-    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"xbcaf1fca3b74b0f9b232e34a21c1625","expires":14}</script>
-    <script src="assets/himalaya/himalaya.js"></script>
-    <script src="assets/js-cookie/js.cookie.js"></script>
-    <link href="assets/editable/editable.css" rel="stylesheet" />
-    <script src="assets/editable/editable.js"></script>
-    <script src="assets/freezeframe/freezeframe.min.js"></script>
-    <script src="assets/xaringanExtra-freezeframe/freezeframe-init.js"></script>
-    <script id="xaringanExtra-freezeframe-options" type="application/json">{"selector":"img[src$=\"gif\"]","trigger":"click","overlay":false,"responsive":true,"warnings":true}</script>
-    <script src="https://use.fontawesome.com/5235085b15.js"></script>
-  </head>
-  <body>
-    <textarea id="source">
-class: center, middle, inverse, title-slide
+<html lang="en"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-226bd0f977fa82dfae4534cac220d79a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/quarto-contrib/jquery-3.6.3/jquery-3.6.3.min.js"></script>
+<script src="index_files/libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.js" defer="true"></script>
+<link href="index_files/libs/quarto-contrib/code-fullscreen-1.0.0/code-fullscreen.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/tachyonsextra-0.0.1/tachyonsextra.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.23">
 
-.title[
-# Data Science for Linguists
-]
-.subtitle[
-## Bayesian inference
-]
-.author[
-### Joseph V. Casillas, PhD
-]
-.date[
-### Rutgers University</br>Spring 2023</br>Last update: 2023-04-27
-]
+  <meta name="author" content="Joseph V. Casillas, PhD">
+  <title>Data Science for Linguists</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-b1d6ca2c565208d07f2e0e4cc96e78c9.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
 
----
-
-
-
-
-
-
-
-
-
-
-
-
-class: title-slide-section-grey, middle
-background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
-background-size: contain
-background-position: 100% 50%
-
-# What is probability?
-
-???
-
-Before we get started I'd like to ask you to take a second and think about "probability". 
-
-What does is it mean? 
-
-What do you understand if somebody asks you the probability you are going to be on time?
-
-What is the probability it will rain tomorrow?
-
-Over the next two days we will be thinking about the notion of probability and how define it in light of the research that we do
-
----
-layout: false
-class: middle
-
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/6977375589225286917" data-video-id="6977375589225286917" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>Trying to figure out if someone is Bayesian or not  😒👀 <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statsTikTok</a></p> <a target="_blank" title="♬ Monkeys Spinning Monkeys - Kevin MacLeod & Kevin The Monkey" href="https://www.tiktok.com/music/Monkeys-Spinning-Monkeys-6746993352891189249?refer=embed">♬ Monkeys Spinning Monkeys - Kevin MacLeod & Kevin The Monkey</a> </section> </blockquote> 
-<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
-<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
-<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-
-&lt;!--
+<section id="title-slide" class="center">
+  <img width="150" src="https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_new.png">
+  <h1 class="title">Data Science for Linguists</h1>
+  <h3 class="subtitle">Bayesian inference</h3>
+  <p class="author">Joseph V. Casillas, PhD</p>
+  <p class="institute">Rutgers University<mybr>Spring 2025<br>Last update: 2025-04-25</mybr></p>
+</section>
+<section>
+<section id="what-is-probability" class="title-slide slide level1 center" data-background-color="black" data-background-image="https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg" data-background-size="contain" data-background-position="100% 50%">
+<h1>What is probability?</h1>
+<aside class="notes">
+<p>Before we get started I’d like to ask you to take a second and think about “probability”.</p>
+<p>What does is it mean?</p>
+<p>What do you understand if somebody asks you the probability you are going to be on time?</p>
+<p>What is the probability it will rain tomorrow?</p>
+<p>Over the next two days we will be thinking about the notion of probability and how define it in light of the research that we do</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section" class="slide level2 center">
+<h2></h2>
+<!--
 general bayes
---&gt;
-
----
-background-image: url(./assets/img/worldview.png)
-background-size: contain
-background-color: black
-
-# The world according to frequentists
-
-???
-
-A key reason for *why* we will talk about probability has to do with frequentism
-
-You might have heard this term before, but if not, that's fine. 
-
-I'm certain you already have a grasp of what it is. 
-
-Over the next few days we will be thinking a lot about frequentism and comparing it directly with Bayesian methods. 
-
----
-background-image: url(https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg)
-background-size: contain
-background-position: 100% 50%
-
-# What is frequentism?
-
-.pull-left[
-.large[
-- A blanket term used to refer to "classical" statistics
-
-- Population parameters are fixed, actually exist
-
-- Probability refers to the long-run frequency of a given event
-
-- A sample of data is the result of one of an infinite number of exactly repeated experiments
-
-- Data are random, result from sampling a fixed population distribution
-]
-]
-
-???
-
-- Frequentist statistics represent what we have been doing all semester
-- The frequentist view of probability is what leads to odd definitions of statistical machinery, like confidence intervals
-- This view of probability seems to be at odds with how we think/reason
-  - What is the probability X candidate wins the election?
-
----
-class: center, middle
-
-# What if...
-
-### There isn't one true population parameter... &lt;br&gt;
---
-but an entire distribution of parameters, some more plausible than others
-
----
-class: middle
-
-
-
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b1-1.png" width="100%" /&gt;
-
----
-class: middle
-count: false
-
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b2-1.png" width="100%" /&gt;
-
----
-class: middle
-
-&lt;img src="index_files/figure-html/cars-b-draws1-1.png" width="100%" /&gt;
-
----
-class: middle
-count: false
-
-&lt;img src="index_files/figure-html/cars-b-draws2-1.png" width="100%" /&gt;
-
----
-class: middle
-count: false
-
-&lt;img src="index_files/figure-html/cars-b-draws3-1.png" width="100%" /&gt;
-
----
-class: middle
-
-&lt;img src="index_files/figure-html/cars-f-vs-cars-b-2-1.png" width="100%" /&gt;
-
-???
-
-Classical: There is a single "true" line of best fit, and I'll give my best estimate of it.
-
-Bayesian: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
-
----
-background-color: black
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_bey.png)
-background-size: contain
-
----
-class: middle, center
-
-# Bayesian inference &lt;br&gt;is all about the posterior
-
-???
-
-One key idea that I'd like you to hold on to for right now is that Bayesian inference is all about what we call the posterior distribution
-
-I'm going to spend the rest of my time in this brief presentation building up intuition about the posterior.
-
-In other words, in Bayesian data analysis we produce/approximate a posterior distribution of possible parameters that we can then summarize in different ways to answer questions and quantify uncertainty
-
-This is a fundamental difference with regard to frequentistism
-That is to say, there is no posterior distribution in frequentist statistics, you only estimate 1 single value for a parameter
-
-I am going to walk us through applying this idea to regression
-
----
-class: middle
-
-# .center[Applied to regression]
-
-## .blue[Classical]: There is a single "true" line of best fit, and I'll give my best estimate of it.
-
-???
-
-As many of us already know, in standard linear regression in a frequentist framework, we typically estimate what we call a line of best fit, either using OLS or maximum likelihood estimation
-
-It's actually quite simple at it's core, we have some blob of data and we try to shove a line through it to describe it the best we can
-
---
-
-## **Bayesian**: There is a distribution of lines of fit...some more plausible than others...and I'll give you samples from that distribution.
-
-???
-
-Under a Bayesian framework, we derive a distribution of lines that are compatible with our data and our prior assumptions
-
-Some of these lines are more plausible than others, so we can use standard methods to summarize and quantify uncertainty about them
-
-Let's illustrate this to make it clear
-
----
-
-# Distributions of plausible outcomes
-
-.pull-left[
-
-- In Bayesian inference we attempt to approximate this (these) distribution(s)... we call it the **posterior distribution**
-
-- Bayesian inference is all about the posterior
-
-- It represents a distribution of estimates that could arise from the data
-
-- Values that are more common (appear more often) are more plausible
-
-- For *very* simple problems we can calculate the posterior analytically by integrating (calculus)
-
-- For most problems (regression) we cannot calculate the posterior... so we approximate it via sampling (and calculus)
-
-]
-
-.pull-right[
-&lt;br&gt;
-&lt;img src="index_files/figure-html/normal-dist-1.png" width="100%" /&gt;
-
-]
-
----
-
-# A trivial example
-
-.pull-left[
-
-### More cars
-
-.large[
-- Let's explore the `mpg` variable
-
-- N = 32
-
-- The range is 10.4, 33.9. 
-
-- The mean is 20.090625. 
-
-- The SD is 6.0269481.
-
-- The 95% quantiles are 10.4, 32.7375
-
-- We'll fit an intercept only model. 
-]
-]
-
-.pull-right[
-
-&lt;/br&gt;&lt;/br&gt;
-&lt;img src="index_files/figure-html/mtcars-mpg-plot-1.png" width="100%" /&gt;
-
-]
-
----
-
-# A trivial example
-
-### Frequentist model
-
-We'll fit an intercept only model. The mean `mpg` is 20.09 ±6.03 SD. 
-
-.pull-left[
-
-
-```r
-lm(mpg ~ 1, data = mtcars) %&gt;% summary()
-```
-
-```
-
+-->
+</section>
+<section id="the-world-according-to-frequentists" class="slide level2" data-background-image="./index_files/img/worldview.png" data-background-size="contain" data-background-color="black">
+<h2>The world according to frequentists</h2>
+<aside class="notes">
+<p>A key reason for <em>why</em> we will talk about probability has to do with frequentism</p>
+<p>You might have heard this term before, but if not, that’s fine.</p>
+<p>I’m certain you already have a grasp of what it is.</p>
+<p>Over the next few days we will be thinking a lot about frequentism and comparing it directly with Bayesian methods.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-frequentism" class="slide level2" data-background-image="https://www.bellevuerarecoins.com/wp-content/uploads/bigstock-Coin-Flip-5807921.jpg" data-background-size="contain" data-background-position="100% 50%">
+<h2>What is frequentism?</h2>
+<div class="columns">
+<div class="column" style="font-size: 0.8em;">
+<ul>
+<li>A blanket term used to refer to “classical” statistics</li>
+<li>Population parameters are fixed, actually exist</li>
+<li>Probability refers to the long-run frequency of a given event</li>
+<li>A sample of data is the result of one of an infinite number of exactly repeated experiments</li>
+<li>Data are random, result from sampling a fixed population distribution</li>
+</ul>
+</div></div>
+<aside class="notes">
+<ul>
+<li>Frequentist statistics represent what we have been doing all semester</li>
+<li>The frequentist view of probability is what leads to odd definitions of statistical machinery, like confidence intervals</li>
+<li>This view of probability seems to be at odds with how we think/reason
+<ul>
+<li>What is the probability X candidate wins the election?</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-if" class="slide level2 center">
+<h2>What if…</h2>
+<p><span class="fragment">There isn’t one true population parameter…</span> <br> <span class="fragment">but an entire distribution of parameters, some more plausible than others</span></p>
+</section>
+<section id="section-1" class="slide level2 center">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-f-vs-cars-b1-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-2" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-f-vs-cars-b2-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-3" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-b-draws1-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-4" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-b-draws2-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-5" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-b-draws3-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-6" class="slide level2 center" data-visibility="uncounted">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/cars-f-vs-cars-b-2-1.png" class="img-fluid r-stretch" width="3000"><aside class="notes">
+<p>Classical: There is a single “true” line of best fit, and I’ll give my best estimate of it.</p>
+<p>Bayesian: There is a distribution of lines of fit…some more plausible than others…and I’ll give you samples from that distribution.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-7" class="slide level2" data-background-color="black" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_bey.png" data-background-size="contain">
+<h2></h2>
+</section></section>
+<section>
+<section id="bayesian-inference-is-all-about-the-posterior" class="title-slide slide level1 center">
+<h1>Bayesian inference <br>is all about the posterior</h1>
+<aside class="notes">
+<p>One key idea that I’d like you to hold on to for right now is that Bayesian inference is all about what we call the posterior distribution</p>
+<p>I’m going to spend the rest of my time in this brief presentation building up intuition about the posterior.</p>
+<p>In other words, in Bayesian data analysis we produce/approximate a posterior distribution of possible parameters that we can then summarize in different ways to answer questions and quantify uncertainty</p>
+<p>This is a fundamental difference with regard to frequentistism That is to say, there is no posterior distribution in frequentist statistics, you only estimate 1 single value for a parameter</p>
+<p>I am going to walk us through applying this idea to regression</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="applied-to-regression" class="slide level2 center">
+<h2>Applied to regression</h2>
+<p><span style="color: blue;"><strong>Classical</strong></span>: There is a single “true” line of best fit, and I’ll give my best estimate of it.</p>
+<div class="fragment">
+<p><strong><span class="emph">Bayesian</span></strong>: There is a distribution of lines of fit…some more plausible than others…and I’ll give you samples from that distribution.</p>
+<aside class="notes">
+<p>As many of us already know, in standard linear regression in a frequentist framework, we typically estimate what we call a line of best fit, either using OLS or maximum likelihood estimation</p>
+<p>It’s actually quite simple at it’s core, we have some blob of data and we try to shove a line through it to describe it the best we can</p>
+<p>Under a Bayesian framework, we derive a distribution of lines that are compatible with our data and our prior assumptions</p>
+<p>Some of these lines are more plausible than others, so we can use standard methods to summarize and quantify uncertainty about them</p>
+<p>Let’s illustrate this to make it clear</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="distributions-of-plausible-outcomes" class="slide level2">
+<h2>Distributions of plausible outcomes</h2>
+<div class="columns">
+<div class="column" style="font-size: 0.65em;">
+<ul>
+<li>In Bayesian inference we attempt to approximate this (these) distribution(s)… we call it the <strong><span class="emph">posterior distribution</span></strong></li>
+<li>Bayesian inference is all about the posterior</li>
+<li>It represents a distribution of estimates that could arise from the data</li>
+<li>Values that are more common (appear more often) are more plausible</li>
+<li>For <em>very</em> simple problems we can calculate the posterior analytically by integrating (calculus)</li>
+<li>For most problems (regression) we cannot calculate the posterior… so we approximate it via sampling (and calculus)</li>
+</ul>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:45%;">
+<p><br><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/normal-dist-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="a-trivial-example" class="slide level2">
+<h2>A trivial example</h2>
+<div class="columns">
+<div class="column" style="font-size: 0.8em;">
+<p>More cars</p>
+<ul>
+<li>Let’s explore the <code>mpg</code> variable</li>
+<li>N = 32</li>
+<li>The range is 10.4, 33.9.</li>
+<li>The mean is 20.090625.</li>
+<li>The SD is 6.0269481.</li>
+<li>The 95% quantiles are 10.4, 32.7375</li>
+<li>We’ll fit an intercept only model.</li>
+</ul>
+</div><div class="column">
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/mtcars-mpg-plot-1.png" class="img-fluid" width="3000"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="a-trivial-example-1" class="slide level2">
+<h2>A trivial example</h2>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Frequentist model</span></p>
+<div class="columns">
+<div class="column" style="width:41%;">
+<div style="font-size: 0.72em;">
+<p>We’ll fit an intercept only model:</p>
+</div>
+<div class="fragment" style="font-size: 0.8em;">
+<span style="color: white;">.</span>
+<center>
+<code>lm(mpg ~ 1)</code>
+</center>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{align}
+mpg_{i} &amp; \sim N(\mu_{i}, \sigma) \\
+\mu_{i} &amp; = \alpha
+\end{align}
+\]</span></p>
+</div>
+<div class="fragment" style="font-size: 0.72em;">
+<p>The mean <code>mpg</code> is 20.09 ±6.03 SD.</p>
+</div>
+</div><div class="column" style="width:2%;">
+
+</div><div class="column fragment" style="font-size: 0.7em; width: 57%">
+<p><br><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
 Call:
 lm(formula = mpg ~ 1, data = mtcars)
 
@@ -316,887 +496,1251 @@ Coefficients:
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 6.027 on 31 degrees of freedom
-```
+Residual standard error: 6.027 on 31 degrees of freedom</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="a-trivial-example-2" class="slide level2">
+<h2>A trivial example</h2>
+<p><span class="p-font" style="font-size: 1.25em; color: #666666">Bayesian model</span></p>
+<div class="columns">
+<div class="column" style="width:41%;">
+<div style="font-size: 0.72em;">
+<p>We’ll fit an intercept only model.</p>
+</div>
+<div class="fragment" style="font-size: 0.8em;">
+<span style="color: white;">.</span>
+<center>
+<code>brm(mpg ~ 1)</code>
+</center>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\begin{align}
+mpg_{i} &amp; \sim N(\mu_{i}, \sigma) \\
+\mu_{i} &amp; = \alpha
+\end{align}
+\]</span></p>
+</div>
+<div class="fragment" style="font-size: 0.72em;">
+<p>The mean <code>mpg</code> is 20.09 ±6.03 SD.</p>
+</div>
+</div><div class="column" style="width:2%;">
 
-]
-
-.pull-right[
-.center[
-.large[
-
-|           |        |                      |
-| --------: | :----- | :------------------- |
-| `\(mpg_{i}\)` | `\(\sim\)` | `\(N(\mu_{i}, \sigma)\)` |
-| `\(\mu_{i}\)` | `\(=\)`    | `\(\alpha\)`             |
-
-`lm(mpg ~ 1)`
-
-]
-]
-]
-
----
-
-# A trivial example
-
-### Bayesian model
-
-We'll fit an intercept only model. The mean `mpg` is 20.09 ±6.03 SD. 
-.pull-left[
-
-
-```r
-brm(mpg ~ 1, data = mtcars) %&gt;% summary()
-```
-
-
-```
- Family: gaussian 
+</div><div class="column fragment" style="font-size: 0.62em; width: 57%">
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">brm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
 Formula: mpg ~ 1 
    Data: mtcars (Number of observations: 32) 
   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
          total post-warmup draws = 4000
 
-Population-Level Effects: 
+Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 Intercept    20.06      1.04    18.06    22.25 1.00     2881     2280
 
-Family Specific Parameters: 
+Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     6.14      0.79     4.84     7.87 1.00     3106     2113
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).
-```
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="a-trivial-example-3" class="slide level2 smaller">
+<h2>A trivial example</h2>
+<h3 id="lets-compare">Let’s compare</h3>
+<div class="columns">
+<div class="column">
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">lm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error  t value     Pr(&gt;|t|)
+(Intercept) 20.09062   1.065424 18.85693 1.526151e-18</code></pre>
+</div>
+</div>
+</div><div class="column fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">brm</span>(mpg <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>           Estimate Est.Error      Q2.5     Q97.5
+Intercept 20.062135  1.042972 18.055954 22.252435
+Sigma      6.135967  0.790000  4.839691  7.872904</code></pre>
+</div>
+</div>
+</div></div>
+<p><br></p>
+<div class="fragment">
+<ul>
+<li>Recall that the mean <code>mpg</code> is 20.09 ±6.03 SD</li>
+<li>The Bayesian model estimates an additional paramter… which?</li>
+<li>The Bayesian estimates are slightly different (but really close)… why?</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="so-whats-the-difference" class="title-slide slide level1 transition center">
+<h1>So what’s the difference?</h1>
+<aside class="notes">
+<p>At this point you might be saying to yourself “So what? The models are the same?” and you would have a good point.</p>
+<p>The information we have looked at in the summaries is essentially the same.</p>
+<p>The main difference, and the key take away from this section, is that the bayesian model provides a posterior distribution of values for the parameters it estimates, the intercept and sigma.</p>
+<p>Let’s see what we can do with a posterior distribution</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exploring-the-posterior" class="slide level2 smaller">
+<h2>Exploring the posterior</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>cp <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(cars_bayes_int)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table" data-quarto-postprocess="true" style="font-size: 20px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">b_Intercept</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">sigma</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">21.93103</td>
+<td style="text-align: right;">5.183423</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.46296</td>
+<td style="text-align: right;">5.282083</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.08187</td>
+<td style="text-align: right;">6.228794</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.53519</td>
+<td style="text-align: right;">5.165951</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.68760</td>
+<td style="text-align: right;">4.864501</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.81836</td>
+<td style="text-align: right;">8.179158</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.45889</td>
+<td style="text-align: right;">5.133981</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19.96603</td>
+<td style="text-align: right;">5.367908</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.35175</td>
+<td style="text-align: right;">6.781768</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">19.92893</td>
+<td style="text-align: right;">5.826664</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20.19183</td>
+<td style="text-align: right;">6.904526</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">21.06296</td>
+<td style="text-align: right;">6.069348</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">19.70825</td>
+<td style="text-align: right;">6.274392</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">20.85624</td>
+<td style="text-align: right;">6.445802</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">21.56705</td>
+<td style="text-align: right;">5.920678</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li>This posterior distribution has 4000 draws of mean and SD values that are compatible with our data</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">nrow</span>(cp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4000</code></pre>
+</div>
+</div>
+<ul>
+<li>The posterior is just like any other distribution of data</li>
+<li>We can analyze/summarize it however we want</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">mean</span>(cp<span class="sc">$</span>b_Intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20.06213</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">quantile</span>(cp<span class="sc">$</span>b_Intercept, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>), <span class="at">names =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18.05595 22.25243</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
 
-]
 
-.pull-right[
-.center[
-.large[
-
-|           |        |                      |
-| --------: | :----- | :------------------- |
-| `\(mpg_{i}\)` | `\(\sim\)` | `\(N(\mu_{i}, \sigma)\)` |
-| `\(\mu_{i}\)` | `\(=\)`    | `\(\alpha\)`             |
-
-`brm(mpg ~ 1)`
-
-]
-]
-]
-
----
-class: title-slide-section-grey, middle, center
-
-# So what's the difference?
-
-???
-
-At this point you might be saying to yourself "So what? The models are the same?" and you would have a good point. 
-
-The information we have looked at in the summaries is essentially the same. 
-
-The main difference, and the key take away from this section, is that the bayesian model provides a posterior distribution of values for the parameters it estimates, the intercept and sigma. 
-
-Let's see what we can do with a posterior distribution
-
----
-
-# Exploring the posterior
-
-.pull-left[
-
-```r
-cp &lt;- as_tibble(cars_bayes_int)
-```
+<img data-src="index_files/figure-revealjs/cars-post-plot-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section class="slide level2">
 
 
-```
-# A tibble: 15 × 2
-   b_Intercept sigma
-         &lt;dbl&gt; &lt;dbl&gt;
- 1        21.9  5.18
- 2        21.5  5.28
- 3        19.1  6.23
- 4        20.5  5.17
- 5        19.7  4.86
- 6        20.8  8.18
- 7        19.5  5.13
- 8        20.0  5.37
- 9        20.4  6.78
-10        19.9  5.83
-11        20.2  6.90
-12        21.1  6.07
-13        19.7  6.27
-14        20.9  6.45
-15        21.6  5.92
-```
-
-]
-
---
-
-.pull-right[
-
-- This posterior distribution has 4000 draws of mean and SD values that are compatible with our data
-
-- The posterior is just like any other distribution of data
-
-- We can analyze/summarize it however we want
-
-
-```r
-mean(cp$b_Intercept)
-```
-
-```
-## [1] 20.06213
-```
-
-```r
-quantile(cp$b_Intercept, probs = c(0.025, 0.975))
-```
-
-```
-##     2.5%    97.5% 
-## 18.05595 22.25243
-```
-
-]
-
----
-
-&lt;img src="index_files/figure-html/cars-post-plot-1.png" width="100%" /&gt;
-
----
-
-&lt;img src="index_files/figure-html/ar-post-paramspace-plot-1.png" width="100%" /&gt;
-
----
-class: title-slide-section-grey, middle
-
-# **How do we get a posterior?**
-
-### Let's talk about probability
-
----
-class: middle, center
-
-.Large[
-`$$P(\color{green}{y})$$`
-]
-
---
-
-.Large["the probability of .green[y]"]
-
---
-
-.Large["the probability of .green[you getting an A in stats]"]
-
----
-class: middle, center
-
-.Large[
-`$$P(\color{green}{y} | \color{red}{z} )$$`
-]
-
---
-
-.Large["the probability of .green[y] given .red[z]"]
-
---
-
-.Large["the probability of .green[you getting an A in stats] given .red[you don't do the readings]"]
-
----
-
-# How do we get a posterior?
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.center[
-.Large[
-$$
+<img data-src="index_files/figure-revealjs/ar-post-paramspace-plot-1.png" class="img-fluid r-stretch" width="3000"></section></section>
+<section>
+<section id="how-do-we-get-a-posterior" class="title-slide slide level1 transition center">
+<h1>How do we get a posterior?</h1>
+<p><span class="p-font">Let’s talk about probability</span></p>
+</section>
+<section id="section-8" class="slide level2 center">
+<h2></h2>
+<p><span class="math display">\[
+P(\color{green}{y})
+\]</span></p>
+<div class="fragment">
+<center>
+“the probability of <span style="color: green;">y</span>”
+</center>
+</div>
+<div class="fragment">
+<center>
+“the probability of <span style="color: green;">you getting an A in stats</span>”
+</center>
+</div>
+</section>
+<section id="section-9" class="slide level2 center">
+<h2></h2>
+<p><span class="math display">\[
+P(\color{green}{y} | \color{red}{z} )
+\]</span></p>
+<div class="fragment">
+<center>
+“the probability of <span style="color: green;">y</span> given <span style="color: red;">z</span>”
+</center>
+</div>
+<div class="fragment">
+<center>
+“the probability of <span style="color: green;">you getting an A in stats</span> given <span style="color: red;">you don’t do the readings</span>”
+</center>
+</div>
+</section>
+<section id="how-do-we-get-a-posterior-1" class="slide level2">
+<h2>How do we get a posterior?</h2>
+<p><br></p>
+<p><span class="math display">\[
 P(A | B) = \frac{P(B | A) \times P(A)}{P(B)}
-$$
-]
-]
-
---
-
-Read as: 
-
-&lt;ru-blockquote&gt;
-The probability of A given B is equal to the probability of B given A times the probability of A divided by the probability of B
-&lt;/ru-blockquote&gt;
-
---
-
-.content-box-red[
-There is a good chance you never actually use this, even though most texts on Bayesian inference will start with this and base rate fallacy examples 
-]
-
-???
-
-It tells you how to convert one conditional probability into another one.
-
----
-background-image: url(./assets/img/bayes_theorem.gif)
-background-size: 600px
-background-position: 50% 40%
-
-# How do we get a posterior?
-
----
-background-image: url(./assets/img/bayes_theorem.png)
-background-size: 600px
-background-position: 50% 40%
-
-# How do we get a posterior?
-
---
-
-.footnote[
-.content-box-blue[
-The posterior distribution is the product of the likelihood and the prior...&lt;br&gt;
-(divided by the normalizing constant)
-]
-]
-
-???
-
-This is much more interesting in the context of statistical modelling
-
-In a class on Bayesian inference we would dedicate a lot of time to understanding the likelihood and the prior...
-
-The prior is the most controversial part of Bayesian inference
-
----
-
-# How do we get a posterior?
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.Large[
-$$
+\]</span></p>
+<div class="fragment">
+<div class="columns" style="font-size: 0.7em;">
+<div class="column">
+<div class="box-note">
+<p>The probability of A given B is equal to the probability of B given A times the probability of A divided by the probability of B</p>
+</div>
+</div><div class="column fragment">
+<div class="box-warning">
+<p>You’ll probably never actually use this, even though most texts on Bayesian inference start with this and base rate fallacy examples</p>
+</div>
+</div></div>
+<aside class="notes">
+<p>It tells you how to convert one conditional probability into another one.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="how-do-we-get-a-posterior-2" class="slide level2" data-background-image="./index_files/img/bayes_theorem.gif" data-background-size="1000px" data-background-position="50% 40%">
+<h2>How do we get a posterior?</h2>
+</section>
+<section id="how-do-we-get-a-posterior-3" class="slide level2" data-background-image="./index_files/img/bayes_theorem.png" data-background-size="1000px" data-background-position="50% 40%">
+<h2>How do we get a posterior?</h2>
+<div class="fragment">
+<center>
+<div class="box-tip absolute" style="font-size: 0.55em;left: 15%; bottom: 0px; ">
+<p>The posterior distribution is the product of the likelihood and the prior…<br> (divided by the normalizing constant)</p>
+</div>
+</center>
+<aside class="notes">
+<p>This is much more interesting in the context of statistical modelling</p>
+<p>In a class on Bayesian inference we would dedicate a lot of time to understanding the likelihood and the prior…</p>
+<p>The prior is the most controversial part of Bayesian inference</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="how-do-we-get-a-posterior-4" class="slide level2">
+<h2>How do we get a posterior?</h2>
+<p><br></p>
+<p><span class="math display">\[
 Posterior = \frac{Likelihood \times Prior}{Normalizing\ constant}
-$$
-]
-
-???
-
-Prior and posterior describe when information is obtained: what we know pre-data is our prior information, and what we learn post-data is the updated information (“posterior”).
-
-The likelihood in the equation says how likely the data is given the model parameters. 
-I think of it as fit: How well do the parameters fit the data? 
-Classical regression's line of best fit is the maximum likelihood line. 
-The likelihood also encompasses the data-generating process behind the model. 
-For example, if we assume that the observed data is normally distributed, then we evaluate the likelihood by using the normal probability density function. 
-You don't need to know what that last sentence means. 
-What's important is that the likelihood contains our built-in assumptions about how the data is distributed.
-
----
-class: middle
-
-&lt;iframe src="https://seeing-theory.brown.edu/bayesian-inference/index.html" style="border:none;" width="100%" height="100%"&gt;
-
----
-
-# How do we get a posterior?
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.Large[
-$$
+\]</span></p>
+<aside class="notes">
+<p>Prior and posterior describe when information is obtained: what we know pre-data is our prior information, and what we learn post-data is the updated information (“posterior”).</p>
+<p>The likelihood in the equation says how likely the data is given the model parameters. I think of it as fit: How well do the parameters fit the data? Classical regression’s line of best fit is the maximum likelihood line. The likelihood also encompasses the data-generating process behind the model. For example, if we assume that the observed data is normally distributed, then we evaluate the likelihood by using the normal probability density function. You don’t need to know what that last sentence means. What’s important is that the likelihood contains our built-in assumptions about how the data is distributed.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-10" class="slide level2" data-menu-title="Seeing theory" data-background-iframe="https://seeing-theory.brown.edu/bayesian-inference/index.html" data-background-interactive="TRUE">
+<h2></h2>
+</section>
+<section id="how-do-we-get-a-posterior-5" class="slide level2">
+<h2>How do we get a posterior?</h2>
+<p><br></p>
+<p><span class="math display">\[
 updated\ knowledge \propto Likelihood\ of\ data \times prior\ beliefs
-$$
-]
-
---
-
-.footnote[
-.content-box-blue[
-We can think of Bayes' theorem as a principled/systematic method for updating our knowledge in light of new data.
-
-- Update beliefs in proportion to how well the data fit those beliefs.
-- Because beliefs have probabilities, we can quantify our uncertainty about them.
-
-]
-]
-
----
-
-# How do we get a posterior?
-
-&lt;br&gt;&lt;br&gt;&lt;br&gt;
-
-.Large[
-$$
+\]</span></p>
+<div class="fragment">
+<div class="box-tip absolute" style="font-size: 0.55em;top: 15P; bottom: 0px; ">
+<p>We can think of Bayes’ theorem as a principled/systematic method for updating our knowledge in light of new data.</p>
+<ul>
+<li>Update beliefs in proportion to how well the data fit those beliefs.</li>
+<li>Because beliefs have probabilities, we can quantify our uncertainty about them.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="how-do-we-get-a-posterior-6" class="slide level2">
+<h2>How do we get a posterior?</h2>
+<p><br><br></p>
+<div style="font-size: 0.9em;">
+<p><span class="math display">\[
 P(unknown | observed) = \frac{\color{red}{P(observed | unknown)} \times P(unknown)}{P(observed)}
-$$
-]
-
-???
-
-We have some model that describes a data-generating process and we have some observed data, but we want to estimate some unknown model parameters. In that case, the formula reads like:
-
-When I was first learning Bayes, this form was my anchor for remembering the formula. The goal is to learn about unknown quantity from data, so the left side needs to be “unknown given data”.
-
----
-class: title-slide-section-grey, middle
-
-# Frequentism vs. Bayesianism
-
----
-
-# Frequentism vs. Bayesianism
-
-.large[
-.center[
-In essence the frequentist approach assess the probability of the data given a specific hypothesis
-]
-
-`$$P(data | H_{x})$$`
-
-]
-
-&lt;br&gt;
-
---
-
-.large[
-.center[
-Through Bayes formula one is able to asses the probability of a specific hypothesis given the data
-]
-
-`$$P(H_{x} | data)$$`
-
-]
-
-&lt;br&gt;
-
---
-
-.center[
-.content-box-blue[
-.large[
-This is what we pretty much always want in science &lt;br&gt;(and what many people think they are doing with frequentist statistics)
-]
-]
-]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_1.png)
-background-size: contain
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_2.png)
-background-size: contain
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_priors.png)
-background-size: contain
-background-position: 100% 50%
-background-color: black
-
-# About priors
-
-.pull-left[
-.white[
-- To approximate the posterior distribution we need priors and data
-
-- Priors = prior beliefs or assumptions
-
-- They represent a way for us to incorporate prior experience or domain expertise into the model 
-
-- You can set any prior you want (subjective)
-
-- Many object to Bayesian inference because of the priors
-
-- Counterpoint: priors force you to be explicit about your assumptions
-]
-]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_likelihoods.png)
-background-size: contain
-background-color: black
-
----
-
-# Why?
-
-.pull-left[
-### Advantages
-
-- A more intuitive inferential framework
-- Focus on distributions and uncertainty estimation instead of point estimates
-- More natural interpretation of results
-- Ability to handle small samples with appropriate guard against overfitting
-- Natural/principled way to combine prior information with data, within a solid decision theoretical framework
-- Flexible, can fit *many* models
-- Multiple comparisons?
-- Evidence for the null?
-- Model convergence?
-]
-
---
-
-.pull-right[
-### Disadvantages
-
-- Conceptually difficult
-- Steep learning curve
-- Requires careful consideration of prior assumptions
-- Frequentist probability is based on an imaginary set of experiments that you never actually carry out
-- Manipulating posterior takes practice
-- Less common, less accepted
-- Computationally costly, slow
-- There is no correct way to choose a prior
-]
-
----
-class: title-slide-section-grey, middle
-
-# Frequentism vs. Bayesianism?
-
----
-
-# Frequentism vs. Bayesianism?
-
-&lt;br&gt;
-
-.Large[
-- A Bayesian estimate with flat priors is generally equivalent to a frequentist MLE
-
-- Frequentism is not wrong, just different
-
-- Frequentism is susceptible to QRPs
-
-- It's about using the right tool for the job
-
-- Do whatever you need to do answer your questions
-]
-
----
-class: title-slide-section-grey, middle
-
-# How you do it?
-
----
-
-# More sleep (but Bayesian)
-
-### `sleepstudy` dataset
-
-.pull-left[
-
-- Part of `lme4` package
-
-- Criterion = reaction time (`Reaction`)
-
-- Predictor = \# of days of sleep deprivation (`Days`)
-
-- 10 observations per participant
-
-- \+2 fake participants w/ incomplete data
-
-]
-
-.pull-right[
-
-
-
-
-```
-## tibble [183 × 3] (S3: tbl_df/tbl/data.frame)
-##  $ Reaction: num [1:183] 250 259 251 321 357 ...
-##  $ Days    : num [1:183] 0 1 2 3 4 5 6 7 8 9 ...
-##  $ Subject : chr [1:183] "308" "308" "308" "308" ...
-```
-
-```
-## # A tibble: 6 × 3
-##   Reaction  Days Subject
-##      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  
-## 1     250.     0 308    
-## 2     259.     1 308    
-## 3     251.     2 308    
-## 4     321.     3 308    
-## 5     357.     4 308    
-## 6     415.     5 308
-```
-
-]
-
----
-class: middle
-
-&lt;img src="index_files/figure-html/ss-plot0-1.png" width="100%" /&gt;
-
----
-class: middle
-
-
-```
-## Linear mixed model fit by REML ['lmerMod']
-## Formula: Reaction ~ 1 + Days + (1 + Days | Subject)
-##    Data: df_sleep
-## 
-## REML criterion at convergence: 1771.4
-## 
-## Scaled residuals: 
-##     Min      1Q  Median      3Q     Max 
-## -3.9707 -0.4703  0.0276  0.4594  5.2009 
-## 
-## Random effects:
-##  Groups   Name        Variance Std.Dev. Corr
-##  Subject  (Intercept) 582.72   24.140       
-##           Days         35.03    5.919   0.07
-##  Residual             649.36   25.483       
-## Number of obs: 183, groups:  Subject, 20
-## 
-## Fixed effects:
-##             Estimate Std. Error t value
-## (Intercept)  252.543      6.433  39.257
-## Days          10.452      1.542   6.778
-## 
-## Correlation of Fixed Effects:
-##      (Intr)
-## Days -0.137
-```
-
----
-class: middle
-
-&lt;img src="index_files/figure-html/ss-plot1-1.png" width="100%" /&gt;
-
----
-
-# Bayesian version
-
-### Fitting the model
-
-.center[
-.Large[
-$$
-`\begin{aligned}
+\]</span></p>
+</div>
+<aside class="notes">
+<p>We have some model that describes a data-generating process and we have some observed data, but we want to estimate some unknown model parameters. In that case, the formula reads like:</p>
+<p>When I was first learning Bayes, this form was my anchor for remembering the formula. The goal is to learn about unknown quantity from data, so the left side needs to be “unknown given data”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="frequentism-vs.-bayesianism" class="title-slide slide level1 transition center">
+<h1>Frequentism vs.&nbsp;Bayesianism</h1>
+
+</section>
+<section id="frequentism-vs.-bayesianism-1" class="slide level2">
+<h2>Frequentism vs.&nbsp;Bayesianism</h2>
+<p>In essence the frequentist approach assess the probability of the data given a specific hypothesis</p>
+<p><span class="math display">\[
+P(data | H_{x})
+\]</span></p>
+<div class="fragment">
+<p>Through Bayes formula one is able to asses the probability of a specific hypothesis given the data</p>
+<p><span class="math display">\[
+P(H_{x} | data)
+\]</span></p>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:22%;">
+
+</div><div class="column" style="width:56%;">
+<div class="box-tip" style="font-size: 0.6em;">
+<center>
+This is what we pretty much always want in science (and what many people think they are doing with frequentist statistics)
+</center>
+</div>
+</div><div class="column" style="width:22%;">
+
+</div></div>
+</div>
+</section>
+<section id="section-11" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_1.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="section-12" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_ci_2.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="about-priors" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_priors.png" data-background-size="contain" data-background-position="100% 50%" data-background-color="black">
+<h2>About priors</h2>
+<div class="columns">
+<div class="column" style="font-size: 0.75em;">
+<ul>
+<li>To approximate the posterior distribution we need priors and data</li>
+<li>Priors = prior beliefs or assumptions</li>
+<li>They represent a way for us to incorporate prior experience or domain expertise into the model</li>
+<li>You can set any prior you want (subjective)</li>
+<li>Many object to Bayesian inference because of the priors</li>
+<li>Counterpoint: priors force you to be explicit about your assumptions</li>
+</ul>
+</div></div>
+</section>
+<section id="section-13" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/bayesian_likelihoods.png" data-background-size="contain" data-background-color="black">
+<h2></h2>
+</section>
+<section id="why" class="slide level2">
+<h2>Why?</h2>
+<div class="columns" style="font-size: 0.6em;">
+<div class="column">
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li>A more intuitive inferential framework</li>
+<li>Focus on distributions and uncertainty estimation instead of point estimates</li>
+<li>More natural interpretation of results</li>
+<li>Ability to handle small samples with appropriate guard against overfitting</li>
+<li>Natural/principled way to combine prior information with data, within a solid decision theoretical framework</li>
+<li>Flexible, can fit <em>many</em> models</li>
+<li>Multiple comparisons?</li>
+<li>Evidence for the null?</li>
+<li>Model convergence?</li>
+</ul>
+</div><div class="column fragment">
+<h3 id="disadvantages">Disadvantages</h3>
+<ul>
+<li>Conceptually difficult</li>
+<li>Steep learning curve</li>
+<li>Requires careful consideration of prior assumptions</li>
+<li>Frequentist probability is based on an imaginary set of experiments that you never actually carry out</li>
+<li>Manipulating posterior takes practice</li>
+<li>Less common, less accepted</li>
+<li>Computationally costly, slow</li>
+<li>There is no correct way to choose a prior</li>
+</ul>
+</div></div>
+</section></section>
+<section>
+<section id="frequentism-vs.-bayesianism-2" class="title-slide slide level1 transition center">
+<h1>Frequentism vs.&nbsp;Bayesianism?</h1>
+
+</section>
+<section id="frequentism-vs.-bayesianism-3" class="slide level2">
+<h2>Frequentism vs.&nbsp;Bayesianism?</h2>
+<ul>
+<li><p>A Bayesian estimate with flat priors is generally equivalent to a frequentist MLE</p></li>
+<li><p>Frequentism is not wrong, just different</p></li>
+<li><p>Frequentism is susceptible to QRPs</p></li>
+<li><p>It’s about using the right tool for the job</p></li>
+<li><p>Do whatever you need to do answer your questions</p></li>
+</ul>
+</section></section>
+<section>
+<section id="how-you-do-it" class="title-slide slide level1 transition center">
+<h1>How you do it?</h1>
+
+</section>
+<section id="more-sleep-but-bayesian" class="slide level2">
+<h2>More sleep (but Bayesian)</h2>
+<h3 id="sleepstudy-dataset"><code>sleepstudy</code> dataset</h3>
+<div class="columns">
+<div class="column" style="font-size: 0.9em;">
+<ul>
+<li>Part of <code>lme4</code> package</li>
+<li>Criterion = reaction time (<code>Reaction</code>)</li>
+<li>Predictor = # of days of sleep deprivation (<code>Days</code>)</li>
+<li>10 observations per participant</li>
+<li>+2 fake participants w/ incomplete data</li>
+</ul>
+</div><div class="column" style="font-size: 0.75em;">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [183 × 4] (S3: tbl_df/tbl/data.frame)
+ $ Reaction: num [1:183] 250 259 251 321 357 ...
+ $ Days    : num [1:183] 0 1 2 3 4 5 6 7 8 9 ...
+ $ Subject : chr [1:183] "308" "308" "308" "308" ...
+ $ is_extra: logi [1:183] FALSE FALSE FALSE FALSE FALSE FALSE ...</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table" data-quarto-postprocess="true" style="font-size: 18px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Reaction</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Days</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Subject</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">is_extra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">249.5600</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">258.7047</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">250.8006</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">321.4398</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">356.8519</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">414.6901</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">382.2038</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">290.1486</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">430.5853</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">466.3535</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">308</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">222.7339</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">309</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">205.2658</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">309</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-14" class="slide level2 center">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/ss-plot0-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-15" class="slide level2 center smaller">
+<h2></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: Reaction ~ 1 + Days + (1 + Days | Subject)
+   Data: df_sleep
+
+REML criterion at convergence: 1771.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9707 -0.4703  0.0276  0.4594  5.2009 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ Subject  (Intercept) 582.72   24.140       
+          Days         35.03    5.919   0.07
+ Residual             649.36   25.483       
+Number of obs: 183, groups:  Subject, 20
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  252.543      6.433  39.257
+Days          10.452      1.542   6.778
+
+Correlation of Fixed Effects:
+     (Intr)
+Days -0.137</code></pre>
+</div>
+</div>
+</section>
+<section id="section-16" class="slide level2 center">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/ss-plot1-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="bayesian-version" class="slide level2">
+<h2>Bayesian version</h2>
+<h3 id="fitting-the-model">Fitting the model</h3>
+<p><span class="math display">\[
+\begin{aligned}
 Reaction_{ij} &amp; \sim normal(\mu, \sigma) \\
 \mu &amp; = \alpha_{ij} + \beta * Days_{ij} \\
 \alpha &amp; \sim normal(0, 1) \\
 \beta &amp; \sim normal(0, 1) \\
 \sigma &amp; \sim normal(0, 1)
-\end{aligned}`
-$$
-]
-]
+\end{aligned}
+\]</span></p>
+<div class="fragment">
+<p><br></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">brm</span>(Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">|</span> Subject), <span class="at">data =</span> sleepstudy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-17" class="slide level2 center" style="font-size: 0.8em;">
+<h2></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: Reaction ~ Days + (Days | Subject) 
+   Data: df_sleep (Number of observations: 183) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
 
---
+Multilevel Hyperparameters:
+~Subject (Number of levels: 20) 
+                    Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)          25.88      6.26    15.14    39.91 1.00     1793     2244
+sd(Days)                6.58      1.53     4.14    10.09 1.00     1581     2319
+cor(Intercept,Days)     0.09      0.30    -0.46     0.66 1.00     1047     1656
 
-&lt;/br&gt;
-.center[
-.Large[
-```
-brm(Reaction ~ 1 + Days + (1 + Days | Subject), data = sleepstudy)
-```
-]
-]
+Regression Coefficients:
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept   252.18      6.80   238.81   265.63 1.00     1909     2649
+Days         10.34      1.69     6.88    13.61 1.00     1314     1918
 
----
-class: middle
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma    25.79      1.52    23.03    28.93 1.00     3622     2961
 
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+</section>
+<section id="section-18" class="slide level2 center">
+<h2></h2>
 
-```
-##  Family: gaussian 
-##   Links: mu = identity; sigma = identity 
-## Formula: Reaction ~ Days + (Days | Subject) 
-##    Data: df_sleep (Number of observations: 183) 
-##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup draws = 4000
-## 
-## Group-Level Effects: 
-## ~Subject (Number of levels: 20) 
-##                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)          25.88      6.26    15.14    39.91 1.00     1793     2244
-## sd(Days)                6.58      1.53     4.14    10.09 1.00     1581     2319
-## cor(Intercept,Days)     0.09      0.30    -0.46     0.66 1.00     1047     1656
-## 
-## Population-Level Effects: 
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept   252.18      6.80   238.81   265.63 1.00     1909     2649
-## Days         10.34      1.69     6.88    13.61 1.00     1314     1918
-## 
-## Family Specific Parameters: 
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma    25.79      1.52    23.03    28.93 1.00     3622     2961
-## 
-## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
-```
+<img data-src="index_files/figure-revealjs/sleep-draws-main-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-19" class="slide level2 center">
+<h2></h2>
 
----
+<img data-src="index_files/figure-revealjs/sleep-draws-forest-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-20" class="slide level2 center" data-background-color="black">
+<h2></h2>
 
-&lt;img src="index_files/figure-html/sleep-draws-main-1.png" width="100%" /&gt;
-
----
-
-&lt;img src="index_files/figure-html/sleep-draws-forest-1.png" width="100%" /&gt;
-
----
-background-color: black
-
-&lt;img src="index_files/figure-html/sleep-draws-solar-system-1.png" width="100%" /&gt;
-
----
-class: center, middle
-background-color: black
-background-image: url(./assets/img/dark_density_posterior.png)
-background-size: contain
+<img data-src="index_files/figure-revealjs/sleep-draws-solar-system-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-21" class="slide level2 center" data-background-color="black" data-background-image="./index_files/img/dark_density_posterior.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section class="slide level2">
 
 
+<img data-src="index_files/figure-revealjs/sleep-draws-spaghetti-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-22" class="slide level2" data-background-color="black">
+<h2></h2>
 
----
+<img data-src="index_files/figure-revealjs/sleep-multiverse-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-23" class="slide level2 center" data-background-color="black">
+<h2></h2>
 
-&lt;img src="index_files/figure-html/sleep-draws-spaghetti-1.png" width="100%" /&gt;
+<img data-src="index_files/figure-revealjs/bayes-infographic-1.png" class="img-fluid r-stretch" width="3000"></section>
+<section id="section-24" class="slide level2 center" data-background-color="black">
+<h2></h2>
+<center>
+<p><span class="p-font" style="font-size: 1.5em;color: white;">“We put a tiny sliver of scientific information into the model and then we bet on the things that can happen a large number of ways”</span></p>
+</center>
+</section></section>
+<section>
+<section id="takeaways" class="title-slide slide level1 center">
+<h1>Takeaways</h1>
+<ul>
+<li>There are primarily two camps in statistics: frequentists and Bayesians</li>
+<li>The two camps see probability in different ways</li>
+<li><strong>Bayesian statistics is all about the posterior</strong></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>There are primarily two camps in statistics: frequentists and Bayesians</li>
+<li>The two camps see probability in different ways</li>
+<li>Frequentists: parameters are real/true, provide best estimate of it</li>
+<li>Bayesians: there are distributions of possible parameters, we summarize the distribution</li>
+<li>Bayesian statistics is all about the posterior</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-25" class="slide level2 center">
+<h2></h2>
+<!-- bayes posterior -->
+<div class="footer">
+<p><a href="https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806" class="uri">https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806</a></p>
+</div>
+</section>
+<section id="section-26" class="slide level2" data-background-color="black" data-background-image="https://i.pinimg.com/originals/1b/58/77/1b58772e23bb5b761ded9aa1d1e1d7e4.gif" data-background-size="contain">
+<h2></h2>
+<aside class="notes">
+<p>With this in mind, you are now on your way to becoming Bayesians We will continue building intuitions about these core ideas</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-27" class="slide level2" data-background-image="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" data-background-size="contain">
+<h2></h2>
+<div class="footer">
+<p><a href="./assets/bda_walkthrough/bda_walkthrough.zip">BDA walkthrough</a></p>
+</div>
+</section>
+<section id="section-28" class="slide level2" data-menu-title="Seeing theory" data-background-iframe="https://allisonhorst.github.io/palmerpenguins/" data-background-interactive="TRUE">
+<h2></h2>
+</section></section>
+<section id="references" class="title-slide slide level1 final smaller scrollable" data-visibility="uncounted">
+<h1><span class="emph">References</span></h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-bates2011mixed" class="csl-entry" role="listitem">
+Bates, D. (2011). <em>Mixed models in r using the lme4 package part 2: Longitudinal data, modeling interactions</em>. <a href="http://lme4.r-forge.r-project.org/slides/2011-03-16-Amsterdam/2Longitudinal.pdf" class="uri">http://lme4.r-forge.r-project.org/slides/2011-03-16-Amsterdam/2Longitudinal.pdf</a>.
+</div>
+<div id="ref-mahr2017plotting" class="csl-entry" role="listitem">
+Mahr, T. J. (2017). <em>Plotting partial pooling in mixed-effects models</em>. <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/" class="uri">https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/</a>.
+</div>
+<div id="ref-mahr2019another" class="csl-entry" role="listitem">
+Mahr, T. J. (2019). <em>Another mixed effects model visualization</em>. <a href="https://www.tjmahr.com/another-mixed-effects-model-visualization/" class="uri">https://www.tjmahr.com/another-mixed-effects-model-visualization/</a>.
+</div>
+<div id="ref-mahr2020bayes" class="csl-entry" role="listitem">
+Mahr, T. J. (2020). <em>Bayes’ theorem in three panels</em>. <a href="https://www.tjmahr.com/bayes-theorem-in-three-panels/" class="uri">https://www.tjmahr.com/bayes-theorem-in-three-panels/</a>.
+</div>
+<div id="ref-mcelreath2018statistical" class="csl-entry" role="listitem">
+McElreath, R. (2015). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. CRC Press.
+</div>
+</div>
+<aside class="notes">
+<p><span class="citation" data-cites="mcelreath2018statistical">McElreath (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span> <span class="citation" data-cites="bates2011mixed">Bates (<a href="#/references" role="doc-biblioref" onclick="">2011</a>)</span> <span class="citation" data-cites="mahr2017plotting">Mahr (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span> <span class="citation" data-cites="mahr2019another">Mahr (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span> <span class="citation" data-cites="mahr2020bayes">Mahr (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 
----
-background-color: black
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
 
-&lt;img src="index_files/figure-html/sleep-multiverse-1.png" width="100%" /&gt;
+</div>
+</div></div>
 
----
-class: middle
-background-color: black
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
 
-&lt;img src="index_files/figure-html/bayes-infographic-1.png" width="100%" /&gt;
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
----
-class: middle, center
-background-color: black
+  <script>
 
-# .white["We put a tiny sliver of scientific information into the model and then we bet on the things that can happen a large number of ways"]
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":false,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"hideMissingTitles":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
 
----
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
 
-# Takeaways
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
 
-.Large[
-- There are primarily two camps in statistics: frequentists and Bayesians
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
 
-- The two camps see probability in different ways
+        // Display a presentation progress bar
+        progress: true,
 
-- **Bayesian statistics is all about the posterior**
-]
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
 
-???
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
 
-- There are primarily two camps in statistics: frequentists and Bayesians
-- The two camps see probability in different ways
-- Frequentists: parameters are real/true, provide best estimate of it
-- Bayesians: there are distributions of possible parameters, we summarize the distribution
-- Bayesian statistics is all about the posterior
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
 
----
-layout: false
-class: middle
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
 
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@chelseaparlettpelleriti/video/7017252472737516806" data-video-id="7017252472737516806" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@chelseaparlettpelleriti" href="https://www.tiktok.com/@chelseaparlettpelleriti?refer=embed">@chelseaparlettpelleriti</a> <p>Bayesian got back <a title="statstiktok" target="_blank" href="https://www.tiktok.com/tag/statstiktok?refer=embed">#statstiktok</a> <a title="bayesian" target="_blank" href="https://www.tiktok.com/tag/bayesian?refer=embed">#bayesian</a></p> <a target="_blank" title="♬ Thot Shit - Megan Thee Stallion" href="https://www.tiktok.com/music/Thot-Shit-6972655154873796610?refer=embed">♬ Thot Shit - Megan Thee Stallion</a> </section> </blockquote> 
-<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
-<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
-<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
-<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
 
-&lt;!--
-bayes posterior
---&gt;
+        // Push each slide change to the browser history
+        history: true,
 
----
-background-color: black
-background-image: url(https://i.pinimg.com/originals/1b/58/77/1b58772e23bb5b761ded9aa1d1e1d7e4.gif)
-background-size: contain
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
 
-???
+        // Enable the slide overview mode
+        overview: true,
 
-With this in mind, you are now on your way to becoming Bayesians
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
 
-We will continue building intuitions about these core ideas
+        // Vertical centering of slides
+        center: false,
 
----
-background-image: url(https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
-background-size: contain
+        // Enables touch navigation on devices with touch input
+        touch: true,
 
-.footnote[[BDA walkthrough](./assets/bda_walkthrough/bda_walkthrough.zip)]
+        // Loop the presentation
+        loop: false,
 
----
-class: middle
+        // Change the presentation direction to be RTL
+        rtl: false,
 
-&lt;iframe src="https://allisonhorst.github.io/palmerpenguins/" style="border:none;" height="100%", width="100%"&gt;
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
 
----
-exclude: true
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
 
-(McElreath, 2015)
+        // Turns fragments on and off globally
+        fragments: true,
 
----
-layout: false
-class: title-slide-final, left
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
 
-# References
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
 
-[1] R. McElreath. _Statistical Rethinking: A Bayesian Course with
-Examples in R and Stan_. Chapman &amp; Hall/CRC Texts in Statistical
-Science. CRC Press, 2015. ISBN: 9781482253481.
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
 
-[2] Bates, D. (2011). *Mixed models in R using the lme4 package Part 2: Longitudinal data, modeling interactions*. http://lme4.r-forge.r-project.org/slides/2011-03-16-Amsterdam/2Longitudinal.pdf
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
 
-[3] Mahr, T. (2017). *Plotting partial pooling in mixed-effects models*. https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
 
-[4] Mahr, T. (2019). *Another mixed effects model visualization*. https://www.tjmahr.com/another-mixed-effects-model-visualization/
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
 
-[5] Mahr, T. (2020) *Bayes’ theorem in three panels*. https://www.tjmahr.com/bayes-theorem-in-three-panels/
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: true,
 
-    </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script src="https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js"></script>
-<script src="https://platform.twitter.com/widgets.js"></script>
-<script>var slideshow = remark.create({
-"highlightStyle": "default",
-"highlightLines": true,
-"countIncrementalSlides": false,
-"ratio": "16:9"
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})(document);
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
 
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
-})();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
-(function() {
-  "use strict"
-  // Replace <script> tags in slides area to make them executable
-  var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container script'
-  );
-  if (!scripts.length) return;
-  for (var i = 0; i < scripts.length; i++) {
-    var s = document.createElement('script');
-    var code = document.createTextNode(scripts[i].textContent);
-    s.appendChild(code);
-    var scriptAttrs = scripts[i].attributes;
-    for (var j = 0; j < scriptAttrs.length; j++) {
-      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
-    }
-    scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-})();
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
 
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
 
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
-      }
-    }
-    i++;
-  }
-};
-slideshow._releaseMath(document);
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: true,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 2,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 7.5e-2,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
