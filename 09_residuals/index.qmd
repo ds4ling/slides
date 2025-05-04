@@ -1,142 +1,123 @@
 ---
 title   : 'Data Science for Linguists'
-subtitle: 'Residuals'
-author  : "Joseph V. Casillas, PhD"
-date    : "Rutgers University</br>Spring 2023</br>Last update: `r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    lib_dir: assets
-    css: ["hygge", "rutgers", "rutgers-fonts"]
-    nature:
-      beforeInit: ["https://www.jvcasillas.com/ru_xaringan/js/ru_xaringan.js", "https://platform.twitter.com/widgets.js"]
-      highlightStyle: default
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
-    includes:
-      in_header: "../assets/partials/header.html"
+subtitle : 'Residuals'
+author   : "Joseph V. Casillas, PhD"
+institute: "Rutgers University<mybr>Spring 2025<br>Last update: `r Sys.Date()`"
 ---
 
 ```{r}
-#| label: setup
-#| include: false
-options(htmltools.dir.version = FALSE)
-```
-
-```{r}
-#| label: global-setup
-#| echo: false
-knitr::opts_chunk$set(
-  echo = FALSE, 
-  out.width = "100%", 
-  fig.asp = 0.5625, 
-  fig.retina = 2, 
-  dpi = 300, 
-  message = FALSE, 
-  warning = FALSE
-  )
-```
-
-```{r}
-#| label: xaringan-extra-all-the-things
-#| echo: false
-xaringanExtra::use_xaringan_extra(
-  c("tile_view", "panelset", "editable", "freezeframe"
-    #"scribble", "search", "webcam"
-    )
-)
-```
-
-```{r}
-#| label: helpers
+#| label: load-helpers
+#| echo: false 
+#| message: false 
+#| warning: false
 source(here::here("assets", "scripts", "helpers.R"))
 ```
 
-```{r}
-#| label: load-refs
-bib <- ReadBib(here("assets", "bib", "ds4ling_refs.bib"), check = FALSE)
-ui <- "- "
-```
-
-class: title-slide-section-grey, middle
 
 
-# .white[What is Data Science again?]
+
+# What is Data Science again? {.transition}
 
 ---
-background-image: url("../assets/img/workflow/data_science1.png")
-background-size: contain
+
+## {background-image="../assets/img/workflow/data_science1.png" background-size="contain"}
 
 ---
-background-image: url("../assets/img/workflow/data_science2.png")
-background-size: contain
+
+## {background-image="../assets/img/workflow/data_science2.png" background-size="contain"}
 
 ---
-background-image: url("../assets/img/workflow/data_science3.png")
-background-size: contain
+
+## {background-image="../assets/img/workflow/data_science3.png" background-size="contain"}
 
 ---
-background-image: url("../assets/img/workflow/datascience_workflow1.png")
-background-size: contain
 
---
+## {background-image="../assets/img/workflow/datascience_workflow1.png" background-size="contain"}
 
-.center[.big[**You have learned how to version control this process!**]]
+. . .
 
----
-background-image: url("../assets/img/workflow/datascience_workflow2.png"), url(../assets/img/workflow/workflow_10.png)
-background-size: 600px, 700px
-background-position: 15% 90%, 95% 40%
+<center>
 
---
+[**You have learned how to version control this process!**]{.p-font .emph style="font-size: 1.3em;"}
 
-.center[.big[**You have learned how to version control this process!**]]
+</center>
 
 ---
-class: title-slide-section-grey, middle
 
-# .white[So what was version control  
-again?]
+## {background-image="../assets/img/workflow/datascience_workflow2.png, ../assets/img/workflow/workflow_10.png" background-size="600px, 700px" background-position="15% 90%, 95% 40%"}
 
---
-background-image: url("../assets/img/workflow/final_doc.png")
-background-size: 525px
-background-position: 100% 50%
+. . .
+
+<center>
+
+[**You have learned how to version control this process!**]{.p-font .emph style="font-size: 1.3em;"}
+
+</center>
 
 ---
-background-image: url("../assets/img/workflow/datascience_workflow3.png")
-background-size: 600px
-background-position: 10% 50%
 
-# Don't forget the stats...
+## {background-color="#272822"}
 
---
+<br><br><br>
 
-.pull-right[
+:::: {.columns}
+::: {.column width="50%"}
+::: {.r-fit-text .p-font}
+So what is version <mybr>control (again)?
+:::
+:::
+::::
+
+---
+
+## {background-color="#272822" background-image="../assets/img/workflow/final_doc.png" background-size="contain" background-position="right" visibility="uncounted"}
+
+<br><br><br>
+
+::: columns
+::: {.column width="50%"}
+::: {.r-fit-text .p-font}
+So what is version <mybr>control (again)?
+:::
+:::
+:::
+---
+
+::: columns
+::: {.column width="55%"}
+::: {.r-fit-text .emph .p-font}
+Don't forget the stats...
+:::
+<br><br><br>
+![](../assets/img/workflow/datascience_workflow3.png)
+:::
+
+::: {.column width="45%"}
+
+<br><br><br>
 
 ```{r}
 #| label: stats-example
-#| warning: false
-#| message: false 
-#| fig.retina: 2 
-#| fig.height: 5
+#| fig-asp: 0.7
+#| fig-width: 4.5
+#| echo: true
 
-ggplot(mtcars, aes(x = disp, y = mpg)) + 
+mtcars |>
+  ggplot() + 
+  aes(x = disp, y = mpg) + 
   geom_point() + 
- {{geom_smooth(method = 'lm', formula = "y ~ x")}}
+  geom_smooth(method = 'lm', formula = "y ~ x")
 ```
+:::
+:::
 
-]
 
----
-background-image: url("../assets/img/workflow/datascience_workflow4.png")
-background-size: 500px
-background-position: 90% 50%
 
-# We do literate programming
 
-.pull-left[
-.large[
+# We do literate programming {.smaller}
+
+::: columns
+::: {.column width="45%"}
 - This means we write code in a way that clearly documents 
 what we did.
 
@@ -145,50 +126,87 @@ computer what to do, we write code that tells other humans
 what we told the computer to do and *why*. 
 
 - Importantly, we don't separate our code from the report/essay/manuscript
-we are writing. Everyting is together, in a single document.  
-]
-]
+we are writing. Everything is together, in a single document (usually).  
+:::
+:::
+
+![](../assets/img/workflow/datascience_workflow4.png){.absolute top="200" right="-80" width="600" height="187"}
+
+
+
+
+
+
+#
+
+::: {.r-stack .p-font style="font-size: 1.6em;"}
+**In this class you have learned to...**
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font .emph style="font-size: 1.2em;"}
+**manage version controlled research projects**
+:::
+
+::: {.r-stack .p-font}
+[in a way that facilitates <u>collaboration</u> and <u>honesty</u>]{style="font-size: 0.8em;"}
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**get** and [**tidy**]{style="font-size: 1.6em; color: #497dd7;"} data
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**transform** and [**visualize**]{style="font-size: 1.6em" .emph} your data  
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**fit** statistical [**models**]{style="font-size: 1.6em; color: #497dd7;"} to your data and **test** hypotheses  
+:::
+
+. . .
+
+<mybr>
+
+::: {.r-stack .p-font style="font-size: 1.2em;"}
+**communicate** your results using [**literate programming**]{style="font-size: 1.6em" .emph}
+:::
+
+
+
+
+
+
+# 
+
+::: {.r-stack .p-font}
+This is [**reproducible research**]{style="font-size: 1.4em;" .emph}
+:::
 
 ---
-class: center, middle
 
-# .black[In this class you have learned to...]
-
---
-
-### .big[.RUred[manage version controlled research projects]] in a way that facilitates collaboration and honesty
-
---
-
-### get and .big[.blue[tidy]] data
-
---
-
-### transform and .big[.RUred[visualize]] your data
-
---
-
-### fit statistical .big[.blue[models]] to your data and test hypotheses
-
---
-
-### .big[.black[communicate]] your results using .big[.RUred[literate programming]]
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/philosophy_of_science_stats.png" background-size="contain"}
 
 ---
-class: center, middle
-
-## This is .big[**reproducible research**]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/philosophy_of_science_stats.png)
-background-size: contain
-
----
-layout: false
-class: middle
 
 ```{r}
 #| label: tiktok1
+#| eval: false
 t1_url <- "https://www.tiktok.com/@chelseaparlettpelleriti/video/6969954394909576453"
 t1 <- tiktok_embed(t1_url)
 t1
@@ -198,110 +216,91 @@ t1
 need more methods
 --> 
 
----
-layout: true
+::: footer
+<https://www.tiktok.com/@chelseaparlettpelleriti/video/6969954394909576453>
+:::
 
-# What we've seen
+---
+
+## What we've seen {.smaller background-image="./index_files/img/lm_ex1.png" background-position="100% 50%" background-size="950px"}
 
 - MRC
-
 - Linear regression
-
 - General linear model
-
 - Generalized linear model
 
 ---
 
-background-image: url(./assets/img/lm_ex1.png)
-background-position: 100% 50%
-background-size: 750px
+## What we've seen {.smaller background-image="./index_files/img/lm_ex2.png" background-position="100% 50%" background-size="950px"}
+
+- MRC
+- Linear regression
+- General linear model
+- Generalized linear model
 
 ---
 
-background-image: url(./assets/img/lm_ex2.png)
-background-position: 100% 50%
-background-size: 750px
+## What we've seen {.smaller background-image="./index_files/img/lm_ex4.png" background-position="100% 50%" background-size="950px"}
+
+- MRC
+- Linear regression
+- General linear model
+- Generalized linear model
 
 ---
 
-background-image: url(./assets/img/lm_ex4.png)
-background-position: 100% 50%
-background-size: 750px
+## [What we've seen]{.emph} {.smaller background-color="black" background-image="./index_files/img/lm_ex5.png" background-position="100% 50%" background-size="950px"}
 
----
-layout: false
-background-color: black
-background-image: url(./assets/img/lm_ex5.png)
-background-position: 100% 50%
-background-size: 750px
-
-# What we've seen
-
-.white[
 ~~Frequentist~~  
 
-- **Bayesian** MRC
-
-- **Bayesian** Linear regression
-
-- **Bayesian** General linear model
-
-- **Bayesian** Generalized linear model
-
-]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_knowledge.png)
-background-size: contain
+- [**Bayesian**]{.emph} MRC
+- [**Bayesian**]{.emph} Linear regression
+- [**Bayesian**]{.emph} General linear model
+- [**Bayesian**]{.emph} Generalized linear model
 
 ---
 
-<blockquote align='center' class="twitter-tweet" data-lang="de">
-<a href="https://twitter.com/phdemetri/status/1634568517688127488"></a>
-</blockquote>
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_knowledge.png" background-size="contain"}
+
+
+
+
+
+# {.transition visibility="uncounted"}
+
+{{< tweet user=phdemetri id=1634568517688127488 >}}
 
 <!--
 make a table tweet
 --> 
 
+
+
+# Next steps {.transition}
+
 ---
-class: title-slide-section-grey, middle
 
-# Next steps
+## Moving forward {background-image="./index_files/img/gelman_hill.png" background-position="95% 50%" background-size="600px"}
 
----
-background-image: url(./assets/img/gelman_hill.png)
-background-position: 90% 50%
-
-# Moving forward
-
-.pull-left[
+::: {.columns}
+::: {.column .closelist style="font-size: 0.75em; width: 60%"}
 - Unfortunately we don't have enough time to go into more detail
-
 - Your journey with programming and statistics is just getting started
-
 - Use your knowledge to think critically about what you read and about your own data
-
-- New techniques and methods are constantly coming out, but it 
-seems unlikely we will stray too far from the linear model
-
-<p></p>
-
+- New techniques and methods are constantly coming out, but it seems unlikely we will stray too far from the linear model
 - Book recommendations
-  - Data Analysis Using Regression and Multlilevel-Hierarchicaal Models (Gelman & Hill, 2007)
-  - Regression and other stories (Gelman, Hill, & Vehtari, 2020)
-  - Statistical Rethinking (McElreath, 2015, 2020)
-]
+  - Data Analysis Using Regression and Multlilevel-Hierarchicaal Models [@gelman2007data]
+  - Regression and other stories [@gelman2021regression]
+  - Statistical Rethinking [@mcelreath2018statistical]
+:::
+:::
 
 ---
-background-image: url(https://images.tandf.co.uk/common/jackets/amazon/978148225/9781482253443.jpg)
-background-position: 90% 50%
 
-# Moving forward
+## Moving forward {background-image="https://images.tandf.co.uk/common/jackets/amazon/978148225/9781482253443.jpg" background-position="95% 50%" background-size="600px"}
 
-.pull-left[
-
+::: {.columns}
+::: {.column .closelist style="font-size: 0.72em; width: 60%"}
 - Getting help
   - stackoverflow.com
   - coursera.con
@@ -321,39 +320,45 @@ background-position: 90% 50%
   - [Conceptual understanding](http://mfviz.com/hierarchical-models/)
   - [Logistic regression](http://www.karlin.mff.cuni.cz/~pesta/NMFM404/mixed.html)
   - [Specifying random effects](http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification)
-  - [More links](https://socialbyselection.wordpress.com/2015/07/14/mixed-effect-models/)
-
-]
-
----
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_stackoverflow.png)
-background-size: 500px
+:::
+:::
 
 ---
-exclude: true
 
-`r AutoCite(bib, c("wickham2016r", "qass93_ch2", "qass93_ch3", "qass93_ch4"))`
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_stackoverflow.png" background-size="700px"}
 
 ---
-layout: false
-class: title-slide-final
-background-image: url(https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_shield.png)
-background-size: 55px
-background-position: 9% 15%
 
-</br></br></br>
+## {background-image="./index_files/img/chatgpt.png" background-size="contain"}
 
-# Data Science for Linguists
+---
 
-## www.ds4ling.jvcasillas.com
+## {.final visibility="uncounted"}
 
+![](https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png){.absolute top="5" right="0" width="55" height="55"}
+
+::: {.p-font .emph style="font-size: 1.5em;"}
+Data Science for Linguists 
+:::
 
 </br>
 
-|                                                                                                            |                                   |
-| :--------------------------------------------------------------------------------------------------------- | :-------------------------------- |
-| <a href="mailto:joseph.casillas@rutgers.edu">.RUred[<i class="fa fa-paper-plane fa-fw"></i>]               | joseph.casillas@rutgers.edu       |
-| <a href="http://twitter.com/jvcasill">.RUred[<i class="fa fa-twitter fa-fw"></i>]                          | @jvcasill                         |
-| <a href="http://github.com/jvcasillas">.RUred[<i class="fa fa-github fa-fw"></i>]                          | @jvcasillas                       |
+### [www.ds4ling.jvcasillas.com]{style="color: #fff;"}
 
-# Thanks!
+### Save the link to the website for future reference
+
+</br>
+
+|                                                                            |                             |
+| -------------------------------------------------------------------------: | :-------------------------- |
+| <a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a> | [joseph.casillas@rutgers.edu]{.emph} |
+| <a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>       | [\@jvcasill]{.emph}                   |
+| <a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>       | [\@jvcasillas]{.emph}                 |
+
+: {tbl-colwidths="[25,75]"}
+
+
+# [References]{.emph} {.final}
+
+::: {#refs}
+:::
